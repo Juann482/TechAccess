@@ -9,7 +9,7 @@ public class TechAccess3063267Application {
 	public static void main(String[] args) {
 		SpringApplication.run(TechAccess3063267Application.class, args);
 		
-		// tests
+		
 	}
 
 }
