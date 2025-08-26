@@ -5,15 +5,6 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-<<<<<<< HEAD
-		<version>3.5.5</version>
-		<relativePath/> <!-- lookup parent from repository -->
-	</parent>
-	<groupId>com.sena.techaccess</groupId>
-	<artifactId>TechAccess</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>TechAccess</name>
-=======
 		<version>3.5.4</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
@@ -21,7 +12,6 @@
 	<artifactId>techaccess</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>TechAccess_3063267</name>
->>>>>>> 2f0f5532d2e97b9136d249f1c9b9df2335316074
 	<description>Demo project for Spring Boot</description>
 	<url/>
 	<licenses>
