@@ -1,5 +1,20 @@
 package com.sena.techaccess.repository;
 
-public interface FichaRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+import com.sena.techaccess.model.Ficha;
+import com.sena.techaccess.model.Usuario;
+import java.util.List;
 
+@Repository
+public interface FichaRepository extends JpaRepository<Ficha, Integer> {
+    
+    // Buscar fichas por nombre del programa
+    List<Ficha> findByNombrePrograma(String nombrePrograma);
+    
+    // Buscar fichas por número de ficha
+    Ficha findByNuumFicha(String nuumFicha);
+    
+    // Buscar usuarios asociados a una ficha
+    List<Usuario> findUsuariosByIdFicha(Integer idFicha);
 }
