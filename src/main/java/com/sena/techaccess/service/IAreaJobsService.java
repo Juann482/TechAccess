@@ -1,5 +1,12 @@
 package com.sena.techaccess.service;
 
-public interface IAreaJobsService {
+	import com.sena.techaccess.model.AreaJobs;
+	
 
+	public interface IAreaJobsService {
+
+	public AreaJobs save(AreaJobs nomArea);
+	public void update(AreaJobs nomArea);
+		
+	
 }
