@@ -4,8 +4,8 @@ import com.sena.techaccess.model.AreaJobs;
 
 public class AreaJobsServiceImplement implements IAreaJobsService{
 
-	
-	private AreaJobs save(AreaJobs areajobs);
+	@Override
+	private AreaJobs save(AreaJobs areaJobs);
 
 	@Override
 	public AreaJobs save(AreaJobs nomArea) {
