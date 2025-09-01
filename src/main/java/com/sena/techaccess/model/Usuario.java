@@ -1,8 +1,11 @@
 package com.sena.techaccess.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -17,7 +20,6 @@ public class Usuario {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-
 	private Integer id;
 	private String nombre;
 	private String username;
@@ -29,21 +31,21 @@ public class Usuario {
 	private String tipo;
 
 	@OneToMany(mappedBy = "usuario")
-	private List<Ficha> ficha;
+	private List<Ficha> ficha = new ArrayList<>();
 
 	@OneToMany(mappedBy = "usuario")
-	private List<Permisos> permisos;
+	private List<Permisos> permisos = new ArrayList<>();
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	private EstadoCuenta estadocuenta;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)//LAZY evita traer objetos grandes que no siempre necesitas.
 	private Rol rol;
 
-	@OneToOne(mappedBy = "usuario")
+	@OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Vigilancia vigilancia;
 
-	@OneToOne(mappedBy = "usuario")
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)//CAscadeType.ALL Borra todas sus fichas y accesos automaticamente si se llega a borrar un usuario
 	private Acceso acceso;
 
 	public Usuario() {
@@ -139,8 +141,8 @@ public class Usuario {
 	@Override
 	public String toString() {
 		return "Usuario [id=" + id + ", nombre=" + nombre + ", username=" + username + ", email=" + email
-				+ ", documento=" + documento + ", direccion=" + direccion + ", telefono=" + telefono + ", password="
-				+ password + ", tipo=" + tipo + "]";
+				+ ", documento=" + documento + ", direccion=" + direccion + ", telefono=" + telefono 
+				 + ", tipo=" + tipo + "]";
 	}
 
 }

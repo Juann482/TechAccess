@@ -1,54 +1,67 @@
 package com.sena.techaccess.model;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 
 @Entity
 @Table(name = "vigilancia")
 public class Vigilancia {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer idVigilacia;
+	private Integer idVigilancia;
+	
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date horaIngreso;
+	
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date horaEgreso;
+	
 	private String turno;
 
-	@ManyToOne
-	private EstadoPermanencia estadopermanencia;
+	@ManyToOne(fetch = FetchType.LAZY)
+	private EstadoPermanencia estadoPermanencia;
 
-	@OneToOne
+	@OneToOne(mappedBy = "vigilancia", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Usuario usuario;
 
-	@ManyToOne
-	private Acceso acceso;
+	@OneToMany(mappedBy = "vigilancia", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<Acceso> accesos = new ArrayList<>();
+	
 
-	// constructor vacío
 	public Vigilancia() {
 	}
 
-	// constructor con campos
-	public Vigilancia(Integer idVigilacia, Date horaIngreso, Date horaEgreso, String turno) {
+	public Vigilancia(Integer idVigilancia, Date horaIngreso, Date horaEgreso, String turno) {
 		super();
-		this.idVigilacia = idVigilacia;
+		this.idVigilancia = idVigilancia;
 		this.horaIngreso = horaIngreso;
 		this.horaEgreso = horaEgreso;
 		this.turno = turno;
 	}
 
 	// getters and setters
-	public Integer getIdVigilacia() {
-		return idVigilacia;
+	
+	public Integer getIdVigilancia() {
+		return idVigilancia;
 	}
 
-	public void setIdVigilacia(Integer idVigilacia) {
-		this.idVigilacia = idVigilacia;
+	public void setIdVigilancia(Integer idVigilancia) {
+		this.idVigilancia = idVigilancia;
 	}
 
 	public Date getHoraIngreso() {
@@ -75,12 +88,12 @@ public class Vigilancia {
 		this.turno = turno;
 	}
 
-	public EstadoPermanencia getEstadopermanencia() {
-		return estadopermanencia;
+	public EstadoPermanencia getEstadoPermanencia() {
+		return estadoPermanencia;
 	}
 
-	public void setEstadopermanencia(EstadoPermanencia estadopermanencia) {
-		this.estadopermanencia = estadopermanencia;
+	public void setEstadoPermanencia(EstadoPermanencia estadoPermanencia) {
+		this.estadoPermanencia = estadoPermanencia;
 	}
 
 	public Usuario getUsuario() {
@@ -91,19 +104,23 @@ public class Vigilancia {
 		this.usuario = usuario;
 	}
 
-	public Acceso getAcceso() {
-		return acceso;
+	public List<Acceso> getAccesos() {
+		return accesos;
 	}
 
-	public void setAcceso(Acceso acceso) {
-		this.acceso = acceso;
+	public void setAccesos(List<Acceso> accesos) {
+		this.accesos = accesos;
 	}
 
-	// toString
 	@Override
 	public String toString() {
-		return "Vigilancia [idVigilacia=" + idVigilacia + ", horaIngreso=" + horaIngreso + ", horaEgreso=" + horaEgreso
-				+ ", turno=" + turno + "]";
+	    return "Vigilancia [idVigilancia=" + idVigilancia + ", horaIngreso=" + horaIngreso + ", horaEgreso="
+	            + horaEgreso + ", turno=" + turno
+	            + ", estadoPermanencia=" + (estadoPermanencia != null ? estadoPermanencia.getTipoPermanencia() : null)
+	            + ", usuario=" + (usuario != null ? usuario.getId() : null)
+	            + ", accesos=" + (accesos != null ? accesos.size() : 0) + "]";
 	}
+
+	
 
 }
