@@ -16,7 +16,7 @@ public class EstadoCuenta {
 	public static final String NomInactivo = "Inactivo";
 	@Id
 	@Column(name = "idEstado")
-	private Integer idestado;
+	private Integer idEstado;
 	@Column(name = "nombreEstado", length = 45, nullable = false, unique = true)
 	private String nombreEstado;
 	@OneToMany(mappedBy = "estadoCuenta")
@@ -25,17 +25,17 @@ public class EstadoCuenta {
 	public EstadoCuenta() {
 	}
 
-	public EstadoCuenta(Integer idestado, String nombreEstado) {
-		this.idestado = idestado;
+	public EstadoCuenta(Integer idEstado, String nombreEstado) {
+		this.idEstado = idEstado;
 		this.nombreEstado = nombreEstado;
 	}
 
-	public Integer getIdestado() {
-		return idestado;
+	public Integer getidEstado() {
+		return idEstado;
 	}
 
-	public void setIdestado(Integer idestado) {
-		this.idestado = idestado;
+	public void setidEstado(Integer idEstado) {
+		this.idEstado = idEstado;
 	}
 
 	public String getNombreEstado() {
@@ -56,6 +56,6 @@ public class EstadoCuenta {
 
 	@Override
 	public String toString() {
-		return "EstadoCuenta [idestado=" + idestado + ", nombreEstado=" + nombreEstado + "]";
+		return "EstadoCuenta [idEstado=" + idEstado + ", nombreEstado=" + nombreEstado + "]";
 	}
 }
