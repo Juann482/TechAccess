@@ -9,12 +9,12 @@ import java.util.List;
 @Repository
 public interface PermisosRepository extends JpaRepository<Permisos, Integer> {
 
-    // Buscar permisos por tipo
-    List<Permisos> findByTipoPermiso(String tipoPermiso);
+	// Buscar permisos por tipo
+	List<Permisos> findByTipoPermiso(String tipoPermiso);
 
-    // Buscar permisos por ruta
-    List<Permisos> findByRutaPermiso(String rutaPermiso);
+	// Buscar permisos por ruta
+	List<Permisos> findByRutaPermiso(String rutaPermiso);
 
-    // Buscar permisos de un usuario
-    List<Permisos> findByUsuario(Usuario usuario);
+	// Buscar permisos de un usuario
+	List<Permisos> findByUsuario(Usuario usuario);
 }
