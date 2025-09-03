@@ -15,7 +15,7 @@ public class Ficha {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer idFicha;
 	private String nombrePrograma;
-	private String nuumFicha;
+	private String numFicha;
 	
 	@ManyToOne
 	private Usuario usuario;
@@ -25,11 +25,11 @@ public class Ficha {
 	}
 
 	//contructor con campos
-	public Ficha(Integer idFicha, String nombrePrograma, String nuumFicha) {
+	public Ficha(Integer idFicha, String nombrePrograma, String numFicha) {
 		super();
 		this.idFicha = idFicha;
 		this.nombrePrograma = nombrePrograma;
-		this.nuumFicha = nuumFicha;
+		this.numFicha = numFicha;
 	}
 
 	//getters and setters
@@ -49,18 +49,18 @@ public class Ficha {
 		this.nombrePrograma = nombrePrograma;
 	}
 
-	public String getNuumFicha() {
-		return nuumFicha;
+	public String getnumFicha() {
+		return numFicha;
 	}
 
-	public void setNuumFicha(String nuumFicha) {
-		this.nuumFicha = nuumFicha;
+	public void setnumFicha(String numFicha) {
+		this.numFicha = numFicha;
 	}
 
 	//toString
 	@Override
 	public String toString() {
-		return "Ficha [idFicha=" + idFicha + ", nombrePrograma=" + nombrePrograma + ", nuumFicha=" + nuumFicha + "]";
+		return "Ficha [idFicha=" + idFicha + ", nombrePrograma=" + nombrePrograma + ", numFicha=" + numFicha + "]";
 	}
 	
 

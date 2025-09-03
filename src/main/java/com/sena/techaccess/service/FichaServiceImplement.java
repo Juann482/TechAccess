@@ -35,7 +35,7 @@ public class FichaServiceImplement implements IFichaService {
 	}
 
 	public Ficha findByNuumFicha(String nuumFicha) { // Busca ficha por número de ficha
-		return fichaRepository.findByNuumFicha(nuumFicha);
+		return fichaRepository.findByNumFicha(nuumFicha);
 	}
 
 	public List<Usuario> findUsuariosByIdFicha(Integer idFicha) { // Obtiene usuarios asociados a una ficha

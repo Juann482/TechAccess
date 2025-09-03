@@ -13,7 +13,7 @@ public interface FichaRepository extends JpaRepository<Ficha, Integer> {
     List<Ficha> findByNombrePrograma(String nombrePrograma);
     
     // Buscar fichas por número de ficha
-    Ficha findByNuumFicha(String nuumFicha);
+    Ficha findByNumFicha(String numFicha);
     
     // Buscar usuarios asociados a una ficha
     List<Usuario> findUsuariosByIdFicha(Integer idFicha);
