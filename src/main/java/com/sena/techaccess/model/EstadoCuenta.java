@@ -14,6 +14,7 @@ public class EstadoCuenta {
 	public static final Integer U_Inactivo = 2;
 	public static final String NomActivo = "Activo";
 	public static final String NomInactivo = "Inactivo";
+	
 	@Id
 	@Column(name = "idEstado")
 	private Integer idEstado;
