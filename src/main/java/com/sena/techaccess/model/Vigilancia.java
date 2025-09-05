@@ -36,7 +36,7 @@ public class Vigilancia {
 	@ManyToOne(fetch = FetchType.LAZY)
 	private EstadoPermanencia estadoPermanencia;
 
-	@OneToOne(mappedBy = "vigilancia", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Usuario usuario;
 
 	@OneToMany(mappedBy = "vigilancia", fetch = FetchType.LAZY, cascade = CascadeType.ALL)

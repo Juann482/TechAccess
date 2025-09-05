@@ -10,9 +10,11 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "estadoPermanencia")
 public class EstadoPermanencia {
+	
 	public static final Integer P_ID_PRESENTE = 1;
 	public static final Integer P_ID_AUSENTE = 2;
 	public static final Integer P_ID_POR_DEFINIR = 3;
+	
 	public static final String P_PRESENTE = "Presente";
 	public static final String P_AUSENTE = "Ausente";
 	public static final String P_POR_DEFINIR = "Por definir";

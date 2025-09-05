@@ -37,7 +37,7 @@ public class Usuario {
 	private List<Permisos> permisos = new ArrayList<>();
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	private EstadoCuenta estadocuenta;
+	private EstadoCuenta estadoCuenta;
 
 	@ManyToOne(fetch = FetchType.LAZY)//LAZY evita traer objetos grandes que no siempre necesitas.
 	private Rol rol;

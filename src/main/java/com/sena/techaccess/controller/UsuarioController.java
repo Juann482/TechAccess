@@ -10,14 +10,13 @@ import com.sena.techaccess.service.IAccesoService;
 
 
 @Controller
-@RequestMapping("/")
+@RequestMapping("/usuario")
 public class UsuarioController {
-
 
 	@Autowired
 	private IAccesoService accesoService;
 	
-	@GetMapping("")
+	@GetMapping("/home")
 	public String home(Model model) {
 		model.addAttribute("accesos", accesoService.findAll());
 		return "usuario/home";

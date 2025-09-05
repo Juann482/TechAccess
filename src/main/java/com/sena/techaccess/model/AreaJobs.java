@@ -13,12 +13,13 @@ import jakarta.persistence.OneToMany;
 @Table(name = "areaJobs")
 
 public class AreaJobs {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer idarea;
 	private String nomArea;
 
-	@OneToMany(mappedBy = "areajobs")
+	@OneToMany(mappedBy = "areaJobs")
 	private List<Acceso> acceso;
 
 	// Const. Vacio

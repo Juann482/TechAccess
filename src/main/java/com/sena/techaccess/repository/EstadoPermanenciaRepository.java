@@ -10,8 +10,6 @@ import com.sena.techaccess.model.EstadoPermanencia;
 @Repository
 public interface EstadoPermanenciaRepository extends JpaRepository<EstadoPermanencia, Integer>{
 	
-	public List<EstadoPermanencia>findById(EstadoPermanencia idEstadopermanencia);
-	
-	public List<EstadoPermanencia>findBynomEstadoPermanencias(EstadoPermanencia nomEstadoPermanencia);
+	public List<EstadoPermanencia>findByTipoPermanencia(String tipoPermanencia);
 
 }
