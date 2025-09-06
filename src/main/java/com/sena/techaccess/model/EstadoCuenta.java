@@ -8,7 +8,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "estadoCuenta")
+@Table(name = "estadocuenta")
 public class EstadoCuenta {
 	public static final Integer U_Activo = 1;
 	public static final Integer U_Inactivo = 2;
