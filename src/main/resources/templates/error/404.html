@@ -1,43 +1,7 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 
-<head>
-	<meta charset="utf-8">
-	<meta content="width=device-width, initial-scale=1.0" name="viewport">
-	<title>TechAccess - Error 404</title>
-	<meta name="description" content="">
-	<meta name="keywords" content="">
-
-
-	<!-- Favicons -->
-	<link th:href="@{/images/TecAccess.png}" rel="icon">
-	<link th:href="@{/images/apple-touch-icon.png}" rel="apple-touch-icon">
-
-	<!-- Fonts -->
-	<link href="https://fonts.googleapis.com" rel="preconnect">
-	<link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-	<link
-		href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-		rel="stylesheet">
-
-	<!-- Vendor CSS Files -->
-	<link th:href="@{/assets/vendor/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
-	<link th:href="@{/assets/vendor/bootstrap-icons/bootstrap-icons.css}" rel="stylesheet">
-	<link th:href="@{/assets/vendor/aos/aos.css}" rel="stylesheet">
-	<link th:href="@{/assets/vendor/swiper/swiper-bundle.min.css}" rel="stylesheet">
-	<link th:href="@{/assets/vendor/glightbox/css/glightbox.min.css}" rel="stylesheet">
-
-	<!-- Main CSS File -->
-	<link th:href="@{/assets/css/main.css}" rel="stylesheet">
-
-	<!-- =======================================================
-  * Template Name: NiceSchool
-  * Template URL: https://bootstrapmade.com/nice-school-bootstrap-education-template/
-  * Updated: May 10 2025 with Bootstrap v5.3.6
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
-</head>
+<head th:insert="~{/usuario/templates_usuario.html::head}"></head>
 
 <body class="page-404">
 
@@ -47,13 +11,12 @@
 			<a th:href="@{/usuario/home}" class="logo d-flex align-items-center">
 				<!-- Uncomment the line below if you also wish to use an image logo -->
 				<!-- <img th:src="@{assets/img/logo.webp" alt=""> -->
-				<img th:src="@{/images/TecAccess.png}">
+				<img th:src="@{/images/TecAccess.png}" alt="LogoPrin">
 				<h1 class="sitename"><strong>TECH</strong>ACCESS</h1>
 			</a>
 
 			<nav id="navmenu" class="navmenu">
 				<ul>
-					<li><a th:href="@{/usuario/home}" class="active">PRUEBA</a></li>
 
 					<li><a th:href="@{/usuario/home}" style="color: #2f92b1;"><b>Inicio</b></a></li>
 					<li><a th:href="@{/usuario/about}">Sobre Nosotros</a></li>
@@ -78,7 +41,7 @@
 					numquam molestias.</p>
 				<nav class="breadcrumbs">
 					<ol>
-						<li><a th:href="@{/usuario/home}">Home</a></li>
+						<li><a th:href="@{/usuario/home}">Inicio</a></li>
 						<li class="current">404</li>
 					</ol>
 				</nav>
@@ -112,10 +75,10 @@
 
 								<div class="error-actions" data-aos="fade-up" data-aos-delay="800">
 									<a th:href="@{/usuario/home}" class="btn-home">
-										<i class="bi bi-house-door"></i> Back to Home
+										<i class="bi bi-house-door"></i> Volver al principio
 									</a>
 									<a th:href="@{/usuario/soporte}" class="btn-help">
-										<i class="bi bi-question-circle"></i> Help Center
+										<i class="bi bi-question-circle"></i> Centro de ayuda
 									</a>
 								</div>
 							</div>
@@ -128,43 +91,10 @@
 		</section><!-- /Error 404 Section -->
 
 	</main>
-
-	<footer id="footer" class="footer position-relative dark-background">
-
-
-		<div class="container copyright text-center mt-4">
-			<p>© <span>Copyright</span> <strong class="px-1 sitename">TechAccess</strong> <span>Todos los derechos
-					reservados.</span></p>
-			<div class="credits">
-				<!-- All the links in the footer should remain intact. -->
-				<!-- You can delete the links only if you've purchased the pro version. -->
-				<!-- Licensing information: https://bootstrapmade.com/license/ -->
-				<!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
-				Designed by <a th:href="@{/usuario/home}"><b>TECH</b>ACCESS</a>
-			</div>
-		</div>
-
-	</footer>
-
-	<!-- Scroll Top -->
-	<a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i
-			class="bi bi-arrow-up-short"></i></a>
-
-	<!-- Preloader -->
-	<div id="preloader"></div>
-
-	<!-- Vendor JS Files -->
-	<script th:src="@{/assets/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
-	<script th:src="@{/assets/vendor/php-email-form/validate.js}"></script>
-	<script th:src="@{/assets/vendor/aos/aos.js}"></script>
-	<script th:src="@{/assets/vendor/purecounter/purecounter_vanilla.js}"></script>
-	<script th:src="@{/assets/vendor/imagesloaded/imagesloaded.pkgd.min.js}"></script>
-	<script th:src="@{/assets/vendor/isotope-layout/isotope.pkgd.min.js}"></script>
-	<script th:src="@{/assets/vendor/swiper/swiper-bundle.min.js}"></script>
-	<script th:src="@{/assets/vendor/glightbox/js/glightbox.min.js}"></script>s
-
-	<!-- Main JS File -->
-	<script th:src="@{/assets/js/main.js}"></script>
+	
+	<div th:insert="~{/usuario/templates_usuario.html::footer}"></div>
+	
+	<div th:insert="~{/usuario/templates_usuario.html::jsFiles}"></div>
 
 </body>
 
