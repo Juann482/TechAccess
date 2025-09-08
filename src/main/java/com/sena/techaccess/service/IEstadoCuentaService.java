@@ -4,8 +4,7 @@ import com.sena.techaccess.model.EstadoCuenta;
 
 public interface IEstadoCuentaService {
 	
-	void inicializarEstados();
-	
-	public EstadoCuenta save(EstadoCuenta estadocuenta);
+	void inicializarEstados();	
+	EstadoCuenta save(EstadoCuenta estadocuenta);
 
 }

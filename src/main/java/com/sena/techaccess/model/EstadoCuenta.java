@@ -10,8 +10,10 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "estadocuenta")
 public class EstadoCuenta {
+	
 	public static final Integer U_Activo = 1;
 	public static final Integer U_Inactivo = 2;
+	
 	public static final String NomActivo = "Activo";
 	public static final String NomInactivo = "Inactivo";
 	
