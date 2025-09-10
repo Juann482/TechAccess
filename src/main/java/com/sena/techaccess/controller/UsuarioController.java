@@ -23,11 +23,12 @@ public class UsuarioController {
 
 	@GetMapping("/soporte")
 	public String soporte() {
-		return "usuario/soporte"; // busca templates/usuario/soporte.html
+		return "usuario/soporte";
 	}
-	
-	 @GetMapping("/about")
-	    public String about() {
-	        return "usuario/about"; 
+
+	@GetMapping("/about")
+	public String about() {
+		return "usuario/about";
+
 	}
 }
