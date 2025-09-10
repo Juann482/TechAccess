@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>TECHACCESS | Registro</title>
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+
+  <!-- Favicons -->
+  <link href="assets/img/TecAccess.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+
+  <!-- Main CSS File -->
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+  <link href="assets/css/main.css" rel="stylesheet">
+  <link rel="preload" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" as="style">
+
+
+  <!-- =======================================================
+  * Template Name: NiceSchool
+  * Template URL: https://bootstrapmade.com/nice-school-bootstrap-education-template/
+  * Updated: May 10 2025 with Bootstrap v5.3.6
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+</head>
+
+<body class="contact-page">
+
+
+  <header id="header" class="header d-flex align-items-center fixed-top">
+    <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
+
+      <a href="index.html" class="logo d-flex align-items-center">
+        <!-- Uncomment the line below if you also wish to use an image logo -->
+        <!-- <img src="assets/img/logo.webp" alt=""> -->
+        <img src="assets\img\TecAccess.png">
+        <h1 class="sitename"><strong>TECH</strong>ACCESS</h1>
+      </a>
+
+      <nav id="navmenu" class="navmenu">
+        <ul>
+          <li><a href="index.html" class="active"></a></li>
+                 
+
+                    <li><a href="index.html" style="color: #2f92b1;"><b>Inicio</b></a></li>
+                    <li><a href="about.html">Sobre Nosotros</a></li>
+                    <li><a href="soporte.html">Soporte</a></li>
+                    <li><a href="events.html">Lenguaje</a></li>
+            </ul>
+        </ul>
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
+
+    </div>
+  </header>
+
+  <main class="main">
+
+    <!-- Page Title -->
+    <div class="page-title dark-background"
+      style="background-image: url('assets/img/sena.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat; min-height: 350px;">
+      <div class="container position-relative">
+        <h1>Regístrate</h1>
+        <p>Esse dolorum voluptatum ullam est sint nemo et est ipsa porro placeat quibusdam quia assumenda numquam
+          molestias.</p>
+        <nav class="breadcrumbs">
+          <ol>
+            <li><a href="index.html">inicio</a></li>
+            <li class="current">Registro</li>
+          </ol>
+        </nav>
+      </div>
+    </div><!-- End Page Title -->
+
+    <!-- Contact Form Section -->
+    <section id="contact" class="contact section">
+      <div class="container" data-aos="fade-up" data-aos-delay="300">
+        <div class="row justify-content-center">
+          <div class="col-lg-10">
+            <div class="contact-form-wrapper">
+              <h2 class="text-center mb-4">Formulario de Registro</h2>
+
+              <form id="registrationForm" class="php-email-form">
+                <div class="row g-3">
+                  <!-- Datos Personales -->
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <div class="input-with-icon">
+                        <i class="bi bi-person"></i>
+                        <input type="text" class="form-control" name="name" placeholder="Nombre completo" required>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <div class="input-with-icon">
+                        <i class="bi bi-envelope"></i>
+                        <input type="email" class="form-control" name="email" placeholder="Correo electrónico" required>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <div class="input-with-icon">
+                        <i class="bi bi-card-text"></i>
+                        <select class="form-control" name="id_type" required>
+                          <option value="">Tipo de identificación</option>
+                          <option value="cc">Cédula de Ciudadanía</option>
+                          <option value="ti">Tarjeta de Identidad</option>
+                          <option value="passport">Cédula de Extranjería</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <div class="input-with-icon">
+                        <i class="bi bi-card-list"></i>
+                        <input type="text" class="form-control" name="id_number" placeholder="Número de identificación"
+                          required>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <div class="input-with-icon">
+                        <i class="bi bi-phone"></i>
+                        <input type="tel" class="form-control" name="phone" placeholder="Teléfono(Opcional)" required>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <div class="input-with-icon">
+                        <i class="bi bi-geo-alt"></i>
+                        <input type="tel" class="form-control" name="phone" placeholder="Residencia" required>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <div class="input-with-icon">
+                        <i class="bi bi-phone"></i>
+                        <input type="tel" class="form-control" name="phone" placeholder="Celular" required>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Tipo de Usuario -->
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <div class="input-with-icon">
+                        <i class="bi bi-people"></i>
+                        <select id="userType" class="form-control" name="user_type" required>
+                          <option value="">Tipo de usuario</option>
+                          <option value="admin">Administrador</option>
+                          <option value="funcionario">Funcionario</option>
+                          <option value="instructor">Instructor</option>
+                          <option value="aprendiz">Aprendiz</option>
+                          <option value="visitante">Visitante</option>
+                          <option value="seguridad">Seguridad</option>
+                          <option value="cafeteria">Cafetería</option>
+                          <option value="servicios">Servicos Generales</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Campos específicos para Aprendices -->
+                <div id="aprendizFields" class="row g-3 mt-2" style="display: none;">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <div class="input-with-icon">
+                        <i class="bi bi-123"></i>
+                        <input type="text" class="form-control" name="ficha" placeholder="Número de ficha">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <div class="input-with-icon">
+                        <i class="bi bi-book"></i>
+                        <select class="form-control" name="programa">
+                          <option value="">Programa de formación</option>
+                          <option value="programa1">Telecomunicaciones</option>
+                          <option value="programa2">Tecnologías de la Información y la comunicación</option>
+                          <option value="programa2">Análisis y Desarrollo de Software</option>
+                          <option value="programa2">Mecánica Diesel</option>
+                          <option value="programa2">Mecánica Industrial</option>
+                          <option value="programa2">Confecciones</option>
+                          <option value="programa2">Electricidad</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <div class="input-with-icon">
+                        <i class="bi bi-clock"></i>
+                        <select class="form-control" name="jornada">
+                          <option value="">Jornada</option>
+                          <option value="mañana">Mañana</option>
+                          <option value="tarde">Tarde</option>
+                          <option value="mixta">Mixta</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <div class="input-with-icon">
+                        <i class="bi bi-award"></i>
+                        <select class="form-control" name="nivel">
+                          <option value="">Nivel de formación</option>
+                          <option value="técnico">Técnico</option>
+                          <option value="tecnólogo">Tecnólogo</option>
+                          <option value="operario">Operario</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- Campos adicionales para Personal de seguridad (ocultos inicialmente) -->
+                <div id="seguridadFields" class="row g-3 mt-2" style="display: none;">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <div class="input-with-icon">
+                        <i class="bi bi-person-badge"></i>
+                        <input type="text" class="form-control" name="titulo_seguridad"
+                          placeholder="Título profesional">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <div class="input-with-icon">
+                        <i class="bi bi-building"></i>
+                        <input type="text" class="form-control" name="empresa_seguridad"
+                          placeholder="Empresa contratante">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="text-center mt-4">
+                  <button type="submit" class="btn btn-submit btn-lg">Enviar Formulario</button>
+
+              </form>
+              <!-- Carga la librería SweetAlert2 para mostrar alertas estilizadas -->
+              <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+              <!--INICIO DE LAS FUNCIONES DEL JS-->
+              <script>
+                // Espera a que el documento HTML esté completamente cargado
+                document.addEventListener('DOMContentLoaded', function () {
+                  // ========== SELECCIÓN DE ELEMENTOS DEL DOM ==========
+                  // Obtiene referencias a los elementos importantes del formulario
+                  const userTypeSelect = document.getElementById('userType'); // Selector de tipo de usuario
+                  const aprendizFields = document.getElementById('aprendizFields'); // Campos para aprendices
+                  const seguridadFields = document.getElementById('seguridadFields'); // Campos para seguridad
+                  const registrationForm = document.getElementById('registrationForm'); // Formulario completo
+                  const successMessage = document.getElementById('successMessage'); // Mensaje de éxito (opcional)
+                  const submitBtn = registrationForm.querySelector('[type="submit"]'); // Botón de envío
+
+                  // ========== CONFIGURACIÓN INICIAL ==========
+                  // Establece el selector de tipo de usuario en la opción por defecto
+                  userTypeSelect.selectedIndex = 0;
+                  // Oculta los campos específicos al cargar la página
+                  aprendizFields.style.display = 'none';
+                  seguridadFields.style.display = 'none';
+                  // Si existe el mensaje de éxito, lo oculta inicialmente
+                  if (successMessage) successMessage.style.display = 'none';
+
+                  // ========== MANEJO DE CAMBIOS EN TIPO DE USUARIO ==========
+                  // Escucha cambios en el selector de tipo de usuario
+                  userTypeSelect.addEventListener('change', function () {
+                    // Muestra/oculta campos según la selección usando operador ternario
+                    aprendizFields.style.display = this.value === 'aprendiz' ? 'flex' : 'none';
+                    seguridadFields.style.display = this.value === 'seguridad' ? 'flex' : 'none';
+                  });
+
+                  // ========== MANEJO DE ENVÍO DEL FORMULARIO ==========
+                  // Escucha el evento de envío del formulario
+                  registrationForm.addEventListener('submit', function (e) {
+                    e.preventDefault(); // Previene el envío tradicional del formulario
+
+                    // ===== PREPARACIÓN DURANTE EL ENVÍO =====
+                    // Deshabilita el botón para evitar múltiples envíos
+                    submitBtn.disabled = true;
+                    // Cambia el texto del botón y añade un spinner de carga
+                    submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status"></span> Enviando...';
+
+                    // ===== MOSTRAR ALERTA DE ÉXITO =====
+                    // Muestra una alerta estilizada con SweetAlert2
+                    Swal.fire({
+                      title: '¡Registro Exitoso!', // Título principal
+                      text: 'El usuario ha sido registrado correctamente', // Texto descriptivo
+                      icon: 'success', // Icono de éxito (check verde)
+                      confirmButtonText: 'Aceptar', // Texto del botón
+                      allowOutsideClick: false, // Impide cerrar haciendo clic fuera
+                      // Animaciones al mostrar/ocultar usando animate.css
+                      showClass: {
+                        popup: 'animate__animated animate__fadeInDown'
+                      },
+                      hideClass: {
+                        popup: 'animate__animated animate__fadeOutUp'
+                      }
+                    }).then(() => {
+                      // ===== ACCIONES POSTERIORES AL CIERRE DEL ALERTA =====
+                      // Resetear todos los campos del formulario
+                      this.reset();
+                      // Vuelve a la selección inicial en tipo de usuario
+                      userTypeSelect.selectedIndex = 0;
+                      // Oculta los campos específicos
+                      aprendizFields.style.display = 'none';
+                      seguridadFields.style.display = 'none';
+                      // Reactiva el botón de envío
+                      submitBtn.disabled = false;
+                      // Restaura el texto original del botón
+                      submitBtn.textContent = 'Enviar Formulario';
+
+                      // Si existe, oculta el mensaje de éxito alternativo
+                      if (successMessage) successMessage.style.display = 'none';
+                    });
+                  });
+                });
+              </script>
+
+  </main>
+
+ <footer id="footer" class="footer position-relative dark-background">
+
+        <div class="container copyright text-center mt-4">
+            <p>© <span>Copyright</span> <strong class="px-1 sitename">TechAccess</strong> <span>Todos los derechos
+                    reservados</span></p>
+            <div class="credits">
+             
+            </div>
+        </div>
+
+    </footer>
+
+
+  <!-- Scroll Top -->
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i
+      class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Preloader -->
+  <div id="preloader"></div>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+  <script src="assets/vendor/aos/aos.js"></script>
+  <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
+  <script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
+  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+
+  <!-- Main JS File -->
+  <script src="assets/js/main.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,196 @@
+body {
+    background-image: url(/NiceSchool/NiceSchool/assets/img/WhatsApp\ Image\ 2025-07-08\ at\ 2.35.37\ PM.jpeg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 100%;
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+h5{
+    color: rgb(74, 196, 84);
+}
+.encabezado {
+    background-color: black;
+    margin: 0;
+    color: aliceblue;
+    display: flex;
+    justify-content: space-between;
+}
+
+.encabezado h1 {
+    color: aqua;
+    margin-left: 2rem;
+}
+
+#hd {
+    background-color: black;
+    align-items: center;
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    padding: 1rem;
+    display: flex;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    color: rgb(74, 196, 84);
+    justify-content: space-between;
+}
+
+#furer {
+    background: black;
+    color: white;
+    text-align: center;
+    padding: 15px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+#furer a {
+    color: #0077B5;
+    text-decoration-line: none;
+}
+
+#furer a:hover {
+    color: rgb(241, 241, 121);
+}
+
+/*--------------------------------------------------------------
+# Opcion salir 
+------------------------------------------------------------*/
+.admin {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    text-align: right;
+    border-radius: 15px;
+    width: 200px;
+    margin-right: 240px;
+}
+a:hover{
+    color: rgb(241, 241, 121);
+}
+
+.admin li {
+    position: sticky;
+}
+
+.admin li a {
+    display: block;
+    padding: 10px;
+    color: rgb(252, 249, 249);
+    text-decoration: none;
+    border-radius: 1rem;
+    text-align: center;
+}
+
+.admin li a:hover {
+    background: #a8a4a4;
+
+}
+
+.submenu {
+    display: none;
+    position: absolute;
+    left: 100%;
+    top: 0;
+    /* background: rgba(238, 2, 2, 0.5); */
+    /* min-width: 200px; */
+    /* border-radius: 15px; */
+    list-style: none;
+}
+
+/* #perfil {
+    border-bottom-left-radius: 0%;
+    border-bottom-right-radius: 0%;
+}
+
+#salir {
+    border-top-left-radius: 0%;
+    border-top-right-radius: 0%;
+} */
+
+.admin li:hover>.submenu {
+    display: block;
+}
+
+/*--------------------------------------------------------------
+#  FIN Opcion salir 
+---------------------------------------------------------------*/
+main{
+    z-index: 1;
+    border-radius: 20px;
+    display: flex;
+
+}
+h4{
+    color: #69b4dd;
+}
+h2{
+    color: #69b4dd;
+    text-align: center;
+}
+p{
+    color: rgb(193, 197, 201);
+}
+.aside{
+    border-radius: 15px;
+    padding: 20px;
+    background-color: rgb(14, 13, 13, 0.6);
+    backdrop-filter: blur(5px);
+    margin:  5rem  0rem 0rem 25rem;
+    text-align: center;
+    
+    flex: 1;
+}
+ul, li{
+    list-style: none;
+    padding: 15px;
+}
+table{
+    text-align: center;
+    align-items: center;
+    align-self: center;
+    width: auto;
+    margin: 0 auto;
+}
+table th{
+    color: orange;
+    text-align: center;
+}
+table td{
+    color: rgb(193, 197, 201);
+    padding: 10px;
+    
+}
+
+article{
+    flex: 1;
+    background-color: rgb(14, 13, 13, 0.6);
+    backdrop-filter: blur(5px);
+    border-radius: 15px;
+    padding: 20px;
+    margin: 5rem 25rem 0rem 2rem;
+    justify-content: space-evenly;
+}
+.panel{
+    display: flex;
+    justify-content: space-between;
+    margin: 1rem 8rem 2rem 8rem;
+    gap: 1rem;
+
+}
+.paD{
+    text-align: center;
+    background-color: rgb(14, 13, 13, 0.6);
+    border-radius: 15px;
+    padding: 20px;
+    flex: 1;
+
+}
+.paD small{
+    color: #a8a4a4;
+}
+.paD h5{
+    margin: 10px 21px;
+
+}
