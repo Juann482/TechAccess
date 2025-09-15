@@ -4,11 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
@@ -22,13 +24,15 @@ public class Usuario {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String nombre;
-	private String username;
+	
+	@Column(nullable = true)
+	private Integer nFicha;
+	
 	private String email;
 	private String documento;
 	private String direccion;
 	private String telefono;
 	private String password;
-	private String tipo;
 
 	@OneToMany(mappedBy = "usuario")
 	private List<Ficha> ficha = new ArrayList<>();
@@ -37,33 +41,35 @@ public class Usuario {
 	private List<Permisos> permisos = new ArrayList<>();
 
 	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name ="estado_cuenta")
 	private EstadoCuenta estadoCuenta;
 
 	@ManyToOne(fetch = FetchType.LAZY)//LAZY evita traer objetos grandes que no siempre necesitas.
+	@JoinColumn(name="Rol")
 	private Rol rol;
-
+	
 	@OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Vigilancia vigilancia;
 
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)//CAscadeType.ALL Borra todas sus fichas y accesos automaticamente si se llega a borrar un usuario
+	@JoinColumn(name ="Acceso")
 	private Acceso acceso;
 
 	public Usuario() {
 
 	}
 
-	public Usuario(Integer id, String nombre, String username, String email, String documento, String direccion,
-			String telefono, String password, String tipo) {
+	public Usuario(Integer id, String nombre, Integer nFicha, String email, String documento, String direccion,
+			String telefono, String password) {
 		super();
 		this.id = id;
 		this.nombre = nombre;
-		this.username = username;
+		this.nFicha = nFicha;
 		this.email = email;
 		this.documento = documento;
 		this.direccion = direccion;
 		this.telefono = telefono;
 		this.password = password;
-		this.tipo = tipo;
 	}
 
 	public Integer getId() {
@@ -82,17 +88,18 @@ public class Usuario {
 		this.nombre = nombre;
 	}
 
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
 	public String getEmail() {
 		return email;
 	}
+	
+	public void setNFicha(Integer nFicha) {
+		this.nFicha = nFicha;
+	}
+
+	public Integer getNFicha() {
+		return nFicha;
+	}
+	
 
 	public void setEmail(String email) {
 		this.email = email;
@@ -129,20 +136,30 @@ public class Usuario {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
-	public String getTipo() {
-		return tipo;
+	
+	public Rol getRol() {
+	    return rol;
 	}
 
-	public void setTipo(String tipo) {
-		this.tipo = tipo;
+	public void setRol(Rol rol) {
+	    this.rol = rol;
 	}
+	
+	public EstadoCuenta getEstadoCuenta() {
+	    return estadoCuenta;
+	}
+
+	public void setEstadoCuenta(EstadoCuenta estadoCuenta) {
+	    this.estadoCuenta = estadoCuenta;
+	}
+
+	
 
 	@Override
 	public String toString() {
-		return "Usuario [id=" + id + ", nombre=" + nombre + ", username=" + username + ", email=" + email
+		return "Usuario [id=" + id + ", nombre=" + nombre + ", ficha=" + nFicha + ", email=" + email
 				+ ", documento=" + documento + ", direccion=" + direccion + ", telefono=" + telefono 
-				 + ", tipo=" + tipo + "]";
+				  + "]";
 	}
 
 }

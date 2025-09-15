@@ -6,6 +6,9 @@ import com.sena.techaccess.model.Rol;
 
 public interface IRolService {
 
+	
+	void rolesEspecificos();
+		
 	public Optional<Rol> findById(Integer id);
 
 	public Rol save(Rol rol);
@@ -13,4 +16,5 @@ public interface IRolService {
 	public void deleteById(Integer id);
 
 	List<Rol> findAll();
+
 }

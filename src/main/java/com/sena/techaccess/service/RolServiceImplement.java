@@ -15,6 +15,7 @@ public class RolServiceImplement implements IRolService {
 	@Autowired
 	private RolRepository rolRepository;
 
+
 	@Override
 	public List<Rol> findAll() {
 		return rolRepository.findAll();
@@ -33,5 +34,11 @@ public class RolServiceImplement implements IRolService {
 	@Override
 	public void deleteById(Integer id) {
 		rolRepository.deleteById(id);
+	}
+
+	@Override
+	public void rolesEspecificos() {
+		// TODO Auto-generated method stub
+		
 	}
 }

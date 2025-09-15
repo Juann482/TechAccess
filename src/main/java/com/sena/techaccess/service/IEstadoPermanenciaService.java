@@ -1,10 +1,15 @@
 package com.sena.techaccess.service;
 
+import java.util.List;
+
 import com.sena.techaccess.model.EstadoPermanencia;
 
 public interface IEstadoPermanenciaService {
-	
-	void ingresoPermanencias();
+
 	EstadoPermanencia save(EstadoPermanencia estadoPermanencia);
+	
+	List<EstadoPermanencia>findByTipoPermanencia(EstadoPermanencia tipoPermanencia);
+	
+	
 
 }

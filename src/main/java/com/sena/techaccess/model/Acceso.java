@@ -8,6 +8,7 @@ import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.ManyToOne;
@@ -31,9 +32,11 @@ public class Acceso {
 
 	
 	@OneToOne(mappedBy = "acceso", fetch = FetchType.LAZY)
+	@JoinColumn(name="Nombre completo")
 	private Usuario usuario;
 
 	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="Permanencia")
 	private EstadoPermanencia estadoPermanencia; // detalleacceso
 
 	@ManyToOne(fetch = FetchType.LAZY)
