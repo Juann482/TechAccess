@@ -2,9 +2,8 @@ package com.sena.techaccess.model;
 
 import java.util.List;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -14,13 +13,13 @@ import jakarta.persistence.Table;
 public class Rol {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
 	private Integer id;
-
+	@Column(name = "tipo", length = 45, nullable = false, unique = true)
 	private String tipo;
 
 	@OneToMany(mappedBy = "rol")
-	private List<Usuario> usuario;
+	private List<Usuario> usuarios;
 
 	public Rol() {
 	}
@@ -47,11 +46,11 @@ public class Rol {
 	}
 
 	public List<Usuario> getUsuario() {
-		return usuario;
+		return usuarios;
 	}
 
 	public void setUsuario(List<Usuario> usuario) {
-		this.usuario = usuario;
+		this.usuarios = usuario;
 	}
 
 	@Override

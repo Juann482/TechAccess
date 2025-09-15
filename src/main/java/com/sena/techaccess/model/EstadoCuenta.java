@@ -11,12 +11,6 @@ import jakarta.persistence.Table;
 @Table(name = "estadocuenta")
 public class EstadoCuenta {
 	
-	public static final Integer U_Activo = 1;
-	public static final Integer U_Inactivo = 2;
-	
-	public static final String NomActivo = "Activo";
-	public static final String NomInactivo = "Inactivo";
-	
 	@Id
 	@Column(name = "idEstado")
 	private Integer idEstado;
@@ -33,11 +27,11 @@ public class EstadoCuenta {
 		this.nombreEstado = nombreEstado;
 	}
 
-	public Integer getidEstado() {
+	public Integer getIdEstado() {
 		return idEstado;
 	}
 
-	public void setidEstado(Integer idEstado) {
+	public void setIdEstado(Integer idEstado) {
 		this.idEstado = idEstado;
 	}
 

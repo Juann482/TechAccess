@@ -30,4 +30,5 @@ public class UsuarioController {
 	    public String about() {
 	        return "usuario/about"; 
 	}
+
 }

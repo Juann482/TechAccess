@@ -17,10 +17,7 @@ public class VigilanciaServiceImplement implements IVigilanciaService {
 
 	// ========================================================================================
 
-	@Override
-	public void registrarVigilancia(Vigilancia v) {
-		registrarVigilanciaConEstado(v, EstadoPermanencia.P_ID_PRESENTE);
-	}
+	
 
 	public void registrarVigilanciaConEstado(Vigilancia v, Integer idEstado) {
 		EstadoPermanencia ep = estadoPermanenciaRepository.findById(idEstado)
@@ -29,6 +26,12 @@ public class VigilanciaServiceImplement implements IVigilanciaService {
 		v.setEstadoPermanencia(ep);
 		
 		vigilanciaRepository.save(v);
+	}
+
+	@Override
+	public void registrarVigilancia(Vigilancia v) {
+		// TODO Auto-generated method stub
+		
 	} 
 	
 	// =========================================================================================

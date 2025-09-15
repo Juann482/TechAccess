@@ -1,4 +1,4 @@
-body {
+	body {
     background-image: url(/NiceSchool/NiceSchool/assets/img/WhatsApp\ Image\ 2025-07-08\ at\ 2.35.37\ PM.jpeg);
     background-size: cover;
     background-repeat: no-repeat;
@@ -35,24 +35,7 @@ h5{
     justify-content: space-between;
 }
 
-#furer {
-    background: black;
-    color: white;
-    text-align: center;
-    padding: 15px;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-}
 
-#furer a {
-    color: #0077B5;
-    text-decoration-line: none;
-}
-
-#furer a:hover {
-    color: rgb(241, 241, 121);
-}
 
 /*--------------------------------------------------------------
 # Opcion salir 
