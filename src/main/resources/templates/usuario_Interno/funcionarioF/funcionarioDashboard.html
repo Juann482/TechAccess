@@ -54,7 +54,7 @@
 
 
 								<div class="col-md-12">
-									<div class="card p-4">
+									
 										<h5 class="mb-3"><i class="bi bi-activity me-2"
 												style="color: var(--primary-green);"></i>Resumen
 											general</h5>
@@ -86,7 +86,7 @@
 												</div>
 											</div>
 										</div>
-									</div>
+									
 									<table class="table datatable">
 										<thead>
 											<tr>
@@ -95,7 +95,7 @@
 												<th scope="col">Rol</th>
 												<th scope="col">Ficha</th>
 												<th scope="col">Estado</th>
-												
+
 												<th scope="col">Eliminar </th>
 												<th scope="col">Editar </th>
 											</tr>
@@ -104,13 +104,17 @@
 											<tr>
 												<td th:text="${usuario.nombre}"></td>
 												<td th:text="${usuario.documento}"></td>
-												<td th:text="${usuario.rol}"></td>
+												<td th:text="${usuario.rol.tipo}"></td>
 												<td th:text="${usuario.nFicha}"></td>
-												<td th:text="${usuario.estadoCuenta}"></td>
-												
+												<td th:text="${usuario.estadoCuenta.nombreEstado}"></td>
+
 												<td></td>
 												<td></td>
 
+											</tr>
+											<tr th:if="${usuarios.empty}">
+												<td colspan="7" class="text-center">No se encontraron usuarios
+													registrados</td>
 											</tr>
 										</tbody>
 
