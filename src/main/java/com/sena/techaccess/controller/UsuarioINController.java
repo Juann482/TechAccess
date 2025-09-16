@@ -110,7 +110,7 @@ public class UsuarioINController {
 	        Hibernate.initialize(usuario.getEstadoCuenta());
 	    });
 	    
-		model.addAttribute("usuarios", usuarios);// Listado de usuarios
+		model.addAttribute("Usuarios", usuarios);// Listado de usuarios
 		return "usuario_Interno/funcionarioF/funcionarioDashboard";
 
 	}
@@ -132,7 +132,7 @@ public class UsuarioINController {
 		fichaRepository.save(ficha);
 		LOGGER.debug("La ficha se ha registrado con exito {}", ficha);
 
-		return "redirect:/funcionarioF/fichas";
+		return "redirect:/funcionarioF/funcionarioFichas";
 	}
 
 }
