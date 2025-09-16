@@ -45,7 +45,7 @@ public class Rol {
 		this.tipo = tipo;
 	}
 
-	public List<Usuario> getUsuario() {
+	public List<Usuario> getUsuarios() {
 		return usuarios;
 	}
 
