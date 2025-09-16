@@ -51,6 +51,7 @@
 					<div class="row justify-content-center" data-aos="fade-up" data-aos-delay="300">
 						<div class="col-lg-10">
 							<div class="contact-form-wrapper">
+								
 
 
 								<h2 class="text-center mb-4">Fichas registradas</h2>
@@ -77,6 +78,43 @@
 									</tbody>
 
 								</table>
+
+							</div>
+							<div class="col-md-6">
+								<div class="bg-light rounded p-3">
+									<form th:action="@{/usuario_Interno/funcionarioF/fichaSave}" method="post">
+										<div class="row g-3">
+											<div class="col-md-6">
+												<div class="form-group">
+													<div class="input-with-icon">
+														<i class="bi bi-book"></i>
+														<input type="text" class="form-control" id="nombrePrograma"
+															name="nombrePrograma" placeholder="Nombre del programa"
+															required>
+													</div>
+												</div>
+											</div>
+
+											<div class="col-md-6">
+												<div class="form-group">
+													<div class="input-with-icon">
+														<i class="bi bi-123"></i>
+														<input type="number" class="form-control" id="numFicha"
+															name="numFicha" placeholder="Número de la ficha" required>
+													</div>
+												</div>
+											</div>
+
+											<div class="col-12 text-center">
+												<button type="submit"
+													class="btn btn-primary btn-submit">REGISTRAR</button>
+											</div>
+										</div>
+									</form>
+									
+
+
+								</div>
 							</div>
 						</div>
 					</div>
@@ -86,54 +124,7 @@
 
 	</main>
 
-	<p>¿Alguna ficha no está inscrita?</p>
-	<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#fichasModal">
-		Registrar ficha
-	</button>
-	<!-- Modal con el formulario -->
-	<div class="modal fade" id="fichasModal" tabindex="-1" aria-labelledby="fichaModalLabel" aria-hidden="true"
-		style="z-index: 1050;">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="fichaModalLabel">Registrar Ficha</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-				</div>
-				<div class="modal-body">
-					<form th:action="@{/usuario_Interno/funcionarioF/fichaSave}" method="post">
-						<div class="row g-3">
-							<div class="col-md-6">
-								<div class="form-group">
-									<div class="input-with-icon position-relative">
-										<i
-											class="bi bi-book position-absolute top-50 start-0 translate-middle-y ps-2"></i>
-										<input type="text" class="form-control ps-5" id="nombrePrograma"
-											name="nombrePrograma" placeholder="Nombre del programa" required>
-									</div>
-								</div>
-							</div>
-							<div class="col-md-6">
-								<div class="form-group">
-									<div class="input-with-icon position-relative">
-										<i
-											class="bi bi-123 position-absolute top-50 start-0 translate-middle-y ps-2"></i>
-										<input type="number" class="form-control ps-5" id="numFicha" name="numFicha"
-											placeholder="Número de la ficha" required>
-									</div>
-								</div>
-							</div>
-							<div class="col-12 text-center">
-								<button type="submit" class="btn btn-primary btn-submit">REGISTRAR</button>
-							</div>
-						</div>
-					</form>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-				</div>
-			</div>
-		</div>
-	</div>
+	
 
 	<div th:insert="~{/usuario/templates_usuario.html::footer}"></div>
 
