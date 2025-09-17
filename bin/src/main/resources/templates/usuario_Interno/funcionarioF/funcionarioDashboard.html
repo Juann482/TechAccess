@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head th:insert="~{/usuario/templates_usuario.html::head}"></head>
+
+<body class="contact-page">
+
+	<header id="header" class="header d-flex align-items-center fixed-top">
+		<div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
+
+			<a th:href="@{/usuario/home}" class="logo d-flex align-items-center">
+				<img th:src="@{/images/TecAccess.png}" alt="LogoPrin">
+				<h1 class="sitename"><b>TECH</b>ACCESS</h1>
+			</a>
+
+			<nav id="navmenu" class="navmenu">
+				<ul>
+					<li><a href="#" class="active"><b>Dashboard</b></a></li>
+					<li><a th:href="@{/usuario_Interno/funcionarioF/form}">Registros</a></li>
+					<li><a th:href="@{/usuario_Interno/funcionarioF/fichas}">Fichas</a>
+					</li>
+					<li><a href="#">Administador</a></li>
+				</ul>
+				<i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+			</nav>
+
+		</div>
+	</header>
+
+	<main class="main">
+
+		<!-- Page Title -->
+		<div class="page-title dark-background" th:style="'background-image: url(' + @{/images/fondo.jpeg} + ');'">
+			<div class="container position-relative">
+				<h1>Dashboard</h1>
+				<nav class="breadcrumbs">
+					<ol>
+						<li><a th:href="@{/usuario/home}"><b>Salir</b></a></li>
+						<li class="current">Administrador</li>
+					</ol>
+				</nav>
+			</div>
+		</div>
+		<!-- End Page Title -->
+
+		<!-- Contact Section -->
+		<section id="contact" class="contact section" style="padding-top: 220px;">
+			<!--Acomodar Style cuando este todo finalizado-->
+			<div class="container" data-aos="fade-up" data-aos-delay="100">
+				<div class="container form-container-overlap">
+					<div class="row justify-content-center" data-aos="fade-up" data-aos-delay="300">
+						<div class="col-lg-10">
+							<div class="contact-form-wrapper">
+
+
+								<div class="col-md-12">
+									
+										<h5 class="mb-3"><i class="bi bi-activity me-2"
+												style="color: var(--primary-green);"></i>Resumen
+											general</h5>
+
+										<div class="row mb-3">
+											<div class="col-6 col-md-3 mb-2">
+												<div class="card text-center py-2 metric-card">
+													<small>Usuarios</small>
+													<h5 class="mt-1 mb-0">142</h5>
+												</div>
+											</div>
+
+											<div class="col-6 col-md-3 mb-2">
+												<div class="card text-center py-2 metric-card">
+													<small>Accesos hoy</small>
+													<h5 class="mt-1 mb-0">87</h5>
+												</div>
+											</div>
+											<div class="col-6 col-md-3 mb-2">
+												<div class="card text-center py-2 metric-card">
+													<small>Eventualidades</small>
+													<h5 class="mt-1 mb-0">3</h5>
+												</div>
+											</div>
+											<div class="col-6 col-md-3 mb-2">
+												<div class="card text-center py-2 metric-card">
+													<small>Activos hoy</small>
+													<h5 class="mt-1 mb-0">64</h5>
+												</div>
+											</div>
+										</div>
+									
+									<table class="table datatable">
+										<thead>
+											<tr>
+												<th scope="col">Nombre completo</th>
+												<th scope="col">Documento</th>
+												<th scope="col">Rol</th>
+												<th scope="col">Ficha</th>
+												<th scope="col">Estado</th>
+
+												<th scope="col">Eliminar </th>
+												<th scope="col">Editar </th>
+											</tr>
+										</thead>
+										<tbody th:each="usuario: ${Usuarios}">
+											<tr>
+												<td th:text="${usuario.nombre}"></td>
+												<td th:text="${usuario.documento}"></td>
+												<td th:text="${usuario.rol.tipo}"></td>
+												<td th:text="${usuario.nFicha}"></td>
+												<td th:text="${usuario.estadoCuenta.nombreEstado}"></td>
+
+												<td></td>
+												<td></td>
+
+											</tr>
+											<tr th:if="${usuarios.empty}">
+												<td colspan="7" class="text-center">No se encontraron usuarios
+													registrados</td>
+											</tr>
+										</tbody>
+
+									</table>
+								</div>
+
+							</div>
+						</div>
+					</div>
+		</section>
+
+	</main>
+
+	<div th:insert="~{/usuario/templates_usuario.html::footer}"></div>
+
+	<div th:insert="~{/usuario/templates_usuario.html::jsFiles}"></div>
+
+</body>
+
+</html>

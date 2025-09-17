@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head th:insert="~{/usuario/templates_usuario.html::head}"></head>
+
+<body class="page-404">
+
+	<header id="header" class="header d-flex align-items-center fixed-top">
+		<div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
+
+			<a th:href="@{/usuario/home}" class="logo d-flex align-items-center">
+				<!-- Uncomment the line below if you also wish to use an image logo -->
+				<!-- <img th:src="@{assets/img/logo.webp" alt=""> -->
+				<img th:src="@{/images/TecAccess.png}" alt="Logo principal">
+				<h1 class="sitename"><strong>TECH</strong>ACCESS</h1>
+			</a>
+
+			<nav id="navmenu" class="navmenu">
+				<ul>
+
+					<li><a th:href="@{/usuario/home}" style="color: #2f92b1;"><b>Inicio</b></a></li>
+				
+				</ul>
+				<i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+			</nav>
+
+		</div>
+	</header>
+
+	<main class="main">
+
+		<!-- Page Title -->
+		<div class="page-title dark-background" th:style="'background-image: url(' + @{/images/showcase-1.webp} + ');'">
+			<div class="container position-relative">
+				<h1>404</h1>
+				<p>La página que esta buscando ha sido inhabilitada, su nombre cambió o esta temporalmente fuera de servicio.</p>
+				<nav class="breadcrumbs">
+					<ol>
+						<li><a th:href="@{/usuario/home}">Inicio</a></li>
+						<li class="current">404</li>
+					</ol>
+				</nav>
+			</div>
+		</div><!-- End Page Title -->
+
+		<!-- Error 404 Section -->
+		<section id="error-404" class="error-404 section">
+
+			<div class="container" data-aos="fade-up" data-aos-delay="100">
+
+				<div class="error-wrapper">
+					<div class="row align-items-center">
+						<div class="col-lg-6" data-aos="fade-right" data-aos-delay="200">
+							<div class="error-illustration">
+								<i class="bi bi-exclamation-triangle-fill"></i>
+								<div class="circle circle-1"></div>
+								<div class="circle circle-2"></div>
+								<div class="circle circle-3"></div>
+							</div>
+						</div>
+						<div class="col-lg-6" data-aos="fade-left" data-aos-delay="300">
+							<div class="error-content">
+								<span class="error-badge" data-aos="zoom-in" data-aos-delay="400">Error</span>
+								<h1 class="error-code" data-aos="fade-up" data-aos-delay="500">404</h1>
+								<h2 class="error-title" data-aos="fade-up" data-aos-delay="600">Página no encontrada</h2>
+								<p class="error-description" data-aos="fade-up" data-aos-delay="700">
+									La página que esta buscando ha sido inhabilitada, su nombre cambió o esta temporalmente fuera de servicio.
+								</p>
+
+								<div class="error-actions" data-aos="fade-up" data-aos-delay="800">
+									<a th:href="@{/usuario/home}" class="btn-home">
+										<i class="bi bi-house-door"></i> Volver al principio
+									</a>
+									<a th:href="@{/usuario/soporte}" class="btn-help">
+										<i class="bi bi-question-circle"></i> Centro de ayuda
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+		</section><!-- /Error 404 Section -->
+
+	</main>
+	
+	<div th:insert="~{/usuario/templates_usuario.html::footer}"></div>
+	
+	<div th:insert="~{/usuario/templates_usuario.html::jsFiles}"></div>
+
+</body>
+
+</html>
