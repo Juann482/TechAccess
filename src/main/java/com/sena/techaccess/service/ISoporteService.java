@@ -1,22 +1,21 @@
 package com.sena.techaccess.service;
 
+import java.util.List;
 import java.util.Optional;
-
 import com.sena.techaccess.model.Soporte;
-import com.sena.techaccess.model.Usuario;
 
 public interface ISoporteService {
 
 	public Optional<Soporte> findById(Integer id);
 
-	public Soporte save(Usuario usuario);
+	public Soporte save(Soporte soporte);										
 
-	public void deleteById(Integer id);
+	public void delete(Integer id);
 
-	public Usuario findByNombre(String nombre);
+	public Soporte findByNombre(String nombre);
 
-	public Usuario findByEmail(String email);
+	public Soporte findByEmail(String email);
 
-	public Object findAll();
+	List<Soporte> findAll();
 
 }

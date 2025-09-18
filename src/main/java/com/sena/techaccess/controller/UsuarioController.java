@@ -49,7 +49,7 @@ public class UsuarioController {
 		model.addAttribute("Soportes", soporteRepository.findAll());
 		model.addAttribute("Ssoporte", new Soporte());
 
-		return "usuario/home";
+		return "usuario/soporte";
 
 	}
 

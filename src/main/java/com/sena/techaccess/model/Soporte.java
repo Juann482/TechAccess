@@ -13,36 +13,30 @@ public class Soporte {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	private String nombre;
 	private String email;
 	private String mensaje;
+	private String nombre;
+	private String sujeto;
 
 	public Soporte() {
 
 	}
 
-	public Soporte(Integer id, String nombre, String email, String mensaje) {
+	public Soporte(Integer id, String email, String mensaje, String nombre, String sujeto) {
 		super();
 		this.id = id;
-		this.nombre = nombre;
 		this.email = email;
 		this.mensaje = mensaje;
+		this.nombre = nombre;
+		this.sujeto = sujeto;
 	}
 
 	public Integer getId() {
 		return id;
-	}
+	}	
 
 	public void setId(Integer id) {
 		this.id = id;
-	}
-
-	public String getNombre() {
-		return nombre;
-	}
-
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
 	}
 
 	public String getEmail() {
@@ -61,9 +55,26 @@ public class Soporte {
 		this.mensaje = mensaje;
 	}
 
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public String getSujeto() {
+		return sujeto;
+	}
+
+	public void setSujeto(String sujeto) {
+		this.sujeto = sujeto;
+	}
+
 	@Override
 	public String toString() {
-		return "Soporte [id=" + id + ", nombre=" + nombre + ", email=" + email + ", mensaje=" + mensaje + "]";
+		return "Soporte [id=" + id + ", email=" + email + ", mensaje=" + mensaje + ", nombre=" + nombre + ", sujeto="
+				+ sujeto + "]";
 	}
 
 }
