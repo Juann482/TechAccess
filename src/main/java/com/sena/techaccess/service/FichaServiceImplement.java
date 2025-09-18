@@ -41,4 +41,16 @@ public class FichaServiceImplement implements IFichaService {
 	public List<Usuario> findUsuariosByIdFicha(Integer idFicha) { // Obtiene usuarios asociados a una ficha
 		return fichaRepository.findUsuariosByIdFicha(idFicha);
 	}
+
+	@Override
+	public void update(Ficha ficha) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Optional<Ficha> get(Integer idFicha) {
+		// TODO Auto-generated method stub
+		return fichaRepository.findById(idFicha);
+	}
 }

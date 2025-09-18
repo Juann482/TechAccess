@@ -2,15 +2,12 @@ package com.sena.techaccess.service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.sena.techaccess.model.Usuario;
 import com.sena.techaccess.repository.UsuarioRepository;
-import com.sena.techaccess.dto.UsuarioDTO;
 
 @Service
 public class UsuarioServiceImplement implements IUsuarioService {
@@ -25,16 +22,27 @@ public class UsuarioServiceImplement implements IUsuarioService {
 	public Optional<Usuario> findById(Integer id) {
 		return usuarioRepository.findById(id);
 	}
+	
+	@Override
+	public Optional<Usuario> get(Integer id) {
+		// TODO Auto-generated method stub
+		return usuarioRepository.findById(id);
+	}	
 
 	@Override
-	@Transactional
+	public void update(Usuario usuario) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	//@Transactional
 	public Usuario save(Usuario usuario) {
 		return usuarioRepository.save(usuario);
 	}
 
 	@Override
-	@Transactional
-	public void deleteById(Integer id) {
+	public void delete(Integer id) {
 		usuarioRepository.deleteById(id);
 	}
 
@@ -54,22 +62,7 @@ public class UsuarioServiceImplement implements IUsuarioService {
 		return Optional.empty();
 	}
 
-	// =========================================================================
 
-	@Override
-	public List<UsuarioDTO> listaUsuarios() {
-		return usuarioRepository.findAll()
-				.stream()
-				.map(usuario -> convertirADTO(usuario))
-				.collect(Collectors.toList());
-
-	}
-
-	private UsuarioDTO convertirADTO(Usuario usuario) {
-		return new UsuarioDTO(usuario.getNombre(), usuario.getEmail(), usuario.getDocumento(), usuario.getTelefono(),
-				usuario.getRol() != null ? usuario.getRol().getTipo() : "Sin rol",
-				usuario.getNFicha() != null ? usuario.getNFicha().toString() : "Sin ficha",
-				usuario.getEstadoCuenta() != null ? usuario.getEstadoCuenta().getNombreEstado() : "Sin estado");
-	}
+	
 
 }

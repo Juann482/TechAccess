@@ -40,11 +40,11 @@ public class Usuario {
 	@OneToMany(mappedBy = "usuario")
 	private List<Permisos> permisos = new ArrayList<>();
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne //(fetch = FetchType.LAZY)
 	@JoinColumn(name ="estado_cuenta")
 	private EstadoCuenta estadoCuenta;
 
-	@ManyToOne(fetch = FetchType.LAZY)//LAZY evita traer objetos grandes que no siempre necesitas.
+	@ManyToOne //(fetch = FetchType.LAZY)//LAZY evita traer objetos grandes que no siempre necesitas.
 	@JoinColumn(name="Rol")
 	private Rol rol;
 	

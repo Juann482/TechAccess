@@ -25,11 +25,12 @@ public class Ficha {
 	}
 
 	//contructor con campos
-	public Ficha(Integer idFicha, String nombrePrograma, String numFicha) {
+	public Ficha(Integer idFicha, String nombrePrograma, String numFicha, Usuario usuario) {
 		super();
 		this.idFicha = idFicha;
 		this.nombrePrograma = nombrePrograma;
 		this.numFicha = numFicha;
+		this.usuario = usuario;
 	}
 
 	//getters and setters
@@ -57,11 +58,29 @@ public class Ficha {
 		this.numFicha = numFicha;
 	}
 
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+
 	//toString
 	@Override
 	public String toString() {
-		return "Ficha [idFicha=" + idFicha + ", nombrePrograma=" + nombrePrograma + ", numFicha=" + numFicha + "]";
+		return "Ficha [idFicha=" + idFicha + ", nombrePrograma=" + nombrePrograma + ", numFicha=" + numFicha
+				+ ", usuario=" + usuario + "]";
 	}
+
+	
+	
+
+	
+
+
+	
+	
 	
 
 }

@@ -10,6 +10,8 @@ import com.sena.techaccess.model.EstadoCuenta;
 @Repository
 public interface EstadoCuentaRepository extends JpaRepository<EstadoCuenta, Integer> {
 	
-	public List<EstadoCuenta> findByNombreEstado(String nombreEstado);
+	List<EstadoCuenta> findByNombreEstado(String nombreEstado);
+	
+	List<EstadoCuenta> findByidEstado(Integer idEstado);
 
 }

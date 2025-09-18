@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Optional;
 
 import com.sena.techaccess.model.Ficha;
-import com.sena.techaccess.model.Usuario;
 
 public interface IFichaService {
 
@@ -13,14 +12,10 @@ public interface IFichaService {
 
 	void delete(Integer idFicha); // Eliminar
 
-	Optional<Ficha> findById(Integer idFicha); // Buscar por ID
+	void update(Ficha ficha);
 
+	Optional<Ficha> get(Integer idFicha);
+	
 	List<Ficha> findAll(); // Listar todas las fichas
 
-	// Consultas personalizadas
-	List<Ficha> findByNombrePrograma(String nombrePrograma);
-
-	Ficha findByNuumFicha(String nuumFicha);
-
-	List<Usuario> findUsuariosByIdFicha(Integer idFicha);
 }
