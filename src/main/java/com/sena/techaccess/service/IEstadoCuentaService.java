@@ -6,10 +6,8 @@ import java.util.Optional;
 import com.sena.techaccess.model.EstadoCuenta;
 
 public interface IEstadoCuentaService {
-	
-	List<EstadoCuenta>finbyId(EstadoCuenta tipoEstado);
-	
 
-	Optional<EstadoCuenta> findBy(Integer idEstado);
+	Optional<EstadoCuenta> findById(Integer idEstado);
 
+	List<EstadoCuenta> findAll();
 }

@@ -3,16 +3,17 @@ package com.sena.techaccess.service;
 import java.util.List;
 import java.util.Optional;
 
-import com.sena.techaccess.dto.UsuarioDTO;
 import com.sena.techaccess.model.Usuario;
 
 public interface IUsuarioService {
 
-	public Optional<Usuario> findById(Integer id);
+	public Optional<Usuario> get(Integer id);
 
 	public Usuario save(Usuario usuario);
 
-	public void deleteById(Integer id);
+	public void delete(Integer id);
+	
+	public void update(Usuario usuario);
 
 	public Usuario findByNombre(String nombre);
 
@@ -22,5 +23,5 @@ public interface IUsuarioService {
 	
 	List<Usuario> findAll();
 	
-	List<UsuarioDTO> listaUsuarios();
+	
 }

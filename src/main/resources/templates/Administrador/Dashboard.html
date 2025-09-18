@@ -16,8 +16,8 @@
 			<nav id="navmenu" class="navmenu">
 				<ul>
 					<li><a href="#" class="active"><b>Dashboard</b></a></li>
-					<li><a th:href="@{/usuario_Interno/funcionarioF/form}">Registros</a></li>
-					<li><a th:href="@{/usuario_Interno/funcionarioF/fichas}">Fichas</a>
+					<li><a th:href="@{/Administrador/form}">Registros</a></li>
+					<li><a th:href="@{/Administrador/fichas}">Fichas</a>
 					</li>
 					<li><a href="#">Administador</a></li>
 				</ul>
@@ -54,39 +54,39 @@
 
 
 								<div class="col-md-12">
-									
-										<h5 class="mb-3"><i class="bi bi-activity me-2"
-												style="color: var(--primary-green);"></i>Resumen
-											general</h5>
 
-										<div class="row mb-3">
-											<div class="col-6 col-md-3 mb-2">
-												<div class="card text-center py-2 metric-card">
-													<small>Usuarios</small>
-													<h5 class="mt-1 mb-0">142</h5>
-												</div>
-											</div>
+									<h5 class="mb-3"><i class="bi bi-activity me-2"
+											style="color: var(--primary-green);"></i>Resumen
+										general</h5>
 
-											<div class="col-6 col-md-3 mb-2">
-												<div class="card text-center py-2 metric-card">
-													<small>Accesos hoy</small>
-													<h5 class="mt-1 mb-0">87</h5>
-												</div>
-											</div>
-											<div class="col-6 col-md-3 mb-2">
-												<div class="card text-center py-2 metric-card">
-													<small>Eventualidades</small>
-													<h5 class="mt-1 mb-0">3</h5>
-												</div>
-											</div>
-											<div class="col-6 col-md-3 mb-2">
-												<div class="card text-center py-2 metric-card">
-													<small>Activos hoy</small>
-													<h5 class="mt-1 mb-0">64</h5>
-												</div>
+									<div class="row mb-3">
+										<div class="col-6 col-md-3 mb-2">
+											<div class="card text-center py-2 metric-card">
+												<small>Usuarios</small>
+												<h5 class="mt-1 mb-0">142</h5>
 											</div>
 										</div>
-									
+
+										<div class="col-6 col-md-3 mb-2">
+											<div class="card text-center py-2 metric-card">
+												<small>Accesos hoy</small>
+												<h5 class="mt-1 mb-0">87</h5>
+											</div>
+										</div>
+										<div class="col-6 col-md-3 mb-2">
+											<div class="card text-center py-2 metric-card">
+												<small>Eventualidades</small>
+												<h5 class="mt-1 mb-0">3</h5>
+											</div>
+										</div>
+										<div class="col-6 col-md-3 mb-2">
+											<div class="card text-center py-2 metric-card">
+												<small>Activos hoy</small>
+												<h5 class="mt-1 mb-0">64</h5>
+											</div>
+										</div>
+									</div>
+
 									<table class="table datatable">
 										<thead>
 											<tr>
@@ -96,26 +96,26 @@
 												<th scope="col">Ficha</th>
 												<th scope="col">Estado</th>
 
-												<th scope="col">Eliminar </th>
 												<th scope="col">Editar </th>
+												<th scope="col">Eliminar </th>
 											</tr>
 										</thead>
 										<tbody th:each="usuario: ${Usuarios}">
 											<tr>
 												<td th:text="${usuario.nombre}"></td>
 												<td th:text="${usuario.documento}"></td>
+												<!---->
 												<td th:text="${usuario.rol.tipo}"></td>
 												<td th:text="${usuario.nFicha}"></td>
 												<td th:text="${usuario.estadoCuenta.nombreEstado}"></td>
 
-												<td></td>
-												<td></td>
+												<td><a title="Editar" class="btn btn-info"
+													th:href="@{/Administrador/edicionUsuario/{id} (id=${usuario.id})}"><i class="bi bi-pencil-fill"></i>Editar</a></td>
+												<td><a title="Eliminar" class="btn btn-danger"
+													th:href="@{/Administrador/deleteUser/{id} (id=${usuario.id})}"><i class="bi bi-trash-fill"></i>Eliminar</a></td>
 
 											</tr>
-											<tr th:if="${usuarios.empty}">
-												<td colspan="7" class="text-center">No se encontraron usuarios
-													registrados</td>
-											</tr>
+											
 										</tbody>
 
 									</table>
