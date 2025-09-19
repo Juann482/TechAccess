@@ -18,6 +18,7 @@ public class FichaServiceImplement implements IFichaService {
 		return fichaRepository.save(ficha);
 	}
 
+	@Override
 	public void delete(Integer idFicha) { // Elimina una ficha por su ID
 		fichaRepository.deleteById(idFicha);
 	}
@@ -30,22 +31,16 @@ public class FichaServiceImplement implements IFichaService {
 		return fichaRepository.findAll();
 	}
 
-	public List<Ficha> findByNombrePrograma(String nombrePrograma) { // Busca fichas por nombre del programa
-		return fichaRepository.findByNombrePrograma(nombrePrograma);
-	}
-
-	public Ficha findByNuumFicha(String nuumFicha) { // Busca ficha por número de ficha
-		return fichaRepository.findByNumFicha(nuumFicha);
+	public Ficha findByNumFicha(Integer numFicha) { // Busca ficha por número de ficha
+		return fichaRepository.findByNumFicha(numFicha);
 	}
 
 	public List<Usuario> findUsuariosByIdFicha(Integer idFicha) { // Obtiene usuarios asociados a una ficha
 		return fichaRepository.findUsuariosByIdFicha(idFicha);
 	}
 
-	@Override
 	public void update(Ficha ficha) {
-		// TODO Auto-generated method stub
-		
+		fichaRepository.save(ficha);		
 	}
 
 	@Override
@@ -53,4 +48,11 @@ public class FichaServiceImplement implements IFichaService {
 		// TODO Auto-generated method stub
 		return fichaRepository.findById(idFicha);
 	}
+
+	@Override
+	public Ficha findByNombrePrograma(String nombrePrograma) {
+		// TODO Auto-generated method stub
+		return fichaRepository.findByNombrePrograma(nombrePrograma);
+	}
+	
 }

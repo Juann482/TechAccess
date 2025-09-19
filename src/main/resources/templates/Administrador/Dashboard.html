@@ -109,9 +109,9 @@
 												<td th:text="${usuario.nFicha}"></td>
 												<td th:text="${usuario.estadoCuenta.nombreEstado}"></td>
 
-												<td><a title="Editar" class="btn btn-info"
+												<td><a title="Editar" class="btn btn-outline-info"
 													th:href="@{/Administrador/edicionUsuario/{id} (id=${usuario.id})}"><i class="bi bi-pencil-fill"></i>Editar</a></td>
-												<td><a title="Eliminar" class="btn btn-danger"
+												<td><a title="Eliminar" class="btn btn-outline-danger"
 													th:href="@{/Administrador/deleteUser/{id} (id=${usuario.id})}"><i class="bi bi-trash-fill"></i>Eliminar</a></td>
 
 											</tr>
