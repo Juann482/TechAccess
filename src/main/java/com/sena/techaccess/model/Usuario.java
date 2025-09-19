@@ -39,7 +39,7 @@ public class Usuario {
 	@ManyToOne(fetch = FetchType.LAZY)
 	private EstadoCuenta estadoCuenta;
 
-	@ManyToOne(fetch = FetchType.LAZY)//LAZY evita traer objetos grandes que no siempre necesitas.
+	@ManyToOne(fetch = FetchType.LAZY)//LAZY evita traer objetos grandes que no siempre necesita.
 	private Rol rol;
 
 	@OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)

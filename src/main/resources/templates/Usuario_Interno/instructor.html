@@ -1,20 +1,20 @@
 ﻿<!DOCTYPE html>
-<html lang="es">
+<html lang="es-COL">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TechAccess | Instructor</title>
-    <link rel="icon" href="/assets/img/TecAccess.png">
-    <link href="assets/css/main.css" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/instructor.css">
+    <link rel="icon" th:href="@{/assets/img/TecAccess.png}">
+    <link href=/TechAccess/src/main/resources/assets/css/main.css rel="stylesheet}"}>     <!--<link th:href="@{/assets/css/main.css" rel="stylesheet}"}>-->
+    <link rel="stylesheet" href="/assets/css/instructor.css">             <!--<link rel="stylesheet" th:href="@{/assets/css/instructor.css}">-->
 
 </head>
 
 <body>
     <header id="hd">
 
-        <h1 class="colorhe"><b>TECH</b> ACCESS | SENA - CIMM CIUDADELA </h1>
+        <h1 class="colorhead"><b>TECH</b> ACCESS | SENA - CIMM CIUDADELA </h1>
         <ul class="admin">
             <li>
                 <a href="#">Instructor</a>
@@ -48,74 +48,54 @@
             <header class="aside">
                 <nav>
                     <ul>
-                        <li><b><a href="">Inicio</a></b></li>
-                        <li><b><a href="">Horarios</a></b></li>
-                        <li><b><a href="">Estudiantes</a></b></li>
-                        <li><b><a href="">Reportes</a></b></li>
-                    </ul>
+                        <li><button onclick="cargar('entradas')">Ultimas Entradas</button></li>
+                        <li><button onclick="cargar('grupos')">Grupos</button></li>
+                        <li><button onclick="cargar('reportes')">Reportes</button></li>
+                    </ul>	
                 </nav>
             </header>
         </aside>
 
-        <article>
-            <div>
-                <h2>Panel</h2>
-                <div class="panel">
-                    <div class="paD">
-                        <h5>Aprendices</h5>
-                        <small>24</small>
-                    </div>
-                    <div class="paD">
-                        <h5>Sesiones</h5>
-                        <small>2</small>
-                    </div>
-                    <div class="paD">
-                        <h5>Áreas</h5>
-                        <small>2</small>
-                    </div>
-                </div>
+		<div id="contenido"></div>
 
-
-            </div>
-            <div>
-                <table class="table"  style="width: auto; margin: 0 auto;">
-                <tr>
-                    <th>Estudiante</th>
-                    <th>Área</th>
-                    <th>Fecha</th>
-                    <th>Estado</th>
-                </tr>
-                <tr>
-                    <td>Susana Oria</td>
-                    <td>Lab 3</td>
-                    <td>15/05 08:15</td>
-                    <td><span class="badge bg-success bg-opacity-10 text-success">0K</span></td>
-                </tr>
-                <tr>
-                    <td>Aura Tevez Melo</td>
-                    <td>Biblioteca</td>
-                    <td>15/05 09:30</td>
-                    <td><span class="badge bg-success bg-opacity-10 text-success">0K</span></td>
-                </tr>
-                <tr>
-                    <td>Pablito</td>
-                    <td>Taller</td>
-                    <td>14/05 15:45</td>
-                    <td><span class="badge bg-danger bg-opacity-10 text-danger">NO 0K</span></td>
-                </tr>
-            </table>
-
-            </div>
-            
-
-        </article>
-
-
+		<template id="tpl-entradas">
+		  <h2>Últimas Entradas</h2>
+		  <table class="table">
+		    <tr>
+		      <th>Estudiante</th>
+		      <th>Área</th>
+		      <th>Fecha</th>
+		      <th>Estado</th>
+		    </tr>
+		    <tr th:each="entrada:${entradas}">
+		      <td th:text="${entrada.estudiante}"></td>
+		      <td th:text="${entrada.area}"></td>
+		      <td th:text="${entrada.fecha}"></td>
+		      <td>
+		        <span th:if="${entrada.estado == 'OK'}"
+		              class="badge bg-success bg-opacity-10 text-success">OK</span>
+		        <span th:if="${entrada.estado != 'OK'}"
+		              class="badge bg-danger bg-opacity-10 text-danger">NO OK</span>
+		      </td>
+		    </tr>
+		  </table>
+		</template>
+		
+		<template id="tpl-grupos">
+		  <h2>Grupos</h2>
+		  <ul>
+		    <li each="grupo : ${grupos}" text="${grupo.nombre}"><strong>Grupos/Ficha</strong></li>
+			<li>Ficha Mec202302345 - Sog</li> 
+			<li>Ficha Cof201934243 - Sog</li>
+		  </ul>
+		</template>
+		
+		<template id="tpl-reportes">
+		  <h2>Reportes</h2>
+		  <p>1. Al aprendiz X se le reporta reincidencia en el incumplimiento de entrega en las actividades</p>
+		</template>
 
     </main>
-
-
-   
 
     <footer id="furer">
         <p>© <span>Copyright</span> <strong>TechAccess</strong> <span>Todos los derechos
@@ -123,11 +103,18 @@
         <div class="credits">
             Diseñado por <a href="index.html"><b>TECH</b>ACCESS</a>
         </div>
-
-
     </footer>
 
     <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script>
+	  function cargar(opcion) {
+	    const tpl = document.getElementById("tpl-" + opcion);
+	    if (tpl) {
+	      document.getElementById("contenido").innerHTML = tpl.innerHTML;
+	    }
+	  }
+	</script>
+	
 </body>
 
 </html>
