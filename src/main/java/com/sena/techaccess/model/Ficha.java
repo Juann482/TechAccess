@@ -1,31 +1,33 @@
 package com.sena.techaccess.model;
 
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "fichas")	
+@Table(name = "ficha")	
 public class Ficha {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer idFicha;
 	private String nombrePrograma;
-	private String numFicha;
+	private Integer numFicha;
 	
-	@ManyToOne
-	private Usuario usuario;
+	@OneToMany(mappedBy = "ficha")
+	private List<Usuario> usuario;
 	
 	//constructor vacío
 	public Ficha() {
 	}
 
 	//contructor con campos
-	public Ficha(Integer idFicha, String nombrePrograma, String numFicha, Usuario usuario) {
+	public Ficha(Integer idFicha, String nombrePrograma, Integer numFicha, List<Usuario> usuario) {
 		super();
 		this.idFicha = idFicha;
 		this.nombrePrograma = nombrePrograma;
@@ -50,21 +52,22 @@ public class Ficha {
 		this.nombrePrograma = nombrePrograma;
 	}
 
-	public String getNumFicha() {
+	public Integer getNumFicha() {
 		return numFicha;
 	}
 
-	public void setNumFicha(String numFicha) {
+	public void setNumFicha(Integer numFicha) {
 		this.numFicha = numFicha;
 	}
 
-	public Usuario getUsuario() {
+	public List<Usuario> getUsuario() {
 		return usuario;
 	}
 
-	public void setUsuario(Usuario usuario) {
+	public void setUsuario(List<Usuario> usuario) {
 		this.usuario = usuario;
 	}
+
 
 	//toString
 	@Override
@@ -73,6 +76,7 @@ public class Ficha {
 				+ ", usuario=" + usuario + "]";
 	}
 
+	
 	
 	
 

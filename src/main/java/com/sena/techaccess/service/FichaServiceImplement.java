@@ -5,7 +5,6 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.sena.techaccess.model.Ficha;
-import com.sena.techaccess.model.Usuario;
 import com.sena.techaccess.repository.FichaRepository;
 
 @Service
@@ -33,10 +32,6 @@ public class FichaServiceImplement implements IFichaService {
 
 	public Ficha findByNumFicha(Integer numFicha) { // Busca ficha por número de ficha
 		return fichaRepository.findByNumFicha(numFicha);
-	}
-
-	public List<Usuario> findUsuariosByIdFicha(Integer idFicha) { // Obtiene usuarios asociados a una ficha
-		return fichaRepository.findUsuariosByIdFicha(idFicha);
 	}
 
 	public void update(Ficha ficha) {

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es" xmlns="http://www.thymeLeaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.5">
+    <title>TechAccess | Servicios</title>
+    <link rel="icon" th:href="${assets/img/TecAccess.png}">
+    <link rel="stylesheet" th:href="${assets/css/servicio.css}">
+    
+
+
+    
+
+</head>
+
+<body>
+
+    <div class="headerAP">
+        <img class="logoTCH" src="assets/img/TecAccess.png" alt="TechAccess Logo">
+        <h1><b>TECH</b>ACCESS | SENA - CIMM CIUDADELA</h1>
+    </div>
+
+    <div class="container">
+       
+
+        <div class="user-info">
+            <p>Lunes</p>
+            <h2>Yanfri Gonzales</h2>
+        </div>
+
+        <div class="menu">
+            <h2>Actividades a realizar</h2>
+            <div class="menu-item">
+                <input type="checkbox" id="Aseo_general">
+                <label for="Aseo_general">Aseo general</label>
+            </div>
+            <div class="menu-item">
+                <input type="checkbox" id="Poda_zonas_verdes">
+                <label for="Poda_zonas_verdes">Poda zonas verdes</label>
+            </div>
+            <div class="menu-item">
+                <input type="checkbox" id="Limpieza_cafeteria">
+                <label for="Limpieza_cafeteria">Limpieza cafeteria</label>
+            </div>
+            <div class="menu-item">
+                <input type="checkbox" id="Aseo_oficinas_biblioteca">
+                <label for="Aseo_oficinas_biblioteca">Aseo oficinas y biblioteca</label>
+            </div>
+        </div>
+
+        
+
+        <div class="task-list">
+            <h2>Tareas pendientes</h2>
+            <div class="task-item">
+                <input type="checkbox" id="cafeteria">
+                <label for="cafeteria">Limpieza mesas y sillas cafeteria</label>
+            </div>
+            <div class="task-item">
+                <input type="checkbox" id="fugas">
+                <label for="fugas">Revisar fugas baños</label>
+            </div>
+        </div>
+
+    </div>
+    <br>
+    <footer id="furer">
+        <p>© <span>Copyright</span> <strong>TechAccess</strong> <span>Todos los derechos
+                reservados</span></p>
+        <div class="credits">
+            Diseñado por <a href="index.html"><b>TECH</b>ACCESS</a>
+        </div>
+
+
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const menuItems = document.querySelectorAll('.menu-item input[type="checkbox"]');
+            const taskItems = document.querySelectorAll('.task-item input[type="checkbox"]');
+
+            menuItems.forEach(item => {
+                item.addEventListener('change', function () {
+                    const menuItem = this.closest('.menu-item');
+
+                    if (this.checked) {
+                        menuItem.classList.add('completed');
+                    } else {
+                        menuItem.classList.remove('completed');
+                    }
+                });
+            });
+
+            taskItems.forEach(item => {
+                item.addEventListener('change', function () {
+                    const taskItem = this.closest('.task-item');
+                    const label = taskItem.querySelector('label');
+
+                    if (this.checked) {
+                        label.style.opacity = '0.6';
+                        label.style.textDecoration = 'line-through';
+                    } else {
+                        label.style.opacity = '1';
+                        label.style.textDecoration = 'none';
+                    }
+                });
+            });
+
+            // Simulación de carga (opcional)
+            setTimeout(() => {
+                document.querySelector('.container').style.opacity = '1';
+            }, 100);
+        });
+    </script>
+</body>
+
+</html>
