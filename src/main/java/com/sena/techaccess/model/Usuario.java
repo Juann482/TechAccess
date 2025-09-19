@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -25,17 +24,15 @@ public class Usuario {
 	private Integer id;
 	private String nombre;
 	
-	@Column(nullable = true)
-	private Integer nFicha;
-	
 	private String email;
 	private String documento;
 	private String direccion;
 	private String telefono;
 	private String password;
 
-	@OneToMany(mappedBy = "usuario")
-	private List<Ficha> ficha = new ArrayList<>();
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="ficha_id")
+	private Ficha ficha;
 
 	@OneToMany(mappedBy = "usuario")
 	private List<Permisos> permisos = new ArrayList<>();
@@ -64,7 +61,6 @@ public class Usuario {
 		super();
 		this.id = id;
 		this.nombre = nombre;
-		this.nFicha = nFicha;
 		this.email = email;
 		this.documento = documento;
 		this.direccion = direccion;
@@ -90,16 +86,7 @@ public class Usuario {
 
 	public String getEmail() {
 		return email;
-	}
-	
-	public void setNFicha(Integer nFicha) {
-		this.nFicha = nFicha;
-	}
-
-	public Integer getNFicha() {
-		return nFicha;
-	}
-	
+	}	
 
 	public void setEmail(String email) {
 		this.email = email;
@@ -152,12 +139,18 @@ public class Usuario {
 	public void setEstadoCuenta(EstadoCuenta estadoCuenta) {
 	    this.estadoCuenta = estadoCuenta;
 	}
-
 	
+	public Ficha getFicha() {
+	    return ficha;
+	}
+
+	public void setFicha(Ficha ficha) {
+	    this.ficha = ficha;
+	}	
 
 	@Override
 	public String toString() {
-		return "Usuario [id=" + id + ", nombre=" + nombre + ", ficha=" + nFicha + ", email=" + email
+		return "Usuario [id=" + id + ", nombre=" + nombre + ", email=" + email
 				+ ", documento=" + documento + ", direccion=" + direccion + ", telefono=" + telefono 
 				  + "]";
 	}

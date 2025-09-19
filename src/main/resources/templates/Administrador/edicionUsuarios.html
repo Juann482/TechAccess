@@ -122,10 +122,12 @@
 												<div class="input-with-icon">
 													<i class="bi bi-123"></i>
 													<select class="form-control" id="ficha" name="ficha.idFicha"
-														autocomplete="off" required>
+														autocomplete="off">
 														<option value="">------ Ficha ------</option>
-														<option th:each="ficha : ${fichas}" th:value="${ficha.idFicha}"
-															th:text="${ficha.numFicha}">
+														<option th:each="ficha : ${fichas}"
+														    th:value="${ficha.idFicha}"
+															th:text="${ficha.numFicha}"
+															th:selected="${usuario.ficha != null and usuario.ficha.idFicha == ficha.idFicha}">
 														</option>
 													</select>
 												</div>
@@ -140,7 +142,8 @@
 														<option value="">----- Estado -----</option>
 														<option th:each="estadoCuenta : ${estados}"
 															th:value="${estadoCuenta.idEstado}"
-															th:text="${estadoCuenta.nombreEstado}">
+															th:text="${estadoCuenta.nombreEstado}"
+															th:selected="${usuario.estadoCuenta != null and usuario.estadoCuenta.idEstado == estadoCuenta.idEstado}">
 														</option>
 													</select>
 												</div>
@@ -152,8 +155,10 @@
 													<i class="bi bi-person-bounding-box"></i>
 													<select class="form-control" id="Rol" name="rol.id" required autocomplete="off">
 														<option value="">--- Seleccione rol ---</option>
-														<option th:each="rol : ${roles}" th:value="${rol.id}"
-															th:text="${rol.tipo}"> 
+														<option th:each="rol : ${roles}"
+														    th:value="${rol.id}"
+															th:text="${rol.tipo}"
+															th:selected="${usuario.rol != null and usuario.rol.id == rol.id}"> 
 														</option>
 
 													</select>
