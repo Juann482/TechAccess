@@ -31,7 +31,7 @@
 				<h1>Actualización de datos</h1>
 				<nav class="breadcrumbs">
 					<ol>
-						<li><a th:href="@{/usuario_Interno/funcionarioF/fichas}"><b>Volver</b></a></li>
+						<li><a th:href="@{/Administrador/fichas}"><b>Volver</b></a></li>
 						<li class="current">Administrador</li>
 					</ol>
 				</nav>
@@ -51,7 +51,7 @@
 								<p>Ingrese los datos de la ficha que desea actualizar:</p>
 
 
-								<form th:action="@{/usuario_Interno/funcionarioF/update}" method="post">
+								<form th:action="@{/Administrador/update}" method="post">
 									<div>
 										<input type="hidden" name="idFicha" id="idFicha" th:value="${ficha.idFicha}">
 									</div>

@@ -12,6 +12,10 @@ public interface IFichaService {
 
 	void delete(Integer idFicha); // Eliminar
 
+	//Ficha findByNumficha(Integer numFicha);
+	
+	Ficha findByNombrePrograma(String nombrePrograma);
+	
 	void update(Ficha ficha);
 
 	Optional<Ficha> get(Integer idFicha);

@@ -10,10 +10,10 @@ import java.util.List;
 public interface FichaRepository extends JpaRepository<Ficha, Integer> {
     
     // Buscar fichas por nombre del programa
-    List<Ficha> findByNombrePrograma(String nombrePrograma);
+    Ficha findByNombrePrograma(String nombrePrograma);
     
     // Buscar fichas por número de ficha
-    Ficha findByNumFicha(String numFicha);
+    Ficha findByNumFicha(Integer numFicha);
     
     // Buscar usuarios asociados a una ficha
     List<Usuario> findUsuariosByIdFicha(Integer idFicha);
