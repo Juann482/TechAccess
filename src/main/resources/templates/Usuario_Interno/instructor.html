@@ -1,120 +1,161 @@
 ﻿<!DOCTYPE html>
-<html lang="es-COL">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TechAccess | Instructor</title>
-    <link rel="icon" th:href="@{/assets/img/TecAccess.png}">
-    <link href=/TechAccess/src/main/resources/assets/css/main.css rel="stylesheet}"}>     <!--<link th:href="@{/assets/css/main.css" rel="stylesheet}"}>-->
-    <link rel="stylesheet" href="/assets/css/instructor.css">             <!--<link rel="stylesheet" th:href="@{/assets/css/instructor.css}">-->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+	<title>Instructor - TechAccess</title>
 
+	<link th:href="@{/assets/img/TecAccess.png}" rel="icon">
+	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+		rel="stylesheet">
+	<link th:href="@{/assets/vendor/bootstrap-icons/bootstrap-icons.css}" rel="stylesheet">
+	<link th:href="@{/assets/css/main.css}" rel="stylesheet">
+	<link th:href="@{/assets/vendor/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
 </head>
 
-<body>
-    <header id="hd">
+<body class="body">
 
-        <h1 class="colorhead"><b>TECH</b> ACCESS | SENA - CIMM CIUDADELA </h1>
-        <ul class="admin">
-            <li>
-                <a href="#">Instructor</a>
-                <ul class="submenu">
-                    <li><a href="index.html" id="perfil">Perfil</a></li>
-                    <li><a href="index.html" id="salir">Salir</a></li>
-                </ul>
-            </li>
-        </ul>
+	<!-- Video de fondo -->
+	<div class="video-container2">
+		<video class="video-background2" autoplay muted loop>
+			<source th:src="@{/assets/vid/entradaS.mp4}" type="video/mp4">
+			Error al cargar el video!
+		</video>
+	</div>
 
-    </header>
+	<!-- Encabezado -->
+	<header style="background-color:rgb(244, 244, 244);">
+		<div class="container d-flex justify-content-between align-items-center py-3">
+			<h1 class="sitename m-0" style="color: #417e5e;">
+				<a style="color: #9e9e9e;"> <strong>TECH</strong>ACCESS |</a> SENA - CIMM CIUDADELA
+			</h1>
 
-    <!-- <header class="encabezado">
+			<div class="user-profile">
+				<div class="dropdown" style="color: #59a980;">
+					<a class="d-flex align-items-center text-decoration-none" dropdown-toggle data-bs-toggle="dropdown">
+						<span class="me-2" style="color: #616362;" th:text="${instructor.nombre}">Instructor</span>
+						<i class="bi bi-person-circle fs-4"></i>
+					</a>
+					<ul class="dropdown-menu dropdown-menu-end">
+						<li><a class="dropdown-item" href="#"><i class="bi bi-person me-2"></i>Perfil</a></li>
+						<li><a class="dropdown-item" th:href="@{/logout}"><i
+									class="bi bi-box-arrow-right me-2"></i>Cerrar sesión</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</header>
 
+	<!-- Contenido principal -->
+	<main class="main py-4" style="background-color:rgba(182, 179, 179, 0.123)">
+		<div class="container">
+			<div class="row">
 
-        <h1><b>TECH</b>ACCES</h1>
-        <span class="badge-teacher px-3 py-2"><i class="bi bi-person-badge me-1"></i>Instructor</span>
+				<!-- Menú lateral -->
+				<div class="col-lg-3 mb-4">
+					<div class="user-nav">
+						<div class="text-center mb-3">
+							<img th:src="@{/assets/img/instructor.png}" alt="Instructor"
+								style="width: 150px; border-radius: 6rem;">
+							<h5 class="mt-2 mb-0" th:text="${instructor.nombre}">Ing. Armando Barreto</h5>
+							<small class="text-muted"><b>Área:</b> <span text="#">Mecánica</span></small>
+							<div class="mt-2">
+								<span class="status-badge status-active">
+									<b style="color: rgb(43, 181, 112);" text="#">Activo</b>
+								</span>
+							</div>
+						</div>
 
-        <ul class="dropdown-menu dropdown-menu-end">
-            <li><a class="dropdown-item" href="#"><i class="bi bi-person me-2"></i>Perfil</a></li>
-            <li><a class="dropdown-item" href="#"><i class="bi bi-box-arrow-right me-2"></i>Salir</a></li>
-        </ul>
-    </header> -->
-    <main>
-        <aside>
-            <div class="aside">
-                <h4>Ing. Armando Barreto</h4>
-                <b><p>Mecanica</p></b>
+						<nav class="nav flex-column" style="background-color: rgba(225, 225, 225, 0.811);">
+							<a class="nav-link active" href="#" onclick="cargar('entradas')"><i class="bi bi-house"></i>
+								Últimas Entradas</a>
+							<a class="nav-link" href="#" onclick="cargar('grupos')"><i class="bi bi-people"></i>
+								Grupos</a>
+							<a class="nav-link" href="#" onclick="cargar('reportes')"><i
+									class="bi bi-clipboard-data"></i> Reportes</a>
+						</nav>
+					</div>
+				</div>
 
-            </div>
-            <header class="aside">
-                <nav>
-                    <ul>
-                        <li><button onclick="cargar('entradas')">Ultimas Entradas</button></li>
-                        <li><button onclick="cargar('grupos')">Grupos</button></li>
-                        <li><button onclick="cargar('reportes')">Reportes</button></li>
-                    </ul>	
-                </nav>
-            </header>
-        </aside>
+				<!-- Sección dinámica -->
+				<div class="col-lg-9">
+					<div id="contenido" class="access-card">
+						<h4><i class="bi bi-info-circle me-2"></i><b> Bienvenido, </b>
+							<span th:text="${instructor.nombre}">Instructor</span>
+						</h4>
+						<p class="text-muted">Seleccione una opción del menú lateral para ver información.</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
 
-		<div id="contenido"></div>
+	<!-- Plantillas dinámicas -->
+	<template id="tpl-entradas">
+		<div class="access-card">
+			<h2><i class="bi bi-clock-history me-2"></i> Últimas Entradas</h2>
+			<table class="table">
+				<tr>
+					<th>Estudiante</th>
+					<th>Área</th>
+					<th>Fecha</th>
+					<th>Estado</th>
+				</tr>
+				<tr th:each="entrada : ${entradas}">
+					<td th:text="${entrada.estudiante}">Juan Pérez</td>
+					<td th:text="${entrada.area}">Mecánica</td>
+					<td th:text="${entrada.fecha}">2025-09-20</td>
+					<td>
+						<span th:if="${entrada.estado == 'OK'}"
+							class="badge bg-success bg-opacity-10 text-success">OK</span>
+						<span th:if="${entrada.estado != 'OK'}" class="badge bg-danger bg-opacity-10 text-danger">NO
+							OK</span>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</template>
 
-		<template id="tpl-entradas">
-		  <h2>Últimas Entradas</h2>
-		  <table class="table">
-		    <tr>
-		      <th>Estudiante</th>
-		      <th>Área</th>
-		      <th>Fecha</th>
-		      <th>Estado</th>
-		    </tr>
-		    <tr th:each="entrada:${entradas}">
-		      <td th:text="${entrada.estudiante}"></td>
-		      <td th:text="${entrada.area}"></td>
-		      <td th:text="${entrada.fecha}"></td>
-		      <td>
-		        <span th:if="${entrada.estado == 'OK'}"
-		              class="badge bg-success bg-opacity-10 text-success">OK</span>
-		        <span th:if="${entrada.estado != 'OK'}"
-		              class="badge bg-danger bg-opacity-10 text-danger">NO OK</span>
-		      </td>
-		    </tr>
-		  </table>
-		</template>
-		
-		<template id="tpl-grupos">
-		  <h2>Grupos</h2>
-		  <ul>
-		    <li each="grupo : ${grupos}" text="${grupo.nombre}"><strong>Grupos/Ficha</strong></li>
-			<li>Ficha Mec202302345 - Sog</li> 
-			<li>Ficha Cof201934243 - Sog</li>
-		  </ul>
-		</template>
-		
-		<template id="tpl-reportes">
-		  <h2>Reportes</h2>
-		  <p>1. Al aprendiz X se le reporta reincidencia en el incumplimiento de entrega en las actividades</p>
-		</template>
+	<template id="tpl-grupos">
+		<div class="access-card">
+			<h2><i class="bi bi-people me-2"></i> Grupos</h2>
+			<ul>
+				<li th:each="grupo : ${grupos}" th:text="${grupo.nombre}">Ficha Mec202302345 - Sog</li>
+			</ul>
+		</div>
+	</template>
 
-    </main>
+	<template id="tpl-reportes">
+		<div class="access-card">
+			<h2><i class="bi bi-clipboard-data me-2"></i> Reportes</h2>
+			<ul>
+				<li th:each="reporte : ${reportes}" th:text="${reporte.descripcion}">
+					Al aprendiz X se le reporta reincidencia en el incumplimiento de actividades
+				</li>
+			</ul>
+		</div>
+	</template>
 
-    <footer id="furer">
-        <p>© <span>Copyright</span> <strong>TechAccess</strong> <span>Todos los derechos
-                reservados.</span></p>
-        <div class="credits">
-            Diseñado por <a href="index.html"><b>TECH</b>ACCESS</a>
-        </div>
-    </footer>
+	<!-- Footer -->
+	<footer id="furer">
+		<div class="container copyright text-center mt-4">
+			<p>© <span>Copyright</span> <strong>TechAccess</strong> <span>Todos los derechos reservados</span></p>
+			<div class="credits">
+				Diseñado por <a th:href="@{/}" style="color: rgb(82, 142, 122);"><b>TECH</b>ACCESS</a>
+			</div>
+		</div>
+	</footer>
 
-    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script th:src="@{/assets/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
 	<script>
-	  function cargar(opcion) {
-	    const tpl = document.getElementById("tpl-" + opcion);
-	    if (tpl) {
-	      document.getElementById("contenido").innerHTML = tpl.innerHTML;
-	    }
-	  }
+		function cargar(opcion) {
+			const tpl = document.getElementById("tpl-" + opcion);
+			if (tpl) {
+				document.getElementById("contenido").innerHTML = tpl.innerHTML;
+			}
+		}
 	</script>
-	
 </body>
 
 </html>

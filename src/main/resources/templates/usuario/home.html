@@ -47,7 +47,8 @@
 						<div class="col-lg-7" data-aos="zoom-out" data-aos-delay="100">
 							<div class="hero-content">
 								<h1>Gestione el flujo de personal en las instalaciones de su empresa</h1> <!---->
-								<p>Nuestra plataforma facilita la gestión del personal en tiempo real, mejora la seguridad institucional y promueve la eficiencia operativa. ¡Comienza ahora!</p>
+								<p>Nuestra plataforma facilita la gestión del personal en tiempo real, mejora la
+									seguridad institucional y promueve la eficiencia operativa. ¡Comienza ahora!</p>
 							</div>
 						</div>
 
@@ -59,40 +60,28 @@
 									<h3 style="color:rgb(255, 250, 250)">Acceso al Sistema</h3>
 									<div></div>
 
-									<div class="form-group">
-										<label for="username" style="color:rgb(255, 255, 255)">Usuario</label>
-										<input type="text" id="username" placeholder="Ingrese su usuario">
-									</div>
-									<div class="form-group">
-										<label for="password" style="color:white">Contraseña</label>
-										<input type="password" id="password" placeholder="Ingrese su contraseña">
-									</div>
+									<form th:action="@{/logIn/login}" method="post">
+										<div class="form-group">
+											<label for="username" style="color:rgb(255, 255, 255)">Usuario</label>
+											<input type="text" id="username" name="nombreUsuario"
+												placeholder="Ingrese su usuario">
+										</div>
+										<div class="form-group">
+											<label for="password" style="color:white">Contraseña</label>
+											<input type="password" id="password" name="contrasenaUsuario"
+												placeholder="Ingrese su contraseña">
+										</div>
 
-									<!-- funcion vinculo paginas roles -->
-
-									<button class="btn-login" id="enlaceAleatorio" style="color: white;">Iniciar
-										Sesión</button>
-
-									<script>
-										const urls = ["aprendiz.html", "instructor.html", "funcionario.html", "404.html", "cafeteria.html", "seguridad.html", "servicios.html", "about.html"];
-										const enlace = document.getElementById("enlaceAleatorio");
-
-										function generarEnlaceAleatorio() {
-											const randomIndex = Math.floor(Math.random() * urls.length);
-											enlace.href = urls[randomIndex];
-										}
-
-										enlace.onclick = generarEnlaceAleatorio;
-
-									</script>
-
+										<button type="submit" class="btn-login" style="color: white;">Iniciar
+											Sesión</button>
+									</form>
 
 									<!-- funcion vinculo paginas roles END -->
 									<div class="form-footer">
 										<label style="color:white">
 											<p>¿No tiene una cuenta?</p>
 										</label>
-										<a th:href="@{usuario/contact}" class="btn-login">Regístrarse</a>
+										<a href="#" class="btn-login">Regístrarse</a>
 									</div>
 								</div>
 							</div>
@@ -107,7 +96,7 @@
 	<div th:insert="~{/usuario/templates_usuario.html::footer}"></div>
 
 	<div th:insert="~{/usuario/templates_usuario.html::jsFiles}"></div>
-	
+
 </body>
 
 </html>
