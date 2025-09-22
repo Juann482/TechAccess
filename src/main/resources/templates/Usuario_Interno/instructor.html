@@ -27,7 +27,7 @@
 	<!-- Encabezado -->
 	<header style="background-color:rgb(244, 244, 244);">
 		<div class="container d-flex justify-content-between align-items-center py-3">
-			<h1 class="sitename m-0" style="color: #417e5e;">
+			<h1 class="sitename m-0" style="color: #2f92b1;">
 				<a style="color: #9e9e9e;"> <strong>TECH</strong>ACCESS |</a> SENA - CIMM CIUDADELA
 			</h1>
 
@@ -56,19 +56,19 @@
 				<div class="col-lg-3 mb-4">
 					<div class="user-nav">
 						<div class="text-center mb-3">
-							<img th:src="@{/assets/img/instructor.png}" alt="Instructor"
+							<img th:src="@{/assets/img/instructor.png}" alt="Instructor.img"
 								style="width: 150px; border-radius: 6rem;">
 							<h5 class="mt-2 mb-0" th:text="${instructor.nombre}">Ing. Armando Barreto</h5>
 							<small class="text-muted"><b>Área:</b> <span text="#">Mecánica</span></small>
 							<div class="mt-2">
 								<span class="status-badge status-active">
-									<b style="color: rgb(43, 181, 112);" text="#">Activo</b>
+									<b style="color: rgb(0, 128, 128);" text="#">Activo</b>
 								</span>
 							</div>
 						</div>
 
 						<nav class="nav flex-column" style="background-color: rgba(225, 225, 225, 0.811);">
-							<a class="nav-link active" href="#" onclick="cargar('entradas')"><i class="bi bi-house"></i>
+							<a class="nav-link active" href="#" onclick="cargar('acceso')"><i class="bi bi-house"></i>
 								Últimas Entradas</a>
 							<a class="nav-link" href="#" onclick="cargar('grupos')"><i class="bi bi-people"></i>
 								Grupos</a>
@@ -78,7 +78,7 @@
 					</div>
 				</div>
 
-				<!-- Sección dinámica -->
+				<!-- Inicial Instr -->
 				<div class="col-lg-9">
 					<div id="contenido" class="access-card">
 						<h4><i class="bi bi-info-circle me-2"></i><b> Bienvenido, </b>
@@ -91,40 +91,127 @@
 		</div>
 	</main>
 
-	<!-- Plantillas dinámicas -->
-	<template id="tpl-entradas">
+	<!-- Secciones Laterales COMIENZO-->
+
+	<!--Secion enlazada con acceso -->
+	<template id="tpl-acceso">
 		<div class="access-card">
-			<h2><i class="bi bi-clock-history me-2"></i> Últimas Entradas</h2>
-			<table class="table">
-				<tr>
-					<th>Estudiante</th>
-					<th>Área</th>
-					<th>Fecha</th>
-					<th>Estado</th>
-				</tr>
-				<tr th:each="entrada : ${entradas}">
-					<td th:text="${entrada.estudiante}">Juan Pérez</td>
-					<td th:text="${entrada.area}">Mecánica</td>
-					<td th:text="${entrada.fecha}">2025-09-20</td>
-					<td>
-						<span th:if="${entrada.estado == 'OK'}"
-							class="badge bg-success bg-opacity-10 text-success">OK</span>
-						<span th:if="${entrada.estado != 'OK'}" class="badge bg-danger bg-opacity-10 text-danger">NO
-							OK</span>
-					</td>
-				</tr>
-			</table>
+			<h2 class="mb-4">
+				<i class="bi bi-clock-history me-2"></i> Últimas Entradas
+			</h2>
+
+			<div class="card shadow-sm">
+				<div class="card-body">
+					<table class="table table-hover align-middle">
+						<thead class="table-light">
+							<tr>
+								<th>Estudiante</th>
+								<th>Área</th>
+								<th>Fecha</th>
+								<th>Estado</th>
+								<th class="text-center">Acciones</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="entrada : ${acceso}">
+								<td th:text="${entrada.estudiante}">Juan Pérez</td>
+								<td th:text="${entrada.area}">Idiomas</td>
+								<td th:text="${#dates.format(entrada.fecha, 'yyyy-MM-dd HH:mm')}">2025-09-20</td>
+								<td>
+									<span th:if="${entrada.estado == 'OK'}"
+										class="badge bg-success bg-opacity-10 text-success px-3 py-2">
+										OK
+									</span>
+									<span th:if="${entrada.estado != 'OK'}"
+										class="badge bg-danger bg-opacity-10 text-danger px-3 py-2">
+										NO OK
+									</span>
+								</td>
+								<td class="text-center">
+									<a th:href="@{'/acceso/editar/' + ${entrada.id}}"
+										class="btn btn-sm btn-outline-primary me-2">
+										<i class="bi bi-pencil-square"></i> Editar
+									</a>
+									<a th:href="@{'/acceso/eliminar/' + ${entrada.id}}"
+										class="btn btn-sm btn-outline-danger"
+										onclick="return confirm('¿Seguro que deseas eliminar esta entrada?');">
+										<i class="bi bi-trash"></i> Eliminar
+									</a>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
 		</div>
 	</template>
+
+
+	<!--Secion enlazada con ficha -->
 
 	<template id="tpl-grupos">
 		<div class="access-card">
 			<h2><i class="bi bi-people me-2"></i> Grupos</h2>
-			<ul>
-				<li th:each="grupo : ${grupos}" th:text="${grupo.nombre}">Ficha Mec202302345 - Sog</li>
-			</ul>
+
+			<div class="row">
+				<!-- Ficha N1 -->
+
+				<div class="col-md-4 mb-4" each="#">
+					<div class="card shadow-sm h-100">
+						<div class="card-body text-center">
+							<h5 class="card-title" text="#">Ficha Mec202302345 - Sog</h5>
+							<p class="card-text text-muted">
+								Código: <span text="#">G123</span><br>
+								Área: <span text="#">Mecánica</span>
+							</p>
+							<a href="#" class="btn btn-primary btn-sm">Ver detalles</a>
+						</div>
+					</div>
+				</div>
+
+
+
+				<!-- Ficha N2 -->
+
+
+				<div class="col-md-4 mb-4" each="#">
+					<div class="card shadow-sm h-100">
+						<div class="card-body text-center">
+							<h5 class="card-title" text="#">Ficha TIcs202142375 - Dtma</h5>
+							<p class="card-text text-muted">
+								Código: <span text="#">G106</span><br>
+								Área: <span text="#">Tecnologias de la Informacion y Comunicaciónes</span>
+							</p>
+							<a href="#" class="btn btn-primary btn-sm">Ver detalles</a>
+						</div>
+					</div>
+				</div>
+
+
+
+				<!-- Ficha N3 -->
+
+
+				<div class="col-md-4 mb-4" each="#">
+					<div class="card shadow-sm h-100">
+						<div class="card-body text-center">
+							<h5 class="card-title" text="#">Ficha TIcs202001374 - Sog</h5>
+							<p class="card-text text-muted">
+								Código: <span text="#">G132</span><br>
+								Área: <span text="#">Tecnologias de la Informacion y Comunicaciónes</span>
+							</p>
+							<a href="#" class="btn btn-primary btn-sm">Ver detalles</a>
+						</div>
+					</div>
+				</div>
+
+
+			</div>
 		</div>
+
 	</template>
+
+	<!--Secion enlazada con permiso -->
 
 	<template id="tpl-reportes">
 		<div class="access-card">
@@ -136,13 +223,14 @@
 			</ul>
 		</div>
 	</template>
+	<!-- Secciones Laterales FINAL-->
 
 	<!-- Footer -->
 	<footer id="furer">
 		<div class="container copyright text-center mt-4">
 			<p>© <span>Copyright</span> <strong>TechAccess</strong> <span>Todos los derechos reservados</span></p>
 			<div class="credits">
-				Diseñado por <a th:href="@{/}" style="color: rgb(82, 142, 122);"><b>TECH</b>ACCESS</a>
+				Diseñado por <a th:href="@{/}" style="color: rgb(0, 128, 192);"><b>TECH</b>ACCESS</a>
 			</div>
 		</div>
 	</footer>
