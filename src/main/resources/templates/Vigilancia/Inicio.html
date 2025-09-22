@@ -15,9 +15,9 @@
 
 			<nav id="navmenu" class="navmenu">
 				<ul>
-					<li><a href="#" class="active"><b>Dashboard</b></a></li>
-					<li><a th:href="@{/Administrador/form}">Registros</a></li>
-					<li><a th:href="@{/Administrador/fichas}">Fichas</a>
+					<li><a href="#" class="active"><b>Inicio</b></a></li>
+					<li><a th:href="@{#}">Registros</a></li>
+					<li><a th:href="@{#}">Fichas</a>
 					</li>
 					<li><a href="#">Administador</a></li>
 				</ul>
@@ -36,7 +36,7 @@
 				<nav class="breadcrumbs">
 					<ol>
 						<li><a th:href="@{/usuario/home}"><b>Salir</b></a></li>
-						<li class="current">Administrador</li>
+						<li class="current">Vigilancia</li>
 					</ol>
 				</nav>
 			</div>
@@ -55,38 +55,7 @@
 
 								<div class="col-md-12">
 
-									<h5 class="mb-3"><i class="bi bi-activity me-2"
-											style="color: var(--primary-green);"></i>Resumen
-										general</h5>
-
-									<div class="row mb-3">
-										<div class="col-6 col-md-3 mb-2">
-											<div class="card text-center py-2 metric-card">
-												<small>Usuarios</small>
-												<h5 class="mt-1 mb-0">142</h5>
-											</div>
-										</div>
-
-										<div class="col-6 col-md-3 mb-2">
-											<div class="card text-center py-2 metric-card">
-												<small>Accesos hoy</small>
-												<h5 class="mt-1 mb-0">87</h5>
-											</div>
-										</div>
-										<div class="col-6 col-md-3 mb-2">
-											<div class="card text-center py-2 metric-card">
-												<small>Eventualidades</small>
-												<h5 class="mt-1 mb-0">3</h5>
-											</div>
-										</div>
-										<div class="col-6 col-md-3 mb-2">
-											<div class="card text-center py-2 metric-card">
-												<small>Activos hoy</small>
-												<h5 class="mt-1 mb-0">64</h5>
-											</div>
-										</div>
-									</div>
-
+									
 									<table class="table datatable">
 										<thead>
 											<tr class="centrados">
@@ -100,20 +69,9 @@
 												<th scope="col"> Eliminar </th>
 											</tr>
 										</thead>
-										<tbody th:each="usuario: ${Usuarios}">
+										<tbody >
 											<tr>
-												<td th:text="${usuario.nombre}"></td>
-												<td th:text="${usuario.documento}"></td>
-												<!---->
-												<td th:text="${usuario.rol.tipo}"></td>
-												<td th:text="${usuario.ficha.numFicha}"></td>
-												<td th:text="${usuario.estadoCuenta.nombreEstado}"></td>
-
-												<td><a title="Editar" class="btn btn-outline-info"
-													th:href="@{/Administrador/edicionUsuario/{id} (id=${usuario.id})}"><i class="bi bi-pencil-fill"></i>Editar</a></td>
-												<td><a title="Eliminar" class="btn btn-outline-danger"
-													th:href="@{/Administrador/deleteUser/{id} (id=${usuario.id})}"><i class="bi bi-trash-fill"></i>Eliminar</a></td>
-
+												
 											</tr>
 											
 										</tbody>
