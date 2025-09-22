@@ -19,7 +19,7 @@
 				<ul>
 					<li><a th:href="@{/usuario/home}" class="active" style="color: #2f92b1;"><b>Inicio</b></a></li>
 					<li><a th:href="@{/usuario/about}">Sobre Nosotros</a></li>
-					<li><a th:href="@{/usuario/soporte}">Soporte</a></li>
+					<li><a th:href="@{/usuario/Suport}">Soporte</a></li>
 					<li><a href="#">Lenguaje</a></li>
 
 
@@ -60,6 +60,7 @@
 									<h3 style="color:rgb(255, 250, 250)">Acceso al Sistema</h3>
 									<div></div>
 
+<<<<<<< HEAD
 									<form th:action="@{/logIn/login}" method="post">
 										<div class="form-group">
 											<label for="username" style="color:rgb(255, 255, 255)">Usuario</label>
@@ -75,13 +76,49 @@
 										<button type="submit" class="btn-login" style="color: white;">Iniciar
 											Sesión</button>
 									</form>
+=======
+									<div class="form-group">
+										<label for="username" style="color:rgb(255, 255, 255)">Usuario</label>
+										<input type="text" id="username" placeholder="Ingrese su usuario">
+									</div>
+									<div class="form-group">
+										<label for="password" style="color:white">Contraseña</label>
+										<input type="password" id="password" placeholder="Ingrese su contraseña">
+									</div>
+
+									<!-- funcion vinculo paginas roles -->
+
+									<a th:href="@{/usuario_Interno/funcionarioF/funcionarioDashboard}" class="btn-login"
+										id="enlaceAleatorio" style="color: white;">
+										Iniciar sesión</a>
+
+									<a th:href="@{/usuario_Interno/Aprendiz/aprendiz}">Soporte</a>
+
+
+									<!--<script>
+										const urls = ["/usuario_interno/aprendiz.html", "/usuario_interno/instructor.html", "funcionario.html", "404.html", "cafeteria.html", "seguridad.html", "servicios.html"];
+										const enlace = document.getElementById("enlaceAleatorio");
+
+										function generarEnlaceAleatorio() {
+											const randomIndex = Math.floor(Math.random() * urls.length);
+											enlace.href = urls[randomIndex];
+										}
+
+										enlace.onclick = generarEnlaceAleatorio;
+
+									</script>-->
+>>>>>>> 37c1ca7ec7973725c95d88823b7af7f8346f14e3
 
 									<!-- funcion vinculo paginas roles END -->
 									<div class="form-footer">
 										<label style="color:white">
 											<p>¿No tiene una cuenta?</p>
 										</label>
+<<<<<<< HEAD
 										<a href="#" class="btn-login">Regístrarse</a>
+=======
+										<a th:href="@{/usuario_Interno/funcionarioF/instructor}" class="btn-login">Regístrarse</a>
+>>>>>>> 37c1ca7ec7973725c95d88823b7af7f8346f14e3
 									</div>
 								</div>
 							</div>

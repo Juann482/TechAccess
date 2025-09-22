@@ -30,7 +30,7 @@
 	<main class="main">
 
 		<!-- Page Title -->
-		<div class="page-title dark-background"	th:style="'background-image: url(' + @{/images/showcase-1.webp} + ');'">
+		<div class="page-title dark-background" th:style="'background-image: url(' + @{/images/showcase-1.webp} + ');'">
 			<div class="container position-relative">
 				<h1>Soporte</h1>
 				<p>¿Necesitas ayuda/asistencia con la página? <br> Comunícate con nosotros a continuación.</p>
@@ -45,7 +45,8 @@
 		<!-- End Page Title -->
 
 		<!-- Contact Section -->
-		<section id="contact" class="contact section"style="padding-top: 220px;"> <!--Acomodar Style cuando este todo finalizado-->
+		<section id="contact" class="contact section" style="padding-top: 220px;">
+			<!--Acomodar Style cuando este todo finalizado-->
 			<div class="container" data-aos="fade-up" data-aos-delay="100">
 				<div class="container form-container-overlap">
 					<div class="row justify-content-center" data-aos="fade-up" data-aos-delay="300">
@@ -53,13 +54,13 @@
 							<div class="contact-form-wrapper">
 								<h2 class="text-center mb-4">Envia un mensaje a soporte</h2>
 
-								<form action="#" method="post" class="php-email-form">
+								<form th:action="@{/usuario/SuportSave}" method="post" class="php-email-form">
 									<div class="row g-3">
 										<div class="col-md-6">
 											<div class="form-group">
 												<div class="input-with-icon">
 													<i class="bi bi-person"></i>
-													<input type="text" class="form-control" name="name"
+													<input type="text" class="form-control" id=nombre name="nombre"
 														placeholder="Nombre completo" required>
 												</div>
 											</div>
@@ -69,7 +70,7 @@
 											<div class="form-group">
 												<div class="input-with-icon">
 													<i class="bi bi-envelope"></i>
-													<input type="email" class="form-control" name="email"
+													<input type="email" class="form-control" id=email name="email"
 														placeholder="Correo electrónico" required>
 												</div>
 											</div>
@@ -79,7 +80,7 @@
 											<div class="form-group">
 												<div class="input-with-icon">
 													<i class="bi bi-text-left"></i>
-													<input type="text" class="form-control" name="subject"
+													<input type="text" class="form-control" id=sujeto name="sujeto"
 														placeholder="Sujeto" required>
 												</div>
 											</div>
@@ -89,7 +90,7 @@
 											<div class="form-group">
 												<div class="input-with-icon">
 													<i class="bi bi-chat-dots message-icon"></i>
-													<textarea class="form-control" name="message"
+													<textarea class="form-control" id="mensaje" name="mensaje"
 														placeholder="Escriba aquí..." style="height: 180px"
 														required></textarea>
 												</div>
@@ -114,7 +115,7 @@
 	<div th:insert="~{/usuario/templates_usuario.html::footer}"></div>
 
 	<div th:insert="~{/usuario/templates_usuario.html::jsFiles}"></div>
-	
+
 </body>
 
 </html>

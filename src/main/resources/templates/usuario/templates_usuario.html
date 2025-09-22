@@ -24,7 +24,7 @@
 	<header id="header" class="header d-flex align-items-center fixed-top">
 		<div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
 
-			<a th:href="@{usuario/home}" class="logo d-flex align-items-center">
+			<a th:href="@{/usuario/home}" class="logo d-flex align-items-center">
 
 				<img th:src="@{/assets/img/TecAccess.png}" alt="">
 
@@ -125,10 +125,10 @@
 
 	</main>
 
-	<div th:fragment="footer">
+	<div th:fragment="footer" style=" position: bottom; width: 100%;">
 
 		<!--==================================FOOTER=========================================-->
-		<footer id="footer" class="footer position-relative dark-background">
+		<footer id="footer" class="footer position-relative dark-background" style="text-align: center;">
 			<div class="container copyright text-center mt-4">
 				<p>© <span>Copyright</span> <strong class="px-1 sitename">TechAccess</strong> <span>Todos los derechos
 						reservados.</span></p>
@@ -142,11 +142,11 @@
 			</div>
 		</footer>
 		<!-- Scroll Top -->
-			<a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i
-					class="bi bi-arrow-up-short"></i></a>
+		<a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i
+				class="bi bi-arrow-up-short"></i></a>
 	</div>
 
-	
+
 	<div th:fragment="jsFiles">
 		<!-- Vendor JS Files -->
 		<script th:src="@{/assets/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>

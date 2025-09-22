@@ -49,11 +49,11 @@ public class Ficha {
 		this.nombrePrograma = nombrePrograma;
 	}
 
-	public String getnumFicha() {
+	public String getNumFicha() {
 		return numFicha;
 	}
 
-	public void setnumFicha(String numFicha) {
+	public void setNumFicha(String numFicha) {
 		this.numFicha = numFicha;
 	}
 

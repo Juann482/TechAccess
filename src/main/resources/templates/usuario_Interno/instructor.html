@@ -1,0 +1,123 @@
+﻿<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head th:insert="~{/usuario_Interno/templates_instructor::head}">
+
+	<!-- <title>TechAccess | Instructor</title> -->
+
+</head>
+
+<body>
+	<header id="hd">
+
+		<h1 class="colorhe"><b>TECH</b> ACCESS | SENA - CIMM CIUDADELA </h1>
+		<ul class="admin">
+			<li>
+				<a th:href="@{/usuario_Interno/instructor}">Instructor</a>
+				<ul class="submenu">
+					<li><a href="#" id="perfil">Perfil</a></li>
+					<li><a th:href="@{/usuario/home}" id="salir">Salir</a></li>
+				</ul>
+			</li>
+		</ul>
+
+	</header>
+
+	<!-- <header class="encabezado">
+
+
+        <h1><b>TECH</b>ACCES</h1>
+        <span class="badge-teacher px-3 py-2"><i class="bi bi-person-badge me-1"></i>Instructor</span>
+
+        <ul class="dropdown-menu dropdown-menu-end">
+            <li><a class="dropdown-item" href="#"><i class="bi bi-person me-2"></i>Perfil</a></li>
+            <li><a class="dropdown-item" href="#"><i class="bi bi-box-arrow-right me-2"></i>Salir</a></li>
+        </ul>
+    </header> -->
+
+	<main>
+		<aside>
+			<div class="aside">
+				<h4>Ing. Armando Barreto</h4>
+				<b>
+					<p>Mecanica</p>
+				</b>
+
+			</div>
+			<header class="aside">
+				<nav>
+					<ul>
+						<li><b><a th:href="@{/usuario/instructor}">Panel</a></b></li>
+						<li><b><a href="">Horarios</a></b></li>
+						<li><b><a href="">Estudiantes</a></b></li>
+						<li><b><a href="">Reportes</a></b></li>
+					</ul>
+				</nav>
+			</header>
+		</aside>
+
+		<article>
+			<div>
+				<h2>Panel</h2>
+				<div class="panel">
+					<div class="paD">
+						<h5>Aprendices</h5>
+						<small>24</small>
+					</div>
+					<div class="paD">
+						<h5>Sesiones</h5>
+						<small>2</small>
+					</div>
+					<div class="paD">
+						<h5>Áreas</h5>
+						<small>2</small>
+					</div>
+				</div>
+
+
+			</div>
+			<div>
+				<table class="table" style="width: auto; margin: 0 auto;">
+					<tr>
+						<th>Estudiante</th>
+						<th>Área</th>
+						<th>Fecha</th>
+						<th>Estado</th>
+					</tr>
+					<tr>
+						<td>Susana Oria</td>
+						<td>Lab 3</td>
+						<td>15/05 08:15</td>
+						<td><span class="badge bg-success bg-opacity-10 text-success">0K</span></td>
+					</tr>
+					<tr>
+						<td>Aura Tevez Melo</td>
+						<td>Biblioteca</td>
+						<td>15/05 09:30</td>
+						<td><span class="badge bg-success bg-opacity-10 text-success">0K</span></td>
+					</tr>
+					<tr>
+						<td>Pablito</td>
+						<td>Taller</td>
+						<td>14/05 15:45</td>
+						<td><span class="badge bg-danger bg-opacity-10 text-danger">NO 0K</span></td>
+					</tr>
+				</table>
+
+			</div>
+
+
+		</article>
+
+
+
+	</main>
+
+
+	<div th:insert="~{/usuario/templates_usuario.html::footer}"></div>
+
+
+	<script th:src="@{/assets/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+</body>
+
+</html>
