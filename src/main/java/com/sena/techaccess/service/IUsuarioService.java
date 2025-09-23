@@ -22,6 +22,9 @@ public interface IUsuarioService {
 	public Optional<Usuario> findByDocumento(String documento);
 	
 	List<Usuario> findAll();
+
+	
+	
 	
 	
 }

@@ -2,7 +2,7 @@
 
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>TechAccess</title>
+	<title>SENA | Administrador</title>
 
 	<!-- Favicons -->
 	<link th:href="@{/images/TecAccess.png}" rel="icon">
@@ -33,7 +33,77 @@
 
 </head>
 
+<div th:fragment="Dashboard">
 
+	<header id="header" class="header d-flex align-items-center fixed-top">
+		<div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
+
+			<a th:href="@{/usuario/home}" class="logo d-flex align-items-center">
+				<img th:src="@{/images/TecAccess.png}" alt="LogoPrin">
+				<h1 class="sitename"><b>TECH</b>ACCESS</h1>
+			</a>
+
+			<nav id="navmenu" class="navmenu">
+				<ul>
+					<li><a href="#" class="active"><b>Dashboard</b></a></li>
+					<li><a th:href="@{/Administrador/form}">Registros</a></li>
+					<li><a th:href="@{/Administrador/fichas}">Fichas</a>
+					</li>
+					<li><a href="#">Administador</a></li>
+				</ul>
+				<i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+			</nav>
+
+		</div>
+	</header>
+</div>
+<div th:fragment="Registro">
+	<header id="header" class="header d-flex align-items-center fixed-top">
+		<div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
+
+			<a th:href="@{/usuario/home}" class="logo d-flex align-items-center">
+				<img th:src="@{/images/TecAccess.png}" alt="LogoPrin">
+				<h1 class="sitename"><b>TECH</b>ACCESS</h1>
+			</a>
+
+			<nav id="navmenu" class="navmenu">
+				<ul>
+					<li><a th:href="@{/Administrador/usuarios}">Dashboard</a></li>
+					<li><a href="#" class="active"><b>Registros</b></a></li>
+					<li><a th:href="@{/Administrador/fichas}">Fichas</a></li>
+					<li><a href="#">Administrador</a></li>
+				</ul>
+				<i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+			</nav>
+
+		</div>
+	</header>
+
+</div>
+<div th:fragment="Fichas">
+
+	<header id="header" class="header d-flex align-items-center fixed-top">
+		<div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
+
+			<a th:href="@{/usuario/home}" class="logo d-flex align-items-center">
+				<img th:src="@{/images/TecAccess.png}" alt="LogoPrin">
+				<h1 class="sitename"><b>TECH</b>ACCESS</h1>
+			</a>
+
+			<nav id="navmenu" class="navmenu">
+				<ul>
+					<li><a th:href="@{/Administrador/usuarios}">Dashboard</a></li>
+					<li><a th:href="@{/Administrador/form}">Registros</a></li>
+					<li><a th:href="@{/Administrador/fichas}" class="active"><b>Fichas</b></a></li>
+					<li><a href="#">Administrador</a></li>
+				</ul>
+				<i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+			</nav>
+
+		</div>
+	</header>
+
+</div>
 
 <div th:fragment="footer" style=" position: bottom; width: 100%;">
 

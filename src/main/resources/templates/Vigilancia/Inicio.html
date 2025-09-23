@@ -19,7 +19,7 @@
 					<li><a th:href="@{#}">Registros</a></li>
 					<li><a th:href="@{#}">Fichas</a>
 					</li>
-					<li><a href="#">Administador</a></li>
+					<li><a href="#">Vigilancia</a></li>
 				</ul>
 				<i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
 			</nav>
@@ -32,7 +32,7 @@
 		<!-- Page Title -->
 		<div class="page-title dark-background" th:style="'background-image: url(' + @{/images/fondo.jpeg} + ');'">
 			<div class="container position-relative">
-				<h1>Dashboard</h1>
+				<h1>Vigilancia</h1>
 				<nav class="breadcrumbs">
 					<ol>
 						<li><a th:href="@{/usuario/home}"><b>Salir</b></a></li>
@@ -55,7 +55,7 @@
 
 								<div class="col-md-12">
 
-									
+
 									<table class="table datatable">
 										<thead>
 											<tr class="centrados">
@@ -63,18 +63,30 @@
 												<th scope="col">Documento</th>
 												<th scope="col">Rol</th>
 												<th scope="col">Ficha</th>
-												<th scope="col">Estado</th>
 
-												<th scope="col"> Editar </th>
-												<th scope="col"> Eliminar </th>
+												<th scope="col"> Asistencia </th>
 											</tr>
 										</thead>
-										<tbody >
+										<tbody th:each="usuario: ${Usuarios}">
 											<tr>
-												
+												<td th:text="${usuario.nombre}"></td>
+												<td th:text="${usuario.documento}"></td>
+												<td th:text="${usuario.rol.tipo}"></td>
+												<td th:text="${usuario.ficha.numFicha}"></td>
+
+												<td> 
+													<button type="button" class="btn btn-primary"
+														data-bs-toggle="modal" data-bs-target="#exampleModal">
+														Registrar ficha
+													</button>
+												</td>
+
+
+
 											</tr>
-											
+
 										</tbody>
+
 
 									</table>
 								</div>
