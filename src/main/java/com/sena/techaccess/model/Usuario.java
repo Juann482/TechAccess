@@ -23,12 +23,11 @@ public class Usuario {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String nombre;
-
 	private String email;
 	private String documento;
 	private String direccion;
 	private String telefono;
-	private String password;w
+	private String password;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ficha_id")

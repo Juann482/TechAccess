@@ -33,8 +33,6 @@ public class UsuarioINController {
 		model.addAttribute("usuario", new Usuario()); // evita null en thymeleaf
 		return "usuario_Interno/Aprendiz/aprendiz";
 	}
-	@Autowired
-	private IFichaService fichaService;
 
 	@GetMapping("/seguridad")
 	public String vigilancia() {
