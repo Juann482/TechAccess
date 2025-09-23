@@ -11,6 +11,8 @@ import com.sena.techaccess.service.IEstadoCuentaService;
 import com.sena.techaccess.service.IFichaService;
 import com.sena.techaccess.service.IRolService;
 import com.sena.techaccess.service.IUsuarioService;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @Controller
 @RequestMapping("/usuario_Interno")
@@ -30,6 +32,10 @@ public class UsuarioINController {
 	@Autowired
 	private IFichaService fichaService;
 
+	@GetMapping("/seguridad")
+	public String vigilancia() {
+		return "/usuario_Interno/seguridad";
+	}
 	
 
 	

@@ -146,13 +146,16 @@ public class Usuario {
 
 	public void setFicha(Ficha ficha) {
 	    this.ficha = ficha;
-	}	
+	}
 
 	@Override
 	public String toString() {
-		return "Usuario [id=" + id + ", nombre=" + nombre + ", email=" + email
-				+ ", documento=" + documento + ", direccion=" + direccion + ", telefono=" + telefono 
-				  + "]";
-	}
+		return "Usuario [id=" + id + ", nombre=" + nombre + ", email=" + email + ", documento=" + documento
+				+ ", direccion=" + direccion + ", telefono=" + telefono + ", password=" + password + ", ficha=" + ficha
+				+ ", permisos=" + permisos + ", estadoCuenta=" + estadoCuenta + ", rol=" + rol + ", vigilancia="
+				+ vigilancia + ", acceso=" + acceso + "]";
+	}	
+
+	
 
 }

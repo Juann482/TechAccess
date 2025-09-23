@@ -17,4 +17,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
 	Optional<Usuario> findByNombre(String nombres);
 	
 	List<Usuario> findByEstadoCuenta(EstadoCuenta nombreEstado);
+	
+	//================================================0
+
 }
