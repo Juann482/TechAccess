@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.sena.techaccess.model.Usuario;
 import com.sena.techaccess.service.IUsuarioService;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @Controller
 @RequestMapping("/usuario_Interno")
@@ -22,6 +24,7 @@ public class UsuarioINController {
 	@Autowired
 	private IUsuarioService usuarioService;
 
+
 	/**
 	 * Mostrar formulario de aprendiz con un objeto vacío para evitar null
 	 */
@@ -29,6 +32,13 @@ public class UsuarioINController {
 	public String mostrarFormulario(Model model) {
 		model.addAttribute("usuario", new Usuario()); // evita null en thymeleaf
 		return "usuario_Interno/Aprendiz/aprendiz";
+	}
+	@Autowired
+	private IFichaService fichaService;
+
+	@GetMapping("/seguridad")
+	public String vigilancia() {
+		return "/usuario_Interno/seguridad";
 	}
 
 	/**

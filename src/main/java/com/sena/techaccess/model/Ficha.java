@@ -73,7 +73,7 @@ public class Ficha {
 	@Override
 	public String toString() {
 		return "Ficha [idFicha=" + idFicha + ", nombrePrograma=" + nombrePrograma + ", numFicha=" + numFicha
-				+ ", usuario=" + usuario + "]";
+				+ "]";
 	}
 
 	
