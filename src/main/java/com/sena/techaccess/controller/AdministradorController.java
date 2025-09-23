@@ -74,6 +74,7 @@ public class AdministradorController {
 	@GetMapping("/usuarios") /// funcionarioF/Dashboard
 	public String enlistarUsuarios(Model model) {
 		
+
 		model.addAttribute("Usuarios", usuarioService.findAll()); // Listado de usuarios
 		model.addAttribute("usuario", new Usuario());
 		return "Administrador/Dashboard";
