@@ -23,34 +23,39 @@ public class Usuario {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String nombre;
-	
+
 	private String email;
 	private String documento;
 	private String direccion;
 	private String telefono;
 	private String password;
+	private String estado;
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="ficha_id")
+	@JoinColumn(name = "ficha_id")
 	private Ficha ficha;
 
 	@OneToMany(mappedBy = "usuario")
 	private List<Permisos> permisos = new ArrayList<>();
 
-	@ManyToOne //(fetch = FetchType.LAZY)
-	@JoinColumn(name ="estado_cuenta")
+	@ManyToOne // (fetch = FetchType.LAZY)
+	@JoinColumn(name = "estado_cuenta")
 	private EstadoCuenta estadoCuenta;
 
-	@ManyToOne //(fetch = FetchType.LAZY)//LAZY evita traer objetos grandes que no siempre necesitas.
-	@JoinColumn(name="Rol")
+	@ManyToOne // (fetch = FetchType.LAZY)//LAZY evita traer objetos grandes que no siempre
+				// necesitas.
+	@JoinColumn(name = "Rol")
 	private Rol rol;
-	
+
 	@OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Vigilancia vigilancia;
 
-	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)//CAscadeType.ALL Borra todas sus fichas y accesos automaticamente si se llega a borrar un usuario
-	@JoinColumn(name ="Acceso")
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL) // CAscadeType.ALL Borra todas sus fichas y accesos
+																	// automaticamente si se llega a borrar un usuario
+	@JoinColumn(name = "Acceso")
 	private Acceso acceso;
+	
+	
 
 	public Usuario() {
 
@@ -86,7 +91,7 @@ public class Usuario {
 
 	public String getEmail() {
 		return email;
-	}	
+	}
 
 	public void setEmail(String email) {
 		this.email = email;
@@ -123,36 +128,43 @@ public class Usuario {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
+
 	public Rol getRol() {
-	    return rol;
+		return rol;
 	}
 
 	public void setRol(Rol rol) {
-	    this.rol = rol;
+		this.rol = rol;
 	}
-	
+
 	public EstadoCuenta getEstadoCuenta() {
-	    return estadoCuenta;
+		return estadoCuenta;
 	}
 
 	public void setEstadoCuenta(EstadoCuenta estadoCuenta) {
-	    this.estadoCuenta = estadoCuenta;
+		this.estadoCuenta = estadoCuenta;
 	}
-	
+
 	public Ficha getFicha() {
-	    return ficha;
+		return ficha;
 	}
 
 	public void setFicha(Ficha ficha) {
-	    this.ficha = ficha;
-	}	
+		this.ficha = ficha;
+	}
 
 	@Override
 	public String toString() {
-		return "Usuario [id=" + id + ", nombre=" + nombre + ", email=" + email
-				+ ", documento=" + documento + ", direccion=" + direccion + ", telefono=" + telefono 
-				  + "]";
+		return "Usuario [id=" + id + ", nombre=" + nombre + ", email=" + email + ", documento=" + documento
+				+ ", direccion=" + direccion + ", telefono=" + telefono + "]";
+	}
+
+	public String getEstado() {
+		return estado;
+	}
+
+	public void setEstado(String estado) {
+		this.estado = estado;
 	}
 
 }

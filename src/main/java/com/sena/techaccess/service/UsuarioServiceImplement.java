@@ -61,6 +61,12 @@ public class UsuarioServiceImplement implements IUsuarioService {
 		return Optional.empty();
 	}
 
+	@Override
+	public Usuario obtenerUsuario() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 	
 

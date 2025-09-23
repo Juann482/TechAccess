@@ -1,0 +1,295 @@
+﻿<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head th:insert="~{/usuario/templates_usuario.html::head}"></head>
+
+<body class="body" style="font-family: 'Segoe UI', sans-serif;">
+
+	<header id="header" class="header d-flex align-items-center fixed-top">
+		<div
+			class="container-fluid container-xl position-relative d-flex w-100 align-items-center justify-content-between">
+			<!-- HEADER -->
+			<header class="header d-flex align-items-center justify-content-between fixed-top w-100"
+				style="background-color: rgba(0, 124, 88, 0.6); box-shadow: 0 5px 3px rgba(0,0,0,0.2);">
+				<h1 class="sitename m-0">
+					<strong style="color:#ffffff;">TECH</strong>
+					<span style="color:#ffffff;">ACCESS</span>
+					<span style="color:#adb5bd;">/</span>
+					<span style="color:#ffffff;">SENA - CIMM CIUDADELA</span>
+				</h1>
+			</header>
+		</div>
+	</header>
+
+	<!-- CONTENIDO -->
+	<main class="main py-4" style="background-color: rgba(0, 124, 88, 0.05);">
+		<div class="container">
+			<div class="row">
+
+
+				<!-- Aquí va tu contenido -->
+
+
+	</main>
+
+	<div class="video-container2">
+		<video class="video-background2" autoplay muted loop>
+			<source th:src="@{/assets/vid/entradaS.mp4}" type="video/mp4">
+			Error al cargar el video.
+		</video>
+	</div>
+
+	<div>
+		<!-- Encabezado -->
+
+		<!-- Contenido -->
+		<main class="main py-4" style="background-color: rgba(0, 124, 88, 0.05);">
+			<div class="container">
+				<div class="row">
+
+					<!-- Menú lateral -->
+					<div class="col-lg-3 mb-4">
+						<div class="user-nav rounded shadow-sm p-3 bg-white">
+							<div class="text-center mb-3">
+								<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyPko2ajUOpOXvihi71Rccu8kXmRXPhnkOKA&s"
+									alt="Foto de perfil"
+									style="width: 120px; border-radius: 50%; border: 2px solid #007C58;">
+
+
+
+								<div class="border rounded p-2 mb-2 bg-light" style="margin-top: 15px;">
+									<p class="mb-0 text-success">
+										Rol: <span th:text="${usuario != null ? usuario.rol : ''}"></span>
+
+									</p>
+								</div>
+
+								<div class="border rounded p-2 mb-2 bg-light" style="margin-top: 15px;">
+									<p class="mb-0 text-success">
+										Nombre Aprendiz: <span
+											th:text="${usuario != null ? usuario.nombre : ''}"></span>
+									</p>
+								</div>
+
+								<div class="border rounded p-2 mb-2 bg-light">
+									<p class="mb-0 text-success">
+										Ficha: <span th:text="${usuario != null ? usuario.ficha : ''}"></span>
+									</p>
+								</div>
+
+								<div class="border rounded p-2 mb-2 bg-light">
+									<p class="mb-0 text-success">
+										Estado: <span class="badge bg-success"
+											th:text="${usuario != null ? usuario.estado : ''}"></span>
+									</p>
+								</div>
+
+
+
+
+							</div>
+
+							<nav class="nav flex-column">
+								<a th:href="@{/usuario/home}" class="btn btn-outline-success btn-sm mt-2">
+									<i class="bi bi-box-arrow-left text-success"></i> Salir
+								</a>
+
+								<!-- Botón "Código" -->
+								<a href="#" class="btn btn-outline-success btn-sm mt-2"
+									onclick="mostrarQR(); return false;">
+									<i class="bi bi-qr-code me-2 text-success"></i>Codigo
+								</a>
+
+								<!-- Código QR -->
+								<div class="codigo-containermy-4" id="codigoQR" style="display:none;">
+									<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMnbU2i2ZVheiCtFIK6xZnSBE0fSikFVjM-Q&s"
+										alt="Código QR" class="img-fluid" style="max-width: 250px;">
+								</div>
+
+								<script>
+									function mostrarQR() {
+										var qr = document.getElementById("codigoQR");
+										qr.style.display = qr.style.display === "none" ? "block" : "none";
+									}
+								</script>
+
+								<!-- Botón "Ver horario completo" -->
+								<a href="#" class="btn btn-outline-success btn-sm mt-2"
+									onclick="toggleHorario(); return false;">
+									<i class="bi bi-eye me-2 text-success"></i> Ver horario completo
+								</a>
+
+								<!-- Botón "Historial" con Modal -->
+								<a href="#" class="btn btn-outline-success btn-sm mt-3" data-bs-toggle="modal"
+									data-bs-target="#historialModal" onclick="mostrarHistorial(); return false;">
+									<i class="bi bi-eye me-2 text-success"></i> Ver historial acceso
+								</a>
+
+								<!-- Modal de Historial -->
+								<div id="historialModal" class="modal fade" tabindex="-1"
+									aria-labelledby="historialModalLabel" aria-hidden="true">
+									<div class="modal-dialog">
+										<div class="modal-content">
+											<div class="modal-header">
+												<h5 class="modal-title" id="historialModalLabel">Historial de Accesos
+												</h5>
+												<button type="button" class="btn-close" data-bs-dismiss="modal"
+													aria-label="Close"></button>
+											</div>
+											<div class="modal-body">
+												<div id="contenidoHistorial">
+													<p>Historial de accesos...</p>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<!-- Botones de configuración -->
+								<a th:href="@{/usuario_Interno/Aprendiz/excusas}"
+									class="btn btn-outline-success btn-sm mt-2">
+									<i class="bi bi-gear me-2 text-success"></i>Cargar Excusas
+								</a>
+
+								<a href="#" class="btn btn-outline-success btn-sm mt-2">
+									<i class="bi bi-gear me-2 text-success"></i>Configuración
+								</a>
+							</nav>
+						</div>
+					</div>
+					<!-- Contenido principal -->
+
+
+
+					<div class="col-lg-9">
+						<div class="access-card bg-white shadow-sm rounded p-4" style="opacity: 0.8;">
+							<section class="section dashboard">
+								<did class="card">
+									<did class="card-body">
+										<h5 class="card-title"></h5>
+
+
+										<form th:action="@{/Aprendiz/save}" method="post" enctype="multipart/form-data"
+											th:object="${excusa}">
+											<div class="row mb-3">
+												<label class="col-sm-2 col-form-label">Nombre y apellidos: </label>
+												<div class="col-sm-10">
+													<input type="text" th:field="*{nombres}" class="form-control"
+														placeholder="Ingrese nombres y apellidos" required>
+												</div>
+											</div>
+
+											<div class="row mb-3">
+												<label class="col-sm-2 col-form-label">Documento:</label>
+												<div class="col-sm-10">
+													<input type="text" th:field="*{ndocumento}" class="form-control"
+														placeholder="Ingrese documento" required>
+												</div>
+											</div>
+
+											<div class="row mb-3">
+												<label class="col-sm-2 col-form-label">Ficha:</label>
+												<div class="col-sm-10">
+													<input type="text" th:field="*{ficha}" class="form-control"
+														required>
+												</div>
+											</div>
+
+											<div class="row mb-3">
+												<label class="col-sm-2 col-form-label">Número ficha:</label>
+												<div class="col-sm-10">
+													<input type="number" th:field="*{numeroFicha}" class="form-control"
+														required>
+												</div>
+											</div>
+
+											<div class="row mb-3">
+												<label class="col-sm-2 col-form-label">Motivo:</label>
+												<div class="col-sm-10">
+													<select th:field="*{motivo}" class="form-select">
+														<option value="">***Seleccionar***</option>
+														<option value="Enfermedad">Enfermedad</option>
+														<option value="Incapacidades médicas">Incapacidades médicas
+														</option>
+														<option value="Derecho al voto">Derecho al voto</option>
+														<option value="Calamidad doméstica">Calamidad doméstica</option>
+														<option value="Licencia de maternidad">Licencia de maternidad
+														</option>
+														<option value="Fuerza mayor">Fuerza mayor</option>
+														<option value="Eventos académicos">Eventos académicos</option>
+														<option value="Otro">Otro</option>
+													</select>
+												</div>
+											</div>
+
+											<div class="row mb-3">
+												<label class="col-sm-2 col-form-label">Fecha:</label>
+												<div class="col-sm-10">
+													<input type="date" th:field="*{fecha}" class="form-control"
+														required>
+												</div>
+											</div>
+
+											<div class="row mb-3">
+												<label class="col-sm-2 col-form-label">Soporte:</label>
+												<div class="col-sm-10">
+													<input type="file" class="form-control" name="file">
+												</div>
+											</div>
+
+											<div class="text-end">
+												<button type="submit" class="btn btn-success">
+													<i class="bi bi-send-plus"></i> Guardar
+												</button>
+											</div>
+										</form>
+									</did>
+
+
+									<did class="row mb-3"></did>
+									<did class="row mb-3"></did>
+									<did class="row mb-3"></did>
+									<did class="row mb-3"></did>
+									<did class="row mb-3">
+										<label class="col-sm-2 col-form-label">Guardar cambios</label>
+										<did class="col-sm-10">
+											<button type="submit" class="btn btn-success"><i
+													class="bi bi-send-plus"></i>Guardar
+											</button>
+										</did>
+									</did>
+
+								</did>
+								</did>
+
+							</section>
+
+						</div>
+					</div> <!-- Fin contenido principal -->
+
+				</div>
+			</div>
+		</main>
+
+		<div th:insert="~{/usuario/templates_usuario.html::footer}"></div>
+		<div th:insert="~{/usuario/templates_usuario.html::jsFiles}"></div>
+	</div>
+
+	<!-- Archivos JS de Bootstrap -->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
+
+	<script>
+		function mostrarHistorial() {
+			// Llenar el historial con información dinámica
+			const historial = `
+                <h6><b>Aula Computacional N°1</b></h6>
+                <p><b>Entrada:</b> 15 Mayo, 08:15 AM</p>
+                <p><b>Salida:</b> 14 Mayo, 02:30 PM</p>
+            `;
+			document.getElementById('contenidoHistorial').innerHTML = historial;
+		}
+	</script>
+
+</body>
+
+</html>

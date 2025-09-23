@@ -12,7 +12,7 @@ public interface IUsuarioService {
 	public Usuario save(Usuario usuario);
 
 	public void delete(Integer id);
-	
+
 	public void update(Usuario usuario);
 
 	public Usuario findByNombre(String nombre);
@@ -20,8 +20,9 @@ public interface IUsuarioService {
 	public Usuario findByEmail(String email);
 
 	public Optional<Usuario> findByDocumento(String documento);
-	
+
+	public Usuario obtenerUsuario();
+
 	List<Usuario> findAll();
-	
-	
+
 }
