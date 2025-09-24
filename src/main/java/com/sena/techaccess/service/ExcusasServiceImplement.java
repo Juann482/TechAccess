@@ -20,15 +20,16 @@ public class ExcusasServiceImplement implements IExcusasService {
 	}
 
 	@Override
-	public void delete(Integer idExcusas) {
+	public void delete(Integer id) {
 		// TODO Auto-generated method stub
+		return excusasRepository.deleteById(id);
 
 	}
 
 	@Override
-	public Optional<Excusas> findById(Integer idExcusas) {
+	public Optional<Excusas> findById(Integer id) {
 		// TODO Auto-generated method stub
-		return Optional.empty();
+		return excusasRepository.findById(id);
 	}
 
 	@Override
@@ -40,6 +41,7 @@ public class ExcusasServiceImplement implements IExcusasService {
 	@Override
 	public List<Excusas> findAll() {
 		// TODO Auto-generated method stub
-		return null;
+		return excusasRepository.findAll();
 	}
+
 }

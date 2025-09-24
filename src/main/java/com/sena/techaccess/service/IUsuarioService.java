@@ -25,5 +25,4 @@ public interface IUsuarioService {
 
 	List<Usuario> findAll();
 
-
 }

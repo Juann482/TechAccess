@@ -32,15 +32,22 @@ public class UsuarioServiceImplement implements IUsuarioService {
 	public Optional<Usuario> get(Integer id) {
 		// TODO Auto-generated method stub
 		return usuarioRepository.findById(id);
+
 	}
 
-	@Transactional
+	@Override
+	public void update(Usuario usuario) {
+		usuarioRepository.save(usuario);
+	}
+
+	@Override
+	// @Transactional
 	public Usuario save(Usuario usuario) {
 		return usuarioRepository.save(usuario);
 	}
 
 	@Transactional
-	public void deleteById(Integer id) {
+	public void delete(Integer id) {
 		usuarioRepository.deleteById(id);
 	}
 
@@ -75,6 +82,7 @@ public class UsuarioServiceImplement implements IUsuarioService {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 
 	// metodito bn belico para validar por nombre o email
 	public Usuario validarUsuario(String userInput, String password) {

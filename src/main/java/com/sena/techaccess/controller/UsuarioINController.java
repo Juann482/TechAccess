@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.sena.techaccess.model.Usuario;
 import com.sena.techaccess.service.IUsuarioService;
-import org.springframework.web.bind.annotation.RequestParam;
-
 
 @Controller
 @RequestMapping("/usuario_Interno")
@@ -23,7 +21,6 @@ public class UsuarioINController {
 
 	@Autowired
 	private IUsuarioService usuarioService;
-
 
 	/**
 	 * Mostrar formulario de aprendiz con un objeto vacío para evitar null
@@ -49,12 +46,7 @@ public class UsuarioINController {
 
 		// enviamos el usuario guardado a la vista
 		model.addAttribute("usuario", usuario);
-		return "usuario_Interno/Aprendiz/aprendiz";
-	}
-
-	@GetMapping("/Aprendiz/excusas")
-	public String excusas() {
-		return "usuario_Interno/Aprendiz/excusas";
+		return "Aprendiz/aprendiz";
 	}
 
 }
