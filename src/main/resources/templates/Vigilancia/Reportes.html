@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head th:insert="~{/Administrador/templates_vigilancia.html::head}"></head>
+
+<body class="contact-page">
+
+	<header id="header" class="header d-flex align-items-center fixed-top">
+		<div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
+
+			<a th:href="@{/usuario/home}" class="logo d-flex align-items-center">
+				<img th:src="@{/images/TecAccess.png}" alt="LogoPrin">
+				<h1 class="sitename"><b>TECH</b>ACCESS</h1>
+			</a>
+
+			<nav id="navmenu" class="navmenu">
+				<ul>
+					<li><a th:href="@{/Vigilancia/Inicio}" ><b>Ingresos</b></a></li>
+					<li><a th:href="@{/vigilancia/Reportes}" class="active">Reportes</a></li>
+					<li><a th:href="@{#}">Novedades</a>
+					</li>
+					<li><a href="#">Vigilancia</a></li>
+				</ul>
+				<i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+			</nav>
+
+		</div>
+	</header>
+
+	<main class="main">
+
+		<!-- Page Title -->
+		<div class="page-title dark-background" th:style="'background-image: url(' + @{/images/fondo.jpeg} + ');'">
+			<div class="container position-relative">
+				<h1>Reportes</h1>
+				<nav class="breadcrumbs">
+					<ol>
+						<li><a th:href="@{/usuario/home}"><b>Salir</b></a></li>
+						<li class="current">Vigilancia</li>
+					</ol>
+				</nav>
+			</div>
+		</div>
+		<!-- End Page Title -->
+
+		<!-- Contact Section -->
+		<section id="contact" class="contact section" style="padding-top: 220px;">
+			<!--Acomodar Style cuando este todo finalizado-->
+			<div class="container" data-aos="fade-up" data-aos-delay="100">
+				<div class="container form-container-overlap">
+					<div class="row justify-content-center" data-aos="fade-up" data-aos-delay="300">
+						<div class="col-lg-10">
+							<div class="contact-form-wrapper">
+								
+
+
+								<div class="col-md-12">
+									<h5 class="mb-3"><i class="bi bi-activity me-2">Ingreso de personal</i></h5>
+
+
+									<table class="table datatable">
+										<thead>
+											<tr class="centrados">
+												<th scope="col">Nombre completo</th>
+												<th scope="col">Documento</th>
+												<th scope="col">Rol</th>
+												<th scope="col">Ficha</th>
+												<th></th>
+
+												<th scope="col"> Detalles </th>
+											</tr>
+										</thead>
+										<tbody th:each="usuario: ${Usuarios}">
+											<tr>
+												<td th:text="${usuario.nombre}"></td>
+												<td th:text="${usuario.documento}"></td>
+												<td th:text="${usuario.rol.tipo}"></td>
+												<td th:text="${usuario.ficha.numFicha}"></td>
+
+												<td> 
+													<button type="button" class="btn btn-primary"
+														data-bs-toggle="modal" data-bs-target="#exampleModal">
+														Registrar ficha
+													</button>
+												</td>
+
+
+
+											</tr>
+
+										</tbody>
+
+
+									</table>
+								</div>
+
+							</div>
+						</div>
+					</div>
+		</section>
+
+	</main>
+
+	<div th:insert="~{/usuario/templates_usuario.html::footer}"></div>
+
+	<div th:insert="~{/usuario/templates_usuario.html::jsFiles}"></div>
+
+</body>
+
+</html>

@@ -71,7 +71,7 @@ public class AdministradorController {
 	// ========================== DASHBOAD =========================
 
 	// Enlistado de usuarios
-	@GetMapping("/usuarios") /// funcionarioF/Dashboard
+	@GetMapping("/usuarios") 
 	public String enlistarUsuarios(Model model) {
 		
 
