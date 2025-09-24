@@ -34,40 +34,35 @@
 				<!-- Menú lateral -->
 				<div class="col-lg-3 mb-4">
 					<div class="user-nav rounded shadow-sm p-3 bg-white">
-						<div class="text-center mb-3">
+						<a class="text-center mb-3 d-block" th:action="@{/Aprendiz/datosUser}">
 							<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyPko2ajUOpOXvihi71Rccu8kXmRXPhnkOKA&s"
 								alt="Foto de perfil"
 								style="width: 120px; border-radius: 50%; border: 2px solid #007C58;">
 
-							<br>
 
+							<!--
 							<div class="border rounded p-2 mb-2 bg-light" style="margin-top: 15px;">
 								<p class="mb-0 text-success">
-									Rol: <span th:text="${usuario.rol}"></span>
+									Nombre Aprendiz: <span th:text="${Usuario.nombre}"></span>
 								</p>
 							</div>
 
-							<div class="border rounded p-2 mb-2 bg-light" style="margin-top: 15px;">
+							 <div class="border rounded p-2 mb-2 bg-light">
 								<p class="mb-0 text-success">
-									Nombre Aprendiz: <span th:text="${usuario.nombre}"></span>
+									Ficha: <span th:text="${ficha.numFicha}"></span>
 								</p>
 							</div>
 
 							<div class="border rounded p-2 mb-2 bg-light">
 								<p class="mb-0 text-success">
-									Ficha: <span th:text="${usuario.ficha}"></span>
+									Estado: <span class="badge bg-success"
+										th:text="${estadoCuenta.nombreEstado}"></span>
 								</p>
 							</div>
-
-							<div class="border rounded p-2 mb-2 bg-light">
-								<p class="mb-0 text-success">
-									Estado: <span class="badge bg-success" th:text="${usuario.estado}"></span>
-								</p>
-							</div>
+-->
 
 
-
-						</div>
+						</a>
 
 						<nav class="nav flex-column">
 							<a th:href="@{/usuario/home}" class="btn btn-outline-success btn-sm mt-2">

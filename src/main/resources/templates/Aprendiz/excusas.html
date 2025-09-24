@@ -113,43 +113,10 @@
 									}
 								</script>
 
-								<!-- Botón "Ver horario completo" -->
-								<a href="#" class="btn btn-outline-success btn-sm mt-2"
-									onclick="toggleHorario(); return false;">
-									<i class="bi bi-eye me-2 text-success"></i> Ver horario completo
-								</a>
 
-								<!-- Botón "Historial" con Modal -->
-								<a href="#" class="btn btn-outline-success btn-sm mt-3" data-bs-toggle="modal"
-									data-bs-target="#historialModal" onclick="mostrarHistorial(); return false;">
-									<i class="bi bi-eye me-2 text-success"></i> Ver historial acceso
-								</a>
-
-								<!-- Modal de Historial -->
-								<div id="historialModal" class="modal fade" tabindex="-1"
-									aria-labelledby="historialModalLabel" aria-hidden="true">
-									<div class="modal-dialog">
-										<div class="modal-content">
-											<div class="modal-header">
-												<h5 class="modal-title" id="historialModalLabel">Historial de Accesos
-												</h5>
-												<button type="button" class="btn-close" data-bs-dismiss="modal"
-													aria-label="Close"></button>
-											</div>
-											<div class="modal-body">
-												<div id="contenidoHistorial">
-													<p>Historial de accesos...</p>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
 
 								<!-- Botones de configuración -->
-								<a th:href="@{/usuario_Interno/Aprendiz/excusas}"
-									class="btn btn-outline-success btn-sm mt-2">
-									<i class="bi bi-gear me-2 text-success"></i>Cargar Excusas
-								</a>
+
 
 								<a href="#" class="btn btn-outline-success btn-sm mt-2">
 									<i class="bi bi-gear me-2 text-success"></i>Configuración
@@ -167,103 +134,48 @@
 								<did class="card">
 									<did class="card-body">
 										<h5 class="card-title"></h5>
+										<form th:action="@{/excusas/save}" th:object="${excusa}" method="post"
+											enctype="multipart/form-data">
+											<input type="text" th:field="*{nombre}"
+												placeholder="Ingrese nombres y apellidos" required />
+											<input type="text" th:field="*{documento}" placeholder="Ingrese documento"
+												required />
+											<input type="text" th:field="*{ficha}" placeholder="Ficha" required />
+											<input type="number" th:field="*{numeroFicha}" placeholder="Número de ficha"
+												required />
 
+											<select th:field="*{motivo}">
+												<option value="">***Seleccionar***</option>
+												<option value="Enfermedad">Enfermedad</option>
+												<option value="Incapacidad médica">Incapacidad médica</option>
+												<option value="Derecho al voto">Derecho al voto</option>
+												<option value="Calamidad doméstica">Calamidad doméstica</option>
+												<option value="Otro">Otro</option>
+											</select>
 
-										<form th:action="@{/Aprendiz/save}" method="post" enctype="multipart/form-data"
-											th:object="${excusa}">
-											<div class="row mb-3">
-												<label class="col-sm-2 col-form-label">Nombre y apellidos: </label>
-												<div class="col-sm-10">
-													<input type="text" th:field="*{nombres}" class="form-control"
-														placeholder="Ingrese nombres y apellidos" required>
-												</div>
-											</div>
+											<input type="date" th:field="*{fecha}" required />
 
-											<div class="row mb-3">
-												<label class="col-sm-2 col-form-label">Documento:</label>
-												<div class="col-sm-10">
-													<input type="text" th:field="*{ndocumento}" class="form-control"
-														placeholder="Ingrese documento" required>
-												</div>
-											</div>
-
-											<div class="row mb-3">
-												<label class="col-sm-2 col-form-label">Ficha:</label>
-												<div class="col-sm-10">
-													<input type="text" th:field="*{ficha}" class="form-control"
-														required>
-												</div>
-											</div>
-
-											<div class="row mb-3">
-												<label class="col-sm-2 col-form-label">Número ficha:</label>
-												<div class="col-sm-10">
-													<input type="number" th:field="*{numeroFicha}" class="form-control"
-														required>
-												</div>
-											</div>
-
-											<div class="row mb-3">
-												<label class="col-sm-2 col-form-label">Motivo:</label>
-												<div class="col-sm-10">
-													<select th:field="*{motivo}" class="form-select">
-														<option value="">***Seleccionar***</option>
-														<option value="Enfermedad">Enfermedad</option>
-														<option value="Incapacidades médicas">Incapacidades médicas
-														</option>
-														<option value="Derecho al voto">Derecho al voto</option>
-														<option value="Calamidad doméstica">Calamidad doméstica</option>
-														<option value="Licencia de maternidad">Licencia de maternidad
-														</option>
-														<option value="Fuerza mayor">Fuerza mayor</option>
-														<option value="Eventos académicos">Eventos académicos</option>
-														<option value="Otro">Otro</option>
-													</select>
-												</div>
-											</div>
-
-											<div class="row mb-3">
-												<label class="col-sm-2 col-form-label">Fecha:</label>
-												<div class="col-sm-10">
-													<input type="date" th:field="*{fecha}" class="form-control"
-														required>
-												</div>
-											</div>
-
-											<div class="row mb-3">
-												<label class="col-sm-2 col-form-label">Soporte:</label>
-												<div class="col-sm-10">
-													<input type="file" class="form-control" name="file">
-												</div>
-											</div>
-
-											<div class="text-end">
-												<button type="submit" class="btn btn-success">
-													<i class="bi bi-send-plus"></i> Guardar
-												</button>
-											</div>
+											<input type="file" name="img" />
+											<button type="submit" class="btn btn-success">Guardar</button>
 										</form>
+
 									</did>
-
-
-									<did class="row mb-3"></did>
-									<did class="row mb-3"></did>
-									<did class="row mb-3"></did>
-									<did class="row mb-3"></did>
-									<did class="row mb-3">
-										<label class="col-sm-2 col-form-label">Guardar cambios</label>
-										<did class="col-sm-10">
-											<button type="submit" class="btn btn-success"><i
-													class="bi bi-send-plus"></i>Guardar
-											</button>
-										</did>
+								</did>
+								</form>
+								</did>
+								<did class="row mb-3"></did>
+								<did class="row mb-3"></did>
+								<did class="row mb-3"></did>
+								<did class="row mb-3"></did>
+								<did class="row mb-3">
+									<label class="col-sm-2 col-form-label">Guardar cambios</label>
+									<did class="col-sm-10">
+										<button type="submit" class="btn btn-success"><i
+												class="bi bi-send-plus"></i>Guardar
+										</button>
 									</did>
-
 								</did>
-								</did>
-
 							</section>
-
 						</div>
 					</div> <!-- Fin contenido principal -->
 

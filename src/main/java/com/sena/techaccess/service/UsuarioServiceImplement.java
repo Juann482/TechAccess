@@ -23,12 +23,12 @@ public class UsuarioServiceImplement implements IUsuarioService {
 	public Optional<Usuario> findById(Integer id) {
 		return usuarioRepository.findById(id);
 	}
-	
+
 	@Override
 	public Optional<Usuario> get(Integer id) {
 		// TODO Auto-generated method stub
 		return usuarioRepository.findById(id);
-	}	
+	}
 
 	@Override
 	public void update(Usuario usuario) {
@@ -36,7 +36,7 @@ public class UsuarioServiceImplement implements IUsuarioService {
 	}
 
 	@Override
-	//@Transactional
+	// @Transactional
 	public Usuario save(Usuario usuario) {
 		return usuarioRepository.save(usuario);
 	}

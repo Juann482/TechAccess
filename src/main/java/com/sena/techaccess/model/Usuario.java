@@ -28,7 +28,7 @@ public class Usuario {
 	private String documento;
 	private String direccion;
 	private String telefono;
-	private String password;w
+	private String password;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ficha_id")
@@ -53,8 +53,6 @@ public class Usuario {
 																	// automaticamente si se llega a borrar un usuario
 	@JoinColumn(name = "Acceso")
 	private Acceso acceso;
-	
-	
 
 	public Usuario() {
 
@@ -149,7 +147,7 @@ public class Usuario {
 	}
 
 	public void setFicha(Ficha ficha) {
-	    this.ficha = ficha;
+		this.ficha = ficha;
 	}
 
 	@Override
@@ -159,6 +157,6 @@ public class Usuario {
 				+ ", direccion=" + direccion + ", telefono=" + telefono + ", password=" + password + ", ficha=" + ficha
 				+ ", permisos=" + permisos + ", estadoCuenta=" + estadoCuenta + ", rol=" + rol + ", vigilancia="
 				+ vigilancia + ", acceso=" + acceso + "]";
-	}	
+	}
 
 }
