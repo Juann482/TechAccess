@@ -28,7 +28,7 @@ public class Usuario {
 	private String documento;
 	private String direccion;
 	private String telefono;
-	private String password;w
+	private String password;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ficha_id")
