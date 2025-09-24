@@ -23,7 +23,6 @@ public class Usuario {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String nombre;
-
 	private String email;
 	private String documento;
 	private String direccion;
