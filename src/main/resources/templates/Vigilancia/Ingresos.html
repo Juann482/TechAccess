@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 
-<head th:insert="~{/usuario/templates_usuario.html::head}"></head>
+<head th:insert="~{/Administrador/templates_vigilancia.html::head}"></head>
 
 <body class="contact-page">
 
@@ -15,9 +15,9 @@
 
 			<nav id="navmenu" class="navmenu">
 				<ul>
-					<li><a href="#" class="active"><b>Inicio</b></a></li>
-					<li><a th:href="@{#}">Registros</a></li>
-					<li><a th:href="@{#}">Fichas</a>
+					<li><a href="#" class="active"><b>Ingresos</b></a></li>
+					<li><a th:href="@{/Vigilancia/Reportes}">Reportes</a></li>
+					<li><a th:href="@{#}">Novedades</a>
 					</li>
 					<li><a href="#">Vigilancia</a></li>
 				</ul>
@@ -32,7 +32,7 @@
 		<!-- Page Title -->
 		<div class="page-title dark-background" th:style="'background-image: url(' + @{/images/fondo.jpeg} + ');'">
 			<div class="container position-relative">
-				<h1>Vigilancia</h1>
+				<h1>Ingresos</h1>
 				<nav class="breadcrumbs">
 					<ol>
 						<li><a th:href="@{/usuario/home}"><b>Salir</b></a></li>
@@ -51,9 +51,11 @@
 					<div class="row justify-content-center" data-aos="fade-up" data-aos-delay="300">
 						<div class="col-lg-10">
 							<div class="contact-form-wrapper">
+								
 
 
 								<div class="col-md-12">
+									<h5 class="mb-3"><i class="bi bi-activity me-2">Ingreso de personal</i></h5>
 
 
 									<table class="table datatable">
@@ -68,14 +70,14 @@
 											</tr>
 										</thead>
 										<tbody th:each="usuario: ${Usuarios}">
-											<tr>
+											<tr class="centrados">
 												<td th:text="${usuario.nombre}"></td>
 												<td th:text="${usuario.documento}"></td>
 												<td th:text="${usuario.rol.tipo}"></td>
 												<td th:text="${usuario.ficha.numFicha}"></td>
 
 												<td> 
-													<button type="button" class="btn btn-primary"
+													<button type="button" class="btn btn-outline-success"
 														data-bs-toggle="modal" data-bs-target="#exampleModal">
 														Registrar ficha
 													</button>
