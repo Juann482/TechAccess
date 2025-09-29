@@ -1,6 +1,9 @@
 
 package com.sena.techaccess.model;
 
+import org.springframework.data.annotation.Transient;
+import org.springframework.web.multipart.MultipartFile;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -8,7 +11,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "excusas")
+@Table(name = "Excusas")
 public class Excusas {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,6 +23,10 @@ public class Excusas {
 	private String motivo;
 	private String fecha;
 	private String soporte;
+	
+	@Transient
+	private transient MultipartFile soporteFile;
+
 
 	public Excusas() {
 
@@ -107,6 +114,14 @@ public class Excusas {
 		return "Excusas [id=" + id + ", nombres=" + nombres + ", Ndocumento=" + ndocumento + ", ficha=" + ficha
 				+ ", numeroFicha=" + numeroFicha + ", motivo=" + motivo + ", fecha=" + fecha + ", soporte=" + soporte
 				+ "]";
+	}
+
+	
+	
+
+	public MultipartFile getSoporteFile() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

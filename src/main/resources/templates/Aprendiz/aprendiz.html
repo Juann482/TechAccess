@@ -5,18 +5,15 @@
 
 <body class="body" style="font-family: 'Segoe UI', sans-serif;">
 
-	<header id="header" class="header d-flex align-items-center fixed-top">
-		<div
-			class="container-fluid container-xl position-relative d-flex w-100 align-items-center justify-content-between">
-			<header class="header d-flex align-items-center justify-content-between fixed-top w-100"
-				style="background-color: rgba(0, 124, 88, 0.6); box-shadow: 0 5px 3px rgba(0,0,0,0.2);">
-				<h1 class="sitename m-0">
-					<strong style="color:#ffffff;">TECH</strong>
-					<span style="color:#ffffff;">ACCESS</span>
-					<span style="color:#adb5bd;">/</span>
-					<span style="color:#ffffff;">SENA - CIMM CIUDADELA</span>
-				</h1>
-			</header>
+	<header id="header" class="header d-flex align-items-center justify-content-between fixed-top w-100"
+		style="background-color: rgba(0, 124, 88, 0.6); box-shadow: 0 5px 3px rgba(0,0,0,0.2);">
+		<div class="container-fluid container-xl d-flex w-100 align-items-center justify-content-between">
+			<h1 class="sitename m-0">
+				<strong style="color:#ffffff;">TECH</strong>
+				<span style="color:#ffffff;">ACCESS</span>
+				<span style="color:#adb5bd;">/</span>
+				<span style="color:#ffffff;">SENA - CIMM CIUDADELA</span>
+			</h1>
 		</div>
 	</header>
 
@@ -34,40 +31,21 @@
 				<!-- Menú lateral -->
 				<div class="col-lg-3 mb-4">
 					<div class="user-nav rounded shadow-sm p-3 bg-white">
-						<div class="text-center mb-3">
+						<a class="text-center mb-3 d-block" th:href="@{/Aprendiz/datosUser}">
 							<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyPko2ajUOpOXvihi71Rccu8kXmRXPhnkOKA&s"
 								alt="Foto de perfil"
 								style="width: 120px; border-radius: 50%; border: 2px solid #007C58;">
 
-							<br>
+							<!--
 
-							<div class="border rounded p-2 mb-2 bg-light" style="margin-top: 15px;">
-								<p class="mb-0 text-success">
-									Rol: <span th:text="${usuario.rol}"></span>
-								</p>
-							</div>
-
-							<div class="border rounded p-2 mb-2 bg-light" style="margin-top: 15px;">
-								<p class="mb-0 text-success">
-									Nombre Aprendiz: <span th:text="${usuario.nombre}"></span>
-								</p>
-							</div>
-
-							<div class="border rounded p-2 mb-2 bg-light">
-								<p class="mb-0 text-success">
-									Ficha: <span th:text="${usuario.ficha}"></span>
-								</p>
-							</div>
-
-							<div class="border rounded p-2 mb-2 bg-light">
-								<p class="mb-0 text-success">
-									Estado: <span class="badge bg-success" th:text="${usuario.estado}"></span>
-								</p>
-							</div>
+							<span th:text="${usuario.nombre} ?: 'Sin nombre'"></span>
+							<span th:text="${numFicha.numFicha}"></span>
+							<span th:text="${estadoCuenta.nombreEstado}"></span>
 
 
+							-->
 
-						</div>
+						</a>
 
 						<nav class="nav flex-column">
 							<a th:href="@{/usuario/home}" class="btn btn-outline-success btn-sm mt-2">
@@ -81,7 +59,7 @@
 							</a>
 
 							<!-- Código QR -->
-							<div class="codigo-containermy-4" id="codigoQR" style="display:none;">
+							<div class="codigo-container my-4" id="codigoQR" style="display:none;">
 								<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMnbU2i2ZVheiCtFIK6xZnSBE0fSikFVjM-Q&s"
 									alt="Código QR" class="img-fluid" style="max-width: 250px;">
 							</div>
@@ -101,9 +79,10 @@
 
 							<!-- Botón "Historial" con Modal -->
 							<a href="#" class="btn btn-outline-success btn-sm mt-3" data-bs-toggle="modal"
-								data-bs-target="#historialModal" onclick="mostrarHistorial(); return false;">
+								data-bs-target="#historialModal">
 								<i class="bi bi-eye me-2 text-success"></i> Ver historial acceso
 							</a>
+
 
 							<!-- Modal de Historial -->
 							<div id="historialModal" class="modal fade" tabindex="-1"
@@ -250,7 +229,7 @@
 
 									<small class="d-block fw-bold mt-2">Entrada : </small>
 									<small class="d-block text-muted">15 Mayo, 08:15 AM</small>
-									<small class="d-block fw-bold mt-">Salida : </small>
+									<small class="d-block fw-bold mt-2">Salida : </small>
 									<small class="d-block text-muted">15 Mayo, 02:30 PM</small>
 
 									<a href="#" class="btn btn-outline-secondary btn-sm mt-3" data-bs-toggle="modal"
