@@ -9,8 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.sena.techaccess.model.Excusas;
@@ -25,6 +23,7 @@ public class AprendizController {
 
 	// >private final Logger LOGGER =
 	// LoggerFactory.getLogger(AprendizController.class);
+
 
 	@Autowired
 	private IExcusasService excusasService;
@@ -64,8 +63,12 @@ public class AprendizController {
 		model.addAttribute("numFicha", excusasService.findAll().get(0));
 		model.addAttribute("estadoCuenta", estadocuentaService.findAll().get(0));
 
+
+	@GetMapping("/aprendiz")
+	public String InicioAprendiz() {
 		return "Aprendiz/aprendiz";
 	}
+
 
 	@PostMapping("/datosUser")
 	public String guardarExcusa(@ModelAttribute("Excusas") Excusas excusas) throws IOException {
@@ -92,6 +95,7 @@ public class AprendizController {
 	public String listarExcusas(Model model) {
 		model.addAttribute("excusas", excusasService.findAll());
 		return "Aprendiz/excusas"; // tu nueva vista con la tabla
+
 	}
 
 }

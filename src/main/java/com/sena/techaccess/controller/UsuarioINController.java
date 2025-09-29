@@ -15,6 +15,7 @@ import com.sena.techaccess.service.IFichaService;
 import com.sena.techaccess.service.IUsuarioService;
 import org.springframework.web.bind.annotation.RequestParam;
 
+
 @Controller
 @RequestMapping("/usuario_Interno")
 public class UsuarioINController {
@@ -36,6 +37,7 @@ public class UsuarioINController {
 	@Autowired
 	private IFichaService fichaService;
 
+
 	@GetMapping("/seguridad")
 	public String vigilancia() {
 		return "/usuario_Interno/seguridad";
@@ -51,12 +53,7 @@ public class UsuarioINController {
 
 		// enviamos el usuario guardado a la vista
 		model.addAttribute("usuario", usuario);
-		return "usuario_Interno/Aprendiz/aprendiz";
-	}
-
-	@GetMapping("/Aprendiz/excusas")
-	public String excusas() {
-		return "usuario_Interno/Aprendiz/excusas";
+		return "Aprendiz/aprendiz";
 	}
 
 }
