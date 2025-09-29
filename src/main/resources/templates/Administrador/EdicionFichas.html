@@ -1,27 +1,11 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 
-<head th:insert="~{/usuario/templates_usuario.html::head}"></head>
+<head th:insert="~{/Administrador/templates_Administrador.html::head}"></head>
 
 <body class="contact-page">
-
-	<header id="header" class="header d-flex align-items-center fixed-top">
-		<div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
-
-			<a th:href="@{/usuario/home}" class="logo d-flex align-items-center">
-				<img th:src="@{/images/TecAccess.png}" alt="LogoPrin">
-				<h1 class="sitename"><b>TECH</b>ACCESS</h1>
-			</a>
-
-			<nav id="navmenu" class="navmenu">
-				<ul>
-
-				</ul>
-				<i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-			</nav>
-
-		</div>
-	</header>
+	
+	<div th:insert="~{/Administrador/templates_Administrador.html::Edicion}"></div>
 
 	<main class="main">
 
@@ -92,9 +76,9 @@
 
 	</main>
 
-	<div th:insert="~{/usuario/templates_usuario.html::footer}"></div>
+	<div th:insert="~{/Administrador/templates_Administrador.html::footer}"></div>
 
-	<div th:insert="~{/usuario/templates_usuario.html::jsFiles}"></div>
+	<div th:insert="~{/Administrador/templates_Administrador.html::jsFiles}"></div>
 
 </body>
 

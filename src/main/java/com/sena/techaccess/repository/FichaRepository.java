@@ -11,6 +11,6 @@ public interface FichaRepository extends JpaRepository<Ficha, Integer> {
     Ficha findByNombrePrograma(String nombrePrograma);
     
     // Buscar fichas por número de ficha
-    Ficha findByNumFicha(Integer numFicha);
+    Ficha findByNumFicha(String numFicha);
     
 }

@@ -2,22 +2,22 @@
 
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 
-<head th:insert="~{/Administrador/templates_Administrador.html::head}"></head>
+<head th:insert="~{/Vigilancia/templates_vigilancia.html::head}"></head>
 
 <body class="contact-page">
 
-	<div th:insert="~{/Administrador/templates_Administrador::Fichas}"></div>
-	
+	<div th:insert="~{/Vigilancia/templates_vigilancia::visitantes}"></div>
+
 	<main class="main">
 
 		<!-- Page Title -->
 		<div class="page-title dark-background" th:style="'background-image: url(' + @{/images/fondo.jpeg} + ');'">
 			<div class="container position-relative">
-				<h1>Fichas</h1>
+				<h1>Visitantes</h1>
 				<nav class="breadcrumbs">
 					<ol>
 						<li><a th:href="@{/usuario/home}"><b>Salir</b></a></li>
-						<li class="current">Administrador</li>
+						<li class="current">Vigilancia</li>
 					</ol>
 				</nav>
 			</div>
@@ -36,41 +36,34 @@
 						<div class="col-lg-10">
 							<div class="contact-form-wrapper">
 								<div class="contact-form-wrapper">
-									<p>¿Necesita registrar una ficha nueva?</p>
+									<p>Registro para visitantes</p>
 									<button type="button" class="btn btn-primary" data-bs-toggle="modal"
 										data-bs-target="#exampleModal">
-										Registrar ficha
+										Registrar visitante
 									</button>
 								</div>
 								<br>
 								<br>
-								
-
-
-								<h2 class="text-center mb-4">Fichas registradas</h2>
+								<h2 class="text-center mb-4">Historial de visitantes</h2>
 								<table class="table datatable">
 									<thead>
-										<tr>
-											<th scope="col">Id</th>
-											<th scope="col">Número de ficha</th>
-											<th scope="col">Nombre del programa</th>
-
-											<th scope="col" class="centrados">Editar </th>
-											<th scope="col" class="centrados">Eliminar </th>
+										<tr class="centrados">
+											<th scope="col">Nombre completo</th>
+											<th scope="col">Documento</th>
+											<th scope="col">Correo electrónico</th>
+											<th scope="col">Teléfono</th>
+											<th scope="col">Hora de ingreso</th>
+											<th scope="col">Hora de salida</th>
+											<th scope="col">Editar </th>
 										</tr>
 									</thead>
-									<tbody th:each="ficha: ${fichas}">
-										<tr>
-											<td th:text="${ficha.idFicha}"></td>
-											<td th:text="${ficha.numFicha}"></td>
-											<td th:text="${ficha.nombrePrograma}"></td>
+									<tbody th:each="visitante: ${visitantesH}">
+										<tr class="centrados">
 											
-											<td class="centrados"><a title="Editar" class="btn btn-outline-info"
-													th:href="@{/Administrador/EdicionFichas/{idFicha} (idFicha=${ficha.idFicha})}"><i
-														class="bi bi-pencil-fill"></i> Editar</a></td>
-											<td class="centrados"><a title="Eliminar" class="btn btn-outline-danger"
-													th:href="@{/Administrador/delete/{idFicha} (idFicha=${ficha.idFicha})}"><i
-														class="bi bi-trash-fill " ></i> Eliminar</a></td>
+											<td th:text="${visitante.nombre}"></td>
+											<td th:text="${visitante.documento}"></td>
+											<td th:text="${visitante.email}"></td>
+											<td th:text="${visitante.telefono}"></td>
 
 										</tr>
 									</tbody>
@@ -100,15 +93,30 @@
 							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 						</div>
 						<div class="modal-body">
+
 							<!--CONTENIDO DEL MODEL-->
-							<form th:action="@{/Administrador/fichaSave}" method="post">
+
+							<form th:action="@{/Vigilancia/visitanteSave}" method="post">
 								<div class="row g-3">
-									<div class="col-md-6">
+
+									<div class="col-md-12">
 										<div class="form-group">
 											<div class="input-with-icon">
-												<i class="bi bi-book"></i>
-												 <input type="text" class="form-control" id="nombrePrograma" name="nombrePrograma"
-													placeholder="Nombre del programa" required>
+												<i class="bi bi-person-bounding-box"></i>
+												<input type="text" class="form-control" id="nombre" name="nombre"
+													placeholder="Nombre completo" required>
+
+
+											</div>
+										</div>
+									</div>
+
+									<div class="col-md-12">
+										<div class="form-group">
+											<div class="input-with-icon">
+												<i class="bi bi-envelope"></i>
+												<input type="email" class="form-control" id="email" name="email"
+													placeholder="Correo electrónico" required autocomplete="off">
 											</div>
 										</div>
 									</div>
@@ -116,9 +124,21 @@
 									<div class="col-md-6">
 										<div class="form-group">
 											<div class="input-with-icon">
-												<i class="bi bi-123"></i>
-												<input type="number" class="form-control" id="numFicha" name="numFicha"
-													placeholder="Número de la ficha" required>
+												<i class="bi bi-person-vcard"></i>
+												<input type="number" class="form-control" id="documento"
+													name="documento" placeholder="Número de documento" required>
+											</div>
+										</div>
+									</div>
+
+
+
+									<div class="col-md-6">
+										<div class="form-group">
+											<div class="input-with-icon">
+												<i class="bi bi-telephone"></i>
+												<input type="number" class="form-control" id="telefono" name="telefono"
+													placeholder="Teléfono" required autocomplete="off">
 											</div>
 										</div>
 									</div>
@@ -144,9 +164,9 @@
 
 
 
-	<div th:insert="~{/Administrador/templates_Administrador.html::footer}"></div>
+	<div th:insert="~{/Vigilancia/templates_vigilancia.html::footer}"></div>
 
-	<div th:insert="~{/Administrador/templates_Administrador.html::jsFiles}"></div>
+	<div th:insert="~{/Vigilancia/templates_vigilancia.html::jsFiles}"></div>
 
 </body>
 

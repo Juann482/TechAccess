@@ -10,6 +10,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
@@ -30,7 +31,7 @@ public class Usuario {
 	private String password;
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "ficha_id")
+	@JoinColumn(name = "ficha_id", nullable = true)
 	private Ficha ficha;
 
 	@OneToMany(mappedBy = "usuario")
@@ -52,6 +53,9 @@ public class Usuario {
 																	// automaticamente si se llega a borrar un usuario
 	@JoinColumn(name = "Acceso")
 	private Acceso acceso;
+	
+	@ManyToMany
+	private List<Dispositivo> dispositivo = new ArrayList<>();
 
 	public Usuario() {
 
