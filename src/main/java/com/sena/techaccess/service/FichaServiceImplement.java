@@ -30,7 +30,7 @@ public class FichaServiceImplement implements IFichaService {
 		return fichaRepository.findAll();
 	}
 
-	public Ficha findByNumFicha(Integer numFicha) { // Busca ficha por número de ficha
+	public Ficha findByNumFicha(String numFicha) { // Busca ficha por número de ficha
 		return fichaRepository.findByNumFicha(numFicha);
 	}
 

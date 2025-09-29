@@ -14,34 +14,24 @@ public class ExcusasServiceImplement implements IExcusasService {
 	@Autowired
 	private ExcusasRepository excusasRepository;
 
-	@Override
-	public Excusas save(Excusas excusa) {
-		return excusasRepository.save(excusa);
-	}
+	 @Override
+	    public Excusas save(Excusas excusas) {
+	        return excusasRepository.save(excusas);
+	    }
 
-	@Override
-	public void delete(Integer id) {
-		// TODO Auto-generated method stub
-		return excusasRepository.deleteById(id);
+	    @Override
+	    public void delete(Integer id) {
+	        excusasRepository.deleteById(id);
+	    }
 
-	}
+	    @Override
+	    public Optional<Excusas> findById(Integer id) {
+	        return excusasRepository.findById(id);
+	    }
 
-	@Override
-	public Optional<Excusas> findById(Integer id) {
-		// TODO Auto-generated method stub
-		return excusasRepository.findById(id);
-	}
-
-	@Override
-	public List<Excusas> findByIdExcusas(Integer idExcusas) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Excusas> findAll() {
-		// TODO Auto-generated method stub
-		return excusasRepository.findAll();
-	}
+	    @Override
+	    public List<Excusas> findAll() {
+	        return excusasRepository.findAll();
+	    }	
 
 }

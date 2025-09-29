@@ -6,14 +6,13 @@ import java.util.Optional;
 import com.sena.techaccess.model.Excusas;
 
 public interface IExcusasService {
+	
 	public Excusas save(Excusas excusas);
 
-	public void delete(Integer idExcusas);
+	public void delete(Integer id);
 
-	public Optional<Excusas> findById(Integer idExcusas);
+	public Optional<Excusas> findById(Integer id);
 
-	List<Excusas> findByIdExcusas(Integer idExcusas);
-
-	// void update(Excusas excusas);
 	List<Excusas> findAll();
+
 }

@@ -42,7 +42,7 @@ package com.sena.techaccess.controller;
 				case 2:
 					return "Usuario_Interno/aprendiz";
 				case 1:
-					return "Usuario_Interno/admin";
+					return "Administrador/admin";
 				default:
 					return "redirect:/usuario/home?error=tipo";
 				}

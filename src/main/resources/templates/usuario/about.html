@@ -5,246 +5,247 @@
 
 <body class="about-page">
 
-  <header id="header" class="header d-flex align-items-center fixed-top">
-    <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
+	<header id="header" class="header d-flex align-items-center fixed-top">
+		<div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
 
-      <a th:href="@{/usuario/home}" class="logo d-flex align-items-center">
-        <!-- Uncomment the line below if you also wish to use an image logo -->
-        <img th:src="@{/images/TecAccess.png}" alt=""> 
-       
-        <h1 class="sitename"><b>TECH</b>ACCESS</h1>
-      </a>
+			<a th:href="@{/usuario/home}" class="logo d-flex align-items-center">
+				<!-- Uncomment the line below if you also wish to use an image logo -->
+				<img th:src="@{/images/TecAccess.png}" alt="">
 
-      <nav id="navmenu" class="navmenu">
-        <ul>
-			
-          <li><a th:href="@{/usuario/home}">Inicio</a></li>        
-          <li><a th:href="@{/usuario/about}" style="color: #2f92b1;"><b>Sobre nosotros</b></a></li>
-          <li><a th:href="@{/usuario/soporte}">Soporte</a></li>
-		  
-        </ul>
-		
-        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-      </nav>
+				<h1 class="sitename"><b>TECH</b>ACCESS</h1>
+			</a>
 
-    </div>
-  </header>
+			<nav id="navmenu" class="navmenu">
+				<ul>
 
-  <main class="main">
+					<li><a th:href="@{/usuario/home}">Inicio</a></li>
+					<li><a th:href="@{/usuario/about}" style="color: #2f92b1;"><b>Sobre nosotros</b></a></li>
+					<li><a th:href="@{/usuario/soporte}">Soporte</a></li>
 
-    <!-- Page Title -->
-    <div class="page-title dark-background" th:style="'background-image: url(' + @{/images/showcase-1.webp} + ');'">
-      <div class="container position-relative">
-        <h1>Sobre nosotros</h1>
-        <p>¡Conoce a las personas que hicieron posible esta página web!</p>
-        <nav class="breadcrumbs">
-          <ol>
-            <li><a th:href="@{/usuario/home}"><b>Inicio</b></a></li>
-            <li class="current">Conócenos</li>
-          </ol>
-        </nav>
-      </div>
-    </div><!-- End Page Title -->
+				</ul>
 
-    <!-- History Section -->
-    <section id="history" class="history section">
+				<i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+			</nav>
 
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
+		</div>
+	</header>
 
-        <div class="row align-items-center g-5">
-          <div class="col-lg-6">
-            <div class="about-content" data-aos="fade-up" data-aos-delay="200">
-              <h3>Nuestra historia</h3>
-              <h2>Seguridad y organización</h2>
-              <p>Somos un grupo de desarrolladores con una idea práctica para un mejor flujo entre nuestras
-                instalaciones con el fin de tener un mejor control dentro de nuestra sede.</p>
-              <div class="timeline">
-                <div class="timeline-item">
-                  <div class="timeline-dot"></div>
-                  <div class="timeline-content">
-                    <h4>¿Cómo nació la idea?</h4>
-                    <p>Vimos que podía existir una mejor forma de administrar la circulación de todos los que entran y
-                      pensamos en una forma de optimizar el tiempo y tener una mejor seguridad para aquellas personas
-                      que
-                      pertenecen a nuestra sede, tanto para los mismos funcionarios o personas ajenas al SENA. </p>
-                  </div>
-                </div>
+	<main class="main">
 
-                <div class="timeline-item">
-                  <div class="timeline-dot"></div>
-                  <div class="timeline-content">
-                    <h4>¿A quién va dirigida?</h4>
-                    <p>La función principal esta dirigida hacia todos los funcionarios, desde los aprendices hasta los
-                      altos administrativos porque queremos que haya una mejor organización para administrar todo tipo
-                      de novedades.
-                    </p>
-                  </div>
-                </div>
+		<!-- Page Title -->
+		<div class="page-title dark-background" th:style="'background-image: url(' + @{/images/showcase-1.webp} + ');'">
+			<div class="container position-relative">
+				<h1>Sobre nosotros</h1>
+				<p>¡Conoce a las personas que hicieron posible esta página web!</p>
+				<nav class="breadcrumbs">
+					<ol>
+						<li><a th:href="@{/usuario/home}"><b>Inicio</b></a></li>
+						<li class="current">Conócenos</li>
+					</ol>
+				</nav>
+			</div>
+		</div><!-- End Page Title -->
 
-                <div class="timeline-item">
-                  <div class="timeline-dot"></div>
-                  <div class="timeline-content">
-                    <h4>¿Cuál fue nuestra inspiración?</h4>
-                    <p>Quisimos hacer un programa que dejara una huella y a su vez de aportar positivamente a una
-                      comunidad, al ver que hay empresas e instituciones que manejan sistemas similares, quisimos
-                      tomarlo de ejemplo y hacerlo aún mejor. </p>
-                  </div>
-                </div>
+		<!-- History Section -->
+		<section id="history" class="history section">
+
+			<div class="container" data-aos="fade-up" data-aos-delay="100">
+
+				<div class="row align-items-center g-5">
+					<div class="col-lg-6">
+						<div class="about-content" data-aos="fade-up" data-aos-delay="200">
+							<h3>Nuestra historia</h3>
+							<h2>Seguridad y organización</h2>
+							<p>Somos un grupo de desarrolladores con una idea práctica para un mejor flujo entre
+								nuestras
+								instalaciones con el fin de tener un mejor control dentro de nuestra sede.</p>
+							<div class="timeline">
+								<div class="timeline-item">
+									<div class="timeline-dot"></div>
+									<div class="timeline-content">
+										<h4>¿Cómo nació la idea?</h4>
+										<p>Vimos que podía existir una mejor forma de administrar la circulación de
+											todos los que entran y
+											pensamos en una forma de optimizar el tiempo y tener una mejor seguridad
+											para aquellas personas
+											que
+											pertenecen a nuestra sede, tanto para los mismos funcionarios o personas
+											ajenas al SENA. </p>
+									</div>
+								</div>
+
+								<div class="timeline-item">
+									<div class="timeline-dot"></div>
+									<div class="timeline-content">
+										<h4>¿A quién va dirigida?</h4>
+										<p>La función principal esta dirigida hacia todos los funcionarios, desde los
+											aprendices hasta los
+											altos administrativos porque queremos que haya una mejor organización para
+											administrar todo tipo
+											de novedades.
+										</p>
+									</div>
+								</div>
+
+								<div class="timeline-item">
+									<div class="timeline-dot"></div>
+									<div class="timeline-content">
+										<h4>¿Cuál fue nuestra inspiración?</h4>
+										<p>Quisimos hacer un programa que dejara una huella y a su vez de aportar
+											positivamente a una
+											comunidad, al ver que hay empresas e instituciones que manejan sistemas
+											similares, quisimos
+											tomarlo de ejemplo y hacerlo aún mejor. </p>
+									</div>
+								</div>
 
 
-              </div>
-            </div>
-          </div>
+							</div>
+						</div>
+					</div>
 
-          <div class="col-lg-6">
-            <div class="about-image" data-aos="zoom-in" data-aos-delay="300">
-              <img th:src="@{/images/TecAccess.png}" alt="Campus" class="img-fluid rounded">
+					<div class="col-lg-6">
+						<div class="about-image" data-aos="zoom-in" data-aos-delay="300">
+							<img th:src="@{/images/TecAccess.png}" alt="Campus" class="img-fluid rounded">
 
-              <div class="mission-vision" data-aos="fade-up" data-aos-delay="400">
-                <div class="mission">
-                  <h3>Objetivo general</h3>
-                  <p>El objetivo ed desarrollar un software que dé solución a las necesidades de gestión de la información a través de
-                    aplicaciones de escritorio, web o móvil integrando el desarrollo de las competencias del programa de
-                    formación. </p>
-                </div>
+							<div class="mission-vision" data-aos="fade-up" data-aos-delay="600">
+								<div class="mission">
+									<h3>Objetivo general</h3>
+									<p>El objetivo ed desarrollar un software que dé solución a las necesidades de
+										gestión de la información a través de
+										aplicaciones de escritorio, web o móvil integrando el desarrollo de las
+										competencias del programa de
+										formación. </p>
+								</div>
 
-               
-              </div>
-            </div>
-          </div>
-        </div>
 
-        <div class="row mt-5">
-          <div class="col-lg-12">
-            <div class="core-values" data-aos="fade-up" data-aos-delay="500">
-              <h3 class="text-center mb-4">Beneficios</h3>
-              <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
-                <div class="col">
-                  <div class="value-card">
-                    <div class="value-icon">
-                      <i class="bi bi-lock-fill"></i>
-                    </div>
-                    <h4>Seguridad</h4>
-                    <p>Controla a todo aquel que circule dentro con tiempos. </p>
-                  </div>
-                </div>
+							</div>
+						</div>
+					</div>
+				</div>
 
-                <div class="col">
-                  <div class="value-card">
-                    <div class="value-icon">
-                      <i class="bi bi-people"></i>
-                    </div>
-                    <h4>Auto-asistencia</h4>
-                    <p>Registra automáticamente la asistencia sin necesidad de tiempos entre clases u oficios.</p>
-                  </div>
-                </div>
+				<div class="row mt-5">
+					<div class="col-lg-12">
+						<div class="core-values" data-aos="fade-up" data-aos-delay="500">
+							<h3 class="text-center mb-4">Beneficios</h3>
+							<div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+								<div class="col">
+									<div class="value-card">
+										<div class="value-icon">
+											<i class="bi bi-lock-fill"></i>
+										</div>
+										<h4>Seguridad</h4>
+										<p>Controla a todo aquel que circule dentro con tiempos. </p>
+									</div>
+								</div>
 
-                <div class="col">
-                  <div class="value-card">
-                    <div class="value-icon">
-                      <i class="bi bi-arrow-repeat"></i>
-                    </div>
-                    <h4>Optimización</h4>
-                    <p>Agiliza el control de inasistencias con excusa de  manera virtual y con aprobaciones.</p>
-                  </div>
-                </div>
+								<div class="col">
+									<div class="value-card">
+										<div class="value-icon">
+											<i class="bi bi-people"></i>
+										</div>
+										<h4>Auto-asistencia</h4>
+										<p>Registra automáticamente la asistencia sin necesidad de tiempos entre clases
+											u oficios.</p>
+									</div>
+								</div>
 
-                <div class="col">
-                  <div class="value-card">
-                    <div class="value-icon">
-                      <i class="bi bi-postcard"></i>
-                    </div>
-                    <h4>Novedades</h4>
-                    <p>Mantente al tanto de todas las noticias y eventos que puedan ocurrir.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+								<div class="col">
+									<div class="value-card">
+										<div class="value-icon">
+											<i class="bi bi-arrow-repeat"></i>
+										</div>
+										<h4>Optimización</h4>
+										<p>Agiliza el control de inasistencias con excusa de manera virtual y con
+											aprobaciones.</p>
+									</div>
+								</div>
 
-      </div>
+								<div class="col">
+									<div class="value-card">
+										<div class="value-icon">
+											<i class="bi bi-postcard"></i>
+										</div>
+										<h4>Novedades</h4>
+										<p>Mantente al tanto de todas las noticias y eventos que puedan ocurrir.</p>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 
-    </section><!-- /History Section -->
+			</div>
 
-    <!-- Leadership Section -->
-    <section id="leadership" class="leadership section">
+		</section><!-- /History Section -->
 
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
-        <h3 class="text-center mb-4"><b>Desarrolladores</b></h3>
-       
+		<!-- Leadership Section -->
+		<section id="leadership" class="leadership section">
 
-        <div class="leadership-team">
-          <div class="row">
-            <div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="100">
-              <div class="leader-card">
-                <div class="leader-image">
-                  <img th:src="@{/images/default.jpg}" alt="Roman Bohorquez" class="img-fluid">
-                 
-                </div>
-                <div class="leader-info">
-                  <h4>Roman Orlando Bohorquéz</h4>
-                  <p class="position">Programador</p>
-                  <p class="bio">Responsable de la arquitectura del sistema y la implementación de funcionalidades clave en el backend.</p>
-                </div>
-              </div>
-            </div>
+			<div class="container" data-aos="fade-up" data-aos-delay="100">
+				<h3 class="text-center mb-4"><b>Desarrolladores</b></h3>
 
-            <div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="200">
-              <div class="leader-card">
-                <div class="leader-image">
-                  <img th:src="@{/images/default.jpg}" alt="Luis Sandoval" class="img-fluid">
-                  
-                </div>
-                <div class="leader-info">
-                  <h4>Luis Bernardo Sandoval</h4>
-                  <p class="position">Programador</p>
-                  <p class="bio">Encargado del diseño responsivo y de la integración con bases de datos.</p>
-                </div>
-              </div>
-            </div>
 
-            <div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="300">
-              <div class="leader-card">
-                <div class="leader-image">
-                  <img th:src="@{/images/default.jpg}" alt="Juan Prieto" class="img-fluid">
-                  
-                </div>
-                <div class="leader-info">
-                  <h4>Juan Andrés Prieto</h4>
-                  <p class="position">Programador</p>
-                  <p class="bio">Desarrollador frontend, centrado en la experiencia de usuario y la interfaz gráfica.</p>
-                </div>
-              </div>
-            </div>
+				<div class="leadership-team">
+					<div class="row justify-content-center">
+						<div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="100">
+							<div class="leader-card">
+								<div class="leader-image">
+									<img th:src="@{/images/Roman.jpg}" alt="Roman Bohorquez" class="img-fluid">
 
-            <div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="400">
-              <div class="leader-card">
-                <div class="leader-image">
-                  <img th:src="@{/images/default.jpg}" alt="Greily Camargo" class="img-fluid">
-                
-                </div>
-                <div class="leader-info">
-                  <h4>Greily Yicela Camargo</h4>
-                  <p class="position">Programador</p>
-                  <p class="bio">Especialista en pruebas, validación del sistema y documentación técnica.</p>
-                </div>
-              </div>
-            </div>
-          </div>
+								</div>
+								<div class="leader-info">
+									<h4>Roman Orlando Bohorquéz</h4>
+									<p class="position">Programador</p>
+									<p class="bio">Responsable de la arquitectura del sistema y la implementación de
+										funcionalidades clave en el backend.</p>
+								</div>
+							</div>
+						</div>
 
-        </div>
+						<div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="200">
+							<div class="leader-card">
+								<div class="leader-image">
+									<img th:src="@{/images/Lucho.jpg}" alt="Luis Sandoval" class="img-fluid">
 
-      </div>
+								</div>
+								<div class="leader-info">
+									<h4>Luis Bernardo Sandoval</h4>
+									<p class="position">Programador</p>
+									<p class="bio">Encargado del diseño responsivo y de la integración con bases de
+										datos.</p>
+								</div>
+							</div>
+						</div>
 
-    </section><!-- /Leadership Section -->
+						<div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="300">
+							<div class="leader-card">
+								<div class="leader-image">
+									<img th:src="@{/images/Juan.jpg}" alt="Juan Prieto" class="img-fluid">
 
-  </main>
-  
-  <div th:insert="~{/usuario/templates_usuario.html::footer}"></div>
-  
-  <div th:insert="~{/usuario/templates_usuario.html::jsFiles}"></div>
- 
+								</div>
+								<div class="leader-info">
+									<h4>Juan Andrés Prieto</h4>
+									<p class="position">Programador</p>
+									<p class="bio">Desarrollador frontend, centrado en la experiencia de usuario y la
+										interfaz gráfica.</p>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+
+		</section><!-- /Leadership Section -->
+
+	</main>
+
+	<div th:insert="~{/usuario/templates_usuario.html::footer}"></div>
+
+	<div th:insert="~{/usuario/templates_usuario.html::jsFiles}"></div>
+
 </body>
 
 </html>

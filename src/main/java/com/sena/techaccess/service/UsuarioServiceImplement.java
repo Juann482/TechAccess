@@ -9,6 +9,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.sena.techaccess.model.Rol;
 import com.sena.techaccess.model.Usuario;
 import com.sena.techaccess.repository.UsuarioRepository;
 
@@ -29,8 +30,7 @@ public class UsuarioServiceImplement implements IUsuarioService {
 	}
 
 	@Override
-	public Optional<Usuario> get(Integer id) {
-		// TODO Auto-generated method stub
+	public Optional<Usuario> get(Integer id) {		
 		return usuarioRepository.findById(id);
 
 	}
@@ -52,16 +52,6 @@ public class UsuarioServiceImplement implements IUsuarioService {
 	}
 
 	@Override
-	public void update(Usuario usuario) {
-		usuarioRepository.save(usuario);
-	}
-
-	@Override
-	public void delete(Integer id) {
-		usuarioRepository.deleteById(id);
-	}
-
-	@Override
 	public Usuario findByNombre(String nombre) {
 		throw new UnsupportedOperationException("Método findByNombre aún no implementado");
 	}
@@ -72,14 +62,18 @@ public class UsuarioServiceImplement implements IUsuarioService {
 	}
 
 	@Override
-	public Optional<Usuario> findByDocumento(String documento) {
-		// TODO Auto-generated method stub
+	public Optional<Usuario> findByDocumento(String documento) {		
 		return Optional.empty();
 	}
 
 	@Override
+	public List<Usuario> findByRol(Rol rol) {		
+		return usuarioRepository.findByRol(rol);
+	}
+	
+	@Override
 	public Usuario obtenerUsuario() {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
@@ -96,5 +90,7 @@ public class UsuarioServiceImplement implements IUsuarioService {
 
 		return null;
 	}
+
+	
 
 }

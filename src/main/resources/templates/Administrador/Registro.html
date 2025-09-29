@@ -97,7 +97,7 @@
 												<div class="input-with-icon">
 													<i class="bi bi-123"></i>
 													<select class="form-control" id="ficha" name="ficha.idFicha" autocomplete="off">
-														<option value="">------ Ficha ------</option>
+														<option value="" class="centrados">------ Ficha ------</option>
 														<option th:each="ficha : ${fichas}" 
 														th:value="${ficha.idFicha}"
 														th:text="${ficha.numFicha}">
@@ -112,7 +112,7 @@
 													<i class="bi bi-brightness-low"></i>
 													<select class="form-control" id="estadoCuenta"
 														name="estadoCuenta.idEstado" required>
-														<option value="">----- Estado -----</option>
+														<option value="" class="centrados">----- Estado -----</option>
 														<option th:each="estadoCuenta : ${estados}"
 															th:value="${estadoCuenta.idEstado}"
 															th:text="${estadoCuenta.nombreEstado}">
@@ -126,7 +126,7 @@
 												<div class="input-with-icon">
 													<i class="bi bi-person-bounding-box"></i>
 													<select class="form-control" id="Rol" name="rol.id" required>
-														<option value="">--- Seleccione rol ---</option>
+														<option value="" class="centrados">--- Seleccione rol ---</option>
 														<option th:each="rol : ${roles}" th:value="${rol.id}"
 															th:text="${rol.tipo}">
 														</option>

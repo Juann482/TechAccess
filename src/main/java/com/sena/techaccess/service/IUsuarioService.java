@@ -3,6 +3,7 @@ package com.sena.techaccess.service;
 import java.util.List;
 import java.util.Optional;
 
+import com.sena.techaccess.model.Rol;
 import com.sena.techaccess.model.Usuario;
 
 public interface IUsuarioService {
@@ -18,6 +19,8 @@ public interface IUsuarioService {
 	public Usuario findByNombre(String nombre);
 
 	public Usuario findByEmail(String email);
+	
+	public List<Usuario> findByRol(Rol rol);
 
 	public Optional<Usuario> findByDocumento(String documento);
 
