@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.sena.techaccess.model.Excusas;
 import com.sena.techaccess.service.IEstadoCuentaService;
@@ -62,16 +64,14 @@ public class AprendizController {
 		model.addAttribute("Excusas", excusasService.findAll());
 		model.addAttribute("numFicha", excusasService.findAll().get(0));
 		model.addAttribute("estadoCuenta", estadocuentaService.findAll().get(0));
+		return"";
 
-
-	@GetMapping("/aprendiz")
-	public String InicioAprendiz() {
-		return "Aprendiz/aprendiz";
 	}
+	
 
 
 	@PostMapping("/datosUser")
-	public String guardarExcusa(@ModelAttribute("Excusas") Excusas excusas) throws IOException {
+	public String guardarExcusa(@RequestParam("Excusas") Excusas excusas) throws IOException {
 		if (excusas.getSoporteFile() != null && !excusas.getSoporteFile().isEmpty()) {
 			// Guardar solo el nombre del archivo en el campo soporte (String)
 			excusas.setSoporte(excusas.getSoporteFile().getOriginalFilename());
