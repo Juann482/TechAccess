@@ -1,4 +1,10 @@
 package com.sena.techaccess.controller;
+
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.Files;
+import java.io.IOException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,7 +21,9 @@ import com.sena.techaccess.service.IUsuarioService;
 @RequestMapping("/Aprendiz")
 public class AprendizController {
 
-	// >private final Logger LOGGER = LoggerFactory.getLogger(AprendizController.class); 
+	// >private final Logger LOGGER =
+	// LoggerFactory.getLogger(AprendizController.class);
+
 
 	@Autowired
 	private IExcusasService excusasService;
@@ -43,18 +51,51 @@ public class AprendizController {
 	// =========================== Pagina principal
 	// ===================================
 
-	@GetMapping("/Aprendiz/datosUser")
+	@GetMapping("/excusas/datosUser")
 	public String mostrar(Model model) {
-		@SuppressWarnings("unused")
-		Excusas excusas = new Excusas(); // o cargar desde DB
-		model.addAttribute("usuario", usuarioService.findAll());
-		model.addAttribute("Excusas", excusasService.findAll());
-		model.addAttribute("Excusas", new Excusas());
-		model.addAttribute("nombre", usuarioService.findAll());
-		model.addAttribute("numFicha", fichaService.findAll());
-		model.addAttribute("nombreEstado", estadocuentaService.findAll());
+		Excusas excusas = new Excusas();
 
+		// Suponiendo que findAll() devuelve al menos un usuario
+		var usuario = usuarioService.findAll().get(0);
+
+		model.addAttribute("usuario", excusasService);
+		model.addAttribute("Excusas", excusasService.findAll());
+		model.addAttribute("numFicha", excusasService.findAll().get(0));
+		model.addAttribute("estadoCuenta", estadocuentaService.findAll().get(0));
+
+
+	@GetMapping("/aprendiz")
+	public String InicioAprendiz() {
 		return "Aprendiz/aprendiz";
+	}
+
+
+	@PostMapping("/datosUser")
+	public String guardarExcusa(@ModelAttribute("Excusas") Excusas excusas) throws IOException {
+		if (excusas.getSoporteFile() != null && !excusas.getSoporteFile().isEmpty()) {
+			// Guardar solo el nombre del archivo en el campo soporte (String)
+			excusas.setSoporte(excusas.getSoporteFile().getOriginalFilename());
+
+			// Crear carpeta uploads si no existe
+			Path directorio = Paths.get("uploads");
+			if (!Files.exists(directorio)) {
+				Files.createDirectories(directorio);
+			}
+
+			// Guardar físicamente el archivo
+			Path ruta = directorio.resolve(excusas.getSoporteFile().getOriginalFilename());
+			Files.write(ruta, excusas.getSoporteFile().getBytes());
+		}
+
+		excusasService.save(excusas);
+		return "redirect:/Aprendiz/excusas";
+	}
+
+	@GetMapping("/Excusas")
+	public String listarExcusas(Model model) {
+		model.addAttribute("excusas", excusasService.findAll());
+		return "Aprendiz/excusas"; // tu nueva vista con la tabla
+
 	}
 
 }
