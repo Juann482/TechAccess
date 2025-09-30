@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head th:insert="~{/Instructor/templates_Instructor.html::head}"></head>
+
+<body class="contact-page">
+
+	<div th:insert="~{/Instructor/templates_Instructor.html::Entradas}"></div>
+	<main class="main">
+
+		<!-- Page Title -->
+		<div class="page-title dark-background" th:style="'background-image: url(' + @{/images/fondo.jpeg} + ');'">
+			<div class="container position-relative">
+				<h1>Ultimas Entradas</h1>
+				<nav class="breadcrumbs">
+					<ol>
+						<li><a th:href="@{/Administrador/home}"><b>Salir</b></a></li>
+						<li class="current">Instructor</li>
+					</ol>
+				</nav>
+			</div>
+		</div>
+		<!-- End Page Title -->
+
+		<!-- Contact Section -->
+		<section id="contact" class="contact section" style="padding-top: 220px;">
+			<!--Acomodar Style cuando este todo finalizado-->
+			<div class="container" data-aos="fade-up" data-aos-delay="100">
+				<div class="container form-container-overlap">
+					<div class="row justify-content-center" data-aos="fade-up" data-aos-delay="300">
+						<div class="col-lg-10">
+							<div class="contact-form-wrapper">
+
+
+								<div class="col-md-12">
+
+									
+
+									<table class="table datatable">
+										<thead>
+											<tr class="centrados">
+												<th scope="col">Nombre aprendiz</th>
+												<th scope="col">Area</th>
+												<th scope="col">Ficha</th>	
+												<th scope="col">Estado</th>
+												
+											</tr>
+										</thead>
+										<tbody th:each="aprendiz: ${Aprendices}">
+											<tr class="centrados">
+												
+												<td th:text="${aprendiz.nombre}"></td>
+												<td th:text="${aprendiz.#}"></td>
+												<!---->
+												<td th:text="${aprendiz.ficha.numFicha}"></td>
+												<td th:text="${apraendiz.estadoCuenta.nombreEstado}"></td>
+
+												<td><a title="Editar" class="btn btn-outline-info"
+														th:href="@{/Administrador/edicionUsuario/{id} (id=${usuario.id})}"><i
+															class="bi bi-pencil-fill"></i>Editar</a></td>
+												<td><a title="Eliminar" class="btn btn-outline-danger"
+														th:href="@{/Administrador/deleteUser/{id} (id=${usuario.id})}"><i
+															class="bi bi-trash-fill"></i>Eliminar</a></td>
+
+											</tr>
+
+										</tbody>
+
+									</table>
+								</div>
+
+							</div>
+						</div>
+					</div>
+		</section>
+
+	</main>
+
+	<div th:insert="~{/Instructor/templates_Instructor.html::footer}"></div>
+
+	<div th:insert="~{/Instructor/templates_Instructor.html::jsFiles}"></div>
+
+</body>
+
+</html>

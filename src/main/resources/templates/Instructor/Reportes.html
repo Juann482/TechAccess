@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head th:insert="~{/Instructor/templates_Instructor.html::head}"></head>
+
+<body class="contact-page">
+
+	<div th:insert="~{/Instructor/templates_Instructor.html::Grupos}"></div>
+	<main class="main">
+
+		<!-- Page Title -->
+		<div class="page-title dark-background" th:style="'background-image: url(' + @{/images/fondo.jpeg} + ');'">
+			<div class="container position-relative">
+				<h1>Ultimas Entradas</h1>
+				<nav class="breadcrumbs">
+					<ol>
+						<li><a th:href="@{/Administrador/home}"><b>Salir</b></a></li>
+						<li class="current">Reportes</li>
+					</ol>
+				</nav>
+			</div>
+		</div>
+
+		<!-- Reportes-->
+		<template id="tpl-reportes">
+						<div class="access-card">
+							<h2><i class="bi bi-clipboard-data me-2"></i> Reportes</h2>
+							<ul>
+								<li th:each="reporte : ${reportes}" th:text="${reporte.descripcion}">
+									Al aprendiz X se le reporta reincidencia en el incumplimiento de actividades
+								</li>
+							</ul>
+						</div>
+					</template>
+
+	</main>
+
+	<div th:insert="~{/Instructor/templates_Instructor.html::footer}"></div>
+
+	<div th:insert="~{/Instructor/templates_Instructor.html::jsFiles}"></div>
+
+</body>
+
+</html>

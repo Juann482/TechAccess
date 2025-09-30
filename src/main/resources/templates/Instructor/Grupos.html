@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head th:insert="~{/Instructor/templates_Instructor.html::head}"></head>
+
+<body class="contact-page">
+
+	<div th:insert="~{/Instructor/templates_Instructor.html::Grupos}"></div>
+	<main class="main">
+
+		<!-- Page Title -->
+		<div class="page-title dark-background" th:style="'background-image: url(' + @{/images/fondo.jpeg} + ');'">
+			<div class="container position-relative">
+				<h1>Ultimas Entradas</h1>
+				<nav class="breadcrumbs">
+					<ol>
+						<li><a th:href="@{/Administrador/home}"><b>Salir</b></a></li>
+						<li class="current">Instructor</li>
+					</ol>
+				</nav>
+			</div>
+		</div>
+		<!-- End Page Title -->
+
+		<!-- Contact Section -->
+		<section id="contact" class="contact section" style="padding-top: 220px;">
+			<!--Acomodar Style cuando este todo finalizado-->
+			<div class="container" data-aos="fade-up" data-aos-delay="100">
+				<div class="container form-container-overlap">
+					<div class="row justify-content-center" data-aos="fade-up" data-aos-delay="300">
+						<div class="col-lg-10">
+							<div class="contact-form-wrapper">
+
+
+								<div class="col-md-12">
+
+									<!-- Ficha N1 -->
+
+									<div class="col-md-4 mb-4" each="#">
+										<div class="card shadow-sm h-100">
+											<div class="card-body text-center">
+												<h5 class="card-title" text="#">Ficha Mec202302345 - Sog</h5>
+												<p class="card-text text-muted">
+													Código: <span text="#">G123</span><br>
+													Área: <span text="#">Mecánica</span>
+												</p>
+												<a href="#" class="btn btn-primary btn-sm">Ver detalles</a>
+											</div>
+										</div>
+									</div>
+
+
+
+									<!-- Ficha N2 -->
+
+
+									<div class="col-md-4 mb-4" each="#">
+										<div class="card shadow-sm h-100">
+											<div class="card-body text-center">
+												<h5 class="card-title" text="#">Ficha TIcs202142375 - Dtma</h5>
+												<p class="card-text text-muted">
+													Código: <span text="#">G106</span><br>
+													Área: <span text="#">Tecnologias de la Informacion y
+														Comunicaciónes</span>
+												</p>
+												<a href="#" class="btn btn-primary btn-sm">Ver detalles</a>
+											</div>
+										</div>
+									</div>
+
+
+
+									<!-- Ficha N3 -->
+
+
+									<div class="col-md-4 mb-4" each="#">
+										<div class="card shadow-sm h-100">
+											<div class="card-body text-center">
+												<h5 class="card-title" text="#">Ficha TIcs202001374 - Sog</h5>
+												<p class="card-text text-muted">
+													Código: <span text="#">G132</span><br>
+													Área: <span text="#">Tecnologias de la Informacion y
+														Comunicaciónes</span>
+												</p>
+												<a href="#" class="btn btn-primary btn-sm">Ver detalles</a>
+											</div>
+										</div>
+									</div>
+
+
+								</div>
+
+							</div>
+						</div>
+					</div>
+		</section>
+
+	</main>
+
+	<div th:insert="~{/Instructor/templates_Instructor.html::footer}"></div>
+
+	<div th:insert="~{/Instructor/templates_Instructor.html::jsFiles}"></div>
+
+</body>
+
+</html>
