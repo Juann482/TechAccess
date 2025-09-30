@@ -17,13 +17,27 @@ import com.sena.techaccess.service.FichaServiceImplement;
 //@RequestMapping("/instructor")
 public class InstructorController {
 
-	@Autowired
-	private AccesoServiceImplement accesoService;
+	//@Autowired
+	//private AccesoServiceImplement accesoService;
 
 	@Autowired
 	private FichaServiceImplement fichaService;
+	
 
-	@GetMapping("/instructor")
+    public InstructorController(FichaServiceImplement fichaService) {
+        this.fichaService = fichaService;
+    }
+
+    
+    @GetMapping("/grupos")
+    public String verGrupos(Model model) {
+        List<Ficha> fichas = fichaService.findAll();
+        model.addAttribute("fichas", fichas);
+        return "Usuario_Interno/instructor";
+    }
+	/*
+	 * 
+	 * @GetMapping("/instructor")
 	public String vistaInstructor(Model model) {
 
 		// Fichas para tpl-grupos
@@ -37,7 +51,6 @@ public class InstructorController {
 		return "Usuario_Interno/instructor";
 	}
 
-	/*
 	 * @GetMapping("/grupos") public String verGrupos(Model model) { List<Ficha>
 	 * fichas = fichaService.findAll(); model.addAttribute("fichas", fichas); return
 	 * "Usuario_Interno/instructor"; }

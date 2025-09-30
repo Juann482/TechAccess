@@ -12,6 +12,18 @@ public class FichaServiceImplement implements IFichaService {
 
 	@Autowired
 	private FichaRepository fichaRepository;
+	
+	//Seccion listado de variables en ficha -- COMIENZO
+	
+	public FichaServiceImplement(FichaRepository fichaRepository) {
+		this.fichaRepository = fichaRepository;
+	}
+
+	public List<Ficha> listarFichas() {
+		return fichaRepository.findAll();
+	}
+	
+	//Seccion listado de variables en ficha -- FINAL
 
 	public Ficha save(Ficha ficha) { // Guarda o actualiza una ficha
 		return fichaRepository.save(ficha);
@@ -35,7 +47,7 @@ public class FichaServiceImplement implements IFichaService {
 	}
 
 	public void update(Ficha ficha) {
-		fichaRepository.save(ficha);		
+		fichaRepository.save(ficha);
 	}
 
 	@Override
@@ -49,5 +61,5 @@ public class FichaServiceImplement implements IFichaService {
 		// TODO Auto-generated method stub
 		return fichaRepository.findByNombrePrograma(nombrePrograma);
 	}
-	
+
 }
