@@ -1,64 +1,53 @@
 package com.sena.techaccess.model;
 
-import java.util.Date;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
 
 @Entity
 @Table(name = "acceso")
 public class Acceso {
-	
-	@Id	
+
+	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer idacceso;
-	
-	@Temporal(TemporalType.TIMESTAMP)//Almacena fecha/hora en la BD
-	private Date horaIngreso;
-	
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date horaEgreso;
-	
+
+	private Integer horaIngreso;
+	private Integer horaEgreso;
+
 	private String dispositivos;
 
-	
-	@OneToOne(mappedBy = "acceso", fetch = FetchType.LAZY)
-	@JoinColumn(name="Nombre completo")
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "usuario_id")
 	private Usuario usuario;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="Permanencia")
-	private EstadoPermanencia estadoPermanencia; // detalleacceso
+	@JoinColumn(name = "Permanencia")
+	private EstadoPermanencia estadoPermanencia;
 
 	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "vigilancia_idvigilancia")
 	private Vigilancia vigilancia;
-	
+
 	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "areaJobs_idarea")
 	private AreaJobs areaJobs;
 
-	// constructor vacio
 	public Acceso() {
 	}
 
-	// constructor con campos
-	public Acceso(Integer idacceso, Date horaIngreso, Date horaEgreso, String dispositivos) {
-		super();
+	public Acceso(Integer idacceso, Integer horaIngreso, Integer horaEgreso, String dispositivos) {
 		this.idacceso = idacceso;
 		this.horaIngreso = horaIngreso;
 		this.horaEgreso = horaEgreso;
 		this.dispositivos = dispositivos;
 	}
 
-	// getters and setters
 	public Integer getIdacceso() {
 		return idacceso;
 	}
@@ -67,19 +56,19 @@ public class Acceso {
 		this.idacceso = idacceso;
 	}
 
-	public Date getHoraIngreso() {
+	public Integer getHoraIngreso() {
 		return horaIngreso;
 	}
 
-	public void setHoraIngreso(Date horaIngreso) {
+	public void setHoraIngreso(Integer horaIngreso) {
 		this.horaIngreso = horaIngreso;
 	}
 
-	public Date getHoraEgreso() {
+	public Integer getHoraEgreso() {
 		return horaEgreso;
 	}
 
-	public void setHoraEgreso(Date horaEgreso) {
+	public void setHoraEgreso(Integer horaEgreso) {
 		this.horaEgreso = horaEgreso;
 	}
 
@@ -91,10 +80,41 @@ public class Acceso {
 		this.dispositivos = dispositivos;
 	}
 
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+
+	public EstadoPermanencia getEstadoPermanencia() {
+		return estadoPermanencia;
+	}
+
+	public void setEstadoPermanencia(EstadoPermanencia estadoPermanencia) {
+		this.estadoPermanencia = estadoPermanencia;
+	}
+
+	public Vigilancia getVigilancia() {
+		return vigilancia;
+	}
+
+	public void setVigilancia(Vigilancia vigilancia) {
+		this.vigilancia = vigilancia;
+	}
+
+	public AreaJobs getAreaJobs() {
+		return areaJobs;
+	}
+
+	public void setAreaJobs(AreaJobs areaJobs) {
+		this.areaJobs = areaJobs;
+	}
+
 	@Override
 	public String toString() {
 		return "Acceso [idacceso=" + idacceso + ", horaIngreso=" + horaIngreso + ", horaEgreso=" + horaEgreso
 				+ ", dispositivos=" + dispositivos + "]";
 	}
-
 }
