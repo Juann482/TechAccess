@@ -8,6 +8,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 
 @Entity
 @Table(name = "acceso")
@@ -20,7 +21,8 @@ public class Acceso {
 	private Integer horaIngreso;
 	private Integer horaEgreso;
 
-	private String dispositivos;
+	@OneToOne
+	private Dispositivo dispositivo;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "usuario_id")
@@ -41,11 +43,17 @@ public class Acceso {
 	public Acceso() {
 	}
 
-	public Acceso(Integer idacceso, Integer horaIngreso, Integer horaEgreso, String dispositivos) {
+	public Acceso(Integer idacceso, Integer horaIngreso, Integer horaEgreso, Dispositivo dispositivo, Usuario usuario,
+			EstadoPermanencia estadoPermanencia, Vigilancia vigilancia, AreaJobs areaJobs) {
+		super();
 		this.idacceso = idacceso;
 		this.horaIngreso = horaIngreso;
 		this.horaEgreso = horaEgreso;
-		this.dispositivos = dispositivos;
+		this.dispositivo = dispositivo;
+		this.usuario = usuario;
+		this.estadoPermanencia = estadoPermanencia;
+		this.vigilancia = vigilancia;
+		this.areaJobs = areaJobs;
 	}
 
 	public Integer getIdacceso() {
@@ -72,12 +80,12 @@ public class Acceso {
 		this.horaEgreso = horaEgreso;
 	}
 
-	public String getDispositivos() {
-		return dispositivos;
+	public Dispositivo getDispositivos() {
+		return dispositivo;
 	}
 
-	public void setDispositivos(String dispositivos) {
-		this.dispositivos = dispositivos;
+	public void setDispositivos(Dispositivo dispositivos) {
+		this.dispositivo = dispositivos;
 	}
 
 	public Usuario getUsuario() {
@@ -115,6 +123,6 @@ public class Acceso {
 	@Override
 	public String toString() {
 		return "Acceso [idacceso=" + idacceso + ", horaIngreso=" + horaIngreso + ", horaEgreso=" + horaEgreso
-				+ ", dispositivos=" + dispositivos + "]";
+				+ ", dispositivos=" + dispositivo + "]";
 	}
 }
