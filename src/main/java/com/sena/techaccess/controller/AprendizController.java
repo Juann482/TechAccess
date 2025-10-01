@@ -64,12 +64,10 @@ public class AprendizController {
 		model.addAttribute("Excusas", excusasService.findAll());
 		model.addAttribute("numFicha", excusasService.findAll().get(0));
 		model.addAttribute("estadoCuenta", estadocuentaService.findAll().get(0));
-		return"";
+		return "";
 
 	}
 	
-
-
 	@PostMapping("/datosUser")
 	public String guardarExcusa(@RequestParam("Excusas") Excusas excusas) throws IOException {
 		if (excusas.getSoporteFile() != null && !excusas.getSoporteFile().isEmpty()) {
