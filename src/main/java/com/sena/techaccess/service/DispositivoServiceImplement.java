@@ -12,13 +12,13 @@ import com.sena.techaccess.repository.DispositivoRepository;
 
 @Service
 public class DispositivoServiceImplement implements IDispositivoService {
-	
+
 	@Autowired
 	private DispositivoRepository dispositivoRepository;
 
 	@Override
-	public Optional<Dispositivo> findById(Integer id) {
-		return dispositivoRepository.findById(id);
+	public Optional<Dispositivo> findById(Integer idDisp) {
+		return dispositivoRepository.findById(idDisp);
 	}
 
 	@Override
@@ -43,12 +43,12 @@ public class DispositivoServiceImplement implements IDispositivoService {
 
 	@Override
 	public void update(Dispositivo dispositivo) {
-		dispositivoRepository.save(dispositivo);		
+		dispositivoRepository.save(dispositivo);
 	}
 
 	@Override
-	public void delete(Integer id) {
-		dispositivoRepository.deleteById(id);		
+	public void delete(Integer idDisp) {
+		dispositivoRepository.deleteById(idDisp);
 	}
 
 	@Override

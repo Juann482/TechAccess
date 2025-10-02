@@ -75,6 +75,7 @@ public class AprendizController {
 		model.addAttribute("excusas", excusasService.findAll());
 		model.addAttribute("estadoCuenta", estadocuentaService.findAll());
 
+
 		return "Aprendiz/aprendiz"; // ✅ devuelve la vista
 	}
 	
