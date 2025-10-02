@@ -1,14 +1,10 @@
 package com.sena.techaccess.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -22,13 +18,18 @@ public class Dispositivo {
 	private String marca;
 	private String color;
 
-	@ManyToMany(fetch = FetchType.LAZY)
-	private List<Usuario> usuario = new ArrayList<>();
+	
+	@ManyToOne
+	private Usuario usuario;
+
 
 	public Dispositivo() {
 	}
 
-	public Dispositivo(Integer id, String tipoD, String marca, String color, List<Usuario> usuario) {
+	
+	
+	public Dispositivo(Integer id, String tipoD, String marca, String color, Usuario usuario) {
+
 		super();
 		this.idDisp = id;
 		this.tipoD = tipoD;
@@ -69,11 +70,11 @@ public class Dispositivo {
 		this.color = color;
 	}
 
-	public List<Usuario> getUsuario() {
+	public Usuario getUsuario() {
 		return usuario;
 	}
 
-	public void setUsuario(List<Usuario> usuario) {
+	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
 
