@@ -143,15 +143,16 @@
 									<div class="col-md-5">
 										<label for="opcion">¿Ingresa dispositivo?</label>
 									</div>
-									
 
-									
+
+
 
 									<div class="col-md-3">
 										<div class="form-group">
 											<div class="input-with-icon">
 												<i class="bi bi-phone"></i>
-												<select  class="form-control" id="opcion" name="opcion" onchange="mostrarCampos()">
+												<select class="form-control" id="opcion" name="opcion"
+													onchange="mostrarCampos()">
 													<option value="no">No</option>
 													<option value="si">Sí</option>
 												</select>
@@ -162,28 +163,39 @@
 
 
 									<div id="camposExtra" class="oculto">
-										<div class="col-md-6">
-											<div class="form-group">
-												<div class="input">
-													
+										
+										<div class="row g-3">
+											<div class="col-md-4">
+												<div class="form-group">
+													<div class="input-with-icon">
+														<i class="bi bi-phone-vibrate"></i>
+														<input type="text" id="nombre" name="nombre"
+															placeholder="Tipo">
+													</div>
 												</div>
 											</div>
+
+											<div class="col-md-4">
+												<div class="form-group">
+													<div class="input-with-icon">
+														<i class="bi bi-badge-tm-fill"></i>
+														<input type="text" id="edad" name="edad" placeholder="Marca">
+													</div>
+												</div>
+											</div>
+
+											<div class="col-md-4">
+												<div class="form-group">
+													<div class="input-with-icon">
+														<i class="bi bi-palette"></i>
+														<input type="text" id="correo" name="correo" placeholder="Color">
+													</div>
+												</div>
+											</div>											
 										</div>
-										<label for="nombre">Nombre:</label>
-										<input type="text" id="nombre" name="nombre"><br><br>
 
-										<label for="edad">Edad:</label>
-										<input type="number" id="edad" name="edad"><br><br>
-
-										<label for="correo">Correo:</label>
-										<input type="email" id="correo" name="correo"><br><br>
+						
 									</div>
-
-
-
-
-
-
 
 									<div class="modal-footer">
 										<button type="button" class="btn btn-secondary"
