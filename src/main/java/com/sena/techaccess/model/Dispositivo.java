@@ -10,16 +10,18 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "dispositivo")
 public class Dispositivo {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	private Integer idDisp;
 	private String tipoD;
 	private String marca;
 	private String color;
+
 	
 	@ManyToOne
 	private Usuario usuario;
+
 
 	public Dispositivo() {
 	}
@@ -27,21 +29,21 @@ public class Dispositivo {
 	
 	
 	public Dispositivo(Integer id, String tipoD, String marca, String color, Usuario usuario) {
+
 		super();
-		this.id = id;
+		this.idDisp = id;
 		this.tipoD = tipoD;
 		this.marca = marca;
 		this.color = color;
 		this.usuario = usuario;
 	}
 
-
 	public Integer getId() {
-		return id;
+		return idDisp;
 	}
 
 	public void setId(Integer id) {
-		this.id = id;
+		this.idDisp = id;
 	}
 
 	public String getTipoD() {
@@ -78,8 +80,8 @@ public class Dispositivo {
 
 	@Override
 	public String toString() {
-		return "Dispositivo [id=" + id + ", tipoD=" + tipoD + ", marca=" + marca + ", color=" + color + ", usuario="
+		return "Dispositivo [id=" + idDisp + ", tipoD=" + tipoD + ", marca=" + marca + ", color=" + color + ", usuario="
 				+ usuario + "]";
 	}
-	
+
 }

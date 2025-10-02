@@ -37,12 +37,14 @@ package com.sena.techaccess.controller;
 				model.addAttribute("instructor", usuario);
 				// Redirigir según el tipo de usuario
 				switch (usuario.getRol().getId()) {
-				case 3:
-					return "Usuario_Interno/instructor";
+
+				case 1:
+					return "Administrador/Dashboard";
 				case 2:
 					return "Aprendiz/aprendiz";
-				case 1:
-					return "Administrador/usuarios";
+				case 3:
+					return "Instructor/instructor";
+
 				default:
 					return "redirect:/usuario/home?error=tipo";
 				}
