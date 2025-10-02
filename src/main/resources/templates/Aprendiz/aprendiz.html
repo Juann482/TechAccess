@@ -32,22 +32,31 @@
 				<div class="col-lg-3 mb-4">
 					<div class="user-nav rounded shadow-sm p-3 bg-white">
 
-						<a class="text-center mb-3 d-block" th:href="@{/Aprendiz/datosUser}">
+						<a class="text-center mb-3 d-block" th:href="@{/infoUser}">
 
 							<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyPko2ajUOpOXvihi71Rccu8kXmRXPhnkOKA&s"
 								alt="Foto de perfil"
 								style="width: 120px; border-radius: 50%; border: 2px solid #007C58;">
 
-							<!--
 
-							<span th:text="${usuario.nombre} ?: 'Sin nombre'"></span>
-							<span th:text="${numFicha.numFicha}"></span>
-							<span th:text="${estadoCuenta.nombreEstado}"></span>
+							<div class="border rounded p-2 mb-2 bg-light" style="margin-top: 15px;">
+								<p class="mb-0 text-success">
+									Nombre Aprendiz: <span th:text="${usuario != null ? usuario.nombre : ' - '}"></span>
+								</p>
+							</div>
 
+							<div class="border rounded p-2 mb-2 bg-light">
+								<p class="mb-0 text-success">
+									Ficha: <span th:text="${usuario != null ? usuario.ficha : ' - '}"></span>
+								</p>
+							</div>
 
-							-->
-
-
+							<div class="border rounded p-2 mb-2 bg-light">
+								<p class="mb-0 text-success">
+									Estado: <span th:text="${usuario != null ? usuario.estado : ' - '}"></span>
+								</p>
+							</div>
+							
 						</a>
 
 						<nav class="nav flex-column">

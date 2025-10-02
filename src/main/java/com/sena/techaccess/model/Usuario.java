@@ -51,8 +51,11 @@ public class Usuario {
 
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL) // CAscadeType.ALL Borra todas sus fichas y accesos
 																	// automaticamente si se llega a borrar un usuario
-	@JoinColumn(name = "Acceso")
+	@JoinColumn(name = "Acceso")	
 	private Acceso acceso;
+	
+	@OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY) 
+	private List<Excusas> excusas = new ArrayList<>();
 	
 	@ManyToMany
 	private List<Dispositivo> dispositivo = new ArrayList<>();
@@ -72,6 +75,10 @@ public class Usuario {
 		this.telefono = telefono;
 		this.password = password;
 	}
+
+	
+
+	
 
 	public Integer getId() {
 		return id;
@@ -129,12 +136,20 @@ public class Usuario {
 		this.password = password;
 	}
 
-	public Rol getRol() {
-		return rol;
+	public Ficha getFicha() {
+		return ficha;
 	}
 
-	public void setRol(Rol rol) {
-		this.rol = rol;
+	public void setFicha(Ficha ficha) {
+		this.ficha = ficha;
+	}
+
+	public List<Permisos> getPermisos() {
+		return permisos;
+	}
+
+	public void setPermisos(List<Permisos> permisos) {
+		this.permisos = permisos;
 	}
 
 	public EstadoCuenta getEstadoCuenta() {
@@ -145,12 +160,44 @@ public class Usuario {
 		this.estadoCuenta = estadoCuenta;
 	}
 
-	public Ficha getFicha() {
-		return ficha;
+	public Rol getRol() {
+		return rol;
 	}
 
-	public void setFicha(Ficha ficha) {
-		this.ficha = ficha;
+	public void setRol(Rol rol) {
+		this.rol = rol;
+	}
+
+	public Vigilancia getVigilancia() {
+		return vigilancia;
+	}
+
+	public void setVigilancia(Vigilancia vigilancia) {
+		this.vigilancia = vigilancia;
+	}
+
+	public Acceso getAcceso() {
+		return acceso;
+	}
+
+	public void setAcceso(Acceso acceso) {
+		this.acceso = acceso;
+	}
+
+	public List<Excusas> getExcusas() {
+		return excusas;
+	}
+
+	public void setExcusas(List<Excusas> excusas) {
+		this.excusas = excusas;
+	}
+
+	public List<Dispositivo> getDispositivo() {
+		return dispositivo;
+	}
+
+	public void setDispositivo(List<Dispositivo> dispositivo) {
+		this.dispositivo = dispositivo;
 	}
 
 	@Override
