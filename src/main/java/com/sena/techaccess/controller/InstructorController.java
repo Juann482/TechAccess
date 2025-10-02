@@ -20,14 +20,7 @@ import com.sena.techaccess.repository.AccesoRepository;
 public class InstructorController {
 
 	@Autowired
-	private AccesoRepository accesoRepository;
-
-	@GetMapping("/home")
-	public String home(Model model) {
-		List<Acceso> accesos = accesoRepository.findAll();
-		model.addAttribute("acceso", accesos);
-		return "instructor";
-	}
+	private AccesoRepository accesoRepository;	
 
 	@GetMapping("/instructor")
 	public String vistaInstructor(Model model) {
@@ -44,6 +37,13 @@ public class InstructorController {
  * 
  * @Autowired private AccesoServiceImplement accesoService;
  * 
+ * @GetMapping("/home")
+	public String home(Model model) {
+		List<Acceso> accesos = accesoRepository.findAll();
+		model.addAttribute("acceso", accesos);
+		return "instructor";
+	}
+	
  * @Autowired private FichaServiceImplement fichaService;
  * 
  * @GetMapping("/instructor") public String vistaInstructor(Model model) {
