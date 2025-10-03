@@ -100,9 +100,9 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr th:each="entrada : ${accesos}">
-								<td th:text="${entrada.usuario.nombre}">Juan Pérez</td>
-								<td th:text="${entrada.areaJobs.nombre}">Idiomas</td>
+							<tr th:each="entrada : ${acceso}">
+								<td th:text="${entrada.usuario.nombre}"></td>
+								<td th:text="${entrada.areaJobs.nomArea}"></td>
 								<td th:text="${#dates.format(entrada.horaIngreso, 'yyyy-MM-dd HH:mm')}">2025-09-20</td>
 								<td>
 									<span th:if="${entrada.estadoPermanencia.nombre == 'OK'}"
@@ -212,14 +212,15 @@
 	<div th:insert="~{/usuario/templates_usuario.html::jsFiles}"></div>
 
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
-	<script>
+	
+	<!--<script>
 		function cargar(opcion) {
 			const tpl = document.getElementById("tpl-" + opcion);
 			if (tpl) {
 				document.getElementById("contenido").innerHTML = tpl.innerHTML;
 			}
 		}
-	</script>
+	</script>-->
 </body>
 
 </html>
