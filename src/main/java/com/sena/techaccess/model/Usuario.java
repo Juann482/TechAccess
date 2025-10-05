@@ -57,7 +57,7 @@ public class Usuario {
 	@OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY) 
 	private List<Excusas> excusas = new ArrayList<>();
 	
-	@ManyToMany
+	@OneToMany
 	private List<Dispositivo> dispositivo = new ArrayList<>();
 
 	public Usuario() {
