@@ -3,7 +3,6 @@ package com.sena.techaccess.controller;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.List;
 import java.util.UUID;
 import java.nio.file.Files;
 import java.io.IOException;
@@ -22,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.sena.techaccess.model.Excusas;
-import com.sena.techaccess.model.Ficha;
 import com.sena.techaccess.repository.FichaRepository;
 import com.sena.techaccess.service.IEstadoCuentaService;
 import com.sena.techaccess.service.IExcusasService;
@@ -72,7 +70,7 @@ public class AprendizController {
 	public String mostrar(Model model) {
 
 		model.addAttribute("usuario", usuarioService);
-		model.addAttribute("excusas", excusasService.findAll());
+		model.addAttribute("ficha", fichaService.findAll());
 		model.addAttribute("estadoCuenta", estadocuentaService.findAll());
 
 
@@ -194,9 +192,6 @@ public class AprendizController {
 		return "redirect:/Aprendiz/excusas";
 	}
 
-	// @GetMapping("/list")
-	// public String listarFichas(Model model) {
-	// model.addAttribute("fichas", fichaRepository.findAll());
-	// return "Aprendiz/listaFichas";
+
 
 }
