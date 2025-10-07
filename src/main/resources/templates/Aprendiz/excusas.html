@@ -43,13 +43,13 @@
 
 								<div class="border rounded p-2 mb-2 bg-light">
 									<p class="mb-0 text-success">
-										Ficha: <span th:text="${usuario != null ? usuario.ficha : ' - '}"></span>
+										Ficha: <span th:text="${ficha != null ? ficha.nombrePrograma : ' - '}"></span>
 									</p>
 								</div>
 
 								<div class="border rounded p-2 mb-2 bg-light">
 									<p class="mb-0 text-success">
-										Estado: <span th:text="${usuario != null ? usuario.estado : ' - '}"></span>
+										Ficha: <span th:text="${ficha != null ? ficha.numFicha : ' - '}"></span>
 									</p>
 								</div>
 							</div>
@@ -91,7 +91,8 @@
 												apellidos: </label>
 											<div class="col-sm-10">
 												<input type="text" class="form-control" id="nombres" name="nombres"
-													placeholder="Ingrese nombres y apellidos" autocomplete="off"
+													placeholder="Ingrese nombres y apellidos"
+													th:value="${usuario != null ? usuario.nombre : ' - '}" readonly
 													required>
 											</div>
 										</div>
@@ -102,7 +103,9 @@
 											<div class="col-sm-10">
 												<input type="number" class="form-control" id="ndocumento"
 													name="ndocumento" placeholder="Ingrese Nº documento de identidad"
-													autocomplete="off" required>
+													autocomplete="off"
+													th:value="${usuario != null ? usuario.documento : ' - '}" required
+													readonly>
 											</div>
 										</div>
 
@@ -110,8 +113,14 @@
 											<label for="inputText" class="col-sm-2 col-form-label">Numero Ficha:
 											</label>
 											<div class="col-sm-4">
-												<input type="number" class="form-control" id="ficha" name="ficha"
-													placeholder="Ingrese Nº de ficha" autocomplete="off" required>
+												<input type="number" class="form-control" id="fichaasd" name="fichaasd"
+													placeholder="Ingrese Nº de ficha"
+													th:value="${ficha != null ? ficha.numFicha : ' - '}" required
+													readonly>
+												<input type="hidden" class="form-control" id="ficha" name="ficha"
+													placeholder="Ingrese Nº de ficha"
+													th:value="${ficha != null ? ficha.idFicha : ' - '}" required
+													readonly>
 
 											</div>
 										</div>

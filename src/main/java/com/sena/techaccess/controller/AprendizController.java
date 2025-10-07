@@ -1,11 +1,11 @@
 package com.sena.techaccess.controller;
 
+import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.UUID;
-import java.nio.file.Files;
-import java.io.IOException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.sena.techaccess.model.Excusas;
+import com.sena.techaccess.model.Usuario;
 import com.sena.techaccess.repository.FichaRepository;
 import com.sena.techaccess.service.IEstadoCuentaService;
 import com.sena.techaccess.service.IExcusasService;
@@ -31,167 +32,125 @@ import com.sena.techaccess.service.IUsuarioService;
 @RequestMapping("/Aprendiz")
 public class AprendizController {
 
-	private final Logger LOGGER = LoggerFactory.getLogger(AprendizController.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(AprendizController.class);
 
-	@Autowired
-	private IExcusasService excusasService;
+    @Autowired
+    private IExcusasService excusasService;
 
-	@Autowired
-	private IUsuarioService usuarioService;
+    @Autowired
+    private IUsuarioService usuarioService;
 
-	@Autowired
-	private IFichaService fichaService;
+    @Autowired
+    private IFichaService fichaService;
 
-	@Autowired
-	private FichaRepository fichaRepository;
+    @Autowired
+    private FichaRepository fichaRepository;
 
-	@Autowired
-	private IEstadoCuentaService estadocuentaService;
+    @Autowired
+    private IEstadoCuentaService estadoCuentaService;
 
-	AprendizController(FichaRepository fichaRepository) {
-		this.fichaRepository = fichaRepository;
-	}
+    // =========================== MÉTODOS DE NAVEGACIÓN ===========================
+    @GetMapping("/aprendiz")
+    public String inicioAprendiz(Model model) {
+        Usuario user = usuarioService.findAll().get(0);
+        model.addAttribute("usuario", user);
+        model.addAttribute("ficha", user.getFicha());
+        model.addAttribute("estadoCuenta", user.getEstadoCuenta());
+        return "Aprendiz/aprendiz";
+    }
 
-	@GetMapping("/aprendiz")
-	public String InicioAprendiz() {
-		return "Aprendiz/aprendiz";
-	}
+    @GetMapping("/excusas")
+    public String mostrarExcusas(Model model) {
+        model.addAttribute("excusa", new Excusas());
+        model.addAttribute("excusas", excusasService.findAll());
+        return "Aprendiz/excusas";
+    }
 
-	@GetMapping("/excusas")
-	public String mostarexcusas(Model modelo) {
-		modelo.addAttribute("Excusas", new Excusas());
-		return "Aprendiz/excusas";
-	}
+    // =========================== CRUD DE EXCUSAS ===========================
 
-	// =========================== Pagina principal
-	// ===================================
+    // Mostrar formulario de nueva excusa
+    @GetMapping("/form")
+    public String mostrarFormulario(Model model) {
+        model.addAttribute("excusa", new Excusas());
+        return "Aprendiz/excusaForm";
+    }
 
-	@GetMapping("/infoUser")
-	public String mostrar(Model model) {
+    // Guardar nueva excusa
+    @PostMapping("/save")
+    public String guardarExcusa(@ModelAttribute Excusas excusa, @RequestParam("img") MultipartFile archivo)
+            throws IOException {
 
-		model.addAttribute("usuario", usuarioService);
-		model.addAttribute("ficha", fichaService.findAll());
-		model.addAttribute("estadoCuenta", estadocuentaService.findAll());
+        if (!archivo.isEmpty()) {
+            Path rutaCarpeta = Paths.get("uploads");
+            if (!Files.exists(rutaCarpeta)) {
+                Files.createDirectories(rutaCarpeta);
+            }
 
+            String nombreArchivo = UUID.randomUUID() + "_" + archivo.getOriginalFilename();
+            Path rutaArchivo = rutaCarpeta.resolve(nombreArchivo);
+            Files.copy(archivo.getInputStream(), rutaArchivo, StandardCopyOption.REPLACE_EXISTING);
+            excusa.setSoporte(nombreArchivo);
+        }
 
-		return "Aprendiz/aprendiz"; // ✅ devuelve la vista
-	}
-	
-	@GetMapping("/lista")
-	public String fichas(Model model) {
-		
-		model.addAttribute("fichas", fichaService.findAll());
-		
-		return "Aprendiz/excusas";
-		
-	}
+        excusasService.save(excusa);
+        LOGGER.info("Excusa guardada con ID {}", excusa.getId());
+        return "redirect:/Aprendiz/excusas";
+    }
 
-	@PostMapping("/lista")
-	public String Fichas(Excusas excusas) {
+    // Editar excusa existente
+    @GetMapping("/edit/{id}")
+    public String editarExcusa(@PathVariable Integer id, Model model) {
+        Excusas excusa = excusasService.findById(id)
+                .orElseThrow(() -> new RuntimeException("Excusa no encontrada"));
+        model.addAttribute("excusa", excusa);
+        return "Aprendiz/excusaForm";
+    }
 
-		excusasService.save(excusas);
-		LOGGER.warn("Excusa registrada con exito: {}", excusas);
+    // Actualizar excusa
+    @PostMapping("/update")
+    public String actualizarExcusa(@ModelAttribute Excusas excusa, @RequestParam("img") MultipartFile archivo)
+            throws IOException {
 
-		return "Aprendiz/excusas";
-	}
+        Excusas existente = excusasService.findById(excusa.getId())
+                .orElseThrow(() -> new RuntimeException("Excusa no encontrada"));
 
-	// Formulario vacío
-	@GetMapping("/form")
-	public String mostrarFormulario(Model model) {
-		model.addAttribute("excusa", new Excusas());
-		return "Aprendiz/excusaForm";
-	}
+        existente.setMotivo(excusa.getMotivo());
+        existente.setFecha(excusa.getFecha());
+        existente.setFicha(excusa.getFicha());
 
-	// Guardar nueva excusa
-	@PostMapping("/save")
-	public String guardarExcusa(@ModelAttribute Excusas excusa, @RequestParam("img") MultipartFile archivo)
-			throws IOException {
-		LOGGER.info("Excusa recibida: {}", excusa);
+        if (!archivo.isEmpty()) {
+            Path rutaCarpeta = Paths.get("uploads");
+            if (!Files.exists(rutaCarpeta)) {
+                Files.createDirectories(rutaCarpeta);
+            }
 
-		if (!archivo.isEmpty()) {
-			String nombreArchivo = UUID.randomUUID() + "_" + archivo.getOriginalFilename();
-			Path ruta = Paths.get("uploads").resolve(nombreArchivo);
-			Files.copy(archivo.getInputStream(), ruta, StandardCopyOption.REPLACE_EXISTING);
-			excusa.setSoporte(nombreArchivo);
-		}
+            String nombreArchivo = UUID.randomUUID() + "_" + archivo.getOriginalFilename();
+            Path rutaArchivo = rutaCarpeta.resolve(nombreArchivo);
+            Files.copy(archivo.getInputStream(), rutaArchivo, StandardCopyOption.REPLACE_EXISTING);
+            existente.setSoporte(nombreArchivo);
+        }
 
-		excusasService.save(excusa);
-		LOGGER.info("Excusa guardada con ID {}", excusa.getId());
+        excusasService.save(existente);
+        LOGGER.info("Excusa actualizada ID {}", existente.getId());
+        return "redirect:/Aprendiz/excusas";
+    }
 
-		return "redirect:/Excusas/list";
-	}
+    // Eliminar excusa
+    @GetMapping("/delete/{id}")
+    public String eliminarExcusa(@PathVariable Integer id) {
+        excusasService.delete(id);
+        LOGGER.info("Excusa eliminada ID {}", id);
+        return "redirect:/Aprendiz/excusas";
+    }
 
-	// Listado
-	@GetMapping("/list")
-	public String listarExcusas(Model model) {
-		model.addAttribute("excusas", excusasService.findAll());
-		return "Aprendiz/excusas";
-	}
+    // =========================== INFORMACIÓN DE USUARIO ===========================
 
-	// Editar
-	@GetMapping("/edit/{id}")
-	public String editarExcusa(@PathVariable Integer id, Model model) {
-		Excusas excusa = excusasService.findById(id).orElseThrow(() -> new RuntimeException("Excusa no encontrada"));
-		model.addAttribute("excusa", excusa);
-		return "Aprendiz/excusaForm";
-	}
-
-	// Actualizar
-	@PostMapping("/update")
-	public String actualizarExcusa(@ModelAttribute Excusas excusa, @RequestParam("img") MultipartFile archivo)
-			throws IOException {
-
-		Excusas existente = excusasService.findById(excusa.getId())
-				.orElseThrow(() -> new RuntimeException("Excusa no encontrada"));
-
-		existente.setNombres(excusa.getNombres());
-		existente.setNdocumento(excusa.getNdocumento());
-		existente.setFicha(excusa.getFicha());
-		existente.setMotivo(excusa.getMotivo());
-		existente.setFecha(excusa.getFecha());
-
-		if (!archivo.isEmpty()) {
-			String nombreArchivo = UUID.randomUUID() + "_" + archivo.getOriginalFilename();
-			Path ruta = Paths.get("uploads").resolve(nombreArchivo);
-			Files.copy(archivo.getInputStream(), ruta, StandardCopyOption.REPLACE_EXISTING);
-			existente.setSoporte(nombreArchivo);
-		}
-
-		excusasService.save(existente);
-		LOGGER.info("Excusa actualizada ID {}", existente.getId());
-
-		return "redirect:/Excusas/list";
-	}
-
-	// Eliminar
-	@GetMapping("/delete/{id}")
-	public String eliminarExcusa(@PathVariable Integer id) {
-		excusasService.delete(id);
-		LOGGER.info("Excusa eliminada ID {}", id);
-		return "redirect:/Excusas/list";
-	}
-
-	@PostMapping("/datosUser")
-	public String guardarExcusa(@RequestParam("Excusas") Excusas excusas) throws IOException {
-		if (excusas.getSoporteFile() != null && !excusas.getSoporteFile().isEmpty()) {
-			// Guardar solo el nombre del archivo en el campo soporte (String)
-			excusas.setSoporte(excusas.getSoporteFile().getOriginalFilename());
-
-			// Crear carpeta uploads si no existe
-			Path directorio = Paths.get("uploads");
-			if (!Files.exists(directorio)) {
-				Files.createDirectories(directorio);
-			}
-
-			// Guardar físicamente el archivo
-			Path ruta = directorio.resolve(excusas.getSoporteFile().getOriginalFilename());
-			Files.write(ruta, excusas.getSoporteFile().getBytes());
-		}
-
-		excusasService.save(excusas);
-		return "redirect:/Aprendiz/excusas";
-	}
-
-
-
+    @GetMapping("/infouser")
+    public String mostrarInfo(Model model) {
+        Usuario user = usuarioService.findAll().get(0);
+        model.addAttribute("usuario", user);
+        model.addAttribute("ficha", user.getFicha());
+        model.addAttribute("estadoCuenta", user.getEstadoCuenta());
+        return "Aprendiz/aprendiz";
+    }
 }
