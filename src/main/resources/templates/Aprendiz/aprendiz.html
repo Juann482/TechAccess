@@ -47,16 +47,23 @@
 
 							<div class="border rounded p-2 mb-2 bg-light">
 								<p class="mb-0 text-success">
-									Ficha: <span th:text="${usuario != null ? usuario.ficha : ' - '}"></span>
+									Ficha: <span th:text="${ficha != null ? ficha.nombrePrograma : ' - '}"></span>
 								</p>
 							</div>
 
 							<div class="border rounded p-2 mb-2 bg-light">
 								<p class="mb-0 text-success">
-									Estado: <span th:text="${usuario != null ? usuario.estado : ' - '}"></span>
+									Ficha: <span th:text="${ficha != null ? ficha.numFicha : ' - '}"></span>
 								</p>
 							</div>
-							
+
+							<div class="border rounded p-2 mb-2 bg-light">
+								<p class="mb-0 text-success">
+									Estado: <span
+										th:text="${estadoCuenta != null ? estadoCuenta.nombreEstado : ' - '}"></span>
+								</p>
+							</div>
+
 						</a>
 
 						<nav class="nav flex-column">
