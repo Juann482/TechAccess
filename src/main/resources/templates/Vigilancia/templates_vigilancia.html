@@ -36,17 +36,16 @@
 			pointer-events: none;
 		}
 
-	
-		
+
+
 		.input-with-icon .form-control {
-					padding-left: 2.5rem;
-					/* espacio para el ícono */
-				}
+			padding-left: 2.5rem;
+			/* espacio para el ícono */
+		}
 
 		.oculto {
 			display: none;
 		}
-		
 	</style>
 
 	<!-- =======================================================
@@ -82,7 +81,23 @@
 						</a>
 						<ul class="dropdown-menu">
 							<li><a class="dropdown-item" th:href="@{/Vigilancia/registro}">Visitantes</a></li>
-							<li><a class="dropdown-item" href="#">Dispositivos</a></li>
+
+							<li class="dropdown-submenu">
+								<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+									aria-expanded="false">
+									Dispositivoss
+								</a>>
+								<ul class="dropdown-menu">
+									<li><a class="dropdown-item" th:href="@{/Vigilancia/Dispositivos}">Inspección</a>
+									</li>
+									<li><a class="dropdown-item"
+											th:href="@{/Vigilancia/Dispositivos/Registrar}">Registrar </a></li>
+									<li><a class="dropdown-item"
+											th:href="@{/Vigilancia/Dispositivos/Historial}">Historial</a></li>
+								</ul>
+							</li>
+
+							<li><a class="dropdown-item" th:href="@{/Vigilancia/Dispositivos}">Dispositivos</a></li>
 							<li>
 								<hr class="dropdown-divider">
 							</li>
@@ -122,7 +137,7 @@
 						</a>
 						<ul class="dropdown-menu">
 							<li><a class="dropdown-item" th:href="@{/Vigilancia/registro}"><b>Visitantes</b></a></li>
-							<li><a class="dropdown-item" href="#">Dispositivos</a></li>
+							<li><a class="dropdown-item" th:href="@{/Vigilancia/Dispositivos}">Dispositivos</a></li>
 							<li>
 								<hr class="dropdown-divider">
 							</li>
@@ -137,6 +152,45 @@
 		</div>
 	</header>
 
+</div>
+
+<!--=========================== DISPOSITIVOS =============================-->
+
+<div th:fragment="dispositivo">
+	<header id="header" class="header d-flex align-items-center fixed-top">
+		<div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
+
+			<a th:href="@{/usuario/home}" class="logo d-flex align-items-center">
+				<img th:src="@{/images/TecAccess.png}" alt="LogoPrin">
+				<h1 class="sitename"><b style="color: rgb(14, 209, 220);">TECH</b>ACCESS <b
+						style="color: rgb(14, 209, 220);">|</b> SENA</h1>
+			</a>
+
+			<nav id="navmenu" class="navmenu">
+				<ul>
+					<li><a th:href="@{/Vigilancia/Ingreso}">Ingresos</a></li>
+					<li><a th:href="@{/Vigilancia/Reportes}">Reportes</a></li>
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+							aria-expanded="false">
+							<b>Opciones</b>
+						</a>
+						<ul class="dropdown-menu">
+							<li><a class="dropdown-item" th:href="@{/Vigilancia/registro}"><b>Visitantes</b></a></li>
+							<li><a class="dropdown-item" th:href="@{/Vigilancia/Dispositivos}">Dispositivos</a></li>
+							<li>
+								<hr class="dropdown-divider">
+							</li>
+							<li><a class="dropdown-item" href="#">Si</a></li>
+						</ul>
+					</li>
+					<li><a href="#">Vigilancia</a></li>
+				</ul>
+				<i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+			</nav>
+
+		</div>
+	</header>
 </div>
 
 <!--=========================== FOOTER =============================-->

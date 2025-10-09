@@ -12,10 +12,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.sena.techaccess.model.Dispositivo;
+import com.sena.techaccess.model.DispositivoVisit;
 import com.sena.techaccess.model.Rol;
 import com.sena.techaccess.model.Usuario;
+import com.sena.techaccess.repository.DispositivoVisitRepository;
 import com.sena.techaccess.repository.RolRepository;
-import com.sena.techaccess.repository.UsuarioRepository;
+import com.sena.techaccess.service.IDispositivoService;
+import com.sena.techaccess.service.IDispositivoVisitService;
 import com.sena.techaccess.service.IRolService;
 import com.sena.techaccess.service.IUsuarioService;
 import com.sena.techaccess.service.IVigilanciaService;
@@ -28,6 +32,9 @@ public class VigilanciaController {
 	private final Logger LOGGER = (Logger) LoggerFactory.getLogger(AdministradorController.class);
 	
 	@Autowired
+	private IDispositivoService dispositivoService;
+	
+	@Autowired
 	private IVigilanciaService vigilanciaService;
 	
 	@Autowired
@@ -38,6 +45,9 @@ public class VigilanciaController {
 	
 	@Autowired
 	private RolRepository rolRepository;
+	
+	@Autowired
+	private IDispositivoVisitService dispositivoVisitService;
 	
 	@GetMapping("/Ingreso") 
 	public String usuariosvigilancia(Model model) {
@@ -69,17 +79,33 @@ public class VigilanciaController {
 	
 	//Guardar visitantes
 	@PostMapping("/visitanteSave")
-	public String registroVisitante(Usuario usuario) {
+	public String registroVisitante(Usuario usuario, DispositivoVisit dispositivo ,Model model) {
 		
 		//Asignar rol a los visitantes
 		Rol rolVisitante = rolRepository.findByTipo("Visitante");
 		usuario.setRol(rolVisitante);
 		
 		usuarioService.save(usuario);
-		LOGGER.debug("Visitante agregado con exito {}",usuario);		
+		
+		 // 3️⃣ Verificar si viene info de dispositivo (para no guardar uno vacío)
+	    if (dispositivo.getTipo() != null && !dispositivo.getTipo().equals("--Tipo--")) {
+	        // Asociar el usuario recién guardado al dispositivo
+	        dispositivo.setUsuario(usuario);
+	        dispositivoVisitService.save(dispositivo);
+	        LOGGER.debug("Dispositivo registrado para el visitante: {}", dispositivo);
+	    }
+
+	    LOGGER.debug("Visitante agregado con éxito: {}", usuario);		
 		
 		return "redirect:/Vigilancia/registro";
 	}
-	//====================== Dispositivos ===============================
+	//====================== DISPOSITIVOS ===============================
 
+	@GetMapping("/Dispositivos")
+	public String dispositivosUser(Dispositivo dispositivo, Model model) {
+		
+		model.addAttribute("DispositivosUser", dispositivoService.findAll());
+		
+		return "Vigilancia/Dispositivos";
+	}
 }
