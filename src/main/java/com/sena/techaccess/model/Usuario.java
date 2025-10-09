@@ -2,6 +2,7 @@ package com.sena.techaccess.model;
 
 import java.util.ArrayList;
 
+
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
@@ -11,7 +12,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
@@ -34,6 +34,9 @@ public class Usuario {
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ficha_id", nullable = true)
 	private Ficha ficha;
+	
+	@OneToMany(mappedBy = "usuario")
+	private List<DispositivoVisit> dispositivoVisit = new ArrayList<>();
 
 	@OneToMany(mappedBy = "usuario")
 	private List<Permisos> permisos = new ArrayList<>();

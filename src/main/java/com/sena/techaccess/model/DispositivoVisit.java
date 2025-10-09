@@ -4,35 +4,31 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "dispositivo")
-public class Dispositivo {
+@Table(name = "dispoVisit")
+public class DispositivoVisit {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	private String tipoD;
+	private String tipo;
 	private String marca;
 	private String color;
-
 	
 	@ManyToOne
+	@JoinColumn(nullable = true)
 	private Usuario usuario;
 
+	public DispositivoVisit() {}
 
-	public Dispositivo() {
-	}
-
-	
-	
-	public Dispositivo(Integer id, String tipoD, String marca, String color, Usuario usuario) {
-
+	public DispositivoVisit(Integer id, String tipo, String marca, String color, Usuario usuario) {
 		super();
 		this.id = id;
-		this.tipoD = tipoD;
+		this.tipo = tipo;
 		this.marca = marca;
 		this.color = color;
 		this.usuario = usuario;
@@ -46,12 +42,12 @@ public class Dispositivo {
 		this.id = id;
 	}
 
-	public String getTipoD() {
-		return tipoD;
+	public String getTipo() {
+		return tipo;
 	}
 
-	public void setTipoD(String tipoD) {
-		this.tipoD = tipoD;
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
 	}
 
 	public String getMarca() {
@@ -80,8 +76,8 @@ public class Dispositivo {
 
 	@Override
 	public String toString() {
-		return "Dispositivo [id=" + id + ", tipoD=" + tipoD + ", marca=" + marca + ", color=" + color + ", usuario="
+		return "DispositivoVIsit [id=" + id + ", tipo=" + tipo + ", marca=" + marca + ", color=" + color + ", usuario="
 				+ usuario + "]";
 	}
-
+		
 }
