@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head th:insert="~{/Administrador/templates_Administrador.html::head}"></head>
+
+<body class="contact-page" style="font-family: 'Segoe UI', sans-serif;">
+
+	<!-- Encabezado -->
+	<header id="header" class="header d-flex align-items-center fixed-top">
+		<div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
+			<a th:href="@{/usuario/home}" class="logo d-flex align-items-center">
+				<img th:src="@{/images/TecAccess.png}" alt="LogoPrin">
+				<h1 class="sitename">
+					<b style="color: rgb(14, 209, 220);">TECH</b>ACCESS <b style="color: rgb(14, 209, 220);">|</b> SENA
+				</h1>
+			</a>
+
+			<nav id="navmenu" class="navmenu">
+				<ul>
+					<li><a th:href="@{/Aprendiz/aprendiz}">Aprendiz</a></li>
+					<li><a th:href="@{/Aprendiz/excusas}">Excusas</a></li>
+					<li><a href="#" class="active"><b>Horario</b></a></li>
+					<li><a th:href="@{/usuario/home}">Inicio</a></li>
+				</ul>
+				<i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+			</nav>
+		</div>
+	</header>
+
+	<main class="main" style="background-color: rgba(0, 124, 88, 0.05); min-height: 100vh;">
+		<!-- Encabezado de página -->
+		<div class="page-title dark-background text-center py-5"
+			th:style="'background-image: url(' + @{/images/fondo.jpeg} + '); background-size: cover; background-position: center;'">
+			<div class="container position-relative">
+				<h1 class="text-white fw-bold mb-3">Horario</h1>
+				<nav class="breadcrumbs">
+					<ol class="breadcrumb justify-content-center">
+
+					</ol>
+				</nav>
+			</div>
+		</div>
+
+		<!-- 🔹 Fondo de video -->
+		<div class="video-container2 position-fixed top-0 start-0 w-100 h-100 overflow-hidden"
+			style="z-index: -1; opacity: 1;">
+			<video class="video-background2 w-100 h-100 object-fit-cover" autoplay muted loop playsinline>
+				<source th:src="@{/assets/vid/entradaS.mp4}" type="video/mp4">
+				Tu navegador no soporta videos en HTML5.
+			</video>
+		</div>
+
+		<div class="container p-4">
+			<!-- Botones Editar / Guardar -->
+			<div class="d-flex justify-content-end mb-3">
+				<button id="btnEditar" class="btn btn-warning btn-sm me-2" onclick="activarEdicion()">
+					<i class="bi bi-pencil-square me-2"></i> Editar
+				</button>
+
+				<button id="btnGuardar" class="btn btn-success btn-sm" onclick="guardarCambios()" disabled>
+					<i class="bi bi-floppy-fill me-2"></i> Guardar
+				</button>
+			</div>
+
+			<!-- Tabla -->
+			<div class="card shadow-sm">
+				<div class="card-header bg-success text-white">
+					<h5 class="mb-0"><i class="bi bi-table"></i> Gestión de Horario</h5>
+				</div>
+
+				<div class="card-body p-0">
+					<div class="table-responsive">
+						<table id="tablaHorario" class="table table-bordered text-center align-middle mb-0">
+							<thead class="table-light">
+								<tr>
+									<th>Hora</th>
+									<th>Lunes</th>
+									<th>Martes</th>
+									<th>Miércoles</th>
+									<th>Jueves</th>
+									<th>Viernes</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<th>08:00 - 10:00</th>
+									<td>Programación</td>
+									<td>Base de Datos</td>
+									<td>Matemáticas</td>
+									<td>Programación</td>
+									<td>Libre</td>
+								</tr>
+								<tr>
+									<th>10:00 - 12:00</th>
+									<td>Programación</td>
+									<td>Base de Datos</td>
+									<td>Matemáticas</td>
+									<td>Inglés</td>
+									<td>Libre</td>
+								</tr>
+								<tr>
+									<th>13:00 - 15:00</th>
+									<td>Redes</td>
+									<td>Libre</td>
+									<td>Proyecto</td>
+									<td>Libre</td>
+									<td>Libre</td>
+								</tr>
+								<tr>
+									<th>15:00 - 17:00</th>
+									<td>Redes</td>
+									<td>Libre</td>
+									<td>Proyecto</td>
+									<td>Libre</td>
+									<td>Libre</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Script de edición -->
+		<script>
+			let modoEdicion = false;
+
+			function activarEdicion() {
+				if (modoEdicion) return;
+
+				// Ahora seleccionamos las celdas <td> y también las <th> del cuerpo
+				const celdas = document.querySelectorAll("#tablaHorario tbody td, #tablaHorario tbody th");
+
+				celdas.forEach(celda => {
+					const texto = celda.textContent.trim();
+					celda.innerHTML = `<input type="text" class="form-control form-control-sm text-center" value="${texto}">`;
+				});
+
+				document.getElementById("btnEditar").disabled = true;
+				document.getElementById("btnGuardar").disabled = false;
+				modoEdicion = true;
+			}
+
+			function guardarCambios() {
+				if (!modoEdicion) return;
+
+				const celdas = document.querySelectorAll("#tablaHorario tbody td, #tablaHorario tbody th");
+				celdas.forEach(celda => {
+					const input = celda.querySelector("input");
+					if (input) celda.textContent = input.value.trim();
+				});
+
+				document.getElementById("btnEditar").disabled = false;
+				document.getElementById("btnGuardar").disabled = true;
+				modoEdicion = false;
+			}
+		</script>
+	</main>
+
+</body>
+
+</html>
