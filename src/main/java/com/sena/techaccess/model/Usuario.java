@@ -207,10 +207,10 @@ public class Usuario {
 	@Override
 	public String toString() {
 		return "Usuario [id=" + id + ", nombre=" + nombre + ", email=" + email + ", documento=" + documento
-
 				+ ", direccion=" + direccion + ", telefono=" + telefono + ", password=" + password + ", ficha=" + ficha
-				+ ", permisos=" + permisos + ", estadoCuenta=" + estadoCuenta + ", rol=" + rol + ", vigilancia="
-				+ vigilancia + ", acceso=" + acceso + "]";
+				+ ", dispositivoVisit=" + dispositivoVisit + ", permisos=" + permisos + ", estadoCuenta=" + estadoCuenta
+				+ ", rol=" + rol + ", vigilancia=" + vigilancia + ", acceso=" + acceso + ", excusas=" + excusas
+				+ ", dispositivo=" + dispositivo + "]";
 	}
 
 }

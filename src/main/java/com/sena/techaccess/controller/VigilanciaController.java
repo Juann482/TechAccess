@@ -101,10 +101,10 @@ public class VigilanciaController {
 	}
 	//====================== DISPOSITIVOS ===============================
 
-	@GetMapping("/Dispositivos")
+	@GetMapping("/DispositivosVisit")
 	public String dispositivosUser(Dispositivo dispositivo, Model model) {
 		
-		model.addAttribute("DispositivosUser", dispositivoService.findAll());
+		model.addAttribute("DispositivosVisit", dispositivoVisitService.findAll());
 		
 		return "Vigilancia/Dispositivos";
 	}
