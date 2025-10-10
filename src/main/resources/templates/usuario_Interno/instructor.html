@@ -70,8 +70,9 @@
 						<nav class="nav flex-column" style="background-color: rgba(225, 225, 225, 0.811);">
 							<a class="nav-link active" href="#" onclick="cargar('acceso')"><i class="bi bi-house"></i>
 								Últimas Entradas</a>
-							<a class="nav-link" href="#" onclick="cargar('grupos')"><i class="bi bi-people"></i>
-								Grupos</a>
+							<a class="nav-link" href="#" onclick="cargar('grupos')">
+								<i class="bi bi-people"></i> Grupos
+							</a>
 							<a class="nav-link" href="#" onclick="cargar('reportes')"><i
 									class="bi bi-clipboard-data"></i> Reportes</a>
 						</nav>
@@ -156,62 +157,25 @@
 			<h2><i class="bi bi-people me-2"></i> Grupos</h2>
 
 			<div class="row">
-				<!-- Ficha N1 -->
-
-				<div class="col-md-4 mb-4" each="#">
+				<div class="col-md-4 mb-4" th:each="ficha : ${fichas}">
 					<div class="card shadow-sm h-100">
 						<div class="card-body text-center">
-							<h5 class="card-title" text="#">Ficha Mec202302345 - Sog</h5>
+							<h5 class="card-title">
+								Ficha <span th:text="${ficha.numFicha}"></span> -
+								<span th:text="${ficha.nombrePrograma}"></span>
+							</h5>
 							<p class="card-text text-muted">
-								Código: <span text="#">G123</span><br>
-								Área: <span text="#">Mecánica</span>
+								Jornada: <span text="#"></span><br>
+								Área: <span text="#"></span>
 							</p>
 							<a href="#" class="btn btn-primary btn-sm">Ver detalles</a>
 						</div>
 					</div>
 				</div>
-
-
-
-				<!-- Ficha N2 -->
-
-
-				<div class="col-md-4 mb-4" each="#">
-					<div class="card shadow-sm h-100">
-						<div class="card-body text-center">
-							<h5 class="card-title" text="#">Ficha TIcs202142375 - Dtma</h5>
-							<p class="card-text text-muted">
-								Código: <span text="#">G106</span><br>
-								Área: <span text="#">Tecnologias de la Informacion y Comunicaciónes</span>
-							</p>
-							<a href="#" class="btn btn-primary btn-sm">Ver detalles</a>
-						</div>
-					</div>
-				</div>
-
-
-
-				<!-- Ficha N3 -->
-
-
-				<div class="col-md-4 mb-4" each="#">
-					<div class="card shadow-sm h-100">
-						<div class="card-body text-center">
-							<h5 class="card-title" text="#">Ficha TIcs202001374 - Sog</h5>
-							<p class="card-text text-muted">
-								Código: <span text="#">G132</span><br>
-								Área: <span text="#">Tecnologias de la Informacion y Comunicaciónes</span>
-							</p>
-							<a href="#" class="btn btn-primary btn-sm">Ver detalles</a>
-						</div>
-					</div>
-				</div>
-
-
 			</div>
 		</div>
-
 	</template>
+
 
 
 	<!--Secion enlazada con permiso -->
