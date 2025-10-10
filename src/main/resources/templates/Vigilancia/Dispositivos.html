@@ -5,7 +5,7 @@
 
 <body class="contact-page">
 
-	<div th:insert="~{/Vigilancia/templates_vigilancia.html::dispositivo}"></div>
+	<div th:insert="~{/Vigilancia/templates_vigilancia.html::dispositivoVisitante}"></div>
 		
 	<main class="main">
 
@@ -35,7 +35,7 @@
 
 
 								<div class="col-md-12">
-									<h5 class="mb-3"><i class="bi bi-activity me-2">Registro y asignación de dispositivos</i></h5>
+									<h5 class="mb-3"><i class="bi bi-activity me-2">Registro de dispositivos de visitantes</i></h5>
 
 
 									<table class="table datatable">
@@ -46,16 +46,17 @@
 												<th scope="col">Marca </th>
 												<th scope="col">Color</th>
 												<th scope="col">Propietario</th>
+												<th scope="col">Eliminar</th>
 											</tr>
 										</thead>
-										<tbody th:each="usuario: ${Usuarios}">
+										<tbody th:each="dispositivo: ${DispositivosVisit}">
 											<tr class="centrados">
 												
-												<td th:text="${usuario.nombre}"></td>
-												<td th:text="${usuario.documento}"></td>
-												<td th:text="${usuario.rol.tipo}"></td>
-												<td th:text="${usuario.ficha != null ? usuario.ficha.numFicha : '-'}"></td>
-
+												<td th:text="${dispositivo.id}"></td>
+												<td th:text="${dispositivo.tipo}"></td>
+												<td th:text="${dispositivo.marca}"></td>
+												<td th:text="${dispositivo.color}"> </td>
+												<td th:text="${dispositivo.usuario != null ? dispositivo.usuario.nombre : '-'}"> </td>
 												<td>
 													<button type="button" class="btn btn-outline-success"
 														data-bs-toggle="modal" data-bs-target="#exampleModal">
