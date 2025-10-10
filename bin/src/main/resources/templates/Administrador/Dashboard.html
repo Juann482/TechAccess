@@ -1,32 +1,11 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 
-<head th:insert="~{/usuario/templates_usuario.html::head}"></head>
+<head th:insert="~{/Administrador/templates_Administrador.html::head}"></head>
 
 <body class="contact-page">
 
-	<header id="header" class="header d-flex align-items-center fixed-top">
-		<div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
-
-			<a th:href="@{/usuario/home}" class="logo d-flex align-items-center">
-				<img th:src="@{/images/TecAccess.png}" alt="LogoPrin">
-				<h1 class="sitename"><b>TECH</b>ACCESS</h1>
-			</a>
-
-			<nav id="navmenu" class="navmenu">
-				<ul>
-					<li><a href="#" class="active"><b>Dashboard</b></a></li>
-					<li><a th:href="@{/Administrador/form}">Registros</a></li>
-					<li><a th:href="@{/Administrador/fichas}">Fichas</a>
-					</li>
-					<li><a href="#">Administador</a></li>
-				</ul>
-				<i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-			</nav>
-
-		</div>
-	</header>
-
+	<div th:insert="~{/Administrador/templates_Administrador.html::Dashboard}"></div>
 	<main class="main">
 
 		<!-- Page Title -->
@@ -35,7 +14,7 @@
 				<h1>Dashboard</h1>
 				<nav class="breadcrumbs">
 					<ol>
-						<li><a th:href="@{/usuario/home}"><b>Salir</b></a></li>
+						<li><a th:href="@{/Administrador/home}"><b>Salir</b></a></li>
 						<li class="current">Administrador</li>
 					</ol>
 				</nav>
@@ -89,33 +68,35 @@
 
 									<table class="table datatable">
 										<thead>
-											<tr>
+											<tr class="centrados">
 												<th scope="col">Nombre completo</th>
 												<th scope="col">Documento</th>
 												<th scope="col">Rol</th>
 												<th scope="col">Ficha</th>
 												<th scope="col">Estado</th>
 
-												<th scope="col">Editar </th>
-												<th scope="col">Eliminar </th>
+												<th scope="col"> Editar </th>
+												<th scope="col"> Eliminar </th>
 											</tr>
 										</thead>
 										<tbody th:each="usuario: ${Usuarios}">
-											<tr>
+											<tr class="centrados">
 												<td th:text="${usuario.nombre}"></td>
 												<td th:text="${usuario.documento}"></td>
 												<!---->
 												<td th:text="${usuario.rol.tipo}"></td>
-												<td th:text="${usuario.ficha}"></td>
+												<td th:text="${usuario.ficha.numFicha}"></td>
 												<td th:text="${usuario.estadoCuenta.nombreEstado}"></td>
 
 												<td><a title="Editar" class="btn btn-outline-info"
-													th:href="@{/Administrador/edicionUsuario/{id} (id=${usuario.id})}"><i class="bi bi-pencil-fill"></i>Editar</a></td>
+														th:href="@{/Administrador/edicionUsuario/{id} (id=${usuario.id})}"><i
+															class="bi bi-pencil-fill"></i>Editar</a></td>
 												<td><a title="Eliminar" class="btn btn-outline-danger"
-													th:href="@{/Administrador/deleteUser/{id} (id=${usuario.id})}"><i class="bi bi-trash-fill"></i>Eliminar</a></td>
+														th:href="@{/Administrador/deleteUser/{id} (id=${usuario.id})}"><i
+															class="bi bi-trash-fill"></i>Eliminar</a></td>
 
 											</tr>
-											
+
 										</tbody>
 
 									</table>
@@ -128,9 +109,9 @@
 
 	</main>
 
-	<div th:insert="~{/usuario/templates_usuario.html::footer}"></div>
+	<div th:insert="~{/Administrador/templates_Administrador.html::footer}"></div>
 
-	<div th:insert="~{/usuario/templates_usuario.html::jsFiles}"></div>
+	<div th:insert="~{/Administrador/templates_Administrador.html::jsFiles}"></div>
 
 </body>
 
