@@ -1,34 +1,28 @@
 package com.sena.techaccess.model;
 
-import java.util.List;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import jakarta.persistence.Id;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
-import jakarta.persistence.OneToMany;
 
 @Entity
 @Table(name = "areaJobs")
 
 public class AreaJobs {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer idarea;
 	private String nomArea;
 
-	@OneToMany(mappedBy = "areaJobs")
-	private List<Acceso> acceso;
-
 	// Const. Vacio
 	public AreaJobs() {
 
 	}
-	
-	//Const. con Campos
-	
+
+	// Const. con Campos
+
 	public AreaJobs(Integer idarea, String nomArea) {
 		super();
 		this.idarea = idarea;

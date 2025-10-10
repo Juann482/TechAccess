@@ -1,14 +1,7 @@
 package com.sena.techaccess.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.Table;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "acceso")
@@ -18,42 +11,51 @@ public class Acceso {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer idacceso;
 
-	private Integer horaIngreso;
-	private Integer horaEgreso;
+	@Column(name = "horaIngreso")
+	private LocalDateTime horaIngreso;
 
+	@Column(name = "horaEgreso")
+	private LocalDateTime horaEgreso;
+
+	// Sección enlazada con Dispositivo
 	@OneToOne
+	@JoinColumn(name = "idDisp")
 	private Dispositivo dispositivo;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "usuario_id")
+	// Sección enlazada con Usuario
+	@OneToOne(mappedBy = "acceso", fetch = FetchType.LAZY)
 	private Usuario usuario;
 
+	// Sección enlazada con EstadoPermanencia
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "Permanencia")
+	@JoinColumn(name = "idestadoPermanencia")
 	private EstadoPermanencia estadoPermanencia;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "vigilancia_idvigilancia")
+	/*
+	 * / Sección enlazada con Área
+	 * 
+	 * @ManyToOne(fetch = FetchType.LAZY)
+	 * 
+	 * @JoinColumn(name = "idarea") private AreaJobs area;
+	 */
+
+	@ManyToOne
+	@JoinColumn(name = "id_vigilancia")
 	private Vigilancia vigilancia;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "areaJobs_idarea")
-	private AreaJobs areaJobs;
-
-	public Acceso() {
-	}
-
-	public Acceso(Integer idacceso, Integer horaIngreso, Integer horaEgreso, Dispositivo dispositivo, Usuario usuario,
-			EstadoPermanencia estadoPermanencia, Vigilancia vigilancia, AreaJobs areaJobs) {
-		super();
+	public Acceso(Integer idacceso, LocalDateTime horaIngreso, LocalDateTime horaEgreso, Dispositivo dispositivo,
+			Usuario usuario, EstadoPermanencia estadoPermanencia, AreaJobs area) {
 		this.idacceso = idacceso;
 		this.horaIngreso = horaIngreso;
 		this.horaEgreso = horaEgreso;
 		this.dispositivo = dispositivo;
 		this.usuario = usuario;
 		this.estadoPermanencia = estadoPermanencia;
-		this.vigilancia = vigilancia;
-		this.areaJobs = areaJobs;
+		// this.area = area;
+	}
+
+	public Acceso() {
+
 	}
 
 	public Integer getIdacceso() {
@@ -64,28 +66,28 @@ public class Acceso {
 		this.idacceso = idacceso;
 	}
 
-	public Integer getHoraIngreso() {
+	public LocalDateTime getHoraIngreso() {
 		return horaIngreso;
 	}
 
-	public void setHoraIngreso(Integer horaIngreso) {
+	public void setHoraIngreso(LocalDateTime horaIngreso) {
 		this.horaIngreso = horaIngreso;
 	}
 
-	public Integer getHoraEgreso() {
+	public LocalDateTime getHoraEgreso() {
 		return horaEgreso;
 	}
 
-	public void setHoraEgreso(Integer horaEgreso) {
+	public void setHoraEgreso(LocalDateTime horaEgreso) {
 		this.horaEgreso = horaEgreso;
 	}
 
-	public Dispositivo getDispositivos() {
+	public Dispositivo getDispositivo() {
 		return dispositivo;
 	}
 
-	public void setDispositivos(Dispositivo dispositivos) {
-		this.dispositivo = dispositivos;
+	public void setDispositivo(Dispositivo dispositivo) {
+		this.dispositivo = dispositivo;
 	}
 
 	public Usuario getUsuario() {
@@ -104,25 +106,19 @@ public class Acceso {
 		this.estadoPermanencia = estadoPermanencia;
 	}
 
-	public Vigilancia getVigilancia() {
-		return vigilancia;
-	}
+	/*
+	 * public AreaJobs getArea() { return area; }
+	 */
 
-	public void setVigilancia(Vigilancia vigilancia) {
-		this.vigilancia = vigilancia;
-	}
-
-	public AreaJobs getAreaJobs() {
-		return areaJobs;
-	}
-
-	public void setAreaJobs(AreaJobs areaJobs) {
-		this.areaJobs = areaJobs;
-	}
+	/*
+	 * public void setArea(AreaJobs area) { this.area = area; }
+	 */
 
 	@Override
 	public String toString() {
 		return "Acceso [idacceso=" + idacceso + ", horaIngreso=" + horaIngreso + ", horaEgreso=" + horaEgreso
-				+ ", dispositivos=" + dispositivo + "]";
+				+ ", dispositivo=" + dispositivo + ", usuario=" + usuario + ", estadoPermanencia=" + estadoPermanencia
+				+ "]";
 	}
+
 }
