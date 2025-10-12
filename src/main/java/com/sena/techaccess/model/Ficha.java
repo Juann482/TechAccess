@@ -18,7 +18,7 @@ public class Ficha {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer idFicha;
 	private String nombrePrograma;
-	private String numFicha;
+	private Integer numFicha;
 	
 	@OneToMany(mappedBy = "ficha")
 	private List<Usuario> usuario;
@@ -28,7 +28,7 @@ public class Ficha {
 	}
 
 	//contructor con campos
-	public Ficha(Integer idFicha, String nombrePrograma, String numFicha, List<Usuario> usuario) {
+	public Ficha(Integer idFicha, String nombrePrograma, Integer numFicha, List<Usuario> usuario) {
 		super();
 		this.idFicha = idFicha;
 		this.nombrePrograma = nombrePrograma;
@@ -53,11 +53,11 @@ public class Ficha {
 		this.nombrePrograma = nombrePrograma;
 	}
 
-	public String getNumFicha() {
+	public Integer getNumFicha() {
 		return numFicha;
 	}
 
-	public void setNumFicha(String numFicha) {
+	public void setNumFicha(Integer numFicha) {
 		this.numFicha = numFicha;
 	}
 
