@@ -8,7 +8,7 @@ import com.sena.techaccess.model.Ficha;
 public interface FichaRepository extends JpaRepository<Ficha, Integer> {
     
 	 // Buscar fichas por número de ficha
-    Ficha findByNumFicha(Integer numFicha);
+    /*Ficha findByNumFicha(Integer numFicha);*/
 	
 	// Buscar fichas por nombre del programa
     Ficha findByNombrePrograma(String nombrePrograma);

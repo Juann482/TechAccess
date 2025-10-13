@@ -32,24 +32,55 @@ public class InstructorController {
 
 	@GetMapping("/nvasEntradas")
 	public String vistaEntradas(Model model) {
-	    List<Acceso> accesos = accesoRepository.findAll();
-	    System.out.println("Número de accesos encontrados: " + accesos.size()); // Para debug
-	    model.addAttribute("accesos", accesos);
-	    return "instructor/nvasEntradas";
+		try {
+			List<Acceso> accesos = accesoRepository.findAll();
+
+			System.out.println("=== DEBUG NUEVAS ENTRADAS ===");
+			System.out.println("Número de accesos encontrados: " + accesos.size());
+
+			// mostrar info del primer acceso de existir
+			if (!accesos.isEmpty()) {
+				Acceso primerAcceso = accesos.get(0);
+				System.out.println("Primer acceso - ID: " + primerAcceso.getIdacceso());
+				System.out.println("Usuario: "
+						+ (primerAcceso.getUsuario() != null ? primerAcceso.getUsuario().getNombre() : "NULL"));
+			}
+
+			if (accesos.isEmpty()) {
+				model.addAttribute("accesos", accesos); // Msj "No hay registros"
+			} else {
+				model.addAttribute("accesos", accesos);
+			}
+
+		} catch (Exception e) {
+			System.out.println("ERROR en vistaEntradas: " + e.getMessage());
+			e.printStackTrace();
+			model.addAttribute("error", "Error al cargar las entradas: " + e.getMessage());
+		}
+
+		return "instructor/nvasEntradas";
 	}
 
 	@GetMapping("/grupos")
 	public String vistaGrupos(Model model) {
-		String nombrePrograma = "ADSo";
-		Ficha ficha = fichaRepository.findByNombrePrograma(nombrePrograma);
+		try {
+			List<Ficha> fichas = fichaRepository.findAll();
 
-		if (ficha == null) {
-			model.addAttribute("error", "No se encontró ninguna ficha con el nombre del programa especificado.");
-			return "/instructor/error";
+			if (fichas.isEmpty()) {
+				model.addAttribute("error", "No se encontraron fichas registradas en el sistema.");
+			} else {
+				model.addAttribute("fichas", fichas);
+				System.out.println("Fichas encontradas: " + fichas.size());
+				// Debug: mostrar nombres de las fichas
+				fichas.forEach(f -> System.out.println("- " + f.getNombrePrograma() + " - " + f.getNumFicha()));
+			}
+
+		} catch (Exception e) {
+			model.addAttribute("error", "Error al cargar las fichas: " + e.getMessage());
+			e.printStackTrace();
 		}
 
-		model.addAttribute("ficha", ficha);
-		return "/instructor/grupos";
+		return "instructor/grupos";
 	}
 
 	@GetMapping("/reportes")
