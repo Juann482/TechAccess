@@ -68,64 +68,143 @@
 					<!-- Contenido principal dinámico -->
 					<div class="col-lg-9">
 						<div id="contenido" class="access-card bg-white shadow-sm rounded p-4" style="opacity: 0.9;">
-							<h4 class="text-success">
-								<i class="bi bi-house me-2 text-success"></i><b> Últimas Entradas</b>
-								<!--span th:text="${instructor.nombre}">Instructor</span-->
-							</h4>
-							<p class="text-muted">En pantalla los registros de entradas mas recientes al sistema.</p>
 
-							<div class="access-card bg-white shadow-sm rounded p-4" style="opacity: 0.95;">
-								<a th:href="@{/instructor/nvasEntradas}">
-									<h6 class="text-muted"><i class="bi bi-clock-history me-2"></i> Actualizar
-									</h6>
-								</a>
-								<div class="card shadow-sm">
-									<div class="card-body">
-										<table class="table table-hover align-middle">
-											<thead class="table-light">
-												<tr>
-													<th>Estudiante</th>
-													<th>Área</th>
-													<th>Fecha</th>
-													<th>Estado</th>
+							<!-- Mostrar TABLA si hay datos -->
+							<div th:if="${accesos != null and !accesos.empty}">
+								<div class="d-flex justify-content-between align-items-center mb-3">
+									<div>
+										<h4 class="text-success mb-1">
+											<i class="bi bi-clock-history me-2"></i><b> Últimas Entradas</b>
+										</h4>
+										<p class="text-muted mb-0" th:text="'Total de registros: ' + ${accesos.size()}">
+											Registros de entradas recientes
+										</p>
+									</div>
+									<a th:href="@{/instructor/nvasEntradas}" class="btn btn-outline-success btn-sm">
+										<i class="bi bi-arrow-clockwise me-1"></i> Actualizar
+									</a>
+								</div>
 
-												</tr>
-											</thead>
-											<!--tbody>
-												<tr th:each="entrada : ${accesos}">
-													<td th:text="${entrada.usuario.nombre}"></td>
-													<td th:text="${entrada.areaJobs.nomArea}"></td>
-													<td
-														th:text="${#dates.format(entrada.horaIngreso, 'yyyy-MM-dd HH:mm')}">
-														2025-09-20
-													</td>
-													<td>
-														<span th:if="${entrada.estadoPermanencia.nombre == 'OK'}"
-															class="badge bg-success bg-opacity-10 text-success px-3 py-2">OK</span>
-														<span th:if="${entrada.estadoPermanencia.nombre != 'OK'}"
-															class="badge bg-danger bg-opacity-10 text-danger px-3 py-2">NO
-															OK</span>
-													</td>
-													<td class="text-center">
-														<a th:href="@{'/acceso/editar/' + ${entrada.idacceso}}"
-															class="btn btn-sm btn-outline-primary me-2"><i
-																class="bi bi-pencil-square"></i></a>
-														<a th:href="@{'/acceso/eliminar/' + ${entrada.idacceso}}"
-															class="btn btn-sm btn-outline-danger"
-															onclick="return confirm('¿Seguro que deseas eliminar esta entrada?');"><i
-																class="bi bi-trash"></i></a>
-													</td>
-												</tr>
-											</tbody-->
-										</table>
+								<div class="card shadow-sm border-0">
+									<div class="card-body p-0">
+										<div class="table-responsive">
+											<table class="table table-hover align-middle mb-0">
+												<thead class="table-success">
+													<tr>
+														<th class="border-0">
+															<i class="bi bi-person me-1"></i> Estudiante
+														</th>
+														<th class="border-0">
+															<i class="bi bi-geo-alt me-1"></i> Área
+														</th>
+														<th class="border-0">
+															<i class="bi bi-calendar me-1"></i> Fecha Ingreso
+														</th>
+														<th class="border-0">
+															<i class="bi bi-info-circle me-1"></i> Estado
+														</th>
+														<th class="border-0 text-center">
+															<i class="bi bi-gear me-1"></i> Acciones
+														</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr th:each="entrada : ${accesos}" class="border-bottom">
+														<td class="fw-medium"
+															th:text="${entrada.usuario?.nombre} ?: 'N/A'">
+															Estudiante
+														</td>
+														<td th:text="${entrada.areaJobs?.nomArea} ?: 'N/A'">
+															Área
+														</td>
+														<td>
+															<span class="text-muted small"
+																th:text="${#dates.format(entrada.horaIngreso, 'dd/MM/yyyy')}">
+																Fecha
+															</span>
+															<br>
+															<span class="fw-medium"
+																th:text="${#dates.format(entrada.horaIngreso, 'HH:mm')}">
+																Hora
+															</span>
+														</td>
+														<td>
+															<span
+																th:if="${entrada.estadoPermanencia?.nombre == 'Presente'}"
+																class="badge bg-success bg-opacity-25 text-success px-3 py-2 border border-success">
+																<i class="bi bi-check-circle me-1"></i> Presente
+															</span>
+															<span
+																th:if="${entrada.estadoPermanencia?.nombre == 'Ausente'}"
+																class="badge bg-danger bg-opacity-25 text-danger px-3 py-2 border border-danger">
+																<i class="bi bi-x-circle me-1"></i> Ausente
+															</span>
+															<span
+																th:if="${entrada.estadoPermanencia?.nombre != 'Presente' and entrada.estadoPermanencia?.nombre != 'Ausente'}"
+																class="badge bg-secondary bg-opacity-25 text-secondary px-3 py-2 border border-secondary">
+																<i class="bi bi-question-circle me-1"></i>
+																<span
+																	th:text="${entrada.estadoPermanencia?.nombre} ?: 'No definido'"></span>
+															</span>
+														</td>
+														<td class="text-center">
+															<div class="btn-group btn-group-sm" role="group">
+																<a th:href="@{'/acceso/editar/' + ${entrada.idacceso}}"
+																	class="btn btn-outline-primary"
+																	title="Editar entrada">
+																	<i class="bi bi-pencil-square"></i>
+																</a>
+																<a th:href="@{'/acceso/eliminar/' + ${entrada.idacceso}}"
+																	class="btn btn-outline-danger"
+																	onclick="return confirm('¿Seguro que deseas eliminar esta entrada?');"
+																	title="Eliminar entrada">
+																	<i class="bi bi-trash"></i>
+																</a>
+															</div>
+														</td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
 									</div>
 								</div>
+
+								<!-- Contador de estados -->
+								<div class="mt-3 d-flex justify-content-between align-items-center">
+									<small class="text-muted">
+										<i class="bi bi-info-circle me-1"></i>
+										Mostrando <strong th:text="${accesos.size()}">0</strong> registros
+									</small>
+									<small class="text-muted">
+										Última actualización: <span th:text="${#dates.createNow()}">Ahora</span>
+									</small>
+								</div>
 							</div>
+
+							<!-- Mostrar ALERTA si no hay datos -->
+							<div th:if="${accesos != null and accesos.empty}" class="text-center py-5">
+								<div class="alert alert-info border-info">
+									<i class="bi bi-inbox me-2 fs-2 text-info"></i>
+									<h4 class="alert-heading mt-3">No hay registros de entradas</h4>
+									<p class="mb-0">No se encontraron entradas recientes en el sistema.</p>
+									<hr>
+									<small class="text-muted">Las entradas se actualizaran si se registra el acceso de
+										aprendices a
+										las instalaciones</small>
+								</div>
+							</div>
+
+							<!-- Mostrar MENSAJE INICIAL si no se ha cargado nada -->
+							<div th:if="${accesos == null}">
+								<h4 class="text-success">
+									<i class="bi bi-house me-2"></i><b> Últimas Entradas</b>
+								</h4>
+								<p class="text-muted">Seleccione "Últimas Entradas" en el menú lateral para cargar los
+									registros recientes.</p>
+							</div>
+
 						</div>
 					</div>
-
-				</div>
-			</div>
 		</section>
 
 		<!-- Footer -->
