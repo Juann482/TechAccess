@@ -30,6 +30,8 @@ public class Usuario {
 	private String direccion;
 	private String telefono;
 	private String password;
+	
+	
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ficha_id", nullable = true)
@@ -54,8 +56,8 @@ public class Usuario {
 	private Vigilancia vigilancia;
 
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL) // CAscadeType.ALL Borra todas sus fichas y accesos
-																	// automaticamente si se llega a borrar un usuario
-	@JoinColumn(name = "Acceso")	
+																	// automaticamente si se llega a borrar un usuar.io
+		
 	private Acceso acceso;
 	
 	@OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY) 
@@ -79,8 +81,6 @@ public class Usuario {
 		this.telefono = telefono;
 		this.password = password;
 	}
-
-	
 
 	
 
