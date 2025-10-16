@@ -13,11 +13,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.sena.techaccess.model.Ficha;
-import com.sena.techaccess.model.Rol;
 import com.sena.techaccess.model.Usuario;
-import com.sena.techaccess.service.IEstadoCuentaService;
 import com.sena.techaccess.service.IFichaService;
-import com.sena.techaccess.service.IRolService;
 import com.sena.techaccess.service.IUsuarioService;
 
 @Controller
@@ -28,12 +25,6 @@ public class AdministradorController {
 
 	@Autowired
 	private IUsuarioService usuarioService;
-
-	@Autowired
-	private IRolService rolService;
-
-	@Autowired
-	private IEstadoCuentaService estadoCuentaService;
 
 	@Autowired
 	private IFichaService fichaService;
@@ -50,8 +41,6 @@ public class AdministradorController {
 
 		model.addAttribute("usuarios", usuarioService.findAll());
 		model.addAttribute("usuario", new Usuario()); // objeto vacio
-		model.addAttribute("roles", rolService.findAll()); // Lista de roles para cargar
-		model.addAttribute("estados", estadoCuentaService.findAll()); // Lista de estados para cargar
 		model.addAttribute("fichas", fichaService.findAll()); // Lista de fichas
 
 		return "Administrador/Registro";
@@ -59,10 +48,7 @@ public class AdministradorController {
 
 	@PostMapping("/form")
 	public String guardarRegistro(Usuario usuario) {
-		LOGGER.warn("UsuarioFormulario {}", usuario);
-		Rol rol = rolService.findById(usuario.getRol().getId())
-				.orElseThrow(() -> new RuntimeException("Rol no encontrado"));
-		usuario.setRol(rol);
+		
 		usuarioService.save(usuario);
 		LOGGER.warn("Usuario guardado: {}", usuario.getNombre());
 		return "redirect:/Administrador/usuarios";
@@ -88,8 +74,6 @@ public class AdministradorController {
 		Optional<Usuario> ud = usuarioService.get(id); //Llamas a tu servicio para buscar el usuario por su id.
 		userEd = ud.get();
 		LOGGER.warn("Busqueda de usuarios por id {}", userEd);
-		model.addAttribute("roles", rolService.findAll()); // Lista de roles para cargar
-		model.addAttribute("estados", estadoCuentaService.findAll()); // Lista de estados para cargar
 		model.addAttribute("fichas", fichaService.findAll()); // Lista de fichas
 		model.addAttribute("usuario", userEd);
 		return "Administrador/edicionUsuarios";
@@ -116,19 +100,13 @@ public class AdministradorController {
 	    }
 
 	    // Rol
-	    if (usuario.getRol() != null && !usuario.getRol().getId().equals(usuarioExistente.getRol().getId())) {
-	        Rol rol = rolService.findById(usuario.getRol().getId())
-	            .orElseThrow(() -> new RuntimeException("Rol no encontrado"));
-	        usuarioExistente.setRol(rol);
+	    if (usuario.getRol() != null && !usuario.getRol().equals(usuarioExistente.getRol())) {
+	        usuarioExistente.setRol(usuario.getRol());
 	    }
-
+	    
 	    // Estado
-	    if (usuario.getEstadoCuenta() != null && !usuario.getEstadoCuenta().getIdEstado()
-	            .equals(usuarioExistente.getEstadoCuenta().getIdEstado())) {
-	        usuarioExistente.setEstadoCuenta(
-	            estadoCuentaService.findById(usuario.getEstadoCuenta().getIdEstado())
-	            .orElseThrow(() -> new RuntimeException("Estado no encontrado"))
-	        );
+	    if (usuario.getEstadoCuenta() != null && !usuario.getEstadoCuenta().equals(usuarioExistente.getEstadoCuenta())) {
+	        usuarioExistente.setEstadoCuenta(usuario.getEstadoCuenta());	        
 	    }
 
 	    // Ficha (opcional)

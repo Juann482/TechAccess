@@ -1,281 +1,266 @@
 ﻿<!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 
-<head th:insert="~{/usuario/templates_usuario.html::head}"></head>
+<head th:insert="~{/Administrador/templates_Administrador.html::head}"></head>
 
-<body class="body" style="font-family: 'Segoe UI', sans-serif;">
+<body class="contact-page" style="font-family: 'Segoe UI', sans-serif;">
+
+	<!-- Encabezado -->
 
 	<header id="header" class="header d-flex align-items-center fixed-top">
-		<div
-			class="container-fluid container-xl position-relative d-flex w-100 align-items-center justify-content-between">
-			<header class="header d-flex align-items-center justify-content-between fixed-top w-100"
-				style="background-color: rgba(0, 124, 88, 0.6); box-shadow: 0 5px 3px rgba(0,0,0,0.2);">
-				<h1 class="sitename m-0">
-					<strong style="color:#ffffff;">TECH</strong>
-					<span style="color:#ffffff;">ACCESS</span>
-					<span style="color:#adb5bd;">/</span>
-					<span style="color:#ffffff;">SENA - CIMM CIUDADELA</span>
-				</h1>
-			</header>
+		<div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
+
+			<a th:href="@{/usuario/home}" class="logo d-flex align-items-center">
+				<img th:src="@{/images/TecAccess.png}" alt="LogoPrin">
+				<h1 class="sitename"><b style="color: rgb(14, 209, 220);">TECH</b>ACCESS <b
+						style="color: rgb(14, 209, 220);">|</b> SENA</h1>
+			</a>
+
+			<nav id="navmenu" class="navmenu">
+				<ul>
+					<li><a href="#" class="active"><b>Aprendiz</b></a></li>
+					<li><a th:href="@{/Aprendiz/excusas}">Excusas</a></li>
+					<li><a th:href="@{/Aprendiz/Horario}">Horario</a></li>
+					<li><a th:href="@{/usuario/home}">Inicio</a></li>
+					
+				</ul>
+				<i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+			</nav>
+
 		</div>
 	</header>
 
-	<div class="video-container2">
-		<video class="video-background2" autoplay muted loop>
-			<source th:src="@{/assets/vid/entradaS.mp4}" type="video/mp4">
-			Error al cargar el video.
-		</video>
-	</div>
 
-	<main class="main py-4" style="background-color: rgba(0, 124, 88, 0.05); margin-top: 100px;">
-		<div class="container">
-			<div class="row">
-
-				<!-- Menú lateral -->
-				<div class="col-lg-3 mb-4">
-					<div class="user-nav rounded shadow-sm p-3 bg-white">
-						<a class="text-center mb-3 d-block" th:action="@{/Aprendiz/datosUser}">
-							<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyPko2ajUOpOXvihi71Rccu8kXmRXPhnkOKA&s"
-								alt="Foto de perfil"
-								style="width: 120px; border-radius: 50%; border: 2px solid #007C58;">
+	<main class="main" style="background-color: rgba(0, 124, 88, 0.05); min-height: 100vh;">
 
 
-							<!--
-							<div class="border rounded p-2 mb-2 bg-light" style="margin-top: 15px;">
-								<p class="mb-0 text-success">
-									Nombre Aprendiz: <span th:text="${Usuario.nombre}"></span>
-								</p>
+
+		<!-- Contenido principal -->
+		<main class="main" style="background-color: rgba(0, 124, 88, 0.05); min-height: 100vh;">
+
+			<!-- Encabezado de página -->
+			<div class="page-title dark-background text-center py-5"
+				th:style="'background-image: url(' + @{/images/fondo.jpeg} + '); background-size: cover; background-position: center;'">
+				<div class="container position-relative">
+					<h1 class="text-white fw-bold mb-3">Aprendiz</h1>
+					<nav class="breadcrumbs">
+						<ol class="breadcrumb justify-content-center">
+							
+							<li>
+								<!-- <a th:href="@{/Aprendiz/aprendiz}" class="text-white text-decoration-none"><b>Aprendiz</b></a> -->
+							</li>
+						</ol>
+					</nav>
+				</div>
+			</div>
+
+			<!-- 🔹 Fondo de video a pantalla completa -->
+			<div class="video-container2 position-fixed top-0 start-0 w-100 h-100 overflow-hidden"
+				style="z-index: -1; opacity: 1;">
+
+				<video class="video-background2 w-100 h-100 object-fit-cover" autoplay muted loop playsinline>
+					<source th:src="@{/assets/vid/entradaS.mp4}" type="video/mp4">
+					Tu navegador no soporta videos en HTML5.
+				</video>
+			</div>
+
+
+			<!-- Contenido -->
+			<div class="container py-5">
+				<div class="row g-4">
+
+					<!-- Menú lateral -->
+					<div class="col-lg-3">
+						<div class="user-nav bg-white rounded-3 shadow-sm p-4">
+
+							<!-- Perfil -->
+							<div class="text-center mb-4">
+								<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyPko2ajUOpOXvihi71Rccu8kXmRXPhnkOKA&s"
+									alt="Foto de perfil"
+									style="width: 120px; height: 120px; border-radius: 50%; border: 2px solid #007C58;">
 							</div>
 
-							 <div class="border rounded p-2 mb-2 bg-light">
-								<p class="mb-0 text-success">
-									Ficha: <span th:text="${ficha.numFicha}"></span>
-								</p>
+							<!-- Datos del aprendiz -->
+							<div class="info-list">
+								<div class="border rounded p-2 mb-3 bg-light">
+									<p class="mb-0 text-success fw-semibold">
+										Nombre Aprendiz:
+										<span class="text-dark"
+											th:text="${usuario != null ? usuario.nombre : ' - '}"></span>
+									</p>
+								</div>
+
+								<div class="border rounded p-2 mb-3 bg-light">
+									<p class="mb-0 text-success fw-semibold">
+										Programa:
+										<span class="text-dark"
+											th:text="${ficha != null ? ficha.nombrePrograma : ' - '}"></span>
+									</p>
+								</div>
+
+								<div class="border rounded p-2 mb-3 bg-light">
+									<p class="mb-0 text-success fw-semibold">
+										Ficha:
+										<span class="text-dark"
+											th:text="${ficha != null ? ficha.numFicha : ' - '}"></span>
+									</p>
+								</div>
+
+								<div class="border rounded p-2 mb-4 bg-light">
+									<p class="mb-0 text-success fw-semibold">
+										Estado:
+										<span class="text-dark"
+											th:text="${estadoCuenta != null ? estadoCuenta.nombreEstado : ' - '}"></span>
+									</p>
+								</div>
 							</div>
 
-							<div class="border rounded p-2 mb-2 bg-light">
-								<p class="mb-0 text-success">
-									Estado: <span class="badge bg-success"
-										th:text="${estadoCuenta.nombreEstado}"></span>
-								</p>
-							</div>
--->
+							<!-- Navegación -->
+							<nav class="nav flex-column text-center">
+								<a th:href="@{/usuario/home}" class="btn btn-outline-success btn-sm mb-2">
+									<i class="bi bi-box-arrow-left me-2"></i>Salir
+								</a>
 
+								<a href="#" class="btn btn-outline-success btn-sm mb-2"
+									onclick="mostrarQR(); return false;">
+									<i class="bi bi-qr-code me-2"></i> Código
+								</a>
 
-						</a>
+								<!-- QR -->
+								<div id="codigoQR" class="codigo-container my-3 text-center" style="display:none;">
+									<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMnbU2i2ZVheiCtFIK6xZnSBE0fSikFVjM-Q&s"
+										alt="Código QR" class="img-fluid" style="max-width: 220px;">
+								</div>
 
-						<nav class="nav flex-column">
-							<a th:href="@{/usuario/home}" class="btn btn-outline-success btn-sm mt-2">
-								<i class="bi bi-box-arrow-left text-success"></i> Salir
-							</a>
+								
 
-							<!-- Botón "Código" -->
-							<a href="#" class="btn btn-outline-success btn-sm mt-2"
-								onclick="mostrarQR(); return false;">
-								<i class="bi bi-qr-code me-2 text-success"></i>Codigo
-							</a>
+								<a href="#" class="btn btn-outline-success btn-sm mb-2" data-bs-toggle="modal"
+									data-bs-target="#historialModal">
+									<i class="bi bi-clock-history me-2"></i> Ver historial acceso
+								</a>
 
-							<!-- Código QR -->
-							<div class="codigo-containermy-4" id="codigoQR" style="display:none;">
+								
+
+								<a href="#" class="btn btn-outline-success btn-sm">
+									<i class="bi bi-sliders me-2"></i> Configuración
+								</a>
+							</nav>
+						</div>
+					</div>
+
+					<!-- Contenido principal -->
+					<div class="col-lg-9">
+						<div class="access-card bg-white rounded-3 shadow-sm p-4" style="opacity: 0.95;">
+							<h4 class="text-success mb-3">
+								<i class="bi bi-qr-code me-2"></i><b>Referencia de Acceso</b>
+							</h4>
+							<p class="text-muted mb-4">Escanea el siguiente código para ingresar a las instalaciones.
+							</p>
+
+							<div class="text-center mb-4">
 								<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMnbU2i2ZVheiCtFIK6xZnSBE0fSikFVjM-Q&s"
 									alt="Código QR" class="img-fluid" style="max-width: 250px;">
 							</div>
 
-							<script>
-								function mostrarQR() {
-									var qr = document.getElementById("codigoQR");
-									qr.style.display = qr.style.display === "none" ? "block" : "none";
-								}
-							</script>
+							<div class="d-flex justify-content-between align-items-center mb-4">
+								<small class="text-muted">
+									<b>Válido hasta: <span th:text="${fechaValidez}">31/12/2025</span></b>
+								</small>
+							</div>
 
-							<!-- Botón "Ver horario completo" -->
-							<a href="#" class="btn btn-outline-success btn-sm mt-2"
-								onclick="toggleHorario(); return false;">
-								<i class="bi bi-eye me-2 text-success"></i> Ver horario completo
-							</a>
+							<div class="bg-light rounded p-3 mb-4 text-center">
+								<p class="mb-1 fw-semibold text-success">Zonas de acceso restringidas</p>
+								<small class="text-muted">Regulado por el sistema de control de asistencia</small>
+							</div>
 
-							<!-- Botón "Historial" con Modal -->
-							<a href="#" class="btn btn-outline-success btn-sm mt-3" data-bs-toggle="modal"
-								data-bs-target="#historialModal" onclick="mostrarHistorial(); return false;">
-								<i class="bi bi-eye me-2 text-success"></i> Ver historial acceso
-							</a>
+							<!-- Información de accesos -->
+							<div class="row g-3">
+								<div class="col-md-6">
+									<div class="bg-light rounded p-3 h-100">
+										<h6 class="text-success mb-2">
+											<i class="bi bi-calendar3 me-2"></i>Acceso
+										</h6>
+										<ul class="list-unstyled mb-3">
+											<li><i class="bi bi-check-circle-fill text-success me-2"></i>Lunes 8:15 AM
+											</li>
+										</ul>
 
-							<!-- Modal de Historial -->
-							<div id="historialModal" class="modal fade" tabindex="-1"
-								aria-labelledby="historialModalLabel" aria-hidden="true">
-								<div class="modal-dialog">
-									<div class="modal-content">
-										<div class="modal-header">
-											<h5 class="modal-title" id="historialModalLabel">Historial de Accesos</h5>
-											<button type="button" class="btn-close" data-bs-dismiss="modal"
-												aria-label="Close"></button>
-										</div>
-										<div class="modal-body">
-											<div id="contenidoHistorial">
-												<p>Historial de accesos...</p>
-											</div>
-										</div>
+										<h6 class="text-success mb-2">
+											<i class="bi bi-calendar3 me-2"></i>Egreso
+										</h6>
+										<ul class="list-unstyled">
+											<li><i class="bi bi-backspace-reverse-fill text-danger me-2"></i>Lunes 17:35
+												PM
+											</li>
+										</ul>
+									</div>
+								</div>
+
+								<div class="col-md-6">
+									<div class="bg-light rounded p-3 h-100">
+										<h6 class="text-success mb-3">
+											<i class="bi bi-clock-history me-2"></i> Último acceso
+										</h6>
+										<span class="d-block fw-bold text-dark mb-2">Aula Computacional N°1</span>
+										<small class="d-block fw-semibold text-success">Entrada:</small>
+										<small class="d-block text-muted mb-2">15 Mayo, 08:15 AM</small>
+										<small class="d-block fw-semibold text-danger">Salida:</small>
+										<small class="d-block text-muted mb-3">15 Mayo, 02:30 PM</small>
+
+										<a href="#" class="btn btn-outline-secondary btn-sm" data-bs-toggle="modal"
+											data-bs-target="#historialModal"
+											onclick="mostrarHistorial(); return false;">
+											Ver historial
+										</a>
 									</div>
 								</div>
 							</div>
 
-							<!-- Botones de configuración -->
-							<a th:href="@{/Aprendiz/excusas}" class="btn btn-outline-success btn-sm mt-2">
-								<i class="bi bi-gear me-2 text-success"></i>Cargar Excusas
-							</a>
+						</div>
+					</div> <!-- Fin contenido principal -->
 
-							<a href="#" class="btn btn-outline-success btn-sm mt-2">
-								<i class="bi bi-gear me-2 text-success"></i>Configuración
-							</a>
-						</nav>
+				</div>
+			</div>
+		</main>
+
+		<!-- Modal Historial -->
+		<div id="historialModal" class="modal fade" tabindex="-1" aria-labelledby="historialModalLabel"
+			aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="historialModalLabel">Historial de Accesos</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+						<div id="contenidoHistorial">
+							<p>Historial de accesos...</p>
+						</div>
 					</div>
 				</div>
-
-				<!-- Contenido principal -->
-				<div class="col-lg-9">
-					<div class="access-card bg-white shadow-sm rounded p-4" style="opacity: 0.8;">
-						<h4 class="text-success"><i class="bi bi-qr-code me-2"></i><b>Referencia de Acceso</b></h4>
-						<p class="text-muted">Escanea el siguiente código para ingresar a las instalaciones.</p>
-
-						<div class="text-center my-4">
-							<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMnbU2i2ZVheiCtFIK6xZnSBE0fSikFVjM-Q&s"
-								alt="Código QR" class="img-fluid" style="max-width: 250px;">
-						</div>
-
-						<div class="d-flex justify-content-between align-items-center mb-3">
-							<small class="text-muted">
-								<b>Válido hasta: <span th:text="${fechaValidez}">31/12/2025</span></b>
-							</small>
-						</div>
-
-						<div class="bg-light rounded p-3 mb-4">
-							<p class="mb-1"><b>Zonas de acceso restringidas</b> - Regulado -</p>
-							<a href="#" class="btn btn-outline-success btn-sm mt-2"
-								onclick="toggleHorario(); return false;">
-								Ver horario completo
-							</a>
-
-							<div id="horarioSemanal" style="display: none;">
-								<div class="card shadow-sm mt-4">
-									<div class="card-header bg-success text-white">
-										<h5 class="mb-0"><i class="bi bi-calendar-week"></i> Horario Semanal</h5>
-									</div>
-									<div class="card-body p-0">
-										<div class="table-responsive">
-											<table class="table table-bordered text-center mb-0">
-												<thead class="table-light">
-													<tr>
-														<th>Hora</th>
-														<th>Lunes</th>
-														<th>Martes</th>
-														<th>Miércoles</th>
-														<th>Jueves</th>
-														<th>Viernes</th>
-													</tr>
-												</thead>
-												<tbody>
-													<tr>
-														<th>08:00 - 10:00</th>
-														<td>Programación</td>
-														<td>Base de Datos</td>
-														<td>Matemáticas</td>
-														<td>Programación</td>
-														<td>Libre</td>
-													</tr>
-													<tr>
-														<th>10:00 - 12:00</th>
-														<td>Programación</td>
-														<td>Base de Datos</td>
-														<td>Matemáticas</td>
-														<td>Inglés</td>
-														<td>Libre</td>
-													</tr>
-													<tr>
-														<th>13:00 - 15:00</th>
-														<td>Redes</td>
-														<td>Libre</td>
-														<td>Proyecto</td>
-														<td>Libre</td>
-														<td>Libre</td>
-													</tr>
-													<tr>
-														<th>15:00 - 17:00</th>
-														<td>Redes</td>
-														<td>Libre</td>
-														<td>Proyecto</td>
-														<td>Libre</td>
-														<td>Libre</td>
-													</tr>
-												</tbody>
-											</table>
-										</div>
-									</div>
-								</div>
-							</div>
-
-							<script>
-								function toggleHorario() {
-									const horario = document.getElementById("horarioSemanal");
-									horario.style.display = (horario.style.display === "none" || horario.style.display === "") ? "block" : "none";
-								}
-							</script>
-						</div>
-
-						<!-- Horarios y último acceso -->
-						<div class="row g-3">
-							<div class="col-md-6">
-								<div class="bg-light rounded p-3">
-									<h6 class="text-success"><i class="bi bi-calendar3 me-2"></i>Acceso</h6>
-									<ul class="list-unstyled mt-2">
-										<li><i class="bi bi-check-circle-fill text-success me-2"></i>Lunes 8:15 AM</li>
-									</ul>
-
-									<h6 class="text-success mt-4"><i class="bi bi-calendar3 me-2"></i>Egreso</h6>
-									<ul class="list-unstyled mt-2">
-										<li><i class="bi bi-backspace-reverse-fill text-danger me-2"></i>Lunes 17:35 PM
-										</li>
-									</ul>
-								</div>
-							</div>
-
-							<div class="col-md-6">
-								<div class="bg-light rounded p-3">
-									<h6 class="text-success"><i class="bi bi-clock-history me-2"></i> Último acceso</h6>
-									<span class="d-block fw-bold">Aula Computacional N°1</span>
-
-									<small class="d-block fw-bold mt-2">Entrada : </small>
-									<small class="d-block text-muted">15 Mayo, 08:15 AM</small>
-									<small class="d-block fw-bold mt-">Salida : </small>
-									<small class="d-block text-muted">15 Mayo, 02:30 PM</small>
-
-									<a href="#" class="btn btn-outline-secondary btn-sm mt-3" data-bs-toggle="modal"
-										data-bs-target="#historialModal" onclick="mostrarHistorial(); return false;">Ver
-										historial</a>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div> <!-- Fin contenido principal -->
-
 			</div>
 		</div>
-	</main>
 
-	<div th:insert="~{/usuario/templates_usuario.html::footer}"></div>
-	<div th:insert="~{/usuario/templates_usuario.html::jsFiles}"></div>
+		<!-- Footer y Scripts -->
+		<div th:insert="~{/usuario/templates_usuario.html::footer}"></div>
+		<div th:insert="~{/usuario/templates_usuario.html::jsFiles}"></div>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
 
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
+		<script>
+			function mostrarQR() {
+				const qr = document.getElementById("codigoQR");
+				qr.style.display = (qr.style.display === "none" || qr.style.display === "") ? "block" : "none";
+			}
 
-	<script>
-		function mostrarHistorial() {
-			const historial = `
-                <h6><b>Aula Computacional N°1</b></h6>
-                <p><b>Entrada:</b> 15 Mayo, 08:15 AM</p>
-                <p><b>Salida:</b> 14 Mayo, 02:30 PM</p>
-            `;
-			document.getElementById('contenidoHistorial').innerHTML = historial;
-		}
-	</script>
+			function mostrarHistorial() {
+				const historial = `
+				<h6><b>Aula Computacional N°1</b></h6>
+				<p><b>Entrada:</b> 15 Mayo, 08:15 AM</p>
+				<p><b>Salida:</b> 15 Mayo, 02:30 PM</p>
+			`;
+				document.getElementById('contenidoHistorial').innerHTML = historial;
+			}
+		</script>
 
 </body>
 

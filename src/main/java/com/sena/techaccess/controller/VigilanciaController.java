@@ -65,15 +65,12 @@ public class VigilanciaController {
 	
 	//Registro de visitantes
 	@GetMapping("/registro")
-	public String historialVisitante( Model model) {
+	public String historialVisitante(Usuario usuario, Model model) {
 		
-		Rol rolVisitante = rolRepository.findByTipo("Visitante");
-		//Traigo a los usuarios que son compatibles con ese rol
-		List<Usuario> visitantes = usuarioService.findByRol(rolVisitante);
-		if (visitantes.isEmpty()) {
-	        LOGGER.error("No hay visitantes registrados");
-	    }
-		 model.addAttribute("visitantesH", visitantes);
+		Usuario visitantes = usuario.setRol("Visitante");
+		usuario.setRol("Visitante");
+		
+		 model.addAttribute("visitantesH");
 		 LOGGER.warn("Visitante en historial: {}", visitantes);
 		
 		return "Vigilancia/Visitantes";
@@ -84,8 +81,7 @@ public class VigilanciaController {
 	public String registroVisitante(Usuario usuario, DispositivoVisit dispositivo ,Model model) {
 		
 		//Asignar rol a los visitantes
-		Rol rolVisitante = rolRepository.findByTipo("Visitante");
-		usuario.setRol(rolVisitante);
+		usuario.setRol("Visitante");
 		
 		usuarioService.save(usuario);
 		

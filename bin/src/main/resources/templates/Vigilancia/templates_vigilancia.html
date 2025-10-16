@@ -21,6 +21,31 @@
 		.centrados {
 			text-align: center;
 		}
+
+		.input-with-icon {
+			position: relative;
+		}
+
+		.input-with-icon i {
+			position: absolute;
+			top: 50%;
+			left: 12px;
+			transform: translateY(-50%);
+			color: #6c757d;
+			font-size: 1rem;
+			pointer-events: none;
+		}
+
+
+
+		.input-with-icon .form-control {
+			padding-left: 2.5rem;
+			/* espacio para el ícono */
+		}
+
+		.oculto {
+			display: none;
+		}
 	</style>
 
 	<!-- =======================================================
@@ -33,46 +58,179 @@
 
 </head>
 
+<!--=========================== INGRESOS =============================-->
 
+<div th:fragment="Ingresos">
+	<header id="header" class="header d-flex align-items-center fixed-top">
+		<div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
 
-<div th:fragment="footer" style=" position: bottom; width: 100%;">
+			<a th:href="@{/usuario/home}" class="logo d-flex align-items-center">
+				<img th:src="@{/images/TecAccess.png}" alt="LogoPrin">
+				<h1 class="sitename"><b style="color: rgb(14, 209, 220);">TECH</b>ACCESS <b
+						style="color: rgb(14, 209, 220);">|</b> SENA</h1>
+			</a>
 
-	<!--==================================FOOTER=========================================-->
-	<footer id="footer" class="footer position-relative dark-background" style="text-align: center;">
-		<div class="container copyright text-center mt-4">
-			<p>© <span>Copyright</span> <strong class="px-1 sitename">TechAccess</strong> <span>Todos los derechos
-					reservados.</span></p>
-			<div class="credits">
-				<!-- All the links in the footer should remain intact. -->
-				<!-- You can delete the links only if you've purchased the pro version. -->
-				<!-- Licensing information: https://bootstrapmade.com/license/ -->
-				<!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
-				Diseñado por <a th:href="@{/usuario/home}"><b>TECH</b>ACCESS</a>
-			</div>
+			<nav id="navmenu" class="navmenu">
+				<ul>
+					<li><a href="#" class="active"><b>Ingresos</b></a></li>
+					<li><a th:href="@{/Vigilancia/Reportes}">Reportes</a></li>
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+							aria-expanded="false">
+							Opciones
+						</a>
+						<ul class="dropdown-menu">
+							<li><a class="dropdown-item" th:href="@{/Vigilancia/registro}">Visitantes</a></li>
+
+							<li><a class="dropdown-item" th:href="@{/Vigilancia//DispositivosVisit}">Dispositivos</a></li>
+							<li>
+								<hr class="dropdown-divider">
+							</li>
+							<li><a class="dropdown-item" href="#">Si</a></li>
+						</ul>
+					</li>
+					<li><a href="#">Vigilancia</a></li>
+				</ul>
+				<i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+			</nav>
+
 		</div>
-	</footer>
-	<!-- Scroll Top -->
-	<a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i
-			class="bi bi-arrow-up-short"></i></a>
-</div>
-
-
-<div th:fragment="jsFiles">
-	<!-- Vendor JS Files -->
-	<script th:src="@{/assets/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
-	<script th:src="@{/assets/vendor/php-email-form/validate.js}"></script>
-	<script th:src="@{/assets/vendor/aos/aos.js}"></script>
-	<script th:src="@{/assets/vendor/purecounter/purecounter_vanilla.js}"></script>
-	<script th:src="@{/assets/vendor/imagesloaded/imagesloaded.pkgd.min.js}"></script>
-	<script th:src="@{/assets/vendor/isotope-layout/isotope.pkgd.min.js}"></script>
-	<script th:src="@{/assets/vendor/swiper/swiper-bundle.min.js}"></script>
-	<script th:src="@{/assets/vendor/glightbox/js/glightbox.min.js}"></script>
-
-	<!-- Main JS File -->
-	<script th:src="@{/assets/js/main.js}"></script>
+	</header>
 
 </div>
 
+<!--=========================== VISITANTES =============================-->
+
+<div th:fragment="visitantes">
+	<header id="header" class="header d-flex align-items-center fixed-top">
+		<div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
+
+			<a th:href="@{/usuario/home}" class="logo d-flex align-items-center">
+				<img th:src="@{/images/TecAccess.png}" alt="LogoPrin">
+				<h1 class="sitename"><b style="color: rgb(14, 209, 220);">TECH</b>ACCESS <b
+						style="color: rgb(14, 209, 220);">|</b> SENA</h1>
+			</a>
+
+			<nav id="navmenu" class="navmenu">
+				<ul>
+					<li><a th:href="@{/Vigilancia/Ingreso}">Ingresos</a></li>
+					<li><a th:href="@{/Vigilancia/Reportes}">Reportes</a></li>
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+							aria-expanded="false">
+							<b>Opciones</b>
+						</a>
+						<ul class="dropdown-menu">
+							<li><a class="dropdown-item" th:href="@{/Vigilancia/registro}"><b>Visitantes</b></a></li>
+							<li><a class="dropdown-item" th:href="@{/Vigilancia/DispositivosVisit}">Dispositivos</a></li>
+							<li>
+								<hr class="dropdown-divider">
+							</li>
+							<li><a class="dropdown-item" href="#">Si</a></li>
+						</ul>
+					</li>
+					<li><a href="#">Vigilancia</a></li>
+				</ul>
+				<i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+			</nav>
+
+		</div>
+	</header>
+
+</div>
+
+<!--=========================== DISPOSITIVOS =============================-->
+
+<div th:fragment="dispositivoVisitante">
+	<header id="header" class="header d-flex align-items-center fixed-top">
+		<div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
+
+			<a th:href="@{/usuario/home}" class="logo d-flex align-items-center">
+				<img th:src="@{/images/TecAccess.png}" alt="LogoPrin">
+				<h1 class="sitename"><b style="color: rgb(14, 209, 220);">TECH</b>ACCESS <b
+						style="color: rgb(14, 209, 220);">|</b> SENA</h1>
+			</a>
+
+			<nav id="navmenu" class="navmenu">
+				<ul>
+					<li><a th:href="@{/Vigilancia/Ingreso}">Ingresos</a></li>
+					<li><a th:href="@{/Vigilancia/Reportes}">Reportes</a></li>
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+							aria-expanded="false">
+							<b>Opciones</b>
+						</a>
+						<ul class="dropdown-menu">
+							<li><a class="dropdown-item" th:href="@{/Vigilancia/registro}"><b>Visitantes</b></a></li>
+							<li><a class="dropdown-item" th:href="@{/Vigilancia/DispositivosVisit}">Dispositivos</a></li>
+							<li>
+								<hr class="dropdown-divider">
+							</li>
+							<li><a class="dropdown-item" href="#">Si</a></li>
+						</ul>
+					</li>
+					<li><a href="#">Vigilancia</a></li>
+				</ul>
+				<i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+			</nav>
+
+		</div>
+	</header>
+</div>
+
+	<!--=========================== FOOTER =============================-->
+
+	<div th:fragment="footer" style=" position: bottom; width: 100%;">
+
+		<footer id="footer" class="footer position-relative dark-background" style="text-align: center;">
+			<div class="container copyright text-center mt-4">
+				<p>© <span>Copyright</span> <strong class="px-1 sitename">TechAccess</strong> <span>Todos los derechos
+						reservados.</span></p>
+				<div class="credits">
+					<!-- All the links in the footer should remain intact. -->
+					<!-- You can delete the links only if you've purchased the pro version. -->
+					<!-- Licensing information: https://bootstrapmade.com/license/ -->
+					<!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
+					Diseñado por <a th:href="@{/usuario/home}"><b>TECH</b>ACCESS</a>
+				</div>
+			</div>
+		</footer>
+		<!-- Scroll Top -->
+		<a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i
+				class="bi bi-arrow-up-short"></i></a>
+	</div>
+
+	<!--=========================== SCRIPS =============================-->
+
+	<div th:fragment="jsFiles">
+		<!-- Vendor JS Files -->
+		<script th:src="@{/assets/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+		<script th:src="@{/assets/vendor/php-email-form/validate.js}"></script>
+		<script th:src="@{/assets/vendor/aos/aos.js}"></script>
+		<script th:src="@{/assets/vendor/purecounter/purecounter_vanilla.js}"></script>
+		<script th:src="@{/assets/vendor/imagesloaded/imagesloaded.pkgd.min.js}"></script>
+		<script th:src="@{/assets/vendor/isotope-layout/isotope.pkgd.min.js}"></script>
+		<script th:src="@{/assets/vendor/swiper/swiper-bundle.min.js}"></script>
+		<script th:src="@{/assets/vendor/glightbox/js/glightbox.min.js}"></script>
+
+		<!-- Main JS File -->
+		<script th:src="@{/assets/js/main.js}"></script>
+
+		<script>
+			function mostrarCampos() {
+				const opcion = document.getElementById("opcion").value;
+				const campos = document.getElementById("camposExtra");
+
+				if (opcion === "si") {
+					campos.classList.remove("oculto");
+				} else {
+					campos.classList.add("oculto");
+				}
+			}
+		</script>
+
+	</div>
 
 
-</html>
+
+	</html>

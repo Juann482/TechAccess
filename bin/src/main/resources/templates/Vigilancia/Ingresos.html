@@ -1,32 +1,12 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 
-<head th:insert="~{/Administrador/templates_vigilancia.html::head}"></head>
+<head th:insert="~{/Vigilancia/templates_vigilancia.html::head}"></head>
 
 <body class="contact-page">
 
-	<header id="header" class="header d-flex align-items-center fixed-top">
-		<div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
-
-			<a th:href="@{/usuario/home}" class="logo d-flex align-items-center">
-				<img th:src="@{/images/TecAccess.png}" alt="LogoPrin">
-				<h1 class="sitename"><b>TECH</b>ACCESS</h1>
-			</a>
-
-			<nav id="navmenu" class="navmenu">
-				<ul>
-					<li><a href="#" class="active"><b>Ingresos</b></a></li>
-					<li><a th:href="@{/Vigilancia/Reportes}">Reportes</a></li>
-					<li><a th:href="@{#}">Novedades</a>
-					</li>
-					<li><a href="#">Vigilancia</a></li>
-				</ul>
-				<i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-			</nav>
-
-		</div>
-	</header>
-
+	<div th:insert="~{/Vigilancia/templates_vigilancia.html::Ingresos}"></div>
+		
 	<main class="main">
 
 		<!-- Page Title -->
@@ -51,7 +31,7 @@
 					<div class="row justify-content-center" data-aos="fade-up" data-aos-delay="300">
 						<div class="col-lg-10">
 							<div class="contact-form-wrapper">
-								
+
 
 
 								<div class="col-md-12">
@@ -74,12 +54,12 @@
 												<td th:text="${usuario.nombre}"></td>
 												<td th:text="${usuario.documento}"></td>
 												<td th:text="${usuario.rol.tipo}"></td>
-												<td th:text="${usuario.ficha.numFicha}"></td>
+												<td th:text="${usuario.ficha != null ? usuario.ficha.numFicha : '-'}"></td>
 
-												<td> 
+												<td>
 													<button type="button" class="btn btn-outline-success"
 														data-bs-toggle="modal" data-bs-target="#exampleModal">
-														Registrar ficha
+														Ingreso
 													</button>
 												</td>
 
@@ -100,9 +80,9 @@
 
 	</main>
 
-	<div th:insert="~{/usuario/templates_usuario.html::footer}"></div>
+	<div th:insert="~{/Vigilancia/templates_vigilancia.html::footer}"></div>
 
-	<div th:insert="~{/usuario/templates_usuario.html::jsFiles}"></div>
+	<div th:insert="~{/Vigilancia/templates_vigilancia.html::jsFiles}"></div>
 
 </body>
 

@@ -1,206 +1,256 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 
-<head th:insert="~{/usuario/templates_usuario.html::head}"></head>
+<head th:insert="~{/Administrador/templates_Administrador.html::head}"></head>
 
-<body class="body" style="font-family: 'Segoe UI', sans-serif;">
+<body class="contact-page" style="font-family: 'Segoe UI', sans-serif;">
+
+	<!-- Encabezado -->
 
 	<header id="header" class="header d-flex align-items-center fixed-top">
-		<div
-			class="container-fluid container-xl position-relative d-flex w-100 align-items-center justify-content-between">
-			<!-- HEADER -->
-			<header class="header d-flex align-items-center justify-content-between fixed-top w-100"
-				style="background-color: rgba(0, 124, 88, 0.6); box-shadow: 0 5px 3px rgba(0,0,0,0.2);">
-				<h1 class="sitename m-0">
-					<strong style="color:#ffffff;">TECH</strong>
-					<span style="color:#ffffff;">ACCESS</span>
-					<span style="color:#adb5bd;">/</span>
-					<span style="color:#ffffff;">SENA - CIMM CIUDADELA</span>
-				</h1>
-			</header>
+		<div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
+
+			<a th:href="@{/usuario/home}" class="logo d-flex align-items-center">
+				<img th:src="@{/images/TecAccess.png}" alt="LogoPrin">
+				<h1 class="sitename"><b style="color: rgb(14, 209, 220);">TECH</b>ACCESS <b
+						style="color: rgb(14, 209, 220);">|</b> SENA</h1>
+			</a>
+
+			<nav id="navmenu" class="navmenu">
+				<ul>
+					<li><a th:href="@{/Aprendiz/aprendiz}">Aprendiz</a></li>
+					<li><a href="#" class="active"><b>Excusas</b></a></li>
+					<li><a th:href="@{/Aprendiz/Horario}">Horario</a></li>
+					<li><a th:href="@{/usuario/home}">Inicio</a></li>
+
+				</ul>
+				<i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+			</nav>
+
 		</div>
 	</header>
 
-	<!-- CONTENIDO -->
-	<main class="main py-4" style="background-color: rgba(0, 124, 88, 0.05);">
-		<div class="container">
-			<div class="row">
 
-
-				<!-- Aquí va tu contenido -->
-
-
-	</main>
-
-	<div class="video-container2">
-		<video class="video-background2" autoplay muted loop>
-			<source th:src="@{/assets/vid/entradaS.mp4}" type="video/mp4">
-			Error al cargar el video.
-		</video>
-	</div>
-
-	<div>
-		<!-- Encabezado -->
-
-		<!-- Contenido -->
-		<main class="main py-4" style="background-color: rgba(0, 124, 88, 0.05);">
-			<div class="container">
-				<div class="row">
-
-					<!-- Menú lateral -->
-					<div class="col-lg-3 mb-4">
-						<div class="user-nav rounded shadow-sm p-3 bg-white">
-							<div class="text-center mb-3">
-								<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyPko2ajUOpOXvihi71Rccu8kXmRXPhnkOKA&s"
-									alt="Foto de perfil"
-									style="width: 120px; border-radius: 50%; border: 2px solid #007C58;">
+	<main class="main" style="background-color: rgba(0, 124, 88, 0.05); min-height: 100vh;">
 
 
 
-								<div class="border rounded p-2 mb-2 bg-light" style="margin-top: 15px;">
-									<p class="mb-0 text-success">
-										Rol: <span th:text="${usuario != null ? usuario.rol : ''}"></span>
+		<!-- Contenido principal -->
+		<main class="main" style="background-color: rgba(0, 124, 88, 0.05); min-height: 100vh;">
 
-									</p>
-								</div>
-
-								<div class="border rounded p-2 mb-2 bg-light" style="margin-top: 15px;">
-									<p class="mb-0 text-success">
-										Nombre Aprendiz: <span
-											th:text="${usuario != null ? usuario.nombre : ''}"></span>
-									</p>
-								</div>
-
-								<div class="border rounded p-2 mb-2 bg-light">
-									<p class="mb-0 text-success">
-										Ficha: <span th:text="${usuario != null ? usuario.ficha : ''}"></span>
-									</p>
-								</div>
-
-								<div class="border rounded p-2 mb-2 bg-light">
-									<p class="mb-0 text-success">
-										Estado: <span class="badge bg-success"
-											th:text="${usuario != null ? usuario.estado : ''}"></span>
-									</p>
-								</div>
-
-
-
-
-							</div>
-
-							<nav class="nav flex-column">
-								<a th:href="@{/usuario/home}" class="btn btn-outline-success btn-sm mt-2">
-									<i class="bi bi-box-arrow-left text-success"></i> Salir
-								</a>
-
-								<!-- Botón "Código" -->
-								<a href="#" class="btn btn-outline-success btn-sm mt-2"
-									onclick="mostrarQR(); return false;">
-									<i class="bi bi-qr-code me-2 text-success"></i>Codigo
-								</a>
-
-								<!-- Código QR -->
-								<div class="codigo-containermy-4" id="codigoQR" style="display:none;">
-									<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMnbU2i2ZVheiCtFIK6xZnSBE0fSikFVjM-Q&s"
-										alt="Código QR" class="img-fluid" style="max-width: 250px;">
-								</div>
-
-								<script>
-									function mostrarQR() {
-										var qr = document.getElementById("codigoQR");
-										qr.style.display = qr.style.display === "none" ? "block" : "none";
-									}
-								</script>
-
-
-
-								<!-- Botones de configuración -->
-
-
-								<a href="#" class="btn btn-outline-success btn-sm mt-2">
-									<i class="bi bi-gear me-2 text-success"></i>Configuración
-								</a>
-							</nav>
-						</div>
-					</div>
-					<!-- Contenido principal -->
-
-
-
-					<div class="col-lg-9">
-						<div class="access-card bg-white shadow-sm rounded p-4" style="opacity: 0.8;">
-							<section class="section dashboard">
-								<did class="card">
-									<did class="card-body">
-										<h5 class="card-title"></h5>
-										<form th:action="@{/excusas/save}" th:object="${excusa}" method="post"
-											enctype="multipart/form-data">
-											<input type="text" th:field="*{nombre}"
-												placeholder="Ingrese nombres y apellidos" required />
-											<input type="text" th:field="*{documento}" placeholder="Ingrese documento"
-												required />
-											<input type="text" th:field="*{ficha}" placeholder="Ficha" required />
-											<input type="number" th:field="*{numeroFicha}" placeholder="Número de ficha"
-												required />
-
-											<select th:field="*{motivo}">
-												<option value="">***Seleccionar***</option>
-												<option value="Enfermedad">Enfermedad</option>
-												<option value="Incapacidad médica">Incapacidad médica</option>
-												<option value="Derecho al voto">Derecho al voto</option>
-												<option value="Calamidad doméstica">Calamidad doméstica</option>
-												<option value="Otro">Otro</option>
-											</select>
-
-											<input type="date" th:field="*{fecha}" required />
-
-											<input type="file" name="img" />
-											<button type="submit" class="btn btn-success">Guardar</button>
-										</form>
-
-									</did>
-								</did>
-								</form>
-								</did>
-								<did class="row mb-3"></did>
-								<did class="row mb-3"></did>
-								<did class="row mb-3"></did>
-								<did class="row mb-3"></did>
-								<did class="row mb-3">
-									<label class="col-sm-2 col-form-label">Guardar cambios</label>
-									<did class="col-sm-10">
-										<button type="submit" class="btn btn-success"><i
-												class="bi bi-send-plus"></i>Guardar
-										</button>
-									</did>
-								</did>
-							</section>
-						</div>
-					</div> <!-- Fin contenido principal -->
-
+			<!-- Encabezado de página -->
+			<div class="page-title dark-background text-center py-5"
+				th:style="'background-image: url(' + @{/images/fondo.jpeg} + '); background-size: cover; background-position: center;'">
+				<div class="container position-relative">
+					<h1 class="text-white fw-bold mb-3">Excusas</h1>
+					<nav class="breadcrumbs">
+						<ol class="breadcrumb justify-content-center">
+							
+								
+							
+							<li>
+								<!-- <a th:href="@{/Aprendiz/aprendiz}" class="text-white text-decoration-none"><b>Aprendiz</b></a> -->
+							</li>
+						</ol>
+					</nav>
 				</div>
 			</div>
-		</main>
 
-		<div th:insert="~{/usuario/templates_usuario.html::footer}"></div>
-		<div th:insert="~{/usuario/templates_usuario.html::jsFiles}"></div>
-	</div>
+			<!-- 🔹 Fondo de video a pantalla completa -->
+			<div class="video-container2 position-fixed top-0 start-0 w-100 h-100 overflow-hidden"
+				style="z-index: -1; opacity: 1;">
 
-	<!-- Archivos JS de Bootstrap -->
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
+				<video class="video-background2 w-100 h-100 object-fit-cover" autoplay muted loop playsinline>
+					<source th:src="@{/assets/vid/entradaS.mp4}" type="video/mp4">
+					Tu navegador no soporta videos en HTML5.
+				</video>
+			</div>
 
-	<script>
-		function mostrarHistorial() {
-			// Llenar el historial con información dinámica
-			const historial = `
-                <h6><b>Aula Computacional N°1</b></h6>
-                <p><b>Entrada:</b> 15 Mayo, 08:15 AM</p>
-                <p><b>Salida:</b> 14 Mayo, 02:30 PM</p>
-            `;
-			document.getElementById('contenidoHistorial').innerHTML = historial;
-		}
-	</script>
+
+			<!-- 🔹 CONTENIDO PRINCIPAL -->
+			<main class="main py-4" style="background-color: rgba(0, 124, 88, 0.05); margin-top: 90px;">
+				<div class="container">
+					<div class="row">
+
+						<!-- 🔸 MENÚ LATERAL -->
+						<div class="col-lg-3 mb-4">
+							<div class="user-nav rounded shadow-sm p-3 bg-white">
+
+								<div class="text-center mb-3">
+									<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyPko2ajUOpOXvihi71Rccu8kXmRXPhnkOKA&s"
+										alt="Foto de perfil"
+										style="width: 120px; border-radius: 50%; border: 2px solid #007C58;">
+								</div>
+
+								<div class="border rounded p-2 mb-2 bg-light">
+									<p class="mb-0 text-success fw-semibold">
+										Nombre Aprendiz:
+										<span th:text="${usuario != null ? usuario.nombre : ' - '}"></span>
+									</p>
+								</div>
+
+								<div class="border rounded p-2 mb-2 bg-light">
+									<p class="mb-0 text-success fw-semibold">
+										Programa:
+										<span th:text="${ficha != null ? ficha.nombrePrograma : ' - '}"></span>
+									</p>
+								</div>
+
+								<div class="border rounded p-2 mb-2 bg-light">
+									<p class="mb-0 text-success fw-semibold">
+										Ficha:
+										<span th:text="${ficha != null ? ficha.numFicha : ' - '}"></span>
+									</p>
+								</div>
+
+								<nav class="nav flex-column text-center">
+									<a th:href="@{/usuario/home}" class="btn btn-outline-success btn-sm mt-2">
+										<i class="bi bi-box-arrow-left text-success"></i> Salir
+									</a>
+
+									<a href="#" class="btn btn-outline-success btn-sm mt-2"
+										onclick="mostrarQR(); return false;">
+										<i class="bi bi-qr-code me-2 text-success"></i> Código
+									</a>
+
+									<div class="codigo-container my-4" id="codigoQR" style="display:none;">
+										<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMnbU2i2ZVheiCtFIK6xZnSBE0fSikFVjM-Q&s"
+											alt="Código QR" class="img-fluid" style="max-width: 220px;">
+									</div>
+
+									<a th:href="@{/Aprendiz/Horario}" class="btn btn-outline-success btn-sm mt-2">
+										<i class="bi bi-calendar3 text-success me-2"></i> Ver horario
+									</a>
+
+									<a href="#" class="btn btn-outline-success btn-sm mt-2">
+										<i class="bi bi-gear me-2 text-success"></i> Configuración
+									</a>
+								</nav>
+							</div>
+						</div>
+
+						<!-- 🔸 FORMULARIO PRINCIPAL -->
+						<div class="col-lg-9">
+							<div class="access-card bg-white shadow-sm rounded p-4" style="opacity: 0.95;">
+								<section class="section dashboard">
+									<div class="card border-0">
+										<div class="card-body">
+											<h4 class="text-success mb-4"><i
+													class="bi bi-clipboard-check me-2"></i><b>Registrar
+													Excusa</b></h4>
+
+											<form th:action="@{/Aprendiz/lista}" method="post"
+												enctype="multipart/form-data">
+
+												<div class="mb-3 row">
+													<label
+														class="col-sm-3 col-form-label fw-semibold text-success">Nombre
+														y
+														apellidos:</label>
+													<div class="col-sm-9">
+														<input type="text" class="form-control" id="nombres"
+															name="nombres"
+															th:value="${usuario != null ? usuario.nombre : ' - '}"
+															readonly>
+													</div>
+												</div>
+
+												<div class="mb-3 row">
+													<label
+														class="col-sm-3 col-form-label fw-semibold text-success">Documento:</label>
+													<div class="col-sm-9">
+														<input type="number" class="form-control" id="ndocumento"
+															name="ndocumento"
+															th:value="${usuario != null ? usuario.documento : ' - '}"
+															readonly>
+													</div>
+												</div>
+
+												<div class="mb-3 row">
+													<label
+														class="col-sm-3 col-form-label fw-semibold text-success">Número
+														de
+														ficha:</label>
+													<div class="col-sm-9">
+														<input type="number" class="form-control mb-2" id="fichaasd"
+															name="fichaasd"
+															th:value="${ficha != null ? ficha.numFicha : ' - '}"
+															readonly>
+														<input type="hidden" id="ficha" name="ficha"
+															th:value="${ficha != null ? ficha.idFicha : ' - '}">
+													</div>
+												</div>
+
+												<div class="mb-3 row">
+													<label
+														class="col-sm-3 col-form-label fw-semibold text-success">Motivo
+														de
+														inasistencia:</label>
+													<div class="col-sm-9">
+														<select class="form-control" id="motivo" name="motivo" required>
+															<option value="">*** Seleccionar ***</option>
+															<option value="Enfermedad">Enfermedad</option>
+															<option value="Incapacidad médica">Incapacidad médica
+															</option>
+															<option value="Derecho al voto">Derecho al voto</option>
+															<option value="Calamidad doméstica">Calamidad doméstica
+															</option>
+															<option value="Otro">Otro</option>
+														</select>
+													</div>
+												</div>
+
+												<div class="mb-3 row">
+													<label
+														class="col-sm-3 col-form-label fw-semibold text-success">Fecha:</label>
+													<div class="col-sm-9">
+														<input type="date" class="form-control" id="fecha" name="fecha"
+															required>
+													</div>
+												</div>
+
+												<div class="mb-3 row">
+													<label
+														class="col-sm-3 col-form-label fw-semibold text-success">Soporte:</label>
+													<div class="col-sm-9">
+														<input type="file" class="form-control" name="archivo"
+															accept=".pdf,.jpg,.png" required>
+														<small class="text-muted">Adjunte un soporte de la inasistencia
+															(PDF o
+															imagen).</small>
+													</div>
+												</div>
+
+												<div class="text-end">
+													<button type="submit" class="btn btn-success">
+														<i class="bi bi-send-plus me-2"></i> Guardar Excusa
+													</button>
+												</div>
+
+											</form>
+
+										</div>
+									</div>
+								</section>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</main>
+
+			<!-- 🔹 FOOTER -->
+			<div th:insert="~{/usuario/templates_usuario.html::footer}"></div>
+			<div th:insert="~{/usuario/templates_usuario.html::jsFiles}"></div>
+
+			<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
+
+			<script>
+				function mostrarQR() {
+					const qr = document.getElementById("codigoQR");
+					qr.style.display = (qr.style.display === "none" || qr.style.display === "") ? "block" : "none";
+				}
+			</script>
 
 </body>
 

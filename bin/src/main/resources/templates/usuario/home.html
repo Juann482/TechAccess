@@ -61,25 +61,26 @@
 									<div></div>
 
 									<form th:action="@{/logIn/login}" method="post">
-																			<div class="form-group">
-																				<label for="username" style="color:rgb(255, 255, 255)">Usuario</label>
-																				<input type="text" id="email" name="correoUsuario"
-																					placeholder="Ingrese su usuario">
-																			</div>
-																			<div class="form-group">
-																				<label for="password" style="color:white">Contraseña</label>
-																				<input type="password" id="password" name="contrasenaUsuario"
-																					placeholder="Ingrese su contraseña">
-																			</div>
+										<div class="form-group">
+											<label for="username" style="color:rgb(255, 255, 255)">Usuario</label>
+											<input type="text" id="email" name="correoUsuario"
+												placeholder="Ingrese su usuario">
+										</div>
+										<div class="form-group">
+											<label for="password" style="color:white">Contraseña</label>
+											<input type="password" id="password" name="contrasenaUsuario"
+												placeholder="Ingrese su contraseña">
+										</div>
 
-																			<button type="submit" class="btn-login" style="color: white;">Iniciar
-																				Sesión</button>
-																		</form>
+										<button type="submit" class="btn-login" style="color: white;">Iniciar
+											Sesión</button>
+									</form>
 
 									<!-- funcion vinculo paginas roles -->
 
-									<a th:href="@{/Aprendiz/aprendiz}">Soporte</a>
-									<a th:href="@{/Vigilancia/Inicio}">Seguridad</a>
+									<a th:href="@{/Aprendiz/aprendiz}">Aprendiz</a>
+									<a th:href="@{/Vigilancia/Ingreso}">Seguridad</a>
+									<a th:href="@{/Administrador/usuarios}">Admin</a>
 
 
 									<!--<script>
@@ -100,7 +101,7 @@
 										<label style="color:white">
 											<p>¿No tiene una cuenta?</p>
 										</label>
-										<a href="#" class="btn-login">Regístrarse</a>
+										<a th:href="@{/Administrador/form}" class="btn-login">Regístrarse</a>
 									</div>
 								</div>
 							</div>

@@ -30,6 +30,9 @@ public class Usuario {
 	private String direccion;
 	private String telefono;
 	private String password;
+	private String rol;
+	private String estadoCuenta;
+	
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ficha_id", nullable = true)
@@ -40,15 +43,6 @@ public class Usuario {
 
 	@OneToMany(mappedBy = "usuario")
 	private List<Permisos> permisos = new ArrayList<>();
-
-	@ManyToOne // (fetch = FetchType.LAZY)
-	@JoinColumn(name = "estado_cuenta")
-	private EstadoCuenta estadoCuenta;
-
-	@ManyToOne // (fetch = FetchType.LAZY)//LAZY evita traer objetos grandes que no siempre
-				// necesitas.
-	@JoinColumn(name = "Rol")
-	private Rol rol;
 
 	@OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Vigilancia vigilancia;
@@ -64,12 +58,10 @@ public class Usuario {
 	@OneToMany
 	private List<Dispositivo> dispositivo = new ArrayList<>();
 
-	public Usuario() {
+	public Usuario() {}	
 
-	}
-
-	public Usuario(Integer id, String nombre, Integer nFicha, String email, String documento, String direccion,
-			String telefono, String password) {
+	public Usuario(Integer id, String nombre, String email, String documento, String direccion, String telefono,
+			String password, String rol, String estadoCuenta) {
 		super();
 		this.id = id;
 		this.nombre = nombre;
@@ -78,11 +70,9 @@ public class Usuario {
 		this.direccion = direccion;
 		this.telefono = telefono;
 		this.password = password;
+		this.rol = rol;
+		this.estadoCuenta = estadoCuenta;
 	}
-
-	
-
-	
 
 	public Integer getId() {
 		return id;
@@ -156,20 +146,28 @@ public class Usuario {
 		this.permisos = permisos;
 	}
 
-	public EstadoCuenta getEstadoCuenta() {
-		return estadoCuenta;
-	}
-
-	public void setEstadoCuenta(EstadoCuenta estadoCuenta) {
-		this.estadoCuenta = estadoCuenta;
-	}
-
-	public Rol getRol() {
+	public String getRol() {
 		return rol;
 	}
 
-	public void setRol(Rol rol) {
+	public void setRol(String rol) {
 		this.rol = rol;
+	}
+
+	public String getEstadoCuenta() {
+		return estadoCuenta;
+	}
+
+	public void setEstadoCuenta(String estadoCuenta) {
+		this.estadoCuenta = estadoCuenta;
+	}
+
+	public List<DispositivoVisit> getDispositivoVisit() {
+		return dispositivoVisit;
+	}
+
+	public void setDispositivoVisit(List<DispositivoVisit> dispositivoVisit) {
+		this.dispositivoVisit = dispositivoVisit;
 	}
 
 	public Vigilancia getVigilancia() {
@@ -207,10 +205,12 @@ public class Usuario {
 	@Override
 	public String toString() {
 		return "Usuario [id=" + id + ", nombre=" + nombre + ", email=" + email + ", documento=" + documento
-				+ ", direccion=" + direccion + ", telefono=" + telefono + ", password=" + password + ", ficha=" + ficha
-				+ ", dispositivoVisit=" + dispositivoVisit + ", permisos=" + permisos + ", estadoCuenta=" + estadoCuenta
-				+ ", rol=" + rol + ", vigilancia=" + vigilancia + ", acceso=" + acceso + ", excusas=" + excusas
-				+ ", dispositivo=" + dispositivo + "]";
+				+ ", direccion=" + direccion + ", telefono=" + telefono + ", password=" + password + ", rol=" + rol
+				+ ", estadoCuenta=" + estadoCuenta + ", ficha=" + ficha + ", dispositivoVisit=" + dispositivoVisit
+				+ ", permisos=" + permisos + ", vigilancia=" + vigilancia + ", acceso=" + acceso + ", excusas="
+				+ excusas + ", dispositivo=" + dispositivo + "]";
 	}
+
+	
 
 }
