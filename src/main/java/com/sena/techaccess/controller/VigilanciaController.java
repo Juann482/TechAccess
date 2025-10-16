@@ -9,8 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.sena.techaccess.model.Dispositivo;
 import com.sena.techaccess.model.DispositivoVisit;
@@ -99,13 +101,25 @@ public class VigilanciaController {
 		
 		return "redirect:/Vigilancia/registro";
 	}
-	//====================== DISPOSITIVOS ===============================
+	//====================== DISPOSITIVOS Visitantes ===============================
 
+	//Lista de dispositivos de visitantes
 	@GetMapping("/DispositivosVisit")
-	public String dispositivosUser(Dispositivo dispositivo, Model model) {
-		
-		model.addAttribute("DispositivosVisit", dispositivoVisitService.findAll());
+	public String dispositivosUser(DispositivoVisit dispositivo, Model model) {
+				
+		model.addAttribute("dispositivosVisit", dispositivoVisitService.findAll());
 		
 		return "Vigilancia/Dispositivos";
+	}
+	
+	@PostMapping("/DeleteDV/{id}")
+	public String EliminarDispoV (@PathVariable Integer id) {
+		
+		DispositivoVisit DispoVisitDl = new DispositivoVisit();
+		DispoVisitDl = dispositivoVisitService.get(id).get();
+		dispositivoVisitService.delete(id);
+		LOGGER.warn("Dispositivo de visitante eliminado; {}", DispoVisitDl);
+		
+		return "redirect:/Vigilancia/DispositivoVisit";
 	}
 }
