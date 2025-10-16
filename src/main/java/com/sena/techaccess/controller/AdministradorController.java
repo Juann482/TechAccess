@@ -84,8 +84,8 @@ public class AdministradorController {
 	// Editar usuario
 	@GetMapping("/edicionUsuario/{id}")
 	public String edicionUsuario(@PathVariable Integer id, Model model) {
-		Usuario userEd = new Usuario();
-		Optional<Usuario> ud = usuarioService.get(id);
+		Usuario userEd = new Usuario(); //Objeto vacio
+		Optional<Usuario> ud = usuarioService.get(id); //Llamas a tu servicio para buscar el usuario por su id.
 		userEd = ud.get();
 		LOGGER.warn("Busqueda de usuarios por id {}", userEd);
 		model.addAttribute("roles", rolService.findAll()); // Lista de roles para cargar
@@ -162,7 +162,7 @@ public class AdministradorController {
 
 	// ======================= FICHA ===========================
 
-	// crear ficha
+	// enlistar ficha
 	@GetMapping("/fichas")
 	public String asignarCampoFichas(Model model) {
 

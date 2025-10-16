@@ -49,7 +49,7 @@
 												<th scope="col">Eliminar</th>
 											</tr>
 										</thead>
-										<tbody th:each="dispositivo: ${DispositivosVisit}">
+										<tbody th:each="dispositivo: ${dispositivosVisit}">
 											<tr class="centrados">
 												
 												<td th:text="${dispositivo.id}"></td>
@@ -57,11 +57,11 @@
 												<td th:text="${dispositivo.marca}"></td>
 												<td th:text="${dispositivo.color}"> </td>
 												<td th:text="${dispositivo.usuario != null ? dispositivo.usuario.nombre : '-'}"> </td>
-												<td>
-													<button type="button" class="btn btn-outline-success"
-														data-bs-toggle="modal" data-bs-target="#exampleModal">
-														Ingreso
-													</button>
+												
+												<td><a title="Eliminar" class="btn btn-outline-danger"
+													th:href="@{/Vigilancia//DeleteDV/{id}} (id=${usuario.id})">													<i
+																												class="bi bi-trash-fill"></a>
+													
 												</td>
 
 
