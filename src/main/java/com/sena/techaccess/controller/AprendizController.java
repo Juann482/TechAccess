@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.nio.file.Files;
+import java.io.File;
 import java.io.IOException;
 
 import org.slf4j.Logger;
@@ -22,6 +23,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.util.StringUtils;
 
 import com.sena.techaccess.model.Excusas;
 import com.sena.techaccess.model.Horario;
@@ -70,9 +73,13 @@ public class AprendizController {
 	}
 
 	// ========================= EXCUSAS =========================
+
 	@GetMapping("/excusas")
-	public String mostrarExcusas(Model modelo) {
-		modelo.addAttribute("Excusas", new Excusas());
+	public String inicioexcusas(Model model) {
+		Usuario user = usuarioService.findAll().get(0);
+		model.addAttribute("usuario", user);
+		model.addAttribute("ficha", user.getFicha());
+		model.addAttribute("estadoCuenta", user.getEstadoCuenta());
 		return "Aprendiz/excusas";
 	}
 
@@ -97,20 +104,73 @@ public class AprendizController {
 
 	// Guardar nueva excusa con archivo
 	@PostMapping("/save")
-	public String guardarExcusa(@ModelAttribute Excusas excusa, @RequestParam("img") MultipartFile archivo)
-			throws IOException {
-		LOGGER.info("Excusa recibida: {}", excusa);
+	public String guardarExcusa(@ModelAttribute Excusas excusa, @RequestParam("img") MultipartFile archivo,
+			RedirectAttributes redirectAttributes) {
+		try {
+			LOGGER.info("Excusa recibida: {}", excusa);
 
-		if (!archivo.isEmpty()) {
-			String nombreArchivo = UUID.randomUUID() + "_" + archivo.getOriginalFilename();
-			Path ruta = Paths.get("uploads").resolve(nombreArchivo);
-			Files.copy(archivo.getInputStream(), ruta, StandardCopyOption.REPLACE_EXISTING);
-			excusa.setSoporte(nombreArchivo);
+			// 📁 Directorio donde se guardarán los archivos
+			Path uploadsDir = Paths.get("uploads");
+
+			// 🔹 Crear carpeta si no existe
+			if (!Files.exists(uploadsDir)) {
+				Files.createDirectories(uploadsDir);
+				LOGGER.info("Directorio 'uploads' creado en {}", uploadsDir.toAbsolutePath());
+			}
+
+			// 🖼️ Validar si el archivo fue enviado
+			if (!archivo.isEmpty()) {
+				String contentType = archivo.getContentType();
+
+				// ✅ Validar tipo MIME (solo imágenes)
+				if (contentType == null || !contentType.startsWith("image/")) {
+					redirectAttributes.addFlashAttribute("error",
+							"El archivo debe ser una imagen válida (JPG, PNG, etc.)");
+					return "redirect:/Aprendiz/excusas";
+				}
+
+				// 🧩 Normalizar nombre del archivo
+				String shortId = UUID.randomUUID().toString().substring(0, 0);
+				String nombreArchivo = shortId + "_" + StringUtils.cleanPath(archivo.getOriginalFilename());
+
+				// 📍 Ruta final del archivo
+				Path rutaArchivo = uploadsDir.resolve(nombreArchivo);
+
+				// 💾 Guardar archivo en disco (reemplaza si ya existe)
+				Files.copy(archivo.getInputStream(), rutaArchivo, StandardCopyOption.REPLACE_EXISTING);
+
+				// 📎 Asociar nombre al modelo
+				excusa.setSoporte(nombreArchivo);
+				LOGGER.info("Archivo guardado en {}", rutaArchivo.toAbsolutePath());
+			}
+
+			// 💽 Guardar excusa en la base de datos
+			excusasService.save(excusa);
+			LOGGER.info("Excusa guardada con ID {}", excusa.getId());
+
+			redirectAttributes.addFlashAttribute("success", "Excusa guardada correctamente.");
+			return "redirect:/Aprendiz/excusas";
+
+		} catch (IOException e) {
+			LOGGER.error("Error al guardar la excusa o el archivo: {}", e.getMessage(), e);
+			redirectAttributes.addFlashAttribute("error", "Error al guardar la excusa o el archivo.");
+			return "redirect:/Aprendiz/excusas";
+		} catch (Exception e) {
+			LOGGER.error("Error inesperado: {}", e.getMessage(), e);
+			redirectAttributes.addFlashAttribute("error", "Ocurrió un error inesperado.");
+			redirectAttributes.addFlashAttribute("mensaje", "Excusa guardada correctamente");
+			return "redirect:/Aprendiz/excusas";
 		}
+	}
 
-		excusasService.save(excusa);
-		LOGGER.info("Excusa guardada con ID {}", excusa.getId());
-		return "redirect:/Aprendiz/list";
+	// detale excusa
+	@GetMapping("/Aprendiz/excusa/{id}")
+	public String verExcusa(@PathVariable Integer id, Model model) {
+		Excusas excusa = excusasService.findById(id)
+				.orElseThrow(() -> new IllegalArgumentException("Excusa no encontrada con id: " + id));
+
+		model.addAttribute("excusa", excusa);
+		return "Aprendiz/detalle_excusa"; // Nombre del template HTML
 	}
 
 	// Listar excusas
@@ -173,19 +233,6 @@ public class AprendizController {
 		for (int i = 1; i <= 4; i++) {
 			Horario h = horarioRepository.findById((long) i).orElse(new Horario());
 			h.setId((long) i);
-
-			switch (i) {
-			case 1 -> h.setHora("08:00 - 10:00");
-			case 2 -> h.setHora("10:00 - 12:00");
-			case 3 -> h.setHora("13:00 - 15:00");
-			case 4 -> h.setHora("15:00 - 17:00");
-			}
-
-			h.setLunes(params.get("lunes" + i));
-			h.setMartes(params.get("martes" + i));
-			h.setMiercoles(params.get("miercoles" + i));
-			h.setJueves(params.get("jueves" + i));
-			h.setViernes(params.get("viernes" + i));
 
 			horarioRepository.save(h);
 		}
