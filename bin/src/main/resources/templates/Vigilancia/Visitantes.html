@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head th:insert="~{/Vigilancia/templates_vigilancia.html::head}"></head>
+
+<body class="contact-page">
+
+	<div th:insert="~{/Vigilancia/templates_vigilancia::visitantes}"></div>
+
+	<main class="main">
+
+		<!-- Page Title -->
+		<div class="page-title dark-background" th:style="'background-image: url(' + @{/images/fondo.jpeg} + ');'">
+			<div class="container position-relative">
+				<h1>Visitantes</h1>
+				<nav class="breadcrumbs">
+					<ol>
+						<li><a th:href="@{/usuario/home}"><b>Salir</b></a></li>
+						<li class="current">Vigilancia</li>
+					</ol>
+				</nav>
+			</div>
+		</div>
+		<!-- End Page Title -->
+
+
+		<!-- Contact Section -->
+		<section id="contact" class="contact section" style="padding-top: 220px;">
+			<!--Acomodar Style cuando este todo finalizado-->
+			<div class="container" data-aos="fade-up" data-aos-delay="100">
+
+				<div class="container form-container-overlap">
+
+					<div class="row justify-content-center" data-aos="fade-up" data-aos-delay="300">
+						<div class="col-lg-10">
+							<div class="contact-form-wrapper">
+								<div class="contact-form-wrapper">
+									<p>Registro para visitantes</p>
+									<button type="button" class="btn btn-primary" data-bs-toggle="modal"
+										data-bs-target="#exampleModal">
+										Registrar visitante
+									</button>
+								</div>
+								<br>
+								<br>
+								<h2 class="text-center mb-4">Historial de visitantes</h2>
+								<table class="table datatable">
+									<thead>
+										<tr class="centrados">
+											<th scope="col">Nombre completo</th>
+											<th scope="col">Documento</th>
+											<th scope="col">Correo electrónico</th>
+											<th scope="col">Teléfono</th>
+											<th scope="col">Hora de ingreso</th>
+											<th scope="col">Hora de salida</th>
+											<th scope="col">Editar </th>
+										</tr>
+									</thead>
+									<tbody th:each="visitante: ${visitantesH}">
+										<tr class="centrados">
+
+											<td th:text="${visitante.nombre}"></td>
+											<td th:text="${visitante.documento}"></td>
+											<td th:text="${visitante.email}"></td>
+											<td th:text="${visitante.telefono}"></td>
+
+										</tr>
+									</tbody>
+
+								</table>
+
+
+							</div>
+
+
+						</div>
+					</div>
+				</div>
+			</div>
+			</div>
+		</section>
+
+		<section>
+
+			<!-- Modal -->
+			<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+				aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h1 class="modal-title fs-5" id="exampleModalLabel">Ingrese los datos</h1>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+						<div class="modal-body">
+
+							<!--CONTENIDO DEL MODEL-->
+
+							<form th:action="@{/Vigilancia/visitanteSave}" method="post">
+								<div class="row g-3">
+
+									<div class="col-md-12">
+										<div class="form-group">
+											<div class="input-with-icon">
+												<i class="bi bi-person-bounding-box"></i>
+												<input type="text" class="form-control" id="nombre" name="nombre"
+													placeholder="Nombre completo" required>
+
+
+											</div>
+										</div>
+									</div>
+
+									<div class="col-md-12">
+										<div class="form-group">
+											<div class="input-with-icon">
+												<i class="bi bi-envelope"></i>
+												<input type="email" class="form-control" id="email" name="email"
+													placeholder="Correo electrónico" required autocomplete="off">
+											</div>
+										</div>
+									</div>
+
+									<div class="col-md-6">
+										<div class="form-group">
+											<div class="input-with-icon">
+												<i class="bi bi-person-vcard"></i>
+												<input type="number" class="form-control" id="documento"
+													name="documento" placeholder="Número de documento" required>
+											</div>
+										</div>
+									</div>
+
+									<div class="col-md-6">
+										<div class="form-group">
+											<div class="input-with-icon">
+												<i class="bi bi-telephone"></i>
+												<input type="number" class="form-control" id="telefono" name="telefono"
+													placeholder="Teléfono" required autocomplete="off">
+											</div>
+										</div>
+									</div>
+									<div class="col-md-5">
+										<label for="opcion">¿Ingresa dispositivo?</label>
+									</div>
+
+
+
+
+									<div class="col-md-3">
+										<div class="form-group">
+											<div class="input-with-icon">
+												<i class="bi bi-phone"></i>
+												<select class="form-control" id="opcion" name="opcion"
+													onchange="mostrarCampos()">
+													<option value="no">No</option>
+													<option value="si">Sí</option>
+												</select>
+											</div>
+										</div>
+									</div>
+
+
+
+									<div id="camposExtra" class="oculto">
+										<!--<form th:action="@{/Vigilancia/}" method="post">-->
+											<div class="row g-3">
+												<div class="col-md-4">
+													<div class="form-group">
+														<div class="input-with-icon">
+															<i class="bi bi-cpu"></i>
+															<select class="form-control" id="tipo" name="tipo" required>
+
+																<option>--Tipo--</option>
+																<option>Computador</option>
+																<option>Tablet</option>
+																<option>Camara</option>
+
+															</select>
+														</div>
+													</div>
+												</div>
+
+												<div class="col-md-4">
+													<div class="form-group">
+														<div class="input-with-icon">
+
+															<i class="bi bi-badge-tm"></i>
+															<select class="form-control" id="marca" name="marca" required>
+
+																<option>--Marca--</option>
+																<option>Lenovo</option>
+																<option>Samsung</option>
+																<option>DELL</option>
+																<option>Asus</option>
+																<option>Huawei</option>
+																<option>Apple</option>
+																<option>Acer</option>
+																<option>Canon</option>
+																<option>Nikon</option>
+																<option>Sony</option>
+
+															</select>
+														</div>
+													</div>
+												</div>
+
+												<div class="col-md-4">
+													<div class="form-group">
+														<div class="input-with-icon">
+															<i class="bi bi-palette"></i>
+															<select class="form-control" id="color" name="color">
+
+																<option>--Color--</option>
+																<option>Negro</option>
+																<option>Gris</option>
+																<option>Azul oscuro</option>
+																<option>Gris oscuro</option>
+																<option>Dorado</option>
+																<option>Blanco</option>
+
+															</select>
+														</div>
+													</div>
+												</div>
+
+
+											</div>
+
+
+										<!--</form>-->
+
+
+
+									</div>
+
+									<div class="modal-footer">
+										<button type="button" class="btn btn-secondary"
+											data-bs-dismiss="modal">Cancelar</button>
+										<button type="submit" class="btn btn-primary btn-sumit">Guardar</button>
+									</div>
+								</div>
+							</form>
+
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+		</section>
+
+	</main>
+
+
+
+	<div th:insert="~{/Vigilancia/templates_vigilancia.html::footer}"></div>
+
+	<div th:insert="~{/Vigilancia/templates_vigilancia.html::jsFiles}"></div>
+
+</body>
+
+</html>

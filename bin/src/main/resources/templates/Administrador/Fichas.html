@@ -42,6 +42,9 @@
 										Registrar ficha
 									</button>
 								</div>
+								<br>
+								<br>
+								
 
 
 								<h2 class="text-center mb-4">Fichas registradas</h2>
@@ -52,8 +55,8 @@
 											<th scope="col">Número de ficha</th>
 											<th scope="col">Nombre del programa</th>
 
-											<th scope="col">Editar </th>
-											<th scope="col">Eliminar </th>
+											<th scope="col" class="centrados">Editar </th>
+											<th scope="col" class="centrados">Eliminar </th>
 										</tr>
 									</thead>
 									<tbody th:each="ficha: ${fichas}">
@@ -62,10 +65,10 @@
 											<td th:text="${ficha.numFicha}"></td>
 											<td th:text="${ficha.nombrePrograma}"></td>
 											
-											<td><a title="Editar" class="btn btn-outline-info"
+											<td class="centrados"><a title="Editar" class="btn btn-outline-info"
 													th:href="@{/Administrador/EdicionFichas/{idFicha} (idFicha=${ficha.idFicha})}"><i
 														class="bi bi-pencil-fill"></i> Editar</a></td>
-											<td><a title="Eliminar" class="btn btn-outline-danger"
+											<td class="centrados"><a title="Eliminar" class="btn btn-outline-danger"
 													th:href="@{/Administrador/delete/{idFicha} (idFicha=${ficha.idFicha})}"><i
 														class="bi bi-trash-fill " ></i> Eliminar</a></td>
 
@@ -103,11 +106,9 @@
 									<div class="col-md-6">
 										<div class="form-group">
 											<div class="input-with-icon">
-												<i class="bi bi-book"> <input type="text" class="form-control"
-														id="nombrePrograma" name="nombrePrograma"
-														placeholder="Nombre del programa" required>
-												</i>
-
+												<i class="bi bi-book"></i>
+												 <input type="text" class="form-control" id="nombrePrograma" name="nombrePrograma"
+													placeholder="Nombre del programa" required>
 											</div>
 										</div>
 									</div>

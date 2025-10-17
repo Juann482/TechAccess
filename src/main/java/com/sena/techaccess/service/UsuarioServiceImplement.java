@@ -9,7 +9,6 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.sena.techaccess.model.Rol;
 import com.sena.techaccess.model.Usuario;
 import com.sena.techaccess.repository.UsuarioRepository;
 
@@ -53,8 +52,8 @@ public class UsuarioServiceImplement implements IUsuarioService {
 
 	@Override
 	public Usuario findByNombre(String nombre) {
-		throw new UnsupportedOperationException("Método findByNombre aún no implementado");
-	}
+		return usuarioRepository.findByNombre(nombre); 
+		}
 
 	@Override
 	public Usuario findByEmail(String email) {
@@ -63,13 +62,9 @@ public class UsuarioServiceImplement implements IUsuarioService {
 
 	@Override
 	public Optional<Usuario> findByDocumento(String documento) {		
-		return Optional.empty();
+		return usuarioRepository.findByDocumento(documento);
 	}
 
-	@Override
-	public List<Usuario> findByRol(Rol rol) {		
-		return usuarioRepository.findByRol(rol);
-	}
 	
 	@Override
 	public Usuario obtenerUsuario() {
@@ -77,18 +72,16 @@ public class UsuarioServiceImplement implements IUsuarioService {
 		return null;
 	}
 
+	@Override
+	public List<Usuario> findByEstadoCuenta(String estadoCuenta) {
+		return usuarioRepository.findByEstadoCuenta(estadoCuenta);
+	}
 
-	// metodito bn belico para validar por nombre o email
-	public Usuario validarUsuario(String userInput, String password) {
-		// Buscar por correo de usuario
-		Usuario user = findByEmail(userInput);
-
-		// Validar contarseña
-		if (user != null && user.getPassword().equals(password)) {
-			return user;
-		}
-
-		return null;
+	
+	
+	@Override
+	public List<Usuario> findByRol(String rol) {
+	    return usuarioRepository.findByRol(rol);
 	}
 
 	

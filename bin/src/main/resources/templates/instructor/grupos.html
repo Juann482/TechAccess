@@ -1,0 +1,175 @@
+﻿<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head th:insert="~{/usuario/templates_usuario.html::head}"></head>
+
+<body style="font-family: 'Segoe UI', sans-serif;" class="index-page">
+
+	<header id="header" class="header d-flex align-items-center justify-content-between fixed-top w-100"
+		style="background-color: rgba(0, 128, 64, 0.6); box-shadow: 0 5px 3px rgba(0,0,0,0.2); z-index: 999;">
+		<div class="container-fluid container-xl d-flex w-100 align-items-center justify-content-between">
+			<h1 class="sitename m-0">
+				<strong style="color:rgb(243, 243, 243);">TECH</strong>
+				<span style="color:rgb(243, 243, 243);">ACCESS</span>
+				<span style="color:rgb(189, 196, 202);">/</span>
+				<span style="color:#ffffff;">SENA - CIMM CIUDADELA</span>
+			</h1>
+
+			<div class="user-profile d-flex align-items-center">
+				<!--span class="me-2 text-white fw-bold" th:text="${instructor.nombre}">Instructor</span-->
+				<div class="dropdown">
+					<a class="d-flex align-items-center text-decoration-none text-white" dropdown-toggle
+						data-bs-toggle="dropdown">
+						<i class="bi bi-person-circle fs-4"></i>
+					</a>
+					<ul class="dropdown-menu dropdown-menu-end">
+						<li><a class="dropdown-item" href="#"><i class="bi bi-person me-2"></i>Perfil</a></li>
+						<li><a class="dropdown-item" th:href="@{/usuario/home}"><i
+									class="bi bi-box-arrow-right me-2"></i>Cerrar sesión</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</header>
+
+	<!-- Contenido principal -->
+	<main class="main d-flex flex-column justify-content-between"
+		style="background-color: rgba(0, 124, 88, 0.05); min-height: 100vh; margin-top: 100px;">
+
+		<section class="section">
+			<div class="container py-4">
+				<div class="row">
+
+					<!-- Panel lateral -->
+					<div class="col-lg-3 mb-4">
+						<div class="user-nav rounded shadow-sm p-3 bg-white text-center">
+							<img th:src="@{/images/instructor.png}" alt="Instructor.img"
+								style="width: 120px; border-radius: 50%; border: 2px solid #007C58;">
+							<!--h5 class="mt-2 mb-0" th:text="${instructor.nombre}">Instructor</h5-->
+							<small class="text-muted"><b>Área:</b> <span>Mecánica</span></small>
+							<div class="mt-2">
+								<span class="badge bg-success bg-opacity-10 text-success px-3 py-2">Activo</span>
+							</div>
+
+							<nav class="nav flex-column mt-4">
+								<a th:href="@{/instructor/nvasEntradas}" class="btn btn-outline-success btn-sm mt-2">
+									<i class="bi bi-house me-2 text-success"></i> Últimas Entradas
+								</a>
+								<a th:href="@{/instructor/grupos}" class="btn btn-outline-success btn-sm mt-2">
+									<i class="bi bi-people me-2 text-success"></i> Grupos
+								</a>
+								<a th:href="@{/instructor/reportes}" class="btn btn-outline-success btn-sm mt-2">
+									<i class="bi bi-clipboard-data me-2 text-success"></i> Reportes
+								</a>
+							</nav>
+						</div>
+					</div>
+
+					<!-- Contenido principal dinámico -->
+					<div class="col-lg-9">
+						<div id="contenido" class="access-card bg-white shadow-sm rounded p-4" style="opacity: 0.9;">
+
+							<!-- Muestra por ficha -->
+							<div th:if="${fichas != null and !fichas.empty}">
+								<h4 class="text-success">
+									<i class="bi bi-people me-2"></i><b> Grupos Asignados</b>
+								</h4>
+								<p class="text-muted" th:text="'Total de fichas: ' + ${fichas.size()}">Fichas de
+									formación asignadas</p>
+
+								<div class="row mt-4">
+									<!-- Tarjeta individual -->
+									<div th:each="ficha : ${fichas}" class="col-md-6 mb-4">
+										<div class="card shadow-sm h-100 border-success">
+											<div class="card-body text-center">
+												<h5 class="card-title text-success"
+													th:text="'Ficha ' + ${ficha.nombrePrograma}">
+													Ficha ADSo
+												</h5>
+												<p class="card-text text-muted">
+													<strong>Código:</strong> <span
+														th:text="${ficha.numFicha}">G123</span><br>
+													<strong>Programa:</strong> <span
+														th:text="${ficha.nombrePrograma}">ADSo</span><br>
+													<th:block th:if="${ficha.jornada != null}">
+														<strong>Jornada:</strong> <span
+															th:text="${ficha.jornada}">Mañana</span><br>
+													</th:block>
+												</p>
+												<a href="#" class="btn btn-outline-success btn-sm">Ver aprendices</a>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<!-- ALERTA DE ERROR-->
+							<div th:if="${error != null}" class="text-center py-5">
+								<div class="alert alert-warning border-warning">
+									<i class="bi bi-exclamation-triangle-fill me-2 fs-4"></i>
+									<h4 class="alert-heading">Sin grupos asignados</h4>
+									<p class="mb-0" th:text="${error}">No se encontraron fichas asignadas a su
+										cargo.</p>
+									<hr>
+									<small class="text-muted">Contacte al área de administración para la asignación de
+										grupos</small>
+								</div>
+							</div>
+
+							<!-- MENSAJE PPAL -->
+							<div th:if="${fichas == null and error == null}">
+								<h4 class="text-success">
+									<i class="bi bi-info-circle me-2"></i><b> Bienvenido</b>
+								</h4>
+								<p class="text-muted">Seleccione "Grupos" en el menú lateral para ver la información de
+									sus fichas asignadas.</p>
+							</div>
+
+						</div>
+					</div>
+		</section>
+
+		<!--Seccion enlazada con ficha -->
+
+		<!-- Sección de Grupos 
+		<div th:if="${ficha != null}" class="container mt-4">
+			<div class="access-card bg-white shadow-sm rounded p-4">
+				<h2 class="text-success"><i class="bi bi-people me-2"></i> Grupos</h2>
+				<div class="row">
+
+					<Tarjeta retorno de datos de ficha desde la BD 
+					<div class="col-md-6 mb-4">
+						<div class="card shadow-sm h-100 border-success">
+							<div class="card-body text-center">
+								<h5 class="card-title text-success" th:text="'Ficha ' + ${ficha.nombrePrograma}">
+									Ficha ADSo
+								</h5>
+								<p class="card-text text-muted">
+									<strong>Código:</strong> <span th:text="${ficha.numFicha}">G123</span><br>
+									<strong>Área:</strong> <span th:text="${ficha.nombrePrograma}">ADSo</span><br>
+									<strong>Jornada:</strong> <span
+										th:text="${ficha.jornada} ?: 'No especificada'">Mañana</span>
+								</p>
+								<a href="#" class="btn btn-outline-success btn-sm">Ver detalles</a>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+		< Si no hay ficha>
+		<div th:if="${error != null}" class="container mt-4">
+			<div class="alert alert-warning">
+				<h4><i class="bi bi-exclamation-triangle me-2"></i> Información no disponible</h4>
+				<p th:text="${error}">No se encontraron fichas</p>
+			</div>
+		</div-->
+
+		<!-- Footer -->
+		<div th:insert="~{/usuario/templates_usuario.html::footer}"></div>
+
+</body>
+
+</html>

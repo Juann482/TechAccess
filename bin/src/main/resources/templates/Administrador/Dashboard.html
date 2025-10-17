@@ -85,8 +85,8 @@
 												<td th:text="${usuario.documento}"></td>
 												<!---->
 												<td th:text="${usuario.rol.tipo}"></td>
-												<td th:text="${usuario.ficha.numFicha}"></td>
-												<td th:text="${usuario.estadoCuenta.nombreEstado}"></td>
+												<td th:text="${usuario.ficha != null ? usuario.ficha.numFicha : '-'}"></td>
+												<td th:text="${usuario.estadoCuenta !=null ? usuario.estadoCuenta.nombreEstado : '-'}"></td>
 
 												<td><a title="Editar" class="btn btn-outline-info"
 														th:href="@{/Administrador/edicionUsuario/{id} (id=${usuario.id})}"><i

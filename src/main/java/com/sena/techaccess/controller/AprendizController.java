@@ -1,6 +1,7 @@
 package com.sena.techaccess.controller;
 
 import java.nio.file.Path;
+
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
@@ -27,7 +28,6 @@ import com.sena.techaccess.model.Horario;
 import com.sena.techaccess.model.Usuario;
 import com.sena.techaccess.repository.FichaRepository;
 import com.sena.techaccess.repository.HorarioRepository;
-import com.sena.techaccess.service.IEstadoCuentaService;
 import com.sena.techaccess.service.IExcusasService;
 import com.sena.techaccess.service.IFichaService;
 import com.sena.techaccess.service.IUsuarioService;
@@ -50,8 +50,6 @@ public class AprendizController {
 	@Autowired
 	private FichaRepository fichaRepository;
 
-	@Autowired
-	private IEstadoCuentaService estadocuentaService;
 
 	@Autowired
 	private HorarioRepository horarioRepository;

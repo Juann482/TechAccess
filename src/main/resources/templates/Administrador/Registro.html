@@ -111,12 +111,12 @@
 												<div class="input-with-icon">
 													<i class="bi bi-brightness-low"></i>
 													<select class="form-control" id="estadoCuenta"
-														name="estadoCuenta.idEstado" required>
+														name="estadoCuenta" required>
+														
 														<option value="" class="centrados">----- Estado -----</option>
-														<option th:each="estadoCuenta : ${estados}"
-															th:value="${estadoCuenta.idEstado}"
-															th:text="${estadoCuenta.nombreEstado}">
-														</option>
+														<option value="">Activo</option>
+														<option value="">Inactivo</option>
+														
 													</select>
 												</div>
 											</div>
@@ -125,11 +125,15 @@
 											<div class="form-group">
 												<div class="input-with-icon">
 													<i class="bi bi-person-bounding-box"></i>
-													<select class="form-control" id="Rol" name="rol.id" required>
+													<select class="form-control" id="Rol" name="rol" required>
+														
 														<option value="" class="centrados">--- Seleccione rol ---</option>
-														<option th:each="rol : ${roles}" th:value="${rol.id}"
-															th:text="${rol.tipo}">
-														</option>
+														<option >Administrador</option>
+														<option value="">Funcionario</option>
+														<option value="">Instructor</option>
+														<option value="">Aprendiz</option>
+														<option value="">vigilancia</option>
+														<option value="">Visitantes</option>
 
 													</select>
 												</div>
