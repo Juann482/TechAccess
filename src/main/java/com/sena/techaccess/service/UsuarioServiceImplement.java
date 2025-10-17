@@ -52,8 +52,8 @@ public class UsuarioServiceImplement implements IUsuarioService {
 
 	@Override
 	public Usuario findByNombre(String nombre) {
-		throw new UnsupportedOperationException("Método findByNombre aún no implementado");
-	}
+		return usuarioRepository.findByNombre(nombre); 
+		}
 
 	@Override
 	public Usuario findByEmail(String email) {
@@ -62,7 +62,7 @@ public class UsuarioServiceImplement implements IUsuarioService {
 
 	@Override
 	public Optional<Usuario> findByDocumento(String documento) {		
-		return Optional.empty();
+		return usuarioRepository.findByDocumento(documento);
 	}
 
 	
@@ -74,12 +74,14 @@ public class UsuarioServiceImplement implements IUsuarioService {
 
 	@Override
 	public List<Usuario> findByEstadoCuenta(String estadoCuenta) {
-		return usuarioRepository.findByEstadoCuetna(estadoCuenta);
+		return usuarioRepository.findByEstadoCuenta(estadoCuenta);
 	}
 
+	
+	
 	@Override
 	public List<Usuario> findByRol(String rol) {
-		return usuarioRepository.findByRol(rol);
+	    return usuarioRepository.findByRol(rol);
 	}
 
 	
