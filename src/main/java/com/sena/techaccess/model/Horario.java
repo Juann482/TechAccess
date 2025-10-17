@@ -1,5 +1,7 @@
 package com.sena.techaccess.model;
 
+import java.sql.Time;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -11,29 +13,21 @@ public class Horario {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY) // ✅ CORREGIDO
 	private Long id;
-
-	private String hora;
-	private String lunes;
-	private String martes;
-	private String miercoles;
-	private String jueves;
-	private String viernes;
-
+	private Time horaInicio;
+	private Time horaFin;
 	
 	public Horario() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
 
-	public Horario(Long id, String hora, String lunes, String martes, String miercoles, String jueves, String viernes) {
+	public Horario(Long id, Time horaInicio, Time horaFin) {
+		super();
 		this.id = id;
-		this.hora = hora;
-		this.lunes = lunes;
-		this.martes = martes;
-		this.miercoles = miercoles;
-		this.jueves = jueves;
-		this.viernes = viernes;
+		this.horaInicio = horaInicio;
+		this.horaFin = horaFin;
 	}
 
-	// 🔹 Getters y setters
 	public Long getId() {
 		return id;
 	}
@@ -42,57 +36,29 @@ public class Horario {
 		this.id = id;
 	}
 
-	public String getHora() {
-		return hora;
+	public Time getHoraInicio() {
+		return horaInicio;
 	}
 
-	public void setHora(String hora) {
-		this.hora = hora;
+	public void setHoraInicio(Time horaInicio) {
+		this.horaInicio = horaInicio;
 	}
 
-	public String getLunes() {
-		return lunes;
+	public Time getHoraFin() {
+		return horaFin;
 	}
 
-	public void setLunes(String lunes) {
-		this.lunes = lunes;
-	}
-
-	public String getMartes() {
-		return martes;
-	}
-
-	public void setMartes(String martes) {
-		this.martes = martes;
-	}
-
-	public String getMiercoles() {
-		return miercoles;
-	}
-
-	public void setMiercoles(String miercoles) {
-		this.miercoles = miercoles;
-	}
-
-	public String getJueves() {
-		return jueves;
-	}
-
-	public void setJueves(String jueves) {
-		this.jueves = jueves;
-	}
-
-	public String getViernes() {
-		return viernes;
-	}
-
-	public void setViernes(String viernes) {
-		this.viernes = viernes;
+	public void setHoraFin(Time horaFin) {
+		this.horaFin = horaFin;
 	}
 
 	@Override
 	public String toString() {
-		return "Horario [id=" + id + ", hora=" + hora + ", lunes=" + lunes + ", martes=" + martes + ", miercoles="
-				+ miercoles + ", jueves=" + jueves + ", viernes=" + viernes + "]";
+		return "Horario [id=" + id + ", horaInicio=" + horaInicio + ", horaFin=" + horaFin + "]";
 	}
+	
+	
+	
 }
+
+	

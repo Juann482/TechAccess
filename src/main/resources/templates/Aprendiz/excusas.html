@@ -45,9 +45,9 @@
 					<h1 class="text-white fw-bold mb-3">Excusas</h1>
 					<nav class="breadcrumbs">
 						<ol class="breadcrumb justify-content-center">
-							
-								
-							
+
+
+
 							<li>
 								<!-- <a th:href="@{/Aprendiz/aprendiz}" class="text-white text-decoration-none"><b>Aprendiz</b></a> -->
 							</li>
@@ -82,27 +82,39 @@
 										style="width: 120px; border-radius: 50%; border: 2px solid #007C58;">
 								</div>
 
-								<div class="border rounded p-2 mb-2 bg-light">
-									<p class="mb-0 text-success fw-semibold">
-										Nombre Aprendiz:
-										<span th:text="${usuario != null ? usuario.nombre : ' - '}"></span>
-									</p>
-								</div>
+								<div class="info-list">
+									<div class="border rounded p-2 mb-3 bg-light">
+										<p class="mb-0 text-success fw-semibold">
+											Nombre Aprendiz:
+											<span class="text-dark"
+												th:text="${usuario != null ? usuario.nombre : ' - '}"></span>
+										</p>
+									</div>
 
-								<div class="border rounded p-2 mb-2 bg-light">
-									<p class="mb-0 text-success fw-semibold">
-										Programa:
-										<span th:text="${ficha != null ? ficha.nombrePrograma : ' - '}"></span>
-									</p>
-								</div>
+									<div class="border rounded p-2 mb-3 bg-light">
+										<p class="mb-0 text-success fw-semibold">
+											Programa:
+											<span class="text-dark"
+												th:text="${ficha != null ? ficha.nombrePrograma : ' - '}"></span>
+										</p>
+									</div>
 
-								<div class="border rounded p-2 mb-2 bg-light">
-									<p class="mb-0 text-success fw-semibold">
-										Ficha:
-										<span th:text="${ficha != null ? ficha.numFicha : ' - '}"></span>
-									</p>
-								</div>
+									<div class="border rounded p-2 mb-3 bg-light">
+										<p class="mb-0 text-success fw-semibold">
+											Ficha:
+											<span class="text-dark"
+												th:text="${ficha != null ? ficha.numFicha : ' - '}"></span>
+										</p>
+									</div>
 
+									<div class="border rounded p-2 mb-4 bg-light">
+										<p class="mb-0 text-success fw-semibold">
+											Estado:
+											<span class="text-dark"
+												th:text="${estadoCuenta != null ? estadoCuenta.nombreEstado : ' - '}"></span>
+										</p>
+									</div>
+								</div>
 								<nav class="nav flex-column text-center">
 									<a th:href="@{/usuario/home}" class="btn btn-outline-success btn-sm mt-2">
 										<i class="bi bi-box-arrow-left text-success"></i> Salir
@@ -135,11 +147,13 @@
 								<section class="section dashboard">
 									<div class="card border-0">
 										<div class="card-body">
+											<div th:if="${mensaje}" class="alert alert-success" th:text="${mensaje}"></div>
+
 											<h4 class="text-success mb-4"><i
 													class="bi bi-clipboard-check me-2"></i><b>Registrar
 													Excusa</b></h4>
 
-											<form th:action="@{/Aprendiz/lista}" method="post"
+											<form th:action="@{/Aprendiz/save}" method="post"
 												enctype="multipart/form-data">
 
 												<div class="mb-3 row">
@@ -213,8 +227,9 @@
 													<label
 														class="col-sm-3 col-form-label fw-semibold text-success">Soporte:</label>
 													<div class="col-sm-9">
-														<input type="file" class="form-control" name="archivo"
+														<input type="file" class="form-control" name="img"
 															accept=".pdf,.jpg,.png" required>
+
 														<small class="text-muted">Adjunte un soporte de la inasistencia
 															(PDF o
 															imagen).</small>
