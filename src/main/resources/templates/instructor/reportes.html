@@ -92,6 +92,20 @@
 			</div>
 		</template>
 
+		<!-- Seccion salta ALERTA frente a error-->
+
+		<div th:if="${motivo != null and accesos.empty}" class="text-center py-5">
+			<div class="alert alert-info border-info">
+				<i class="bi bi-inbox me-2 fs-2 text-info"></i>
+				<h4 class="alert-heading mt-3">No hay registros de entradas</h4>
+				<p class="mb-0">No se encontraron entradas recientes en el sistema.</p>
+				<hr>
+				<small class="text-muted">Las entradas se actualizaran si se registra el acceso de
+					aprendices a
+					las instalaciones</small>
+			</div>
+		</div>
+
 		<!-- Footer -->
 		<div th:insert="~{/usuario/templates_usuario.html::footer}"></div>
 
