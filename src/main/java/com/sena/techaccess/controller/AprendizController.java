@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.nio.file.Files;
-import java.io.File;
 import java.io.IOException;
 
 import org.slf4j.Logger;
@@ -53,7 +52,6 @@ public class AprendizController {
 	@Autowired
 	private FichaRepository fichaRepository;
 
-
 	@Autowired
 	private HorarioRepository horarioRepository;
 
@@ -79,7 +77,6 @@ public class AprendizController {
 		Usuario user = usuarioService.findAll().get(0);
 		model.addAttribute("usuario", user);
 		model.addAttribute("ficha", user.getFicha());
-		model.addAttribute("estadoCuenta", user.getEstadoCuenta());
 		return "Aprendiz/excusas";
 	}
 
@@ -91,7 +88,6 @@ public class AprendizController {
 
 		model.addAttribute("usuario", user);
 		model.addAttribute("ficha", user.getFicha());
-		model.addAttribute("estadoCuenta", user.getEstadoCuenta());
 		return "Aprendiz/excusas";
 	}
 
@@ -122,11 +118,18 @@ public class AprendizController {
 			if (!archivo.isEmpty()) {
 				String contentType = archivo.getContentType();
 
-				// ✅ Validar tipo MIME (solo imágenes)
-				if (contentType == null || !contentType.startsWith("image/")) {
-					redirectAttributes.addFlashAttribute("error",
-							"El archivo debe ser una imagen válida (JPG, PNG, etc.)");
-					return "redirect:/Aprendiz/excusas";
+				// ✅ Validar tipo MIME (imágenes, PDF y documentos de Office)
+				if (contentType == null || 
+				    !(contentType.startsWith("image/") ||
+				      contentType.equals("application/pdf") ||
+				      contentType.equals("application/msword") ||
+				      contentType.equals("application/vnd.openxmlformats-officedocument.wordprocessingml.document") ||
+				      contentType.equals("application/vnd.ms-excel") ||
+				      contentType.equals("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"))) {
+
+				    redirectAttributes.addFlashAttribute("error",
+				            "El archivo debe ser una imagen o un documento válido (JPG, PNG, PDF, DOC, DOCX, XLS, XLSX)");
+				    return "redirect:/Aprendiz/excusas";
 				}
 
 				// 🧩 Normalizar nombre del archivo
@@ -199,6 +202,7 @@ public class AprendizController {
 		existente.setFicha(excusa.getFicha());
 		existente.setMotivo(excusa.getMotivo());
 		existente.setFecha(excusa.getFecha());
+		existente.setUsuario(excusa.getUsuario());
 
 		if (!archivo.isEmpty()) {
 			String nombreArchivo = UUID.randomUUID() + "_" + archivo.getOriginalFilename();
@@ -240,5 +244,13 @@ public class AprendizController {
 		LOGGER.info("Horario actualizado correctamente.");
 		return "redirect:/Aprendiz/Horario";
 	}
+
+	///////////// Detalle Excusa/////////////////////
+	
+	@GetMapping("/detalleExcusa")
+	public String detalleExcusa() {
+	    return "/Aprendiz/detalleExcusa";
+	}
+
 
 }
