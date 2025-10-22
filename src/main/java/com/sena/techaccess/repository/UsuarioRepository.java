@@ -2,6 +2,7 @@ package com.sena.techaccess.repository;
 
 import java.util.List;
 
+
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -20,7 +21,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
 
 	List<Usuario> findByEstadoCuenta(String estadoCuenta);
 
-	Optional<Usuario> findByDocumento(String documento);
+	Usuario findByDocumento(String documento);
 
 	// ================================================0
 

@@ -23,9 +23,7 @@ public interface IUsuarioService {
 	
 	public List<Usuario> findByRol(String rol);
 
-	public Optional<Usuario> findByDocumento(String documento);
-
-	public Usuario obtenerUsuario();
+	public Usuario findByDocumento(String documento);
 
 	List<Usuario> findAll();
 
