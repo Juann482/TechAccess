@@ -10,30 +10,31 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.sena.techaccess.model.Acceso;
 import com.sena.techaccess.model.Ficha;
-import com.sena.techaccess.repository.AccesoRepository;
 import com.sena.techaccess.repository.FichaRepository;
+import com.sena.techaccess.service.FichaServiceImplement;
+import com.sena.techaccess.service.IAccesoService;
+import com.sena.techaccess.service.IFichaService;
 
 @Controller
 @RequestMapping("/instructor")
 public class InstructorController {
 
 	@Autowired
-	private AccesoRepository accesoRepository;
+	private IAccesoService accesoService;
 
 	@Autowired
-	private FichaRepository fichaRepository;
+	private IFichaService fichaService;
 
 	@GetMapping("")
 	public String vistaPrincipal(Model model) {
-		List<Acceso> accesos = accesoRepository.findAll();
-		model.addAttribute("accesos", accesos);
-		return "instructor/instructor";
+		model.addAttribute("acceso", accesoService.findAll());
+		return "/instructor/instructor";
 	}
 
 	@GetMapping("/nvasEntradas")
 	public String vistaEntradas(Model model) {
 		try {
-			List<Acceso> accesos = accesoRepository.findAll();
+			List<Acceso> accesos = accesoService.findAll();
 
 			System.out.println("=== DEBUG NUEVAS ENTRADAS ===");
 			System.out.println("Número de accesos encontrados: " + accesos.size());
@@ -64,7 +65,7 @@ public class InstructorController {
 	@GetMapping("/grupos")
 	public String vistaGrupos(Model model) {
 		try {
-			List<Ficha> fichas = fichaRepository.findAll();
+			List<Ficha> fichas = fichaService.findAll();
 
 			if (fichas.isEmpty()) {
 				model.addAttribute("error", "No se encontraron fichas registradas en el sistema.");
