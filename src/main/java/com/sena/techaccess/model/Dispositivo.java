@@ -18,7 +18,6 @@ public class Dispositivo {
 	private String tipoD;
 	private String marca;
 	private String color;
-
 	
 	@ManyToOne
 	private Usuario usuario;
@@ -26,10 +25,8 @@ public class Dispositivo {
 	@OneToOne
 	private Acceso acceso;
 
-
 	public Dispositivo() {
 	}
-
 	
 	
 	public Dispositivo(Integer id, String tipoD, String marca, String color, Usuario usuario) {
