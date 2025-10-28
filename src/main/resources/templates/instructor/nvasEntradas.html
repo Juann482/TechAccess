@@ -114,11 +114,11 @@
 															th:text="${entrada.usuario?.nombre} ?: 'N/A'">
 															Estudiante
 														</td>
-														<td th:text="${entrada.areaJobs?.nomArea} ?: 'N/A'">
-															Área
-														</td>
+														<!--td th:text="${entrada.areaJobs?.nomArea} ?: 'N/A'">
+														Área
+														</td-->
 														<td>
-															<span class="text-muted small"
+															<!--span class="text-muted small"
 																th:text="${#dates.format(entrada.horaIngreso, 'dd/MM/yyyy')}">
 																Fecha
 															</span>
@@ -126,7 +126,7 @@
 															<span class="fw-medium"
 																th:text="${#dates.format(entrada.horaIngreso, 'HH:mm')}">
 																Hora
-															</span>
+															</span-->
 														</td>
 														<td>
 															<span
@@ -150,12 +150,12 @@
 														<td class="text-center">
 															<div class="btn-group btn-group-sm" role="group">
 																<a th:href="@{'/acceso/editar/' + ${entrada.idacceso}}"
-																	class="btn btn-outline-primary"
+																	class="btn btn-outline-success"
 																	title="Editar entrada">
 																	<i class="bi bi-pencil-square"></i>
 																</a>
 																<a th:href="@{'/acceso/eliminar/' + ${entrada.idacceso}}"
-																	class="btn btn-outline-danger"
+																	class="btn btn-outline-secondary"
 																	onclick="return confirm('¿Seguro que deseas eliminar esta entrada?');"
 																	title="Eliminar entrada">
 																	<i class="bi bi-trash"></i>
@@ -176,7 +176,8 @@
 										Mostrando <strong th:text="${accesos.size()}">0</strong> registros
 									</small>
 									<small class="text-muted">
-										Última actualización: <span th:text="${#dates.createNow()}">Ahora</span>
+										<strong>Última actualización:</strong> <span
+											th:text="${#dates.createNow()}">Ahora</span>
 									</small>
 								</div>
 							</div>
