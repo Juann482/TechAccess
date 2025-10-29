@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.sena.techaccess.model.Acceso;
 import com.sena.techaccess.model.Ficha;
 import com.sena.techaccess.model.Permisos;
-import com.sena.techaccess.repository.FichaRepository;
-import com.sena.techaccess.service.FichaServiceImplement;
 import com.sena.techaccess.service.IAccesoService;
 import com.sena.techaccess.service.IFichaService;
 import com.sena.techaccess.service.IPermisosService;
