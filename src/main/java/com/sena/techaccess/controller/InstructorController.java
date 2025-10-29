@@ -10,10 +10,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.sena.techaccess.model.Acceso;
 import com.sena.techaccess.model.Ficha;
+import com.sena.techaccess.model.Permisos;
 import com.sena.techaccess.repository.FichaRepository;
 import com.sena.techaccess.service.FichaServiceImplement;
 import com.sena.techaccess.service.IAccesoService;
 import com.sena.techaccess.service.IFichaService;
+import com.sena.techaccess.service.IPermisosService;
 
 @Controller
 @RequestMapping("/instructor")
@@ -24,6 +26,9 @@ public class InstructorController {
 
 	@Autowired
 	private IFichaService fichaService;
+
+	@Autowired
+	private IPermisosService permisosService;
 
 	@GetMapping("")
 	public String vistaPrincipal(Model model) {
@@ -86,6 +91,12 @@ public class InstructorController {
 
 	@GetMapping("/reportes")
 	public String vistaReportes(Model model) {
+		// Cargar todos los permisos para reportes
+		List<Permisos> permisos = permisosService.findAll();
+
+		model.addAttribute("permisos", permisos);
+		model.addAttribute("totalPermisos", permisos.size());
+
 		return "instructor/reportes";
 	}
 }

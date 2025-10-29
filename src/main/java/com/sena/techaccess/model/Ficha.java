@@ -11,7 +11,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "ficha")	
+@Table(name = "ficha")
 public class Ficha {
 
 	@Id
@@ -19,15 +19,15 @@ public class Ficha {
 	private Integer idFicha;
 	private String nombrePrograma;
 	private Integer numFicha;
-	
+
 	@OneToMany(mappedBy = "ficha")
 	private List<Usuario> usuario;
-	
-	//constructor vacío
+
+	// constructor vacío
 	public Ficha() {
 	}
 
-	//contructor con campos
+	// contructor con campos
 	public Ficha(Integer idFicha, String nombrePrograma, Integer numFicha, List<Usuario> usuario) {
 		super();
 		this.idFicha = idFicha;
@@ -36,7 +36,7 @@ public class Ficha {
 		this.usuario = usuario;
 	}
 
-	//getters and setters
+	// getters and setters
 	public Integer getIdFicha() {
 		return idFicha;
 	}
@@ -69,13 +69,10 @@ public class Ficha {
 		this.usuario = usuario;
 	}
 
-
-	//toString
+	// toString
 	@Override
 	public String toString() {
-		return "Ficha [idFicha=" + idFicha + ", nombrePrograma=" + nombrePrograma + ", numFicha=" + numFicha
-				+ "]";
+		return "Ficha [idFicha=" + idFicha + ", nombrePrograma=" + nombrePrograma + ", numFicha=" + numFicha + "]";
 	}
-	
 
 }
