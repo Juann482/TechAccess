@@ -17,8 +17,10 @@ public class Ficha {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer idFicha;
+	private String designacion;
 	private String nombrePrograma;
 	private Integer numFicha;
+	private String jornada;
 
 	@OneToMany(mappedBy = "ficha")
 	private List<Usuario> usuario;
@@ -28,11 +30,14 @@ public class Ficha {
 	}
 
 	// contructor con campos
-	public Ficha(Integer idFicha, String nombrePrograma, Integer numFicha, List<Usuario> usuario) {
+	public Ficha(Integer idFicha, String designacion, String nombrePrograma, Integer numFicha, String jornada,
+			List<Usuario> usuario) {
 		super();
 		this.idFicha = idFicha;
+		this.designacion = designacion;
 		this.nombrePrograma = nombrePrograma;
 		this.numFicha = numFicha;
+		this.jornada = jornada;
 		this.usuario = usuario;
 	}
 
@@ -43,6 +48,14 @@ public class Ficha {
 
 	public void setIdFicha(Integer idFicha) {
 		this.idFicha = idFicha;
+	}
+
+	public String getDesignacion() {
+		return designacion;
+	}
+
+	public void setDesignacion(String designacion) {
+		this.designacion = designacion;
 	}
 
 	public String getNombrePrograma() {
@@ -61,6 +74,14 @@ public class Ficha {
 		this.numFicha = numFicha;
 	}
 
+	public String getJornada() {
+		return jornada;
+	}
+
+	public void setJornada(String jornada) {
+		this.jornada = jornada;
+	}
+
 	public List<Usuario> getUsuario() {
 		return usuario;
 	}
@@ -72,7 +93,8 @@ public class Ficha {
 	// toString
 	@Override
 	public String toString() {
-		return "Ficha [idFicha=" + idFicha + ", nombrePrograma=" + nombrePrograma + ", numFicha=" + numFicha + "]";
+		return "Ficha [idFicha=" + idFicha + ", designacion=" + designacion + ", nombrePrograma=" + nombrePrograma
+				+ ", numFicha=" + numFicha + ", jornada=" + jornada + ", usuario=" + usuario + "]";
 	}
 
 }

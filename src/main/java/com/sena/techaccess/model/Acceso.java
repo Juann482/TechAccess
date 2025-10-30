@@ -3,6 +3,8 @@ package com.sena.techaccess.model;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "acceso")
 public class Acceso {
@@ -11,7 +13,7 @@ public class Acceso {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer idacceso;
 
-	@Column(name = "horaIngreso")	
+	@Column(name = "horaIngreso")
 	private LocalDateTime horaIngreso;
 
 	@Column(name = "horaEgreso")
@@ -23,8 +25,8 @@ public class Acceso {
 	private Dispositivo dispositivo;
 
 	// Sección enlazada con Usuario
-	@OneToOne(mappedBy = "acceso", fetch = FetchType.LAZY)
-	@JoinColumn(name = "UserId")
+	@OneToOne
+	@JsonIgnore // ← ¡IMPORTANTE! Evita recursión infinita
 	private Usuario usuario;
 
 	// Sección enlazada con EstadoPermanencia
@@ -52,7 +54,7 @@ public class Acceso {
 		this.dispositivo = dispositivo;
 		this.usuario = usuario;
 		this.estadoPermanencia = estadoPermanencia;
-		//this.area = area;
+		// this.area = area;
 	}
 
 	public Acceso() {

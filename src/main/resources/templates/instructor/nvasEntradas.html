@@ -96,14 +96,14 @@
 														<th class="border-0">
 															<i class="bi bi-person me-1"></i> Estudiante
 														</th>
-														<th class="border-0">
+														<!--th class="border-0">
 															<i class="bi bi-geo-alt me-1"></i> Área
+														</th-->
+														<th class="border-0">
+															<i class="bi bi-calendar me-1"></i> Hora Ingreso
 														</th>
 														<th class="border-0">
-															<i class="bi bi-calendar me-1"></i> Fecha Ingreso
-														</th>
-														<th class="border-0">
-															<i class="bi bi-info-circle me-1"></i> Anexos
+															<i class="bi bi-info-circle me-1"></i> Estado
 														</th>
 														<th class="border-0 text-center">
 															<i class="bi bi-gear me-1"></i> Acciones
@@ -116,38 +116,41 @@
 															th:text="${entrada.usuario?.nombre} ?: 'NN'">
 															Estudiante
 														</td>
+														<!--td th:text="${entrada.usuario?.rol} ?: 'N/A'">
+														Área
+														</td-->
 														<!--td th:text="${entrada.areaJobs?.nomArea} ?: 'N/A'">
 														Área
 														</td-->
 														<td>
-															<!--span class="text-muted small"
-																th:text="${#dates.format(entrada.horaIngreso, 'dd/MM/yyyy')}">
-																Fecha
+															<span class="text-muted small"
+																th:text="${entrada.horaIngreso}">
+																EntradaRegistro
 															</span>
 															<br>
-															<span class="fw-medium"
+															<!--span class="fw-medium"
 																th:text="${#dates.format(entrada.horaIngreso, 'HH:mm')}">
 																Hora
 															</span-->
 														</td>
 														<td>
 															<span
-																th:if="${entrada.estadoPermanencia?.nombre == 'Presente'}"
+																th:if="${entrada.estadoPermanencia?.idestadoPermanencia == 1}"
 																class="badge bg-success bg-opacity-25 text-success px-3 py-2 border border-success">
 																<i class="bi bi-check-circle me-1"></i> Presente
 															</span>
 															<span
-																th:if="${entrada.estadoPermanencia?.nombre == 'Ausente'}"
+																th:if="${entrada.estadoPermanencia?.idestadoPermanencia == 2}"
 																class="badge bg-danger bg-opacity-25 text-danger px-3 py-2 border border-danger">
 																<i class="bi bi-x-circle me-1"></i> Ausente
 															</span>
-															<span
+															<!--span
 																th:if="${entrada.estadoPermanencia?.nombre != 'Presente' and entrada.estadoPermanencia?.nombre != 'Ausente'}"
 																class="badge bg-secondary bg-opacity-25 text-secondary px-3 py-2 border border-secondary">
 																<i class="bi bi-question-circle me-1"></i>
 																<span
 																	th:text="${entrada.estadoPermanencia?.nombre} ?: 'No definido'"></span>
-															</span>
+															</span-->
 														</td>
 														<td class="text-center">
 															<div class="btn-group btn-group-sm" role="group">
