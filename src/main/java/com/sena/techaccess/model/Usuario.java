@@ -49,7 +49,6 @@ public class Usuario {
 
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL) // CAscadeType.ALL Borra todas sus fichas y accesos
 																	// automaticamente si se llega a borrar un usuario
-	@JoinColumn(name = "Acceso")	
 	private Acceso acceso;
 	
 	@OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY) 

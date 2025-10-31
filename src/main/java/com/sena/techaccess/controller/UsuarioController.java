@@ -19,22 +19,6 @@ public class UsuarioController {
 	@Autowired
 	private IAccesoService accesoService;
 
-	@GetMapping("/home")
-	public String home(Model model) {
-		model.addAttribute("accesos", accesoService.findAll());
-		return "usuario/home";
-	}
-
-	@GetMapping("/soporte")
-	public String soporte() {
-		return "usuario/soporte"; // busca templates/usuario/soporte.html
-	}
-
-	@GetMapping("/about")
-	public String about() {
-		return "usuario/about";
-	}
-
 	@Autowired
 	private UsuarioRepository usuarioRepository;
 

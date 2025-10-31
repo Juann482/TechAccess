@@ -17,6 +17,8 @@ import com.sena.techaccess.model.Usuario;
 import com.sena.techaccess.service.IFichaService;
 import com.sena.techaccess.service.IUsuarioService;
 
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 @RequestMapping("/Administrador")
 public class AdministradorController {
@@ -28,11 +30,10 @@ public class AdministradorController {
 
 	@Autowired
 	private IFichaService fichaService;
+	
+	@Autowired
+	private HttpSession session;
 
-	@GetMapping("/Dashboard")
-	public String inicioFuncionario() {
-		return "Administrador/Dashboard";
-	}
 
 	// ================================ REGISTRO ============================
 
@@ -43,12 +44,16 @@ public class AdministradorController {
 		model.addAttribute("usuario", new Usuario()); // objeto vacio
 		model.addAttribute("fichas", fichaService.findAll()); // Lista de fichas
 
-		return "Administrador/Registro";
+		return "Administrador/RegistroUSER";
 	}
 
 	@PostMapping("/form")
 	public String guardarRegistro(Usuario usuario) {
 		
+		usuario.setEstadoCuenta("Activo");
+		if (usuario.getFicha() != null && usuario.getFicha().getIdFicha() == null) {
+		    usuario.setFicha(null);
+		}
 		usuarioService.save(usuario);
 		LOGGER.warn("Usuario guardado: {}", usuario.getNombre());
 		return "redirect:/Administrador/usuarios";
@@ -63,7 +68,7 @@ public class AdministradorController {
 
 		model.addAttribute("Usuarios", usuarioService.findAll()); // Listado de usuarios
 		model.addAttribute("usuario", new Usuario());
-		return "Administrador/Dashboard";
+		return "Administrador/HistorialUSER";
 
 	}
 
@@ -76,7 +81,7 @@ public class AdministradorController {
 		LOGGER.warn("Busqueda de usuarios por id {}", userEd);
 		model.addAttribute("fichas", fichaService.findAll()); // Lista de fichas
 		model.addAttribute("usuario", userEd);
-		return "Administrador/edicionUsuarios";
+		return "Administrador/EdicionUSER";
 
 	}
 
@@ -141,14 +146,14 @@ public class AdministradorController {
 	// ======================= FICHA ===========================
 
 	// enlistar ficha
-	@GetMapping("/fichas")
+	@GetMapping("/fichasSAVES")
 	public String asignarCampoFichas(Model model) {
 
-		model.addAttribute("fichas", fichaService.findAll());
 		model.addAttribute("ficha", new Ficha());
 
-		return "Administrador/fichas";
+		return "Administrador/RegistroFICHA";
 	}
+	
 
 	// Guardar ficha
 	@PostMapping("/fichaSave")
@@ -157,18 +162,26 @@ public class AdministradorController {
 		fichaService.save(ficha);
 		LOGGER.debug("La ficha se ha registrado con exito {}", ficha);
 
-		return "redirect:/Administrador/fichas";
+		return "redirect:/Administrador/Historialfichas";
 	}
 
+	@GetMapping("/Historialfichas")
+	public String listadoDeFichas(Model model) {
+		
+		model.addAttribute("fichas", fichaService.findAll());
+		
+		return "/Administrador/HistorialFICHAS";
+	}
+	
 	// Editar ficha
-	@GetMapping("/EdicionFichas/{idFicha}")
+	@GetMapping("/Edicion/{idFicha}")
 	public String edicionFicha(@PathVariable Integer idFicha, Model model) {
 		Ficha fichaEd = new Ficha();
 		Optional<Ficha> ut = fichaService.get(idFicha);
 		fichaEd = ut.get();
 		LOGGER.warn("Busqueda de fichas por id {}", fichaEd);
 		model.addAttribute("ficha", fichaEd);
-		return "Administrador/EdicionFichas";
+		return "Administrador/EdicionFICHA";
 
 	}
 
@@ -181,7 +194,7 @@ public class AdministradorController {
 		ficha.setUsuario(fichaAc.getUsuario());
 		fichaService.update(ficha);
 		LOGGER.warn("Ficha actualizada: {}", fichaAc);
-		return "redirect:/Administrador/fichas";
+		return "redirect:/Administrador/Historialfichas";
 	}
 
 	// Eliminar ficha
@@ -191,7 +204,7 @@ public class AdministradorController {
 		fichaEl = fichaService.get(idFicha).get();
 		fichaService.delete(idFicha);
 		LOGGER.warn("Ficha eliminada: {}", fichaEl);
-		return "redirect:/Administrador/fichas";
+		return "redirect:/Administrador/Historialfichas";
 
 	}
 

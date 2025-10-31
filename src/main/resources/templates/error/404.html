@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 
-<head th:insert="~{/usuario/templates_usuario.html::head}"></head>
+<head th:insert="~{/templates_usuario.html::head}"></head>
 
 <body class="page-404">
 
@@ -68,7 +68,7 @@
 								</p>
 
 								<div class="error-actions" data-aos="fade-up" data-aos-delay="800">
-									<a th:href="@{/usuario/home}" class="btn-home">
+									<a th:href="@{/home}" class="btn-home">
 										<i class="bi bi-house-door"></i> Volver al principio
 									</a>
 									<a th:href="@{/usuario/soporte}" class="btn-help">
@@ -86,9 +86,9 @@
 
 	</main>
 	
-	<div th:insert="~{/usuario/templates_usuario.html::footer}"></div>
+	<div th:insert="~{/templates_usuario.html::footer}"></div>
 	
-	<div th:insert="~{/usuario/templates_usuario.html::jsFiles}"></div>
+	<div th:insert="~{/templates_usuario.html::jsFiles}"></div>
 
 </body>
 
