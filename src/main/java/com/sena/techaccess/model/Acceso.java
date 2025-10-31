@@ -3,6 +3,8 @@ package com.sena.techaccess.model;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "acceso")
 public class Acceso {
@@ -23,7 +25,8 @@ public class Acceso {
 	private Dispositivo dispositivo;
 
 	// Sección enlazada con Usuario
-	@OneToOne(mappedBy = "acceso", fetch = FetchType.LAZY)
+	@OneToOne
+	@JsonIgnore // ← ¡IMPORTANTE! Evita recursión infinita
 	private Usuario usuario;
 
 	// Sección enlazada con EstadoPermanencia

@@ -1,5 +1,7 @@
 package com.sena.techaccess.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -10,21 +12,22 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "permisos")
 public class Permisos {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String tipoPermiso;
 	private String rutaPermiso;
-	
+
 	@ManyToOne
+	@JsonIgnore // ← ¡IMPORTANTE! Evita recursión infinita
 	private Usuario usuario;
-	
-	//constructor vacio
+
+	// constructor vacio
 	public Permisos() {
 	}
 
-	//constructor con campos
+	// constructor con campos
 	public Permisos(Integer id, String tipoPermiso, String rutaPermiso, Usuario usuario) {
 		super();
 		this.id = id;
@@ -32,8 +35,8 @@ public class Permisos {
 		this.rutaPermiso = rutaPermiso;
 		this.usuario = usuario;
 	}
-	
-	//getters and setters
+
+	// getters and setters
 	public Integer getId() {
 		return id;
 	}
@@ -66,12 +69,11 @@ public class Permisos {
 		this.usuario = usuario;
 	}
 
-	//toString
+	// toString
 	@Override
 	public String toString() {
 		return "Permisos [id=" + id + ", tipoPermiso=" + tipoPermiso + ", rutaPermiso=" + rutaPermiso + ", usuario="
 				+ usuario + "]";
 	}
-
 
 }

@@ -18,6 +18,9 @@ public class UsuarioController {
 
 	@Autowired
 	private IAccesoService accesoService;
+	
+	@Autowired
+	private UsuarioRepository usuarioRepository;
 
 	@GetMapping("/home")
 	public String home(Model model) {
@@ -35,8 +38,7 @@ public class UsuarioController {
 		return "usuario/about";
 	}
 
-	@Autowired
-	private UsuarioRepository usuarioRepository;
+	
 
 	@PostMapping("/Aprendiz/aprendiz")
 	public String guardarUsuario(@ModelAttribute Usuario usuario, Model model) {

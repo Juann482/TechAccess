@@ -51,18 +51,18 @@
 
 											</tr>
 										</thead>
-										<tbody th:each="dispositivo: ${dispositivosVisit}">
+										<tbody th:each="DU: ${RDU}">
 											<tr class="centrados">
 
-												<td th:text="${dispositivo.tipo}"></td>
-												<td th:text="${dispositivo.marca}"></td>
-												<td th:text="${dispositivo.color}"> </td>
+												<td th:text="${DU.tipoD}"></td>
+												<td th:text="${DU.marca}"></td>
+												<td th:text="${DU.color}"> </td>
 												<td
-													th:text="${dispositivo.usuario != null ? dispositivo.usuario.nombre : '-'}">
+													th:text="${DU.usuario != null ? DU.usuario.nombre : '-'}">
 												</td>
 
 												<td><a title="Eliminar" class="btn btn-outline-danger"
-														th:href="@{/Vigilancia/DeleteDV/{id} (id=${dispositivo.id})}">
+														th:href="@{/Vigilancia/DeleteDUSER/{id} (id=${DU.id})}">
 														<i class="bi bi-trash-fill"></i></a>
 												</td>
 
