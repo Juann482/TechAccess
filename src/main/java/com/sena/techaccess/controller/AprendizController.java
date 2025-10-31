@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.util.StringUtils;
+import org.springframework.validation.BindingResult;
 
 import com.sena.techaccess.model.Excusas;
 import com.sena.techaccess.model.Horario;
@@ -33,6 +34,8 @@ import com.sena.techaccess.repository.HorarioRepository;
 import com.sena.techaccess.service.IExcusasService;
 import com.sena.techaccess.service.IFichaService;
 import com.sena.techaccess.service.IUsuarioService;
+
+import jakarta.validation.Valid;
 
 @Controller
 @RequestMapping("/Aprendiz")
@@ -100,68 +103,59 @@ public class AprendizController {
 
 	// Guardar nueva excusa con archivo
 	@PostMapping("/save")
-	public String guardarExcusa(@ModelAttribute Excusas excusa, @RequestParam("img") MultipartFile archivo,
-			RedirectAttributes redirectAttributes) {
+	public String guardarExcusa(@Valid @ModelAttribute("excusa") Excusas excusa, BindingResult result,
+			@RequestParam("img") MultipartFile archivo, RedirectAttributes redirectAttributes, Model model) {
+
 		try {
-			LOGGER.info("Excusa recibida: {}", excusa);
+			Usuario user = usuarioService.findAll().get(0); // usuario logueado o simulado
+			excusa.setUsuario(user); // ✅ asegura que tenga usuario asignado
+			excusa.setFicha(user.getFicha()); // ✅ también asigna ficha
 
-			// 📁 Directorio donde se guardarán los archivos
-			Path uploadsDir = Paths.get("uploads");
-
-			// 🔹 Crear carpeta si no existe
-			if (!Files.exists(uploadsDir)) {
-				Files.createDirectories(uploadsDir);
-				LOGGER.info("Directorio 'uploads' creado en {}", uploadsDir.toAbsolutePath());
+			// 1️⃣ Validar campos del modelo
+			if (result.hasErrors()) {
+				StringBuilder errores = new StringBuilder("Por favor completa todos los campos obligatorios: ");
+				result.getFieldErrors().forEach(err -> errores.append(err.getDefaultMessage()).append(". "));
+				redirectAttributes.addFlashAttribute("error", errores.toString());
+				return "redirect:/Aprendiz/excusas";
 			}
 
-			// 🖼️ Validar si el archivo fue enviado
+			// 2️⃣ Validar archivo obligatorio
+			Excusas existente = (excusa.getId() != null) ? excusasService.findById(excusa.getId()).orElse(null) : null;
+
+			if (archivo.isEmpty() && (existente == null || existente.getSoporte() == null)) {
+				redirectAttributes.addFlashAttribute("error", "Debes adjuntar un soporte (PDF o imagen).");
+				return "redirect:/Aprendiz/excusas";
+			}
+
+			// 3️⃣ Validar tipo de archivo
 			if (!archivo.isEmpty()) {
-				String contentType = archivo.getContentType();
-
-				// ✅ Validar tipo MIME (imágenes, PDF y documentos de Office)
-				if (contentType == null || 
-				    !(contentType.startsWith("image/") ||
-				      contentType.equals("application/pdf") ||
-				      contentType.equals("application/msword") ||
-				      contentType.equals("application/vnd.openxmlformats-officedocument.wordprocessingml.document") ||
-				      contentType.equals("application/vnd.ms-excel") ||
-				      contentType.equals("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"))) {
-
-				    redirectAttributes.addFlashAttribute("error",
-				            "El archivo debe ser una imagen o un documento válido (JPG, PNG, PDF, DOC, DOCX, XLS, XLSX)");
-				    return "redirect:/Aprendiz/excusas";
+				String tipo = archivo.getContentType();
+				if (tipo == null || !(tipo.startsWith("image/") || tipo.equals("application/pdf"))) {
+					redirectAttributes.addFlashAttribute("error", "El archivo debe ser una imagen o un PDF.");
+					return "redirect:/Aprendiz/excusas";
 				}
 
-				// 🧩 Normalizar nombre del archivo
-				String shortId = UUID.randomUUID().toString().substring(0, 0);
-				String nombreArchivo = shortId + "_" + StringUtils.cleanPath(archivo.getOriginalFilename());
-
-				// 📍 Ruta final del archivo
-				Path rutaArchivo = uploadsDir.resolve(nombreArchivo);
-
-				// 💾 Guardar archivo en disco (reemplaza si ya existe)
-				Files.copy(archivo.getInputStream(), rutaArchivo, StandardCopyOption.REPLACE_EXISTING);
-
-				// 📎 Asociar nombre al modelo
+				// Guardar archivo
+				String nombreArchivo = UUID.randomUUID().toString().substring(0, 8) + "_"
+						+ StringUtils.cleanPath(archivo.getOriginalFilename());
+				Path dir = Paths.get("uploads");
+				if (!Files.exists(dir))
+					Files.createDirectories(dir);
+				Path ruta = dir.resolve(nombreArchivo);
+				Files.copy(archivo.getInputStream(), ruta, StandardCopyOption.REPLACE_EXISTING);
 				excusa.setSoporte(nombreArchivo);
-				LOGGER.info("Archivo guardado en {}", rutaArchivo.toAbsolutePath());
+			} else if (existente != null) {
+				excusa.setSoporte(existente.getSoporte());
 			}
 
-			// 💽 Guardar excusa en la base de datos
+			// 4️⃣ Guardar en BD
 			excusasService.save(excusa);
-			LOGGER.info("Excusa guardada con ID {}", excusa.getId());
-
-			redirectAttributes.addFlashAttribute("success", "Excusa guardada correctamente.");
+			redirectAttributes.addFlashAttribute("mensaje", "✅ Excusa guardada correctamente.");
 			return "redirect:/Aprendiz/excusas";
 
-		} catch (IOException e) {
-			LOGGER.error("Error al guardar la excusa o el archivo: {}", e.getMessage(), e);
-			redirectAttributes.addFlashAttribute("error", "Error al guardar la excusa o el archivo.");
-			return "redirect:/Aprendiz/excusas";
 		} catch (Exception e) {
-			LOGGER.error("Error inesperado: {}", e.getMessage(), e);
-			redirectAttributes.addFlashAttribute("error", "Ocurrió un error inesperado.");
-			redirectAttributes.addFlashAttribute("mensaje", "Excusa guardada correctamente");
+			e.printStackTrace();
+			redirectAttributes.addFlashAttribute("error", "Error al guardar la excusa: " + e.getMessage());
 			return "redirect:/Aprendiz/excusas";
 		}
 	}
@@ -205,12 +199,11 @@ public class AprendizController {
 		existente.setUsuario(excusa.getUsuario());
 
 		if (!archivo.isEmpty()) {
-			String nombreArchivo = UUID.randomUUID() + "_" + archivo.getOriginalFilename();
-			Path ruta = Paths.get("uploads").resolve(nombreArchivo);
+			String nombreArchivo = archivo.getOriginalFilename();
+			Path ruta = Paths.get("uploads/" + nombreArchivo);
 			Files.copy(archivo.getInputStream(), ruta, StandardCopyOption.REPLACE_EXISTING);
-			existente.setSoporte(nombreArchivo);
+			excusa.setSoporte(nombreArchivo);
 		}
-
 		excusasService.save(existente);
 		LOGGER.info("Excusa actualizada ID {}", existente.getId());
 		return "redirect:/Aprendiz/list";
@@ -246,11 +239,12 @@ public class AprendizController {
 	}
 
 	///////////// Detalle Excusa/////////////////////
-	
-	@GetMapping("/detalleExcusa")
-	public String detalleExcusa() {
-	    return "/Aprendiz/detalleExcusa";
-	}
 
+	@GetMapping("/detalleExcusa")
+	public String detalleExcusa(Model model) {
+		List<Excusas> listaExcusas = excusasService.findAll();
+		model.addAttribute("excusas", listaExcusas);
+		return "Aprendiz/detalleExcusa";
+	}
 
 }

@@ -2,7 +2,6 @@ package com.sena.techaccess.model;
 
 import java.util.ArrayList;
 
-
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
@@ -32,12 +31,11 @@ public class Usuario {
 	private String password;
 	private String rol;
 	private String estadoCuenta;
-	
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ficha_id", nullable = true)
 	private Ficha ficha;
-	
+
 	@OneToMany(mappedBy = "usuario")
 	private List<DispositivoVisit> dispositivoVisit = new ArrayList<>();
 
@@ -47,16 +45,18 @@ public class Usuario {
 	@OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Vigilancia vigilancia;
 
+
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL) // CAscadeType.ALL Borra todas sus fichas y accesos automaticamente si se llega a borrar un usuario																
 	private Acceso acceso;
-	
-	@OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY) 
+
+	@OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY)
 	private List<Excusas> excusas = new ArrayList<>();
-	
+
 	@OneToMany
 	private List<Dispositivo> dispositivo = new ArrayList<>();
 
-	public Usuario() {}	
+	public Usuario() {
+	}
 
 	public Usuario(Integer id, String nombre, String email, String documento, String direccion, String telefono,
 			String password, String rol, String estadoCuenta) {
@@ -208,7 +208,5 @@ public class Usuario {
 				+ ", permisos=" + permisos + ", vigilancia=" + vigilancia + ", acceso=" + acceso + ", excusas="
 				+ excusas + ", dispositivo=" + dispositivo + "]";
 	}
-
-	
 
 }
