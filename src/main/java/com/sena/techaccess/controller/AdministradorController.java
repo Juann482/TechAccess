@@ -29,10 +29,7 @@ public class AdministradorController {
 	@Autowired
 	private IFichaService fichaService;
 
-	@GetMapping("/Dashboard")
-	public String inicioFuncionario() {
-		return "Administrador/Dashboard";
-	}
+
 
 	// ================================ REGISTRO ============================
 

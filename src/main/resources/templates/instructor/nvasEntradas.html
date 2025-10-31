@@ -23,7 +23,9 @@
 						<i class="bi bi-person-circle fs-4"></i>
 					</a>
 					<ul class="dropdown-menu dropdown-menu-end">
-						<li><a class="dropdown-item" href="#"><i class="bi bi-person me-2"></i>Perfil</a></li>
+						<li><a class="dropdown-item" th:href="@{/instructor}"><i
+									class="bi bi-person me-2"></i>Perfil</a>
+						</li>
 						<li><a class="dropdown-item" th:href="@{/usuario/home}"><i
 									class="bi bi-box-arrow-right me-2"></i>Cerrar sesión</a></li>
 					</ul>
@@ -94,11 +96,11 @@
 														<th class="border-0">
 															<i class="bi bi-person me-1"></i> Estudiante
 														</th>
-														<th class="border-0">
+														<!--th class="border-0">
 															<i class="bi bi-geo-alt me-1"></i> Área
-														</th>
+														</th-->
 														<th class="border-0">
-															<i class="bi bi-calendar me-1"></i> Fecha Ingreso
+															<i class="bi bi-calendar me-1"></i> Hora Ingreso
 														</th>
 														<th class="border-0">
 															<i class="bi bi-info-circle me-1"></i> Estado
@@ -111,51 +113,54 @@
 												<tbody>
 													<tr th:each="entrada : ${accesos}" class="border-bottom">
 														<td class="fw-medium"
-															th:text="${entrada.usuario?.nombre} ?: 'N/A'">
+															th:text="${entrada.usuario?.nombre} ?: 'NN'">
 															Estudiante
 														</td>
-														<td th:text="${entrada.areaJobs?.nomArea} ?: 'N/A'">
-															Área
-														</td>
+														<!--td th:text="${entrada.usuario?.rol} ?: 'N/A'">
+														Área
+														</td-->
+														<!--td th:text="${entrada.areaJobs?.nomArea} ?: 'N/A'">
+														Área
+														</td-->
 														<td>
 															<span class="text-muted small"
-																th:text="${#dates.format(entrada.horaIngreso, 'dd/MM/yyyy')}">
-																Fecha
+																th:text="${entrada.horaIngreso}">
+																EntradaRegistro
 															</span>
 															<br>
-															<span class="fw-medium"
+															<!--span class="fw-medium"
 																th:text="${#dates.format(entrada.horaIngreso, 'HH:mm')}">
 																Hora
-															</span>
+															</span-->
 														</td>
 														<td>
 															<span
-																th:if="${entrada.estadoPermanencia?.nombre == 'Presente'}"
+																th:if="${entrada.estadoPermanencia?.idestadoPermanencia == 1}"
 																class="badge bg-success bg-opacity-25 text-success px-3 py-2 border border-success">
 																<i class="bi bi-check-circle me-1"></i> Presente
 															</span>
 															<span
-																th:if="${entrada.estadoPermanencia?.nombre == 'Ausente'}"
+																th:if="${entrada.estadoPermanencia?.idestadoPermanencia == 2}"
 																class="badge bg-danger bg-opacity-25 text-danger px-3 py-2 border border-danger">
 																<i class="bi bi-x-circle me-1"></i> Ausente
 															</span>
-															<span
+															<!--span
 																th:if="${entrada.estadoPermanencia?.nombre != 'Presente' and entrada.estadoPermanencia?.nombre != 'Ausente'}"
 																class="badge bg-secondary bg-opacity-25 text-secondary px-3 py-2 border border-secondary">
 																<i class="bi bi-question-circle me-1"></i>
 																<span
 																	th:text="${entrada.estadoPermanencia?.nombre} ?: 'No definido'"></span>
-															</span>
+															</span-->
 														</td>
 														<td class="text-center">
 															<div class="btn-group btn-group-sm" role="group">
 																<a th:href="@{'/acceso/editar/' + ${entrada.idacceso}}"
-																	class="btn btn-outline-primary"
+																	class="btn btn-outline-success"
 																	title="Editar entrada">
 																	<i class="bi bi-pencil-square"></i>
 																</a>
 																<a th:href="@{'/acceso/eliminar/' + ${entrada.idacceso}}"
-																	class="btn btn-outline-danger"
+																	class="btn btn-outline-secondary"
 																	onclick="return confirm('¿Seguro que deseas eliminar esta entrada?');"
 																	title="Eliminar entrada">
 																	<i class="bi bi-trash"></i>
@@ -176,7 +181,8 @@
 										Mostrando <strong th:text="${accesos.size()}">0</strong> registros
 									</small>
 									<small class="text-muted">
-										Última actualización: <span th:text="${#dates.createNow()}">Ahora</span>
+										<strong>Última actualización:</strong> <span
+											th:text="${#dates.createNow()}">Ahora</span>
 									</small>
 								</div>
 							</div>
