@@ -19,7 +19,7 @@ public interface IUsuarioService {
 
 	public Usuario findByNombre(String nombre);
 
-	public Usuario findByEmail(String email);
+	public Optional<Usuario> findByEmail(String email);
 	
 	public List<Usuario> findByRol(String rol);
 

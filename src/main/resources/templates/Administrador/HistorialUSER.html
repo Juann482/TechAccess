@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head th:insert="~{Administrador/template_administracion.html::head}"></head>
+
+<body>
+	<!-- ======== Preloader =========== -->
+	<div id="preloader">
+		<div class="spinner"></div>
+
+	</div>
+
+	<div th:insert="~{/Administrador/template_administracion.html::sidebar}"></div>
+
+	<div class="overlay"></div>
+
+	<main class="main-wrapper">
+
+		<div th:insert="~{Administrador/template_administracion.html::header}"></div>
+
+		<section class="section">
+
+			<div class="container-fluid">
+				<!-- ========== title-wrapper start ========== -->
+				<div class="title-wrapper pt-30">
+					<div class="row align-items-center">
+						<div class="col-md-6">
+							<div class="title">
+								<h2>Historial de usuarios registradas</h2>
+							</div>
+						</div>
+						<!-- end col -->
+						<div class="col-md-6">
+							<div class="breadcrumb-wrapper">
+								<nav aria-label="breadcrumb">
+									<ol class="breadcrumb">
+										<li class="breadcrumb-item">
+											<a href="#0">Historial</a>
+										</li>
+										<li class="breadcrumb-item active" aria-current="page">
+											Historial de usuarios
+										</li>
+
+									</ol>
+								</nav>
+							</div>
+						</div>
+						<!-- end col -->
+					</div>
+					<!-- end row -->
+				</div>
+				<div class="card-style mb-15">
+					<br>
+
+					<!-- end input -->
+					<div class="row justify-content-center" data-aos="fade-up" data-aos-delay="300">
+						<div class="col-lg-12">
+							<div class="form-form-wrapper">
+
+								<table class="table datatable">
+									<thead>
+										<tr class="centrados">
+											<th scope="col">Nombre completo</th>
+											<th scope="col">Documento</th>
+											<th scope="col">Rol</th>
+											<th scope="col">Ficha</th>
+											<th scope="col">Estado</th>
+
+											<th scope="col"> Editar </th>
+											<th scope="col"> Eliminar </th>
+										</tr>
+									</thead>
+									<tbody th:each="usuario: ${Usuarios}">
+										<tr class="centrados">
+											<td th:text="${usuario.nombre}"></td>
+											<td th:text="${usuario.documento}"></td>
+											<!---->
+											<td th:text="${usuario.rol}"></td>
+											<td th:text="${usuario.ficha != null ? usuario.ficha.numFicha : '-'}"></td>
+											<td th:text="${usuario.estadoCuenta !=null ? usuario.estadoCuenta: '-'}">
+											</td>
+
+											<td><a title="Editar" class="btn btn-warning"
+													th:href="@{/Administrador/edicionUsuario/{id} (id=${usuario.id})}"><i
+														class="bi bi-pencil-fill"></i>Editar</a></td>
+											<td><a title="Eliminar" class="btn btn-danger"
+													th:href="@{/Administrador/deleteUser/{id} (id=${usuario.id})}"><i
+														class="bi bi-trash-fill"></i>Eliminar</a></td>
+
+										</tr>
+
+									</tbody>
+
+								</table>
+
+
+							</div>
+						</div>
+					</div>
+					<!-- end input -->
+				</div>
+				<!-- ========== title-wrapper end ========== -->
+			</div>
+
+			<!-- end container -->
+		</section>
+
+
+
+		<div th:insert="~{Administrador/template_administracion.html::footer}"></div>
+		<!-- ========== footer end =========== -->
+	</main>
+	<!-- ======== main-wrapper end =========== -->
+
+	<div th:insert="~{Administrador/template_administracion.html::jsFiles}"></div>
+
+</body>
+
+</html>

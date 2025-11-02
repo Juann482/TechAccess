@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.sena.techaccess.service.IAccesoService;
 import com.sena.techaccess.service.ISoporteService;
 import com.sena.techaccess.model.Soporte;
 
@@ -14,26 +15,22 @@ import com.sena.techaccess.model.Soporte;
 @RequestMapping("/")
 public class HomeUsuarioController {
 	
-	/*@Autowired
-	private ISoporteService soporteservice;
-	
-	@GetMapping("")
-	public String show(Model model) {
-		model.addAttribute("consultantes", soporteservice.findAll());
-		return "/soporte";
+	@Autowired
+	private IAccesoService accesoService;
+
+
+	@GetMapping("/soporte")
+	public String soporte() {
+		return "soporte";
 	}
 
-		@PostMapping("/save")
-		public String create(Soporte soporte) throws IOException {
-			Consultante u = consultanteservice.findById(Integer.parseInt(session.getAttribute("idUsuario¨").toString()))-get()))
-		}*/
-
-	// private final Logger LOGGER = (Logger)
-	// LoggerFactory.getLogger(HomeUsuarioController.class);
-
+	@GetMapping("/about")
+	public String about() {
+		return "about";
+	}
 	@GetMapping("")
 	public String Inicio() {
-		return ("redirect:/usuario/home");
+		return ("home");
 	}
 
 	

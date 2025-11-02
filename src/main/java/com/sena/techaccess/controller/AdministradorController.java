@@ -5,6 +5,7 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,7 +30,7 @@ public class AdministradorController {
 	@Autowired
 	private IFichaService fichaService;
 
-
+	BCryptPasswordEncoder pe = new BCryptPasswordEncoder();
 
 	// ================================ REGISTRO ============================
 
@@ -40,13 +41,14 @@ public class AdministradorController {
 		model.addAttribute("usuario", new Usuario()); // objeto vacio
 		model.addAttribute("fichas", fichaService.findAll()); // Lista de fichas
 
-		return "Administrador/Registro";
+		return "Administrador/RegistroUSER";
 	}
 
 	@PostMapping("/form")
 	public String guardarRegistro(Usuario usuario) {
 		
-		usuarioService.save(usuario);
+		usuario.setPassword(pe.encode(usuario.getPassword()));
+		usuarioService.save(usuario);		
 		LOGGER.warn("Usuario guardado: {}", usuario.getNombre());
 		return "redirect:/Administrador/usuarios";
 	}
@@ -60,7 +62,7 @@ public class AdministradorController {
 
 		model.addAttribute("Usuarios", usuarioService.findAll()); // Listado de usuarios
 		model.addAttribute("usuario", new Usuario());
-		return "Administrador/Dashboard";
+		return "Administrador/HistorialUSER";
 
 	}
 
@@ -73,7 +75,7 @@ public class AdministradorController {
 		LOGGER.warn("Busqueda de usuarios por id {}", userEd);
 		model.addAttribute("fichas", fichaService.findAll()); // Lista de fichas
 		model.addAttribute("usuario", userEd);
-		return "Administrador/edicionUsuarios";
+		return "Administrador/EdicionUSER";
 
 	}
 
@@ -138,13 +140,13 @@ public class AdministradorController {
 	// ======================= FICHA ===========================
 
 	// enlistar ficha
-	@GetMapping("/fichas")
+	@GetMapping("/Historialfichas")
 	public String asignarCampoFichas(Model model) {
 
 		model.addAttribute("fichas", fichaService.findAll());
 		model.addAttribute("ficha", new Ficha());
 
-		return "Administrador/fichas";
+		return "Administrador/HistorialFICHAS";
 	}
 
 	// Guardar ficha
@@ -154,7 +156,7 @@ public class AdministradorController {
 		fichaService.save(ficha);
 		LOGGER.debug("La ficha se ha registrado con exito {}", ficha);
 
-		return "redirect:/Administrador/fichas";
+		return "redirect:/Administrador/Historialfichas";
 	}
 
 	// Editar ficha
@@ -165,7 +167,7 @@ public class AdministradorController {
 		fichaEd = ut.get();
 		LOGGER.warn("Busqueda de fichas por id {}", fichaEd);
 		model.addAttribute("ficha", fichaEd);
-		return "Administrador/EdicionFichas";
+		return "Administrador/EdicionFICHA";
 
 	}
 
@@ -178,7 +180,7 @@ public class AdministradorController {
 		ficha.setUsuario(fichaAc.getUsuario());
 		fichaService.update(ficha);
 		LOGGER.warn("Ficha actualizada: {}", fichaAc);
-		return "redirect:/Administrador/fichas";
+		return "redirect:/Administrador/Historialfichas";
 	}
 
 	// Eliminar ficha
@@ -188,7 +190,7 @@ public class AdministradorController {
 		fichaEl = fichaService.get(idFicha).get();
 		fichaService.delete(idFicha);
 		LOGGER.warn("Ficha eliminada: {}", fichaEl);
-		return "redirect:/Administrador/fichas";
+		return "redirect:/Administrador/Historialfichas";
 
 	}
 
