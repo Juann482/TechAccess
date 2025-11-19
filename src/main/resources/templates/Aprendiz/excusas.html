@@ -189,12 +189,11 @@
 															de
 															ficha:</label>
 														<div class="col-sm-9">
-															<input type="number" class="form-control mb-2" id="fichaasd"
-																name="fichaasd"
+															<input type="number" class="form-control " id="ficha"
+																name="ficha"
 																th:value="${ficha != null ? ficha.numFicha : ' - '}"
 																readonly>
-															<input type="hidden" th:field="*{ficha.idFicha}"
-																th:value="${ficha != null ? ficha.idFicha : 0}">
+															
 														</div>
 													</div>
 
@@ -267,7 +266,7 @@
 
 
 														<div class="text-end">
-															<form th:action="@{/Aprendiz/save}" method="post"
+															<div th:action="@{/Aprendiz/save}" method="post"
 																enctype="multipart/form-data" id="formExcusa">
 																<!-- tus campos aquí -->
 																<div class="text-end">
@@ -278,8 +277,12 @@
 																		Excusa
 																	</button>
 																</div>
-															</form>
+															</div>
 														</div>
+													</div>
+												</form>
+											</div>
+						
 										</section>
 									</div>
 								</div>
