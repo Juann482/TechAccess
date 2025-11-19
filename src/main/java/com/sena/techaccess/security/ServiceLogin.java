@@ -19,37 +19,37 @@ import jakarta.servlet.http.HttpSession;
 
 @Service
 public class ServiceLogin implements UserDetailsService {
-	
-	@Autowired
-	private IUsuarioService usuarioService;
-	
-	@Autowired
-	private HttpSession session;
-	
-	private final Logger LOGGER =  LoggerFactory.getLogger(ServiceLogin.class);
 
-	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		
-		Optional<Usuario> user = usuarioService.findByEmail(username);
-		LOGGER.warn("Este es el user ingresando");
-		if (user.isPresent()) {
-			
-			session.setAttribute("IdUser", user.get().getId());
-			Usuario present = user.get();
-			
-			return User.builder()
-					.username(present.getEmail())
-					.password(present.getPassword())
-					.roles(present.getRol())
-					.build();
-		} else {
-			throw new UsernameNotFoundException("Usuarios no encontrado");
-		}
-	}
+    @Autowired
+    private IUsuarioService usuarioService;
 
-	public String encodePass(String rawPassword) {
-		BCryptPasswordEncoder pe = new BCryptPasswordEncoder();
-		return pe.encode(rawPassword);
-	}
+    @Autowired
+    private HttpSession session;
+
+    private final Logger LOGGER = LoggerFactory.getLogger(ServiceLogin.class);
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        Optional<Usuario> user = usuarioService.findByEmail(username);
+        LOGGER.info("Intentando cargar usuario: {}", username);
+
+        if (user.isPresent()) {
+            Usuario present = user.get();
+            session.setAttribute("IdUser", present.getId());
+
+            return User.builder()
+                    .username(present.getEmail())
+                    .password(present.getPassword())
+                    .authorities(present.getRol()) // usamos el rol tal cual en la DB
+                    .build();
+        } else {
+            throw new UsernameNotFoundException("Usuario no encontrado");
+        }
+    }
+
+    // Método útil para encriptar contraseñas
+    public String encodePass(String rawPassword) {
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        return encoder.encode(rawPassword);
+    }
 }

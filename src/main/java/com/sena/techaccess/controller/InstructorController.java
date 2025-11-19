@@ -2,6 +2,7 @@ package com.sena.techaccess.controller;
 
 import java.util.List;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,10 +29,10 @@ public class InstructorController {
 	@Autowired
 	private IPermisosService permisosService;
 
-	@GetMapping("")
+	@GetMapping("/Inicio")
 	public String vistaPrincipal(Model model) {
 		model.addAttribute("acceso", accesoService.findAll());
-		return "/instructor/instructor";
+		return "instructor/instructor";
 	}
 
 	@GetMapping("/nvasEntradas")

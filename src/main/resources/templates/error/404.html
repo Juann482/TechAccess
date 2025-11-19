@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 
-<head th:insert="~{/usuario/templates_usuario.html::head}"></head>
+<head th:insert="~{/error/templates_usuario.html::head}"></head>
 
 <body class="page-404">
 
@@ -18,7 +18,7 @@
 			<nav id="navmenu" class="navmenu">
 				<ul>
 
-					<li><a th:href="@{/usuario/home}" style="color: #2f92b1;"><b>Inicio</b></a></li>
+					<li><a th:href="@{/}" style="color: #2f92b1;"><b>Inicio</b></a></li>
 				
 				</ul>
 				<i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
@@ -36,7 +36,7 @@
 				<p>La página que esta buscando ha sido inhabilitada, su nombre cambió o esta temporalmente fuera de servicio.</p>
 				<nav class="breadcrumbs">
 					<ol>
-						<li><a th:href="@{/usuario/home}">Inicio</a></li>
+						<li><a th:href="@{/}">Inicio</a></li>
 						<li class="current">404</li>
 					</ol>
 				</nav>
@@ -86,9 +86,9 @@
 
 	</main>
 	
-	<div th:insert="~{/usuario/templates_usuario.html::footer}"></div>
+	<div th:insert="~{/error/templates_usuario.html::footer}"></div>
 	
-	<div th:insert="~{/usuario/templates_usuario.html::jsFiles}"></div>
+	<div th:insert="~{/error/templates_usuario.html::jsFiles}"></div>
 
 </body>
 

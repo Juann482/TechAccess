@@ -74,32 +74,14 @@
 											Sesión</button>
 									</form>
 
-									<!-- funcion vinculo paginas roles -->
-
-									<a th:href="@{/Aprendiz/aprendiz}">Aprendiz</a>
-									<a th:href="@{/Vigilancia/Ingreso}">Seguridad</a>
-									<a th:href="@{/Administrador}">Admin</a>
-
-
-									<!--<script>
-										const urls = ["_interno/aprendiz.html", "_interno/instructor.html", "funcionario.html", "404.html", "cafeteria.html", "seguridad.html", "servicios.html"];
-										const enlace = document.getElementById("enlaceAleatorio");
-
-										function generarEnlaceAleatorio() {
-											const randomIndex = Math.floor(Math.random() * urls.length);
-											enlace.href = urls[randomIndex];
-										}
-
-										enlace.onclick = generarEnlaceAleatorio;
-
-									</script>-->
+									
 
 									<!-- funcion vinculo paginas roles END -->
 									<div class="form-footer">
 										<label style="color:white">
 											<p>¿No tiene una cuenta?</p>
 										</label>
-										<a th:href="@{/Administrador/form}" class="btn-login">Regístrarse</a>
+										<a th:href="@{/#}" class="btn-login">Solicitar</a>
 									</div>
 								</div>
 							</div>

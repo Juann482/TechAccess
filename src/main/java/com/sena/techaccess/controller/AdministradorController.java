@@ -48,6 +48,7 @@ public class AdministradorController {
 	public String guardarRegistro(Usuario usuario) {
 		
 		usuario.setPassword(pe.encode(usuario.getPassword()));
+		usuario.setEstadoCuenta("Activo");
 		usuarioService.save(usuario);		
 		LOGGER.warn("Usuario guardado: {}", usuario.getNombre());
 		return "redirect:/Administrador/usuarios";
