@@ -22,30 +22,38 @@ public class CustomSuccessHandler implements AuthenticationSuccessHandler {
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
 
         for (GrantedAuthority authority : authorities) {
-        	
-        	String rol = authority.getAuthority();
-        	System.out.println("============= Tomando roles =========");
-        	switch(rol) {
-        	
-        	case "ROLE_Administrador":
-        		
-        		response.sendRedirect("Administrador/usuarios");
-        		return;
-        	
-        	case "ROLE_Vigilancia":
-        		
-        		response.sendRedirect("Vigilancia/Ingreso");
-        		return;
-        		
-        	default: 
-        		
-        		response.sendRedirect("/");
-        	}
-        	
-            
+            String rol = authority.getAuthority();
+            System.out.println("============= Rol detectado: " + rol + " =========");
+
+            switch (rol) {
+                case "Administrador":
+                    response.sendRedirect("/Administrador/usuarios");
+                    System.out.println("Usuario logueado como admin");
+                    return;
+
+                case "Vigilancia":
+                    response.sendRedirect("/Vigilancia/Ingreso");
+                    System.out.println("Usuario logueado como vigilancia");
+                    return;
+                    
+                case "Aprendiz":
+                    response.sendRedirect("/Aprendiz/aprendiz");
+                    System.out.println("Usuario logueado como aprendiz");
+                    return;
+                    
+                case "Instructor":
+                    response.sendRedirect("/instructor/Inicio");
+                    System.out.println("Usuario logueado como instructor");
+                    return;
+
+                default:
+                    response.sendRedirect("/");
+                    System.out.println("Usuario sin rol válido");
+                    return;
+            }
         }
 
-        // Si no tiene rol reconocido
+        // Fallback si no hay roles
         response.sendRedirect("/");
     }
 }

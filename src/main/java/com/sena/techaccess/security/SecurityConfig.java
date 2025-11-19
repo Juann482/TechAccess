@@ -5,17 +5,18 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
-@Configuration(proxyBeanMethods = false)
+@Configuration
+@EnableWebSecurity
 public class SecurityConfig {
 
     private final ServiceLogin serviceLogin;
     private final CustomSuccessHandler successHandler;
 
-    // Constructor para inyección de dependencias
     public SecurityConfig(ServiceLogin serviceLogin, CustomSuccessHandler successHandler) {
         this.serviceLogin = serviceLogin;
         this.successHandler = successHandler;
@@ -25,10 +26,15 @@ public class SecurityConfig {
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
             .csrf(csrf -> csrf.disable())
-            .authorizeHttpRequests(entradas -> entradas
-                .requestMatchers("/", "/assets/**", "/images/**", "/css/**", "/js/**", "/img/**").permitAll()
-                .requestMatchers("/Administrador/**").hasRole("Administrador")
-                .requestMatchers("/Vigilancia/**").hasRole("Vigilancia")
+            
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/", "/assets/**", "/images/**", "/css/**", "/js/**", "/img/**, /error/**").permitAll()
+                .requestMatchers("/Administrador/**").hasAuthority("Administrador")
+                .requestMatchers("/Vigilancia/**").hasAuthority("Vigilancia")
+                .requestMatchers("/Aprediz/**").hasAuthority("Aprendiz")
+                .requestMatchers("/instructor/**").hasAuthority("Instructor")
+                
+                
                 .anyRequest().authenticated()
             )
             .formLogin(login -> login
