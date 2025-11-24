@@ -38,16 +38,16 @@ public class FichaServiceImplement implements IFichaService {
 		fichaRepository.save(ficha);		
 	}
 
-	@Override
-	public Optional<Ficha> get(Integer idFicha) {
-		// TODO Auto-generated method stub
-		return fichaRepository.findById(idFicha);
-	}
+	
 
 	@Override
 	public Ficha findByNombrePrograma(String nombrePrograma) {
-		// TODO Auto-generated method stub
 		return fichaRepository.findByNombrePrograma(nombrePrograma);
+	}
+
+	@Override
+	public Optional<Ficha> get(Integer idFicha) {
+		return fichaRepository.findById(idFicha);
 	}
 	
 }

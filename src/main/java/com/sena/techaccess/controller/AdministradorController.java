@@ -149,6 +149,11 @@ public class AdministradorController {
 
 		return "Administrador/HistorialFICHAS";
 	}
+	
+	@GetMapping("/GuardarFicha")
+	public String GuardarFicha(Ficha ficha) {
+		return "Administrador/RegistroFICHA";
+	}
 
 	// Guardar ficha
 	@PostMapping("/fichaSave")
@@ -159,15 +164,16 @@ public class AdministradorController {
 
 		return "redirect:/Administrador/Historialfichas";
 	}
+	
+	
 
 	// Editar ficha
 	@GetMapping("/EdicionFichas/{idFicha}")
 	public String edicionFicha(@PathVariable Integer idFicha, Model model) {
-		Ficha fichaEd = new Ficha();
-		Optional<Ficha> ut = fichaService.get(idFicha);
-		fichaEd = ut.get();
-		LOGGER.warn("Busqueda de fichas por id {}", fichaEd);
-		model.addAttribute("ficha", fichaEd);
+		
+		Ficha ut = fichaService.get(idFicha).orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+		LOGGER.warn("Busqueda de fichas por id {}", ut);
+		model.addAttribute("ficha", ut);
 		return "Administrador/EdicionFICHA";
 
 	}
