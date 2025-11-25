@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head th:insert="~{/Vigilancia/templates_vigilancia.html::head}"></head>
+
+<body class="contact-page">
+
+	<div th:insert="~{/Vigilancia/templates_vigilancia.html::dispositivoVisitante}"></div>
+
+	<main class="main">
+
+		<!-- Page Title -->
+		<div class="page-title dark-background" th:style="'background-image: url(' + @{/images/fondo.jpeg} + ');'">
+			<div class="container position-relative">
+				<h1>Dispositivos Usuarios</h1>
+				<nav class="breadcrumbs">
+					<ol>
+						<li><a th:href="@{/usuario/home}"><b>Salir</b></a></li>
+						<li class="current">Vigilancia</li>
+					</ol>
+				</nav>
+			</div>
+		</div>
+		<!-- End Page Title -->
+
+		<!-- Contact Section -->
+		<section id="contact" class="contact section" style="padding-top: 220px;">
+			<!--Acomodar Style cuando este todo finalizado-->
+			<div class="container" data-aos="fade-up" data-aos-delay="100">
+				<div class="container form-container-overlap">
+					<div class="row justify-content-center" data-aos="fade-up" data-aos-delay="300">
+						<div class="col-lg-10">
+							<div class="contact-form-wrapper">
+								
+								<h2 class="text-center mb-4">Registro de dispositivos personales</h2>
+								<p>Ingrese el tipo y caracteristicas del dispositivo:</p>
+
+								<form th:action="@{/Vigilancia/GuardarDispoUSER}" method="post">
+									
+																			<div class="row g-3">
+											<div class="col-md-4">
+												<div class="form-group">
+													<div class="input-with-icon">
+														<i class="bi bi-cpu"></i>
+														<select class="form-control" id="tipoD" name="tipoD" required>
+
+															<option>--Tipo--</option>
+															<option>Computador</option>
+															<option>Tablet</option>
+															<option>Camara</option>
+
+														</select>
+													</div>
+												</div>
+											</div>
+
+											<div class="col-md-4">
+												<div class="form-group">
+													<div class="input-with-icon">
+
+														<i class="bi bi-badge-tm"></i>
+														<select class="form-control" id="marca" name="marca" required>
+
+															<option>--Marca--</option>
+															<option>Lenovo</option>
+															<option>Samsung</option>
+															<option>DELL</option>
+															<option>Asus</option>
+															<option>Huawei</option>
+															<option>Apple</option>
+															<option>Acer</option>
+															<option>Canon</option>
+															<option>Nikon</option>
+															<option>Sony</option>
+
+														</select>
+													</div>
+												</div>
+											</div>
+
+											<div class="col-md-4">
+												<div class="form-group">
+													<div class="input-with-icon">
+														<i class="bi bi-palette"></i>
+														<select class="form-control" id="color" name="color">
+
+															<option>--Color--</option>
+															<option>Negro</option>
+															<option>Gris</option>
+															<option>Azul oscuro</option>
+															<option>Gris oscuro</option>
+															<option>Dorado</option>
+															<option>Blanco</option>
+
+														</select>
+													</div>
+												</div>
+											</div>
+
+
+										</div>
+
+
+									<div class="modal-footer space-between">
+										<button type="button" class="btn btn-secondary"
+											data-bs-dismiss="modal">Cancelar</button>
+										<button type="submit" class="btn btn-primary btn-sumit">Guardar</button>
+									</div>
+							</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+			</div>
+		</section>
+
+	</main>
+
+	<div th:insert="~{/Vigilancia/templates_vigilancia.html::footer}"></div>
+
+	<div th:insert="~{/Vigilancia/templates_vigilancia.html::jsFiles}"></div>
+
+</body>
+
+</html>

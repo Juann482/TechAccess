@@ -33,6 +33,38 @@
 							<div class="contact-form-wrapper">
 
 
+								<input type="text" 
+								          id="barcodeInput" 
+								          style="width: 300px; height: 40px; font-size: 20px; margin-bottom: 20px;" 
+								          placeholder="Escanee aquí su código..." 
+								          autofocus>
+										  
+										  <script>
+										  document.addEventListener("DOMContentLoaded", () => {
+										    const barcodeInput = document.getElementById("barcodeInput");
+
+										    barcodeInput.addEventListener("change", () => {
+										      const codigo = barcodeInput.value.trim();
+										      if (codigo !== "") {
+										        fetch("/Vigilancia/registrar-ingreso", {
+										          method: "POST",
+										          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+										          body: `documento=${codigo}`
+										        })
+										        .then(response => response.text())
+										        .then(data => {
+										          console.log(data);
+										          location.reload(); // actualiza la tabla
+										        })
+										        .catch(err => console.error(err));
+
+										        barcodeInput.value = "";
+										      }
+										    });
+										  });
+										  </script>
+
+			  
 
 								<div class="col-md-12">
 									<h5 class="mb-3"><i class="bi bi-activity me-2">Ingreso de personal</i></h5>
@@ -45,27 +77,19 @@
 												<th scope="col">Documento</th>
 												<th scope="col">Rol</th>
 												<th scope="col">Ficha</th>
-
-												<th scope="col"> Asistencia </th>
+												<th scope="col">Ingreso</th>
+												<th scope="col">Egreso</th>
 											</tr>
 										</thead>
 										<tbody th:each="usuario: ${Usuarios}">
 											<tr class="centrados">
 												<td th:text="${usuario.nombre}"></td>
 												<td th:text="${usuario.documento}"></td>
-												<td th:text="${usuario.rol.tipo}"></td>
+												<td th:text="${usuario.rol}"></td>
 												<td th:text="${usuario.ficha != null ? usuario.ficha.numFicha : '-'}"></td>
-
-												<td>
-													<button type="button" class="btn btn-outline-success"
-														data-bs-toggle="modal" data-bs-target="#exampleModal">
-														Ingreso
-													</button>
-												</td>
-
-
-
-											</tr>
+												<td th:text="${usuario.acceso !=null ? usuario.acceso.horaIngreso : '-'}"></td>
+												<td th:text="${usuario.acceso !=null ? usuario.acceso.horaEgreso : '-'}"></td>
+																							</tr>
 
 										</tbody>
 

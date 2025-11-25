@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head th:insert="~{/Vigilancia/templates_vigilancia.html::head}"></head>
+
+<body class="contact-page">
+
+	<div th:insert="~{/Vigilancia/templates_vigilancia.html::dispositivoVisitante}"></div>
+
+	<main class="main">
+
+		<!-- Page Title -->
+		<div class="page-title dark-background" th:style="'background-image: url(' + @{/images/fondo.jpeg} + ');'">
+			<div class="container position-relative">
+				<h1>Dispositivos</h1>
+				<nav class="breadcrumbs">
+					<ol>
+						<li><a th:href="@{/usuario/home}"><b>Salir</b></a></li>
+						<li class="current">Vigilancia</li>
+					</ol>
+				</nav>
+			</div>
+		</div>
+		<!-- End Page Title -->
+
+		<!-- Contact Section -->
+		<section id="contact" class="contact section" style="padding-top: 220px;">
+			<!--Acomodar Style cuando este todo finalizado-->
+			<div class="container" data-aos="fade-up" data-aos-delay="100">
+				<div class="container form-container-overlap">
+					<div class="row justify-content-center" data-aos="fade-up" data-aos-delay="300">
+						<div class="col-lg-10">
+							<div class="contact-form-wrapper">
+
+
+
+								<div class="col-md-12">
+									<h5 class="mb-3"><i class="bi bi-activity me-2">Registro de dispositivos de
+											visitantes</i></h5>
+
+
+									<table class="table datatable">
+										<thead>
+											<tr class="centrados">
+
+												<th scope="col">Tipo de dispositivo</th>
+												<th scope="col">Marca </th>
+												<th scope="col">Color</th>
+												<th scope="col">Propietario</th>
+												<th scope="col">Eliminar</th>
+
+											</tr>
+										</thead>
+										<tbody th:each="DU: ${RDU}">
+											<tr class="centrados">
+
+												<td th:text="${DU.tipoD}"></td>
+												<td th:text="${DU.marca}"></td>
+												<td th:text="${DU.color}"> </td>
+												<td
+													th:text="${DU.usuario != null ? DU.usuario.nombre : '-'}">
+												</td>
+
+												<td><a title="Eliminar" class="btn btn-outline-danger"
+														th:href="@{/Vigilancia/DeleteDUSER/{id} (id=${DU.id})}">
+														<i class="bi bi-trash-fill"></i></a>
+												</td>
+
+
+
+											</tr>
+
+										</tbody>
+
+
+									</table>
+								</div>
+
+							</div>
+						</div>
+					</div>
+		</section>
+
+	</main>
+
+	<div th:insert="~{/Vigilancia/templates_vigilancia.html::footer}"></div>
+
+	<div th:insert="~{/Vigilancia/templates_vigilancia.html::jsFiles}"></div>
+
+</body>
+
+</html>
