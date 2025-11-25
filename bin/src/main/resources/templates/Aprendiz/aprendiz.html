@@ -31,7 +31,7 @@
 	</header>
 
 
-	<main class="main" style="background-color: rgba(0, 124, 88, 0.05); min-height: 100vh;">
+	
 
 
 
@@ -54,7 +54,7 @@
 				</div>
 			</div>
 
-			<!-- 🔹 Fondo de video a pantalla completa -->
+			<!-- 🔹 Fondo de video a pantalla completa 
 			<div class="video-container2 position-fixed top-0 start-0 w-100 h-100 overflow-hidden"
 				style="z-index: -1; opacity: 1;">
 
@@ -62,7 +62,7 @@
 					<source th:src="@{/assets/vid/entradaS.mp4}" type="video/mp4">
 					Tu navegador no soporta videos en HTML5.
 				</video>
-			</div>
+			</div>-->
 
 
 			<!-- Contenido -->
@@ -106,13 +106,7 @@
 									</p>
 								</div>
 
-								<div class="border rounded p-2 mb-4 bg-light">
-									<p class="mb-0 text-success fw-semibold">
-										Estado:
-										<span class="text-dark"
-											th:text="${estadoCuenta != null ? estadoCuenta.nombreEstado : ' - '}"></span>
-									</p>
-								</div>
+								
 							</div>
 
 							<!-- Navegación -->

@@ -1,0 +1,374 @@
+﻿<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{templates_usuario :: head}">
+    <style>
+   
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: rgba(0, 124, 88, 0.05);
+            margin: 0;
+        }
+
+      
+        .sidebar {
+            width: 260px;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background: #ffffff;
+            padding: 25px 20px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.08);
+            border-right: 3px solid #007C58;
+        }
+
+        .sidebar h2 {
+            font-size: 20px;
+            font-weight: bold;
+            color: #007C58;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+            margin-top: 20px;
+        }
+
+        .sidebar ul li a {
+            display: block;
+            padding: 12px 15px;
+            margin-bottom: 8px;
+            background: #f7f7f7;
+            border-radius: 6px;
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: 0.2s;
+        }
+
+        .sidebar ul li a:hover,
+        .sidebar ul li a.active {
+            background: #007C58;
+            color: #fff;
+        }
+
+        .sidebar ul li ul {
+            margin-top: 5px;
+            margin-left: 20px;
+        }
+
+        .sidebar ul li ul li a {
+            background: #e8f5f1;
+        }
+
+       
+        .main-content {
+            margin-left: 260px;
+            padding: 30px;
+        }
+
+        header {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.07);
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-left: 4px solid #00c2d6;
+        }
+
+        header h1 {
+            font-weight: 700;
+            color: #007C58;
+        }
+
+        .user-info span {
+            margin-right: 12px;
+            font-size: 14px;
+            color: #444;
+        }
+
+        .user-info img {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            border: 2px solid #007C58;
+        }
+
+        /* --- CARDS Y CONTENIDO --- */
+        .card {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+            border-top: 3px solid #007C58;
+        }
+
+        .role-content-container h3 {
+            color: #007C58;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .role-content h4 {
+            color: #007C58;
+            margin-bottom: 10px;
+        }
+
+        .role-content p {
+            color: #555;
+        }
+
+        .role-content button {
+            background: #007C58;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            margin-right: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .role-content button:hover {
+            background: #005f44;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- === SIDEBAR REESTILIZADO === -->
+    <aside class="sidebar">
+        <h2><i class="fas fa-building"></i> Oficina Central</h2>
+        <ul>
+            <li><a href="#" class="active"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+            <li><a href="#"><i class="fas fa-users"></i> Gestión de Personal</a></li>
+            <li><a href="#"><i class="fas fa-calendar-alt"></i> Calendario</a></li>
+            <li><a href="#"><i class="fas fa-file-alt"></i> Documentos</a></li>
+            <li><a href="#"><i class="fas fa-cog"></i> Configuración</a></li>
+
+            <!-- Biblioteca -->
+            <li th:if="${rolUsuario == 'BIBLIOTECARIO'}">
+                <a href="#"><i class="fas fa-book-open"></i> Gestión de Biblioteca</a>
+                <ul>
+                    <li><a href="#"><i class="fas fa-plus"></i> Añadir Libro</a></li>
+                    <li><a href="#"><i class="fas fa-exchange-alt"></i> Préstamos</a></li>
+                    <li><a href="#"><i class="fas fa-chart-line"></i> Reportes Biblioteca</a></li>
+                </ul>
+            </li>
+
+            <!-- RRHH -->
+            <li th:if="${rolUsuario == 'RRHH'}">
+                <a href="#"><i class="fas fa-user-tie"></i> Recursos Humanos</a>
+                <ul>
+                    <li><a href="#"><i class="fas fa-user-plus"></i> Nuevos Empleados</a></li>
+                    <li><a href="#"><i class="fas fa-briefcase"></i> Puestos</a></li>
+                </ul>
+            </li>
+
+            <li><a href="#"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a></li>
+        </ul>
+    </aside>
+
+
+    <!-- === CONTENIDO PRINCIPAL === -->
+    <div class="main-content">
+
+        <!-- HEADER -->
+        <header>
+            <h1>Dashboard</h1>
+            <div class="user-info">
+                <span>Bienvenido, <strong th:text="${nombreUsuario}"></strong></span>
+                <span class="role">Rol: <strong th:text="${rolUsuario}"></strong></span>
+                <img th:src="@{/img/avatar.png}" alt="Avatar">
+            </div>
+        </header>
+
+
+        <!-- GRID DE TARJETAS -->
+        <section class="dashboard-grid">
+            <!-- Puedes poner contenido dinámico aquí -->
+        </section>
+
+
+        <!-- CARD PRINCIPAL -->
+        <section class="card role-content-container">
+            <h3>Contenido Específico del Rol</h3>
+
+            <!-- Biblioteca -->
+            <div id="biblioteca-content" class="role-content library-section" th:if="${rolUsuario == 'BIBLIOTECARIO'}">
+                <h4>Resumen de Biblioteca</h4>
+                <p>Total de libros: <strong>1250</strong></p>
+                <button>Ver todos los préstamos</button>
+                <button>Añadir nuevo libro</button>
+            </div>
+
+            <!-- RRHH -->
+            <div id="rrhh-content" class="role-content" th:if="${rolUsuario == 'RRHH'}">
+                <h4>Panel de Recursos Humanos</h4>
+                <p>Empleados activos: <strong>150</strong></p>
+                <button>Gestionar personal</button>
+            </div>
+
+            <!-- General -->
+            <div id="general-content" class="role-content"
+                th:unless="${rolUsuario == 'BIBLIOTECARIO' or rolUsuario == 'RRHH'}">
+                <h4>Información General</h4>
+                <p>Aquí se mostrará contenido relevante para todos los roles.</p>
+            </div>
+        </section>
+
+        <div th:insert="~{/templates_usuario.html::footer}"></div>
+        <div th:insert="~{/templates_usuario.html::jsFiles}"></div>
+    </div>
+	
+	
+	<style>
+	    
+
+	       body {
+	           font-family: 'Segoe UI', sans-serif;
+	           background-color: rgba(0, 124, 88, 0.05);
+	           margin: 0;
+	       }
+
+	   
+	       .sidebar {
+	           width: 260px;
+	           height: 100vh;
+	           position: fixed;
+	           top: 0;
+	           left: 0;
+	           background: #ffffff;
+	           padding: 25px 20px;
+	           box-shadow: 0 0 15px rgba(0, 0, 0, 0.08);
+	           border-right: 3px solid #007C58;
+	       }
+
+	       .sidebar h2 {
+	           font-size: 20px;
+	           font-weight: bold;
+	           color: #007C58;
+	           margin-bottom: 20px;
+	           text-align: center;
+	       }
+
+	       .sidebar ul {
+	           list-style: none;
+	           padding: 0;
+	           margin-top: 20px;
+	       }
+
+	       .sidebar ul li a {
+	           display: block;
+	           padding: 12px 15px;
+	           margin-bottom: 8px;
+	           background: #f7f7f7;
+	           border-radius: 6px;
+	           text-decoration: none;
+	           color: #333;
+	           font-weight: 500;
+	           transition: 0.2s;
+	       }
+
+	       .sidebar ul li a:hover,
+	       .sidebar ul li a.active {
+	           background: #007C58;
+	           color: #fff;
+	       }
+
+	       .sidebar ul li ul {
+	           margin-top: 5px;
+	           margin-left: 20px;
+	       }
+
+	       .sidebar ul li ul li a {
+	           background: #e8f5f1;
+	       }
+
+	
+	       .main-content {
+	           margin-left: 260px;
+	           padding: 30px;
+	       }
+
+	       header {
+	           background: #ffffff;
+	           padding: 20px;
+	           border-radius: 12px;
+	           box-shadow: 0 2px 12px rgba(0, 0, 0, 0.07);
+	           margin-bottom: 25px;
+	           display: flex;
+	           justify-content: space-between;
+	           align-items: center;
+	           border-left: 4px solid #00c2d6;
+	       }
+
+	       header h1 {
+	           font-weight: 700;
+	           color: #007C58;
+	       }
+
+	       .user-info span {
+	           margin-right: 12px;
+	           font-size: 14px;
+	           color: #444;
+	       }
+
+	       .user-info img {
+	           width: 45px;
+	           height: 45px;
+	           border-radius: 50%;
+	           border: 2px solid #007C58;
+	       }
+
+	   
+	       .card {
+	           background: #ffffff;
+	           border-radius: 12px;
+	           padding: 25px;
+	           box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+	           border-top: 3px solid #007C58;
+	       }
+
+	       .role-content-container h3 {
+	           color: #007C58;
+	           font-weight: bold;
+	           margin-bottom: 20px;
+	       }
+
+	       .role-content h4 {
+	           color: #007C58;
+	           margin-bottom: 10px;
+	       }
+
+	       .role-content p {
+	           color: #555;
+	       }
+
+	       .role-content button {
+	           background: #007C58;
+	           color: white;
+	           border: none;
+	           padding: 10px 15px;
+	           margin-right: 10px;
+	           border-radius: 8px;
+	           cursor: pointer;
+	           transition: 0.2s;
+	       }
+
+	       .role-content button:hover {
+	           background: #005f44;
+	       }
+	   </style>
+
+</body>
+
+</html>

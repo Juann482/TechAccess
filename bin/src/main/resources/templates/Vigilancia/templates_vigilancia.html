@@ -82,11 +82,15 @@
 						<ul class="dropdown-menu">
 							<li><a class="dropdown-item" th:href="@{/Vigilancia/registro}">Visitantes</a></li>
 
-							<li><a class="dropdown-item" th:href="@{/Vigilancia//DispositivosVisit}">Dispositivos</a></li>
+							<li><a class="dropdown-item" th:href="@{/Vigilancia/DispositivosVisit}">Dispositivos</a>
+							</li>
 							<li>
 								<hr class="dropdown-divider">
 							</li>
-							<li><a class="dropdown-item" href="#">Si</a></li>
+							<li><a class="dropdown-item" th:href="@{/Vigilancia/DispositivosUSER}">Dispositivos
+									usuarios</a></li>
+							<li><a class="dropdown-item" th:href="@{/Vigilancia/RDU}">Registro</a></li>
+
 						</ul>
 					</li>
 					<li><a href="#">Vigilancia</a></li>
@@ -122,11 +126,14 @@
 						</a>
 						<ul class="dropdown-menu">
 							<li><a class="dropdown-item" th:href="@{/Vigilancia/registro}"><b>Visitantes</b></a></li>
-							<li><a class="dropdown-item" th:href="@{/Vigilancia/DispositivosVisit}">Dispositivos</a></li>
+							<li><a class="dropdown-item" th:href="@{/Vigilancia/DispositivosVisit}">Dispositivos</a>
+							</li>
 							<li>
 								<hr class="dropdown-divider">
 							</li>
-							<li><a class="dropdown-item" href="#">Si</a></li>
+							<li><a class="dropdown-item" th:href="@{/Vigilancia/DispositivosUSER}">Dispositivos
+									usuarios</a></li>
+							<li><a class="dropdown-item" th:href="@{/Vigilancia/RDU}">Registro</a></li>
 						</ul>
 					</li>
 					<li><a href="#">Vigilancia</a></li>
@@ -162,11 +169,14 @@
 						</a>
 						<ul class="dropdown-menu">
 							<li><a class="dropdown-item" th:href="@{/Vigilancia/registro}"><b>Visitantes</b></a></li>
-							<li><a class="dropdown-item" th:href="@{/Vigilancia/DispositivosVisit}">Dispositivos</a></li>
+							<li><a class="dropdown-item" th:href="@{/Vigilancia/DispositivosVisit}">Dispositivos</a>
+							</li>
 							<li>
 								<hr class="dropdown-divider">
 							</li>
-							<li><a class="dropdown-item" href="#">Si</a></li>
+							<li><a class="dropdown-item" th:href="@{/Vigilancia/DispositivosUSER}">Dispositivos
+									usuarios</a></li>
+							<li><a class="dropdown-item" th:href="@{/Vigilancia/RDU}">Registro</a></li>
 						</ul>
 					</li>
 					<li><a href="#">Vigilancia</a></li>
@@ -178,59 +188,63 @@
 	</header>
 </div>
 
-	<!--=========================== FOOTER =============================-->
+<!--=========================== FOOTER =============================-->
 
-	<div th:fragment="footer" style=" position: bottom; width: 100%;">
+<div th:fragment="footer" style=" position: bottom; width: 100%;">
 
-		<footer id="footer" class="footer position-relative dark-background" style="text-align: center;">
-			<div class="container copyright text-center mt-4">
-				<p>© <span>Copyright</span> <strong class="px-1 sitename">TechAccess</strong> <span>Todos los derechos
-						reservados.</span></p>
-				<div class="credits">
-					<!-- All the links in the footer should remain intact. -->
-					<!-- You can delete the links only if you've purchased the pro version. -->
-					<!-- Licensing information: https://bootstrapmade.com/license/ -->
-					<!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
-					Diseñado por <a th:href="@{/usuario/home}"><b>TECH</b>ACCESS</a>
-				</div>
+	<footer id="footer" class="footer position-relative dark-background" style="text-align: center;">
+		<div class="container copyright text-center mt-4">
+			<p>© <span>Copyright</span> <strong class="px-1 sitename">TechAccess</strong> <span>Todos los derechos
+					reservados.</span></p>
+			<div class="credits">
+				<!-- All the links in the footer should remain intact. -->
+				<!-- You can delete the links only if you've purchased the pro version. -->
+				<!-- Licensing information: https://bootstrapmade.com/license/ -->
+				<!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
+				Diseñado por <a th:href="@{/usuario/home}"><b>TECH</b>ACCESS</a>
 			</div>
-		</footer>
-		<!-- Scroll Top -->
-		<a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i
-				class="bi bi-arrow-up-short"></i></a>
-	</div>
+		</div>
+	</footer>
+	<!-- Scroll Top -->
+	<a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i
+			class="bi bi-arrow-up-short"></i></a>
+</div>
 
-	<!--=========================== SCRIPS =============================-->
+<!--=========================== SCRIPS =============================-->
 
-	<div th:fragment="jsFiles">
-		<!-- Vendor JS Files -->
-		<script th:src="@{/assets/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
-		<script th:src="@{/assets/vendor/php-email-form/validate.js}"></script>
-		<script th:src="@{/assets/vendor/aos/aos.js}"></script>
-		<script th:src="@{/assets/vendor/purecounter/purecounter_vanilla.js}"></script>
-		<script th:src="@{/assets/vendor/imagesloaded/imagesloaded.pkgd.min.js}"></script>
-		<script th:src="@{/assets/vendor/isotope-layout/isotope.pkgd.min.js}"></script>
-		<script th:src="@{/assets/vendor/swiper/swiper-bundle.min.js}"></script>
-		<script th:src="@{/assets/vendor/glightbox/js/glightbox.min.js}"></script>
+<div th:fragment="jsFiles">
+	<!-- Vendor JS Files -->
+	<script th:src="@{/assets/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+	<script th:src="@{/assets/vendor/php-email-form/validate.js}"></script>
+	<script th:src="@{/assets/vendor/aos/aos.js}"></script>
+	<script th:src="@{/assets/vendor/purecounter/purecounter_vanilla.js}"></script>
+	<script th:src="@{/assets/vendor/imagesloaded/imagesloaded.pkgd.min.js}"></script>
+	<script th:src="@{/assets/vendor/isotope-layout/isotope.pkgd.min.js}"></script>
+	<script th:src="@{/assets/vendor/swiper/swiper-bundle.min.js}"></script>
+	<script th:src="@{/assets/vendor/glightbox/js/glightbox.min.js}"></script>
 
-		<!-- Main JS File -->
-		<script th:src="@{/assets/js/main.js}"></script>
+	<!-- Main JS File -->
+	<script th:src="@{/assets/js/main.js}"></script>
 
-		<script>
-			function mostrarCampos() {
-				const opcion = document.getElementById("opcion").value;
-				const campos = document.getElementById("camposExtra");
+	<script>
+		function mostrarCampos() {
+			const opcion = document.getElementById("opcion").value;
+			const campos = document.getElementById("camposExtra");
 
-				if (opcion === "si") {
-					campos.classList.remove("oculto");
-				} else {
-					campos.classList.add("oculto");
-				}
+			if (opcion === "si") {
+				campos.classList.remove("oculto");
+			} else {
+				campos.classList.add("oculto");
 			}
-		</script>
+		}
+	</script>
 
-	</div>
+	<!-- Script para enviar el documento automáticamente -->
 
 
 
-	</html>
+</div>
+
+
+
+</html>
