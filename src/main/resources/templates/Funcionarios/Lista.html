@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Bibliotecarios</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-4">
+        <h1 th:text="${titulo}"></h1>
+        
+        <!-- Mensajes de éxito/error -->
+        <div th:if="${#fields.hasErrors('*')}">
+            <div class="alert alert-danger">
+                <ul>
+                    <li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div th:if="${success != null}" class="alert alert-success" th:text="${success}"></div>
+        <div th:if="${error != null}" class="alert alert-danger" th:text="${error}"></div>
+        
+        <!-- Formulario de búsqueda -->
+        <div class="card mb-4">
+            <div class="card-body">
+                <form th:action="@{/bibliotecarios}" method="get" class="row g-3">
+                    <div class="col-md-6">
+                        <input type="text" name="busqueda" class="form-control" placeholder="Buscar por nombre o email..." th:value="${param.busqueda}">
+                    </div>
+                    <div class="col-auto">
+                        <button type="submit" class="btn btn-primary">Buscar</button>
+                        <a th:href="@{/bibliotecarios}" class="btn btn-secondary">Limpiar</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Tabla de bibliotecarios -->
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Lista de Bibliotecarios</h5>
+                <a th:href="@{/bibliotecarios/nuevo}" class="btn btn-success">Nuevo Bibliotecario</a>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nombre</th>
+                                <th>Identificación</th>
+                                <th>Email</th>
+                                <th>Teléfono</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="b : ${pagina.content}">
+                                <td th:text="${b.id}"></td>
+                                <td th:text="${b.nombre}"></td>
+                                <td th:text="${b.identificacion}"></td>
+                                <td th:text="${b.email}"></td>
+                                <td th:text="${b.telefono}"></td>
+                                <td>
+                                    <span th:class="${b.estado == 'ACTIVO' ? 'badge bg-success' : 'badge bg-danger'}" 
+                                          th:text="${b.estado}"></span>
+                                </td>
+                                <td>
+                                    <a th:href="@{/bibliotecarios/editar/} + ${b.id}" class="btn btn-sm btn-primary">Editar</a>
+                                    <a th:href="@{/bibliotecarios/eliminar/} + ${b.id}" 
+                                       class="btn btn-sm btn-danger"
+                                       onclick="return confirm('¿Está seguro de eliminar este bibliotecario?')">Eliminar</a>
+                                    <a th:href="@{/bibliotecarios/cambiar-estado/} + ${b.id}" 
+                                       class="btn btn-sm btn-warning"
+                                       th:text="${b.estado == 'ACTIVO' ? 'Desactivar' : 'Activar'}"></a>
+                                </td>
+                            </tr>
+                            <tr th:if="${pagina.totalElements == 0}">
+                                <td colspan="7" class="text-center">No hay bibliotecarios registrados</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <!-- Paginación -->
+                <div th:if="${pagina.totalPages > 1}" class="mt-4">
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination justify-content-center">
+                            <li class="page-item" th:class="${pagina.number == 0} ? 'disabled'">
+                                <a th:href="@{/bibliotecarios(busqueda=${param.busqueda}, estado=${param.estado}, page=0)}" 
+                                   class="page-link">Primera</a>
+                            </li>
+                            <li class="page-item" th:class="${pagina.number == 0} ? 'disabled'">
+                                <a th:href="@{/bibliotecarios(busqueda=${param.busqueda}, estado=${param.estado}, page=${pagina.number-1})}" 
+                                   class="page-link">Anterior</a>
+                            </li>
+                            
+                            <li th:each="i : ${#numbers.sequence(1, pagina.totalPages)}" 
+                                th:class="${pagina.number+1 == i} ? 'page-item active' : 'page-item'">
+                                <a th:href="@{/bibliotecarios(busqueda=${param.busqueda}, estado=${param.estado}, page=${i-1})}" 
+                                   class="page-link" th:text="${i}"></a>
+                            </li>
+                            
+                            <li class="page-item" th:class="${pagina.number == pagina.totalPages-1} ? 'disabled'">
+                                <a th:href="@{/bibliotecarios(busqueda=${param.busqueda}, estado=${param.estado}, page=${pagina.number+1})}" 
+                                   class="page-link">Siguiente</a>
+                            </li>
+                            <li class="page-item" th:class="${pagina.number == pagina.totalPages-1} ? 'disabled'">
+                                <a th:href="@{/bibliotecarios(busqueda=${param.busqueda}, estado=${param.estado}, page=${pagina.totalPages-1})}" 
+                                   class="page-link">Última</a>
+                            </li>
+                        </ul>
+                    </nav>
+                    <div class="text-center text-muted">
+                        Mostrando <span th:text="${pagina.number * pagina.size + 1}"></span> a 
+                        <span th:text="${(pagina.number * pagina.size) + pagina.numberOfElements}"></span> de 
+                        <span th:text="${pagina.totalElements}"></span> registros
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

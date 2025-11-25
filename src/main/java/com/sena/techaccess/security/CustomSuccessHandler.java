@@ -17,7 +17,7 @@ public class CustomSuccessHandler implements AuthenticationSuccessHandler {
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
-                                        Authentication authentication) throws IOException, ServletException {
+            Authentication authentication) throws IOException, ServletException {
 
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
 
@@ -35,15 +35,20 @@ public class CustomSuccessHandler implements AuthenticationSuccessHandler {
                     response.sendRedirect("/Vigilancia/Ingreso");
                     System.out.println("Usuario logueado como vigilancia");
                     return;
-                    
+
                 case "Aprendiz":
                     response.sendRedirect("/Aprendiz/aprendiz");
                     System.out.println("Usuario logueado como aprendiz");
                     return;
-                    
+
                 case "Instructor":
                     response.sendRedirect("/instructor/Inicio");
                     System.out.println("Usuario logueado como instructor");
+                    return;
+
+                case "Funcionario":
+                    response.sendRedirect("/Funcionarios/Bibliotecario");
+                    System.out.println("Usuario logueado como funcionario (redirigiendo a panel de bibliotecario)");
                     return;
 
                 default:
