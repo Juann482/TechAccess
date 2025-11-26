@@ -1,7 +1,12 @@
 package com.sena.techaccess.controller;
 
+import com.sena.techaccess.model.Acceso;
 import com.sena.techaccess.model.SuperAdministrador;
+import com.sena.techaccess.service.IAccesoService;
 import com.sena.techaccess.service.SuperAdministradorServiceImplement;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,14 +19,36 @@ import java.util.Optional;
 @RequestMapping("/superadmin")
 public class SuperAdministradorController {
 
+	private static final Logger LOGGER = LoggerFactory.getLogger(SuperAdministradorController.class);
+
+	private final IAccesoService accesoService;
+
+	public SuperAdministradorController(IAccesoService accesoService) {
+		this.accesoService = accesoService;
+	}
+
+	/*
+	 * @GetMapping("") public String home(Model model) { List<Acceso> accesos =
+	 * accesoService.findAll();
+	 * LOGGER.info("Cargando accesos en administrador/dashboard. Total: {}",
+	 * accesos.size()); model.addAttribute("accesos", accesos); return
+	 * "SuperAdmin/superadmin"; }
+	 */
+
+	@GetMapping("/Inicio")
+	public String dashboard(Model model) {
+		model.addAttribute("acceso", accesoService.findAll());
+		return "SuperAdmin/superadmin";
+	}
+
 	@Autowired
 	private SuperAdministradorServiceImplement superAdministradorService;
 
-	@GetMapping("/dashboard")
-	public String dashboard(Model model) {
-		model.addAttribute("currentPage", "Dashboard");
-		return "superadmin/dashboard";
-	}
+	/*
+	 * @GetMapping("/dashboard") public String dashboard(Model model) {
+	 * model.addAttribute("currentPage", "Dashboard"); return
+	 * "superadmin/dashboard"; }
+	 */
 
 	@GetMapping("/usuarios")
 	public String gestionUsuarios(Model model) {

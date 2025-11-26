@@ -15,50 +15,55 @@ import jakarta.servlet.http.HttpServletResponse;
 @Component
 public class CustomSuccessHandler implements AuthenticationSuccessHandler {
 
-    @Override
-    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
-            Authentication authentication) throws IOException, ServletException {
+	@Override
+	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
+			Authentication authentication) throws IOException, ServletException {
 
-        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+		Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
 
-        for (GrantedAuthority authority : authorities) {
-            String rol = authority.getAuthority();
-            System.out.println("============= Rol detectado: " + rol + " =========");
+		for (GrantedAuthority authority : authorities) {
+			String rol = authority.getAuthority();
+			System.out.println("============= Rol detectado: " + rol + " =========");
 
-            switch (rol) {
-                case "Administrador":
-                    response.sendRedirect("/Administrador/usuarios");
-                    System.out.println("Usuario logueado como admin");
-                    return;
+			switch (rol) {
+			case "Superadmin":
+				response.sendRedirect("/superadmin/Inicio");
+				System.out.println("Usuario logueado como superadmin");
+				return;
 
-                case "Vigilancia":
-                    response.sendRedirect("/Vigilancia/Ingreso");
-                    System.out.println("Usuario logueado como vigilancia");
-                    return;
+			case "Administrador":
+				response.sendRedirect("/Administrador/usuarios");
+				System.out.println("Usuario logueado como admin");
+				return;
 
-                case "Aprendiz":
-                    response.sendRedirect("/Aprendiz/aprendiz");
-                    System.out.println("Usuario logueado como aprendiz");
-                    return;
+			case "Vigilancia":
+				response.sendRedirect("/Vigilancia/Ingreso");
+				System.out.println("Usuario logueado como vigilancia");
+				return;
 
-                case "Instructor":
-                    response.sendRedirect("/instructor/Inicio");
-                    System.out.println("Usuario logueado como instructor");
-                    return;
+			case "Aprendiz":
+				response.sendRedirect("/Aprendiz/aprendiz");
+				System.out.println("Usuario logueado como aprendiz");
+				return;
 
-                case "Funcionario":
-                    response.sendRedirect("/Funcionarios/Bibliotecario");
-                    System.out.println("Usuario logueado como funcionario (redirigiendo a panel de bibliotecario)");
-                    return;
+			case "Instructor":
+				response.sendRedirect("/instructor/Inicio");
+				System.out.println("Usuario logueado como instructor");
+				return;
 
-                default:
-                    response.sendRedirect("/");
-                    System.out.println("Usuario sin rol válido");
-                    return;
-            }
-        }
+			case "Funcionario":
+				response.sendRedirect("/Funcionarios/Bibliotecario");
+				System.out.println("Usuario logueado como funcionario (redirigiendo a panel de bibliotecario)");
+				return;
 
-        // Fallback si no hay roles
-        response.sendRedirect("/");
-    }
+			default:
+				response.sendRedirect("/");
+				System.out.println("Usuario sin rol válido");
+				return;
+			}
+		}
+
+		// Fallback si no hay roles
+		response.sendRedirect("/");
+	}
 }
