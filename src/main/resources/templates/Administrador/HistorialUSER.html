@@ -56,6 +56,13 @@
 					<div class="row justify-content-center" data-aos="fade-up" data-aos-delay="300">
 						<div class="col-lg-12">
 							<div class="form-form-wrapper">
+								<div class="text-end mb-3">
+									<a class="btn btn-warning" th:href="@{/Administrador/usuarios}"><i class="bi bi-arrow-counterclockwise">Volver</i></a>
+									<button class="btn btn-secondary" data-bs-toggle="modal"
+										data-bs-target="#modalFiltros"><i class="bi bi-funnel-fill">Filtro</i>
+									</button>
+									
+								</div>
 
 								<table class="invoice-table table">
 									<thead>
@@ -71,49 +78,28 @@
 										</tr>
 									</thead>
 									<tbody th:each="usuario: ${Usuarios}">
-										<tr class="centrados " >
+										<tr class="centrados ">
 											<td th:text="${usuario.nombre}"></td>
 											<td th:text="${usuario.documento}"></td>
 											<!---->
 											<td th:text="${usuario.rol}"></td>
-											<td th:text="${usuario.ficha != null ? usuario.ficha.numFicha : '-'}"></td>
-											<td><a title="Cambiar" class="btn btn-success">
-													<svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-														xmlns="http://www.w3.org/2000/svg" transform="rotate(0 0 0)">
-														<path
-															d="M13.6387 6.87094C14.0626 6.75806 14.5675 6.64265 15.1118 6.55723C15.8728 6.43782 16.7358 6.37293 17.5749 6.46799C18.4122 6.56286 19.2743 6.82281 19.9779 7.39626C21.7704 8.85732 22.2678 11.0971 21.8717 13.1949C21.4767 15.2871 20.1839 17.3381 18.2456 18.5682C17.3131 19.16 16.0867 19.4214 14.8561 19.5178C13.6097 19.6154 12.2736 19.5496 11.0594 19.4233C9.84188 19.2966 8.72718 19.107 7.91793 18.9495C7.55037 18.878 7.24465 18.8128 7.01953 18.7628L7.01953 6.78322L10.1671 2.84521C10.5941 2.31102 11.2408 2 11.9247 2C13.3676 2 14.4376 3.33902 14.1192 4.74639L13.6387 6.87094Z"
-															fill="#eceef3" />
-														<path
-															d="M5.51953 7.22761H4.25C3.00736 7.22761 2 8.23497 2 9.47761V16.435C2 17.6776 3.00736 18.685 4.25 18.685H5.51953L5.51953 7.22761Z"
-															fill="#eceef3" />
-													</svg>
-
-												</a></td>
+											<td th:text="${usuario.ficha != null ? usuario.ficha.numFicha : 'N/A'}">
+											</td>
+											<td>
+												<a th:href="@{/Administrador/cambiarEstado/{id} (id = ${usuario.id})}"
+													th:text="${usuario.estadoCuenta}"
+													th:style="${usuario.estadoCuenta == 'Activo'} ? 'color: #50F527; font-weight: bold;' : 'color: red; font-weight: bold;'">
+												</a>
+											</td>
 
 											<td><a title="Editar" class="btn btn-warning"
 													th:href="@{/Administrador/edicionUsuario/{id} (id=${usuario.id})}">
-													<svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-														xmlns="http://www.w3.org/2000/svg" transform="rotate(0 0 0)">
-														<path
-															d="M18.5081 3.67826C19.3317 2.92634 20.6012 2.95524 21.3898 3.74386C22.1784 4.53248 22.2073 5.80189 21.4554 6.62558L13.3159 15.5419C13.1598 14.6599 12.7551 13.8091 12.0672 13.1212C11.4186 12.4726 10.5755 11.9878 9.65704 11.7582L18.5081 3.67826Z"
-															fill="#eceef3" />
-														<path
-															d="M8.7145 12.6186L8.7136 12.6194C7.52707 12.5441 6.29189 13.0284 5.45946 14.3137C5.44672 14.3334 5.4349 14.3536 5.42406 14.3744C4.71836 15.7267 3.95876 16.4718 3.40879 16.8736C3.13222 17.0757 2.90402 17.1943 2.75532 17.26C2.68087 17.293 2.62611 17.3127 2.59497 17.3231C2.57939 17.3282 2.56971 17.331 2.56644 17.332C2.29055 17.4016 2.07745 17.6215 2.01701 17.9002C1.95585 18.1821 2.06253 18.4747 2.29031 18.6518L2.29124 18.6525L2.29389 18.6546L2.30224 18.661L2.33096 18.6828C2.35535 18.7011 2.39014 18.727 2.43459 18.7593C2.52342 18.8239 2.65112 18.9142 2.81168 19.0214C3.13208 19.2354 3.5872 19.519 4.12869 19.7992C5.18927 20.3479 6.67746 20.9343 8.16445 20.8617C9.16006 20.8131 10.161 20.4674 10.998 19.6304C11.6011 19.0273 12.0177 18.3037 12.2292 17.5505C12.321 17.2234 12.3741 16.8906 12.3871 16.5593C12.3913 16.4517 12.3915 16.344 12.3872 16.237C12.3518 15.3518 12.0206 14.4888 11.3601 13.8283C10.7611 13.2294 9.95203 12.8022 9.08976 12.6612C8.96558 12.6409 8.84032 12.6266 8.7145 12.6186Z"
-															fill="#eceef3" />
-													</svg>
-												</a></td>
+													<i class="bi bi-pencil-fill"></i></a>
+												</td>
 											<td><a title="Eliminar" class="btn btn-danger"
 													th:href="@{/Administrador/deleteUser/{id} (id=${usuario.id})}">
-													<svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-														xmlns="http://www.w3.org/2000/svg" transform="rotate(0 0 0)">
-														<path
-															d="M7.99902 4.25C7.99902 3.00736 9.00638 2 10.249 2H13.749C14.9917 2 15.999 3.00736 15.999 4.25V5H18.498C19.7407 5 20.748 6.00736 20.748 7.25C20.748 8.28958 20.043 9.16449 19.085 9.42267C18.8979 9.4731 18.7011 9.5 18.498 9.5H5.5C5.29694 9.5 5.10016 9.4731 4.91303 9.42267C3.95503 9.16449 3.25 8.28958 3.25 7.25C3.25 6.00736 4.25736 5 5.5 5H7.99902V4.25ZM14.499 5V4.25C14.499 3.83579 14.1632 3.5 13.749 3.5H10.249C9.83481 3.5 9.49902 3.83579 9.49902 4.25V5H14.499Z"
-															fill="#eceef3" />
-														<path
-															d="M4.97514 10.4578L5.54076 19.8848C5.61205 21.0729 6.59642 22 7.78672 22H16.2113C17.4016 22 18.386 21.0729 18.4573 19.8848L19.0229 10.4578C18.8521 10.4856 18.6767 10.5 18.498 10.5H5.5C5.32131 10.5 5.146 10.4856 4.97514 10.4578ZM10.774 13.4339L10.9982 17.9905C11.0185 18.4042 10.6996 18.7561 10.2859 18.7764C9.8722 18.7968 9.52032 18.4779 9.49997 18.0642L9.27581 13.5076C9.25546 13.0938 9.57434 12.742 9.98805 12.7216C10.4018 12.7013 10.7536 13.0201 10.774 13.4339ZM14.0101 12.7216C14.4238 12.742 14.7427 13.0938 14.7223 13.5076L14.4982 18.0642C14.4778 18.4779 14.1259 18.7968 13.7122 18.7764C13.2985 18.7561 12.9796 18.4042 13 17.9905L13.2241 13.4339C13.2445 13.0201 13.5964 12.7013 14.0101 12.7216Z"
-															fill="#eceef3" />
-													</svg>
-												</a></td>
+													<i class="bi bi-trash-fill"></i></a>
+												</td>
 
 										</tr>
 
@@ -141,7 +127,65 @@
 	<!-- ======== main-wrapper end =========== -->
 
 	<div th:insert="~{Administrador/template_administracion.html::jsFiles}"></div>
+	<!-- Modal -->
+	<div class="modal fade" id="modalFiltros" tabindex="-1" aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
 
+				<div class="modal-header">
+					<h5 class="modal-title">Filtrar Usuarios</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+				</div>
+
+				<form th:action="@{/Administrador/usuarios}" method="get">
+					<div class="modal-body">
+
+						<div class="row">
+
+							<div class="col-md-6">
+								<label>Nombre:</label>
+								<input type="text" name="nombre" class="form-control" th:value="${nombre}">
+							</div>
+
+							<div class="col-md-6">
+								<label>Documento:</label>
+								<input type="text" name="documento" class="form-control" th:value="${documento}">
+							</div>
+
+							<div class="col-md-6 mt-3">
+								<label>Rol:</label>
+								<select name="rol" class="form-control">
+									<option value="" th:selected="${rol == null}">Todos</option>
+									<option value="Administrador" th:selected="${rol == 'Administrador'}">Administrador
+									</option>
+									<option value="Instructor" th:selected="${rol == 'Instructor'}">Instructor</option>
+									<option value="Aprendiz" th:selected="${rol == 'Aprendiz'}">Aprendiz</option>
+								</select>
+							</div>
+
+							<div class="col-md-6 mt-3">
+								<label>Estado:</label>
+								<select name="estado" class="form-control">
+									<option value="" th:selected="${estado == null}">Todos</option>
+									<option value="Activo" th:selected="${estado == 'Activo'}">Activo</option>
+									<option value="Inactivo" th:selected="${estado == 'Inactivo'}">Inactivo</option>
+								</select>
+							</div>
+
+						</div>
+
+					</div>
+
+					<div class="modal-footer">
+						<button class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+						<button class="btn btn-primary" type="submit">Aplicar Filtros</button>
+					</div>
+
+				</form>
+
+			</div>
+		</div>
+	</div>
 </body>
 
 </html>

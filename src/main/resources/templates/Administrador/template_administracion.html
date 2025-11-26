@@ -16,6 +16,8 @@
 	<!--Iconos de  LineIcons-->
 	<link href="https://cdn.lineicons.com/5.0/lineicons.css" rel="stylesheet" />
 	<link href="https://cdn.lineicons.com/5.0/lineicons.css" rel="stylesheet" />
+	
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
 	<style>
 		.centrados {
@@ -37,7 +39,7 @@
 	<aside class="sidebar-nav-wrapper">
 		<div class="navbar-logo">
 			<a th:href="@{/#}">
-				<img th:src="@{/assetsADMIN/images/logo/logo.svg}" alt="logo" />
+				<img th:src="@{/images/LogoBlankogoty.png}" style="width: 120px; align-items: center; text-align: center;" alt="logo" />
 			</a>
 		</div>
 		<nav class="sidebar-nav">
@@ -135,45 +137,8 @@
 				<span class="divider">
 					<hr />
 				</span>
-				<li class="nav-item nav-item-has-children">
-					<a href="#0" class="collapsed" data-bs-toggle="collapse" data-bs-target="#ddmenu_5"
-						aria-controls="ddmenu_5" aria-expanded="false" aria-label="Toggle navigation">
-						<span class="icon">
-							<svg width="20" height="20" viewBox="0 0 20 20" fill="none"
-								xmlns="http://www.w3.org/2000/svg">
-								<path
-									d="M1.66666 5.41669C1.66666 3.34562 3.34559 1.66669 5.41666 1.66669C7.48772 1.66669 9.16666 3.34562 9.16666 5.41669C9.16666 7.48775 7.48772 9.16669 5.41666 9.16669C3.34559 9.16669 1.66666 7.48775 1.66666 5.41669Z" />
-								<path
-									d="M1.66666 14.5834C1.66666 12.5123 3.34559 10.8334 5.41666 10.8334C7.48772 10.8334 9.16666 12.5123 9.16666 14.5834C9.16666 16.6545 7.48772 18.3334 5.41666 18.3334C3.34559 18.3334 1.66666 16.6545 1.66666 14.5834Z" />
-								<path
-									d="M10.8333 5.41669C10.8333 3.34562 12.5123 1.66669 14.5833 1.66669C16.6544 1.66669 18.3333 3.34562 18.3333 5.41669C18.3333 7.48775 16.6544 9.16669 14.5833 9.16669C12.5123 9.16669 10.8333 7.48775 10.8333 5.41669Z" />
-								<path
-									d="M10.8333 14.5834C10.8333 12.5123 12.5123 10.8334 14.5833 10.8334C16.6544 10.8334 18.3333 12.5123 18.3333 14.5834C18.3333 16.6545 16.6544 18.3334 14.5833 18.3334C12.5123 18.3334 10.8333 16.6545 10.8333 14.5834Z" />
-							</svg>
-						</span>
-						<span class="text">UI Elements </span>
-					</a>
-					
-				</li>
 				
-				<li class="nav-item nav-item-has-children">
-					<a href="#0" class="collapsed" data-bs-toggle="collapse" data-bs-target="#ddmenu_5"
-						aria-controls="ddmenu_5" aria-expanded="false" aria-label="Toggle navigation">
-						<span class="icon">
-							<svg width="20" height="20" viewBox="0 0 20 20" fill="none"
-								xmlns="http://www.w3.org/2000/svg">
-								<path
-									d="M4.16666 3.33335C4.16666 2.41288 4.91285 1.66669 5.83332 1.66669H14.1667C15.0872 1.66669 15.8333 2.41288 15.8333 3.33335V16.6667C15.8333 17.5872 15.0872 18.3334 14.1667 18.3334H5.83332C4.91285 18.3334 4.16666 17.5872 4.16666 16.6667V3.33335ZM6.04166 5.00002C6.04166 5.3452 6.32148 5.62502 6.66666 5.62502H13.3333C13.6785 5.62502 13.9583 5.3452 13.9583 5.00002C13.9583 4.65485 13.6785 4.37502 13.3333 4.37502H6.66666C6.32148 4.37502 6.04166 4.65485 6.04166 5.00002ZM6.66666 6.87502C6.32148 6.87502 6.04166 7.15485 6.04166 7.50002C6.04166 7.8452 6.32148 8.12502 6.66666 8.12502H13.3333C13.6785 8.12502 13.9583 7.8452 13.9583 7.50002C13.9583 7.15485 13.6785 6.87502 13.3333 6.87502H6.66666ZM6.04166 10C6.04166 10.3452 6.32148 10.625 6.66666 10.625H9.99999C10.3452 10.625 10.625 10.3452 10.625 10C10.625 9.65485 10.3452 9.37502 9.99999 9.37502H6.66666C6.32148 9.37502 6.04166 9.65485 6.04166 10ZM9.99999 16.6667C10.9205 16.6667 11.6667 15.9205 11.6667 15C11.6667 14.0795 10.9205 13.3334 9.99999 13.3334C9.07949 13.3334 8.33332 14.0795 8.33332 15C8.33332 15.9205 9.07949 16.6667 9.99999 16.6667Z" />
-							</svg>
-						</span>
-						<span class="text"> Forms </span>
-					</a>
-					<ul id="ddmenu_5" class="collapse dropdown-nav">
-						<li>
-							<a th:href="@{/form-elements}"> Form Elements </a>
-						</li>
-					</ul>
-				</li>
+				
 				
 				<span class="divider">
 					<hr />
@@ -199,7 +164,7 @@
 				<div class="col-lg-5 col-md-5 col-6">
 					<div class="header-left d-flex align-items-center">
 						<div class="menu-toggle-btn mr-15">
-							<button id="menu-toggle" class="main-btn info-btn btn-hover">
+							<button id="menu-toggle" class="main-btn secondary-btn btn-hover">
 								<i class="lni lni-chevron-left me-2"></i> Menu
 							</button>
 						</div>
@@ -337,8 +302,8 @@
 											<img src="assets/images/profile/profile-image.png" alt="" />
 										</div>
 										<div>
-											<h6 class="fw-500">Adam Joe</h6>
-											<p>Admin</p>
+											<h6 class="fw-500 text-secondary" th:text="${session.nombre}"></h6>
+											<p th:text="${session.rol}" class="text-light"></p>
 										</div>
 									</div>
 								</div>
@@ -350,32 +315,32 @@
 											<img src="assets/images/profile/profile-image.png" alt="image">
 										</div>
 										<div class="content">
-											<h4 class="text-sm">Adam Joe</h4>
+											<h4 class="text-sm" th:text="${session.nombre}"></h4>
 											<a class="text-black/40 dark:text-white/40 hover:text-black dark:hover:text-white text-xs"
-												href="#">Email@gmail.com</a>
+												href="#" th:text="${session.email}"></a>
 										</div>
 									</div>
 								</li>
 								<li class="divider"></li>
 								<li>
-									<a href="#0">
-										<i class="lni lni-user"></i> View Profile
+									<a th:href="@{/Administrador/Perfil}">
+										<i class="bi bi-person-circle"></i> Ver perfil
 									</a>
 								</li>
 								<li>
 									<a href="#0">
-										<i class="lni lni-alarm"></i> Notifications
+										<i class="bi bi-bell-fill"></i> Notificaciones
 									</a>
 								</li>
 								<li>
-									<a href="#0"> <i class="lni lni-inbox"></i> Messages </a>
+									<a href="#0"> <i class="bi bi-chat-right-text-fill"></i> Mensajes </a>
 								</li>
 								<li>
-									<a href="#0"> <i class="lni lni-cog"></i> Settings </a>
+									<a href="#0"> <i class="bi bi-gear-fill"></i>Configuración </a>
 								</li>
 								<li class="divider"></li>
 								<li>
-									<a href="#0"> <i class="lni lni-exit"></i> Sign Out </a>
+									<a th:href="@{/logout}"> <i class="bi bi-box-arrow-left"></i> Cerrar sesión </a>
 								</li>
 							</ul>
 						</div>
@@ -399,7 +364,7 @@
 			<div class="row">
 				<div class="col-md-6 order-last order-md-first">
 					<div class="copyright text-center text-md-start">
-						<p class="text-sm">
+						<p class="text-sm" style="color: rgb(0, 0, 64);">
 							Diseñado y programado por:
 							<a href="https://plainadmin.com" rel="nofollow" target="_blank">
 								PlainAdmin
@@ -410,7 +375,7 @@
 				<!-- end col-->
 				<div class="col-md-6">
 					<div class="terms d-flex justify-content-center justify-content-md-end">
-						<a href="#0" class="text-sm">Terminos & condiciones</a>
+						<a href="#0" class="text-sm" >Terminos & condiciones</a>
 						<a href="#0" class="text-sm ml-15">Politicas de privacidad</a>
 					</div>
 				</div>

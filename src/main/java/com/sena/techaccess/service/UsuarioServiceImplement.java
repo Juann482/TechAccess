@@ -63,8 +63,6 @@ public class UsuarioServiceImplement implements IUsuarioService {
 	public List<Usuario> findByEstadoCuenta(String estadoCuenta) {
 		return usuarioRepository.findByEstadoCuenta(estadoCuenta);
 	}
-
-	
 	
 	@Override
 	public List<Usuario> findByRol(String rol) {
@@ -75,6 +73,12 @@ public class UsuarioServiceImplement implements IUsuarioService {
 	public Usuario findByDocumento(String documento) {
 		return usuarioRepository.findByDocumento(documento);
 	}
+
+	@Override
+	public List<Usuario> filtrarUsuarios(String nombre, String documento, String rol, String estado) {
+	    return usuarioRepository.filtrarUsuarios(nombre, documento, rol, estado);
+	}
+
 
 	
 

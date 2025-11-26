@@ -10,12 +10,30 @@ body {
   font-family: "Plus Jakarta Sans", sans-serif !important;
   font-weight: normal;
   font-style: normal;
-  color: #5d657b;
+  color: rgb(0, 0, 64);
   overflow-x: hidden;
-  background: #f1f5f9;
+  background-color: rgb(231, 254, 252);
+  /*
+  background-image: url("/images/fondo.jpeg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: fixed;
+  position: relative;*/
 }
+/*
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgb(0, 0, 0, 0.5); /* color + opacidad */
+  /* Ejemplo: blanco con 50% de opacidad */
 
-* {
+*/
+ {
   margin: 0;
   padding: 0;
   -webkit-box-sizing: border-box;
@@ -39,7 +57,7 @@ button:focus,
 }
 
 a:hover {
-  color: #36f53f;
+  color: rgb(128, 0, 255);
 }
 
 button,
@@ -78,7 +96,7 @@ h3 a,
 h4 a,
 h5 a,
 h6 a {
-  color: inherit;
+  color: #000;
 }
 
 ul,
@@ -116,12 +134,15 @@ p {
 
 /* ========== cart style ========== */
 .card-style {
-  background: #fff;
+  background: rgb(255, 255, 255);
   box-sizing: border-box;
   padding: 25px 30px;
   position: relative;
-  box-shadow: 0px 12px 24px -4px rgba(145, 158, 171, 0.12), 0px 0px 2px 0px rgba(145, 158, 171, 0.2);
+  box-shadow: 0px 12px 24px -4px rgba(145, 158, 171, 0.12), 0px 0px 2px 0px rgb(180, 188, 197);
   border-radius: 7px;
+  
+  backdrop-filter: blur(10px);       /* 🔥 el efecto vidrio */
+    -webkit-backdrop-filter: blur(10px); /* Safari fix */
 }
 @media (max-width: 767px) {
   .card-style {
@@ -151,7 +172,7 @@ p {
   display: none;
 }
 .card-style .dropdown-menu {
-  -webkit-box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.07);
+  -webkit-box-shadow: 0px 0px 5px rgb(0, 64, 0);
   -moz-box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.07);
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.07);
 }
@@ -2354,7 +2375,7 @@ h6,
   position: relative;
 }
 .select-style-3 .select-position::after {
-  border-bottom: 2px solid #5d657b;
+  border-bottom: 2px solid rgb(0, 255, 64);
   border-right: 2px solid #5d657b;
   content: "";
   display: block;
@@ -2690,7 +2711,7 @@ h6,
 /* ========== header css ========== */
 .header {
   padding: 22px 0;
-  background: #48ec07;
+  background: rgb(0, 0, 64);
   position: sticky;
   top: 0;
   z-index: 99;
@@ -3541,7 +3562,7 @@ h6,
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid #efefef;
+  border: 1px solid rgb(0, 0, 64);
   border-radius: 4px;
   background: transparent;
   color: #1A2142;
@@ -3618,7 +3639,7 @@ h6,
 
 /* =========== Sidebar css =========== */
 .sidebar-nav-wrapper {
-  background: #fff;
+  background:linear-gradient(220deg, rgb(0, 0, 64), rgb(0, 168, 168));
   width: 250px;
   padding: 20px 0px;
   height: 100vh;
@@ -3666,9 +3687,10 @@ h6,
   }
 }
 .sidebar-nav-wrapper .navbar-logo {
-  padding: 0 25px;
+  padding: 0 20px;
   margin-bottom: 30px;
   margin-top: 11px;
+  margin-left: 30px;
 }
 .sidebar-nav-wrapper .sidebar-nav .divider {
   padding: 5px 25px;
@@ -3685,10 +3707,10 @@ h6,
   position: relative;
 }
 .sidebar-nav-wrapper .sidebar-nav ul .nav-item.nav-item-has-children > a {
-  color: #1A2142;
+  color: rgb(0, 0, 64);
 }
 .sidebar-nav-wrapper .sidebar-nav ul .nav-item.nav-item-has-children > a:not(.collapsed) .icon {
-  color: #365CF5;
+  color: rgb(255, 128, 0);
 }
 .sidebar-nav-wrapper .sidebar-nav ul .nav-item.nav-item-has-children > a::after {
   content: url("data:image/svg+xml,%3Csvg width='10' height='10' viewBox='0 0 10 10' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M5.34306 7.76387L9.02356 3.8071C9.32923 3.47851 9.11273 2.91666 8.68048 2.91666L1.31947 2.91666C0.887218 2.91666 0.670743 3.47851 0.976393 3.8071L4.6569 7.76387C4.8464 7.96758 5.15356 7.96758 5.34306 7.76387Z' fill='%239AA4CA'/%3E%3C/svg%3E%0A");
@@ -3708,7 +3730,7 @@ h6,
   transform: rotate(180deg);
 }
 .sidebar-nav-wrapper .sidebar-nav ul .nav-item.nav-item-has-children > a.collapsed {
-  color: #9AA4CA;
+  color: rgb(255, 255, 255);
 }
 .sidebar-nav-wrapper .sidebar-nav ul .nav-item.nav-item-has-children > a.collapsed::before {
   opacity: 0;
@@ -3763,7 +3785,7 @@ h6,
 .sidebar-nav-wrapper .sidebar-nav ul .nav-item a {
   display: flex;
   align-items: center;
-  color: #9AA4CA;
+  color: rgb(255, 255, 255);
   font-size: 14px;
   font-weight: 500;
   width: 100%;
@@ -3811,10 +3833,10 @@ h6,
   transition: all 0.3s ease-out 0s;
 }
 .sidebar-nav-wrapper .sidebar-nav ul .nav-item.active > a, .sidebar-nav-wrapper .sidebar-nav ul .nav-item.active > a.collapsed, .sidebar-nav-wrapper .sidebar-nav ul .nav-item:hover > a, .sidebar-nav-wrapper .sidebar-nav ul .nav-item:hover > a.collapsed {
-  color: #1A2142;
+  color: rgb(0, 255, 255);
 }
 .sidebar-nav-wrapper .sidebar-nav ul .nav-item.active > a .icon, .sidebar-nav-wrapper .sidebar-nav ul .nav-item.active > a.collapsed .icon, .sidebar-nav-wrapper .sidebar-nav ul .nav-item:hover > a .icon, .sidebar-nav-wrapper .sidebar-nav ul .nav-item:hover > a.collapsed .icon {
-  color: #365CF5;
+  color: rgb(255, 128, 0);
 }
 
 .sidebar-nav-wrapper.style-2 .sidebar-nav ul .nav-item.nav-item-has-children ul li a.active, .sidebar-nav-wrapper.style-2 .sidebar-nav ul .nav-item.nav-item-has-children ul li a:hover {
@@ -3905,7 +3927,7 @@ h6,
   color: inherit;
 }
 .main-wrapper .footer .copyright p a:hover {
-  color: #365CF5;
+  color: rgb(255, 128, 0);
 }
 @media (max-width: 767px) {
   .main-wrapper .footer .terms {
@@ -3914,10 +3936,10 @@ h6,
   }
 }
 .main-wrapper .footer .terms a {
-  color: #5d657b;
+  color: rgb(0, 0, 64);
 }
 .main-wrapper .footer .terms a:hover {
-  color: #365CF5;
+  color: rgb(255, 128, 0);
 }
 
 .promo-box {
