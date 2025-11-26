@@ -35,7 +35,11 @@ public class ServiceLogin implements UserDetailsService {
 
         if (user.isPresent()) {
             Usuario present = user.get();
+            
             session.setAttribute("IdUser", present.getId());
+            session.setAttribute("nombre", present.getNombre());
+            session.setAttribute("email", present.getEmail());
+            session.setAttribute("rol", present.getRol());
 
             return User.builder()
                     .username(present.getEmail())
