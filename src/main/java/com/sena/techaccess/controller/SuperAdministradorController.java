@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("/superadmin")
+@RequestMapping("/Superadmin")
 public class SuperAdministradorController {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(SuperAdministradorController.class);
@@ -27,28 +27,28 @@ public class SuperAdministradorController {
 		this.accesoService = accesoService;
 	}
 
-	/*
-	 * @GetMapping("") public String home(Model model) { List<Acceso> accesos =
-	 * accesoService.findAll();
-	 * LOGGER.info("Cargando accesos en administrador/dashboard. Total: {}",
-	 * accesos.size()); model.addAttribute("accesos", accesos); return
-	 * "SuperAdmin/superadmin"; }
-	 */
-
-	@GetMapping("/Inicio")
-	public String dashboard(Model model) {
-		model.addAttribute("acceso", accesoService.findAll());
+	@GetMapping("")
+	public String home(Model model) {
+		List<Acceso> accesos = accesoService.findAll();
+		LOGGER.info("Cargando accesos en administrador/dashboard. Total: {}", accesos.size());
+		model.addAttribute("accesos", accesos);
 		return "SuperAdmin/superadmin";
 	}
+
+	
+	 @GetMapping("/Iniciar") public String dashboard(Model model) {
+	 model.addAttribute("acceso", accesoService.findAll()); return
+	 "SuperAdmin/superadmin"; }
+	 
 
 	@Autowired
 	private SuperAdministradorServiceImplement superAdministradorService;
 
-	/*
-	 * @GetMapping("/dashboard") public String dashboard(Model model) {
-	 * model.addAttribute("currentPage", "Dashboard"); return
-	 * "superadmin/dashboard"; }
-	 */
+	/*@GetMapping("/dashboard")
+	public String dashboard(Model model) {
+		model.addAttribute("currentPage", "Dashboard");
+		return "superadmin/dashboard";
+	}*/
 
 	@GetMapping("/usuarios")
 	public String gestionUsuarios(Model model) {

@@ -8,18 +8,18 @@
 	<header id="header" class="header d-flex align-items-center fixed-top">
 		<div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
 
-			<a th:href="@{/home}" class="logo d-flex align-items-center">
+			<a th:href="@{/}" class="logo d-flex align-items-center">
 				<img th:src="@{/images/TecAccess.png}" alt="LogoPrin">
 				<h1 class="sitename"><b>TECH</b>ACCESS</h1>
 			</a>
 
 			<nav id="navmenu" class="navmenu">
 				<ul>
-					<li><a th:href="@{/home}">Inicio</a></li>
+					<!--li><a th:href="@{/}">Inicio</a></li-->
 					<li><a th:href="@{/about}">Sobre nosotros</a></li>
 					<li><a th:href="@{/soporte}" class="active"><b style="color: #2f92b1;">Soporte</b></a>
 					</li>
-					<li><a href="#">Lenguaje</a></li>
+					<!--li><a href="#">Lenguaje</a></li-->
 				</ul>
 				<i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
 			</nav>
@@ -30,13 +30,13 @@
 	<main class="main">
 
 		<!-- Page Title -->
-		<div class="page-title dark-background"	th:style="'background-image: url(' + @{/images/showcase-1.webp} + ');'">
+		<div class="page-title dark-background" th:style="'background-image: url(' + @{/images/showcase-1.webp} + ');'">
 			<div class="container position-relative">
 				<h1>Soporte</h1>
 				<p>¿Necesitas ayuda/asistencia con la página? <br> Comunícate con nosotros a continuación.</p>
 				<nav class="breadcrumbs">
 					<ol>
-						<li><a th:href="@{/home}"><b>Inicio</b></a></li>
+						<li><a th:href="@{/}"><b>Inicio</b></a></li>
 						<li class="current">Soporte</li>
 					</ol>
 				</nav>
@@ -45,7 +45,8 @@
 		<!-- End Page Title -->
 
 		<!-- Contact Section -->
-		<section id="contact" class="contact section"style="padding-top: 220px;"> <!--Acomodar Style cuando este todo finalizado-->
+		<section id="contact" class="contact section" style="padding-top: 220px;">
+			<!--Acomodar Style cuando este todo finalizado-->
 			<div class="container" data-aos="fade-up" data-aos-delay="100">
 				<div class="container form-container-overlap">
 					<div class="row justify-content-center" data-aos="fade-up" data-aos-delay="300">
@@ -80,7 +81,7 @@
 												<div class="input-with-icon">
 													<i class="bi bi-text-left"></i>
 													<input type="text" class="form-control" name="subject"
-														placeholder="Sujeto" required>
+														placeholder="Tema" required>
 												</div>
 											</div>
 										</div>
@@ -114,7 +115,7 @@
 	<div th:insert="~{/templates_usuario.html::footer}"></div>
 
 	<div th:insert="~{/templates_usuario.html::jsFiles}"></div>
-	
+
 </body>
 
 </html>

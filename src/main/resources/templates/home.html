@@ -17,10 +17,10 @@
 
 			<nav id="navmenu" class="navmenu">
 				<ul>
-					<li><a th:href="@{/home}" class="active" style="color: #2f92b1;"><b>Inicio</b></a></li>
+					<!--li><a th:href="@{/home}" class="active" style="color: #2f92b1;"><b>Inicio</b></a></li-->
 					<li><a th:href="@{/about}">Sobre Nosotros</a></li>
 					<li><a th:href="@{/soporte}">Soporte</a></li>
-					<li><a href="#">Lenguaje</a></li>
+					<!--li><a href="#">Lenguaje</a></li-->
 
 
 				</ul>
@@ -63,18 +63,20 @@
 									<form th:action="@{/login}" method="post">
 										<div class="form-group">
 											<label for="username" style="color:rgb(255, 255, 255)">Usuario</label>
-											<input type="email" class="form-control" name="username" placeholder="Correo electrónico" required>
+											<input type="email" class="form-control" name="username"
+												placeholder="Correo electrónico" required>
 										</div>
 										<div class="form-group">
 											<label for="password" style="color:rgb(255, 255, 255)">Contraseña</label>
-											<input type="password" class="form-control" name="password" placeholder="Contraseña" required>
+											<input type="password" class="form-control" name="password"
+												placeholder="Contraseña" required>
 										</div>
 
 										<button type="submit" class="btn-login" style="color: white;">Iniciar
 											Sesión</button>
 									</form>
 
-									
+
 
 									<!-- funcion vinculo paginas roles END -->
 									<div class="form-footer">

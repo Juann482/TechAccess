@@ -27,7 +27,7 @@ public class CustomSuccessHandler implements AuthenticationSuccessHandler {
 
 			switch (rol) {
 			case "Superadmin":
-				response.sendRedirect("/superadmin/Inicio");
+				response.sendRedirect("/superadmin/Iniciar");
 				System.out.println("Usuario logueado como superadmin");
 				return;
 

@@ -6,7 +6,7 @@
 <body style="font-family: 'Segoe UI', sans-serif;" class="index-page">
 
 	<header id="header" class="header d-flex align-items-center justify-content-between fixed-top w-100"
-		style="background-color: rgba(0, 128, 192, 0.75); box-shadow: 0 5px 3px rgba(0,0,0,0.2); z-index: 999;">
+		style="background-color: rgba(0, 96, 142, 0.75); box-shadow: 0 5px 3px rgba(0,0,0,0.2); z-index: 999;">
 		<div class="container-fluid container-xl d-flex w-100 align-items-center justify-content-between">
 			<h1 class="sitename m-0">
 				<strong style="color:rgb(243, 243, 243);">TECH</strong>
@@ -23,8 +23,7 @@
 						<i class="bi bi-person-circle fs-4"></i>
 					</a>
 					<ul class="dropdown-menu dropdown-menu-end">
-						<li><a class="dropdown-item" th:href="@{/instructor}"><i
-									class="bi bi-person me-2"></i>Perfil</a>
+						<li><a class="dropdown-item" th:href="@{/instructor/Inicio}"><i class="bi bi-person me-2"></i>Perfil</a>
 						</li>
 						<li><a class="dropdown-item" th:href="@{/logout}"><i
 									class="bi bi-box-arrow-right me-2"></i>Cerrar sesión</a></li>
@@ -105,9 +104,9 @@
 														<th class="border-0">
 															<i class="bi bi-info-circle me-1"></i> Estado
 														</th>
-														<th class="border-0 text-center">
+														<!--th class="border-0 text-center">
 															<i class="bi bi-gear me-1"></i> Acciones
-														</th>
+														</th-->
 													</tr>
 												</thead>
 												<tbody>
@@ -152,7 +151,7 @@
 																	th:text="${entrada.estadoPermanencia?.nombre} ?: 'No definido'"></span>
 															</span-->
 														</td>
-														<td class="text-center">
+														<!--td class="text-center">
 															<div class="btn-group btn-group-sm" role="group">
 																<a th:href="@{'/acceso/editar/' + ${entrada.idacceso}}"
 																	class="btn btn-outline-info" title="Editar entrada">
@@ -165,7 +164,7 @@
 																	<i class="bi bi-trash"></i>
 																</a>
 															</div>
-														</td>
+														</td-->
 													</tr>
 												</tbody>
 											</table>
