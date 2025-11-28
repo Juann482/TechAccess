@@ -32,70 +32,71 @@
 		</div>
 	</header>
 
-	<!-- Fondo de video>
-	<div class="video-container2 position-fixed top-0 start-0 w-100 h-100" style="z-index:-1;">
-		<video class="video-background2 w-100 h-100 object-fit-cover" autoplay muted loop>
-			<source src="https://videos.pexels.com/video-files/7946210/7946210-uhd_1440_2732_30fps.mp4">
-			Error al cargar el video.
-		</video-->
-	</div>
+	<Fondo de video>
+		<div class="video-container2 position-fixed top-0 start-0 w-100 h-100" style="z-index:-1;">
+			<video class="video-background2 w-100 h-100 object-fit-cover" autoplay muted loop>
+				<source src="https://videos.pexels.com/video-files/7946210/7946210-uhd_1440_2732_30fps.mp4">
+				Error al cargar el video.
+			</video>
+		</div>
 
-	<!-- Contenido principal -->
-	<main class="main d-flex flex-column justify-content-between"
-		style="background-color: rgba(0, 128, 192, 0.05); min-height: 100vh; margin-top: 100px;">
+		<!-- Contenido principal -->
+		<main class="main d-flex flex-column justify-content-between"
+			style="background-color: rgba(0, 128, 192, 0.05); min-height: 100vh; margin-top: 100px;">
 
-		<section class="section" style="background-color:rgba(235, 234, 231, 0.97)">
-			<div class="container py-4">
-				<div class="row">
+			<section class="section" style="background-color:rgba(235, 234, 231, 0.87)">
+				<div class="container py-4">
+					<div class="row">
 
-					<!-- Panel lateral -->
-					<div class="col-lg-3 mb-4">
-						<div class="user-nav rounded shadow-sm p-3 bg-white text-center"
-							style="background-color:rgba(255, 255, 255, 0.7)">
-							<img th:src="@{/images/instructor.png}" alt="Instructor.img"
-								style="width: 120px; border-radius: 50%; border: 2px solid rgb(0, 128, 192);">
-							<!--h5 class="mt-2 mb-0" th:text="${usuario.nombre}">Instructor</h5-->
-							<small class="text-muted"><b>Área:</b> <span>Mecánica</span></small>
-							<div class="mt-2">
-								<span class="badge bg-success bg-opacity-10 text-success px-3 py-2">Activo</span>
+						<!-- Panel lateral -->
+						<div class="col-lg-3 mb-4">
+							<div class="user-nav rounded shadow-sm p-3 bg-white text-center"
+								style="background-color:rgba(255, 255, 255, 0.7)">
+								<img th:src="@{/images/instructor.png}" alt="Instructor.img"
+									style="width: 120px; border-radius: 50%; border: 2px solid rgb(0, 128, 192);">
+								<!--h5 class="mt-2 mb-0" th:text="${usuario.nombre}">Instructor</h5-->
+								<small class="text-muted"><b>Área:</b> <span>Mecánica</span></small>
+								<div class="mt-2">
+									<span class="badge bg-success bg-opacity-10 text-success px-3 py-2">Activo</span>
+								</div>
+
+								<nav class="nav flex-column mt-4">
+									<a th:href="@{/instructor/nvasEntradas}" class="btn btn-outline-info btn-sm mt-2">
+										<i class="bi bi-house me-2 text-success"></i> Últimas Entradas
+									</a>
+									<a th:href="@{/instructor/grupos}" class="btn btn-outline-info btn-sm mt-2">
+										<i class="bi bi-people me-2 text-success"></i> Grupos
+									</a>
+									<a th:href="@{/instructor/reportes}" class="btn btn-outline-info btn-sm mt-2">
+										<i class="bi bi-clipboard-data me-2 text-success"></i> Reportes
+									</a>
+								</nav>
 							</div>
-
-							<nav class="nav flex-column mt-4">
-								<a th:href="@{/instructor/nvasEntradas}" class="btn btn-outline-info btn-sm mt-2">
-									<i class="bi bi-house me-2 text-success"></i> Últimas Entradas
-								</a>
-								<a th:href="@{/instructor/grupos}" class="btn btn-outline-info btn-sm mt-2">
-									<i class="bi bi-people me-2 text-success"></i> Grupos
-								</a>
-								<a th:href="@{/instructor/reportes}" class="btn btn-outline-info btn-sm mt-2">
-									<i class="bi bi-clipboard-data me-2 text-success"></i> Reportes
-								</a>
-							</nav>
 						</div>
-					</div>
 
-					<!-- Contenido principal dinámico -->
-					<div class="col-lg-9">
-						<div id="contenido" class="access-card bg-white shadow-sm rounded p-4" style="opacity: 0.9;">
-							<h4 class="text-info">
-								<i class="bi bi-info-circle me-2"></i><b> Bienvenido, </b>
-								<!--span th:text="${usuario.nombre}">Instructor</span-->
-							</h4>
-							<p class="text-muted">Seleccione una opción del menú para continuar.</p>
+						<!-- Contenido principal dinámico -->
+						<div class="col-lg-9">
+							<div id="contenido" class="access-card bg-white shadow-sm rounded p-4"
+								style="opacity: 0.9;">
+								<h4 class="text-info">
+									<i class="bi bi-info-circle me-2"></i><b> Bienvenido, </b>
+									<!--span th:text="${usuario.nombre}">Instructor</span-->
+								</h4>
+								<p class="text-muted">Seleccione una opción del menú para continuar.</p>
+							</div>
 						</div>
-					</div>
 
+					</div>
 				</div>
-			</div>
-		</section>
+			</section>
 
-		<!-- Footer -->
-		<div th:insert="~{/templates_usuario.html::footer}"></div>
+			<!-- Footer -->
+			<div th:insert="~{/templates_usuario.html::footer}"></div>
 
-	</main>
+		</main>
 
-	<!-- Archivos JS -->
-	<div th:insert="~{/templates_usuario.html::jsFiles}"></div>
+		<!-- Archivos JS -->
+		<div th:insert="~{/templates_usuario.html::jsFiles}"></div>
 
 </body>
 

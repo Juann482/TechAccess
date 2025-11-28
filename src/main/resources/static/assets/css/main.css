@@ -6064,6 +6064,9 @@ section,
 	justify-content: center;
 }
 
+/* Elementos de paginacion*/
+
+
 .events-2 .pagination-wrapper .pagination .page-link:hover {
 	background-color: color-mix(in srgb, var(--accent-color), transparent 85%);
 	border-color: color-mix(in srgb, var(--accent-color), transparent 60%);
