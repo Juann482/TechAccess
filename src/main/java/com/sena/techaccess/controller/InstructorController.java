@@ -2,7 +2,6 @@ package com.sena.techaccess.controller;
 
 import java.util.List;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +14,9 @@ import com.sena.techaccess.model.Permisos;
 import com.sena.techaccess.service.IAccesoService;
 import com.sena.techaccess.service.IFichaService;
 import com.sena.techaccess.service.IPermisosService;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import java.util.Collections;
 
 @Controller
 @RequestMapping("/instructor")
@@ -89,12 +91,35 @@ public class InstructorController {
 	}
 
 	@GetMapping("/reportes")
-	public String vistaReportes(Model model) {
-		// Cargar todos los permisos para reportes
-		List<Permisos> permisos = permisosService.findAll();
+	public String vistaReportes(@RequestParam(defaultValue = "0") int page, Model model) {
 
-		model.addAttribute("permisos", permisos);
-		model.addAttribute("totalPermisos", permisos.size());
+		// Restringe 50 en grupos de 5 páginas-->
+		int tamañoPagina = 10;
+		int maxPaginas = 5;
+
+		List<Permisos> todos = permisosService.findAll();
+
+		// Ordena del más nuevo al más viejo
+		Collections.reverse(todos);
+
+		// Limita a máximo 50 registros
+		if (todos.size() > 50) {
+			todos = todos.subList(0, 50);
+		}
+
+		// Metodo der rango de muestreo de registro
+		int inicio = page * tamañoPagina;
+		int fin = Math.min(inicio + tamañoPagina, todos.size());
+
+		List<Permisos> permisosPagina = todos.subList(inicio, fin);
+
+		// Calcular páginas
+		int totalPaginas = (int) Math.ceil((double) todos.size() / tamañoPagina);
+
+		model.addAttribute("permisos", permisosPagina);
+		model.addAttribute("totalPermisos", todos.size());
+		model.addAttribute("paginaActual", page);
+		model.addAttribute("totalPaginas", totalPaginas);
 
 		return "instructor/reportes";
 	}

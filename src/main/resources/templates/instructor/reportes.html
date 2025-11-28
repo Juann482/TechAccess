@@ -98,25 +98,46 @@
 
 									<!-----------                     ------------------>
 
-									<nav aria-label="Listado">
+
+
+									<nav th:if="${totalPaginas > 1}">
 										<ul class="pagination">
-											<li class="page-item">
-												<a class="page-link" stylehref="#" aria-label="Previous">
-													<span aria-hidden="true">&laquo;</span>
-													<span class="sr-only">Anterior</span>
+											<!-- el PREVOIUS -->
+											<li class="page-item"
+												th:classappend="${paginaActual == 0} ? 'disabled' : ''">
+												<a class="page-link"
+													th:href="@{/instructor/reportes(page=${paginaActual - 1})}">
+													&laquo; Anterior
 												</a>
 											</li>
-											<li class="page-item"><a class="page-link" href="#">1</a></li>
-											<li class="page-item"><a class="page-link" href="#">2</a></li>
-											<li class="page-item"><a class="page-link" href="#">3</a></li>
-											<li class="page-item">
-												<a class="page-link" href="#" aria-label="Next">
-													<span aria-hidden="true">&raquo;</span>
-													<span class="sr-only">Siguiente</span>
+
+											<!-- Páginas -->
+											<li th:each="i : ${#numbers.sequence(0, totalPaginas - 1)}"
+												class="page-item" th:classappend="${i == paginaActual} ? 'active' : ''">
+												<a class="page-link" th:href="@{/instructor/reportes(page=${i})}"
+													th:text="${i + 1}">
+												</a>
+											</li>
+
+											<!-- el NEXT -->
+											<li class="page-item"
+												th:classappend="${paginaActual == totalPaginas - 1} ? 'disabled' : ''">
+												<a class="page-link"
+													th:href="@{/instructor/reportes(page=${paginaActual + 1})}">
+													Siguiente &raquo;
 												</a>
 											</li>
 										</ul>
 									</nav>
+
+									<!-- pa saber -->
+									<div class="text-center text-muted mt-2">
+										Página <span th:text="${paginaActual + 1}"></span> de <span
+											th:text="${totalPaginas}"></span>
+										| Mostrando <span th:text="${permisos.size()}"></span> permisos
+									</div>
+
+
 
 									<table class="table table-striped table-hover">
 										<thead class="table-secondary">

@@ -35,20 +35,20 @@ public class SuperAdministradorController {
 		return "SuperAdmin/superadmin";
 	}
 
-	
-	 @GetMapping("/Iniciar") public String dashboard(Model model) {
-	 model.addAttribute("acceso", accesoService.findAll()); return
-	 "SuperAdmin/superadmin"; }
-	 
+	@GetMapping("/Iniciar")
+	public String dashboard(Model model) {
+		model.addAttribute("acceso", accesoService.findAll());
+		return "SuperAdmin/superadmin";
+	}
 
 	@Autowired
 	private SuperAdministradorServiceImplement superAdministradorService;
 
-	/*@GetMapping("/dashboard")
-	public String dashboard(Model model) {
-		model.addAttribute("currentPage", "Dashboard");
-		return "superadmin/dashboard";
-	}*/
+	/*
+	 * @GetMapping("/dashboard") public String dashboard(Model model) {
+	 * model.addAttribute("currentPage", "Dashboard"); return
+	 * "superadmin/dashboard"; }
+	 */
 
 	@GetMapping("/usuarios")
 	public String gestionUsuarios(Model model) {
