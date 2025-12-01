@@ -124,4 +124,9 @@ public class Acceso {
 				+ "]";
 	}
 
+	public void setVigilancia(Vigilancia vigilancia2) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

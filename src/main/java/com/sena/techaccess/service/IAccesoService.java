@@ -22,5 +22,9 @@ public interface IAccesoService {
 	
 	public List<Acceso> findAll();
 
+	Acceso findbyHoraIngreso(Integer id);
+
+	Acceso findUltimoAcceso(Integer id);
+
 
 }

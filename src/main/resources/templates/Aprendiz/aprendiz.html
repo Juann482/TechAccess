@@ -1,8 +1,9 @@
 ﻿<!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 
-
-<head th:insert="~{templates_usuario::head}"></head>
+<head th:insert="~{templates_usuario::head}">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
 
 <body class="contact-page" style="font-family: 'Segoe UI', sans-serif;">
 
@@ -11,8 +12,10 @@
 
 			<a th:href="@{/usuario/home}" class="logo d-flex align-items-center">
 				<img th:src="@{/images/TecAccess.png}" alt="LogoPrin">
-				<h1 class="sitename"><b style="color: rgb(14, 209, 220);">TECH</b>ACCESS <b
-						style="color: rgb(14, 209, 220);">|</b> SENA</h1>
+				<h1 class="sitename">
+					<b style="color: rgb(14, 209, 220);">TECH</b>ACCESS
+					<b style="color: rgb(14, 209, 220);">|</b> SENA
+				</h1>
 			</a>
 
 			<nav id="navmenu" class="navmenu">
@@ -20,188 +23,246 @@
 					<li><a th:href="@{/Aprendiz/aprendiz}" class="active"><b>Aprendiz</b></a></li>
 					<li><a th:href="@{/Aprendiz/excusas}">Excusas</a></li>
 					<li><a th:href="@{/Aprendiz/Horario}">Horario</a></li>
-					<li><a th:href="@{/usuario/home}">Inicio</a></li>
-					<li><a th:href="@{/Funcionarios/Funcionario}">Funcionario</a></li>
-
 
 				</ul>
 				<i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
 			</nav>
 
+			<div class="user-menu-container">
+				<div class="user-info" id="toggleMenu">
+					<img th:src="@{/images/user.jpg}" alt="Avatar" class="avatar">
+					<div>
+						<span class="" th:text="${usuario != null ? usuario.nombre : ' - '}"></span>
+						<span class="user-role">Administrador</span>
+					</div>
+				</div>
+
+				<div class="dropdown-menu" id="dropdownMenu">
+					<div class="dropdown-header">
+						<img th:src="@{/images/user.jpg}" alt="Avatar Grande" class="avatar-large">
+						<div>
+							<span class="" th:text="${usuario != null ? usuario.nombre : ' - '}"></span>
+							<span class="" th:text="${usuario != null ? usuario.email : ' - '}"></span>
+						</div>
+					</div>
+
+					<ul class="menu-options">
+						<li><a id="openProfile"><i class="fas fa-user-circle"></i> Ver perfil</a></li>
+
+						<!--
+
+					    <li><a th:href="@{/notificaciones}"><i class="fas fa-bell"></i> Notificaciones</a></li> 
+
+					    <li><a th:href="@{/mensajes}"><i class="fas fa-envelope"></i> Mensajes</a></li>
+						
+						-->
+
+
+						<li class="logout"><a th:href="@{/logout}"><i class="fas fa-sign-out-alt"></i> Cerrar sesión</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+
 		</div>
 	</header>
-
-
-
-
-
-
 	<main class="main" style="background-color: rgba(0, 124, 88, 0.05); min-height: 100vh;">
 
-		<div class="page-title dark-background text-center py-5"
-			th:style="'background-image: url(' + @{/images/fondo.jpeg} + '); background-size: cover; background-position: center;'">
+		<div class="page-title dark-background text-center"
+			th:style="'background-image: url(' + @{/images/fondo.jpeg} + '); background-size: cover; background-position: center; padding-top: 150px; padding-bottom: 50px;'">
 			<div class="container position-relative">
 				<h1 class="text-white fw-bold mb-3">Aprendiz</h1>
-				<nav class="breadcrumbs">
-					<ol class="breadcrumb justify-content-center">
-
-						<li class="breadcrumb-item"><a th:href="@{/usuario/home}"
-								class="text-white text-decoration-none">Inicio</a></li>
-						<li class="breadcrumb-item active text-white" aria-current="page">Aprendiz</li>
-
-					</ol>
-				</nav>
 			</div>
 		</div>
 
 		<div class="container py-5">
 			<div class="row g-4">
-
-				<div class="col-lg-3">
-					<div class="user-nav bg-white rounded-3 shadow-sm p-4">
-
-						<div class="text-center mb-4">
-							<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyPko2ajUOpOXvihi71Rccu8kXmRXPhnkOKA&s"
-								alt="Foto de perfil"
-								style="width: 120px; height: 120px; border-radius: 50%; border: 2px solid #007C58;">
-						</div>
-
-						<div class="info-list">
-							<div class="border rounded p-2 mb-3 bg-light">
-								<p class="mb-0 text-success fw-semibold">
-									Nombre Aprendiz:
-									<span class="text-dark"
-										th:text="${usuario != null ? usuario.nombre : ' - '}"></span>
-								</p>
-							</div>
-
-							<div class="border rounded p-2 mb-3 bg-light">
-								<p class="mb-0 text-success fw-semibold">
-									Programa:
-									<span class="text-dark"
-										th:text="${ficha != null ? ficha.nombrePrograma : ' - '}"></span>
-								</p>
-							</div>
-
-							<div class="border rounded p-2 mb-3 bg-light">
-								<p class="mb-0 text-success fw-semibold">
-									Ficha:
-									<span class="text-dark" th:text="${ficha != null ? ficha.numFicha : ' - '}"></span>
-								</p>
-							</div>
-
-
-						</div>
-
-						<nav class="nav flex-column text-center">
-							<a th:href="@{/usuario/home}" class="btn btn-outline-success btn-sm mb-2">
-								<i class="bi bi-box-arrow-left me-2"></i>Salir
-							</a>
-
-							<a href="#" class="btn btn-outline-success btn-sm mb-2"
-								onclick="mostrarQR(); return false;">
-								<i class="bi bi-qr-code me-2"></i> Código
-							</a>
-
-							<div id="codigoQR" class="codigo-container my-3 text-center" style="display:none;">
-								<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMnbU2i2ZVheiCtFIK6xZnSBE0fSikFVjM-Q&s"
-									alt="Código QR" class="img-fluid" style="max-width: 220px;">
-							</div>
+			</div>
+		</div>
 
 
 
-							<a href="#" class="btn btn-outline-success btn-sm mb-2" data-bs-toggle="modal"
-								data-bs-target="#historialModal">
-								<i class="bi bi-clock-history me-2"></i> Ver historial acceso
-							</a>
+
+
+		<!-- TARJETA PRINCIPAL -->
+		<div class="col-lg-11 mx-auto px-4">
+			<div class="access-card bg-white rounded-3 shadow-sm p-4" style="opacity: 0.95;">
+				<h4 class="mb-3" style="color: rgb(14, 209, 220);">
+					<i class="bi bi-qr-code me-2" style="color: rgb(14, 209, 220);"></i><b>Referencia de Acceso</b>
+				</h4>
 
 
 
-							<a href="#" class="btn btn-outline-success btn-sm">
-								<i class="bi bi-sliders me-2"></i> Configuración
-							</a>
-						</nav>
-					</div>
-				</div>
 
-				<div class="col-lg-9">
-					<div class="access-card bg-white rounded-3 shadow-sm p-4" style="opacity: 0.95;">
-						<h4 class="text-success mb-3">
-							<i class="bi bi-qr-code me-2"></i><b>Referencia de Acceso</b>
-						</h4>
-						<p class="text-muted mb-4">Escanea el siguiente código para ingresar a las instalaciones.
+				<h2>Perfil del Usuario</h2>
+
+				<div class="profile-info">
+					<div class="info-list">
+
+
+						<p class="mb-0 text-success fw-semibold">
+							<span class="text-dark" th:text="${usuario != null ? usuario.nombre : ' - '}"></span>
 						</p>
 
-						<div class="text-center mb-4">
-							<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMnbU2i2ZVheiCtFIK6xZnSBE0fSikFVjM-Q&s"
-								alt="Código QR" class="img-fluid" style="max-width: 250px;">
-						</div>
 
-						<div class="d-flex justify-content-between align-items-center mb-4">
-							<small class="text-muted">
-								<b>Válido hasta: <span th:text="${fechaValidez}">31/12/2025</span></b>
-							</small>
-						</div>
 
-						<div class="bg-light rounded p-3 mb-4 text-center">
-							<p class="mb-1 fw-semibold text-success">Zonas de acceso restringidas</p>
-							<small class="text-muted">Regulado por el sistema de control de asistencia</small>
-						</div>
+						<p class="mb-0 text-success fw-semibold">
+							<span class="text-dark" th:text="${ficha != null ? ficha.nombrePrograma : ' - '}"></span>
+						</p>
 
-						<div class="row g-3">
-							<div class="col-md-6">
-								<div class="bg-light rounded p-3 h-100">
-									<h6 class="text-success mb-2">
-										<i class="bi bi-calendar3 me-2"></i>Acceso
-									</h6>
-									<ul class="list-unstyled mb-3">
-										<li><i class="bi bi-check-circle-fill text-success me-2"></i>Lunes 8:15 AM
-										</li>
-									</ul>
+						<p class="mb-0 text-success fw-semibold">
+							<span class="text-dark" th:text="${ficha != null ? ficha.numFicha : ' - '}"></span>
+						</p>
 
-									<h6 class="text-success mb-2">
-										<i class="bi bi-calendar3 me-2"></i>Egreso
-									</h6>
-									<ul class="list-unstyled">
-										<li><i class="bi bi-backspace-reverse-fill text-danger me-2"></i>Lunes 17:35
-											PM
-										</li>
-									</ul>
-								</div>
-							</div>
-
-							<div class="col-md-6">
-								<div class="bg-light rounded p-3 h-100">
-									<h6 class="text-success mb-3">
-										<i class="bi bi-clock-history me-2"></i> Último acceso
-									</h6>
-									<span class="d-block fw-bold text-dark mb-2">Aula Computacional N°1</span>
-									<small class="d-block fw-semibold text-success">Entrada:</small>
-									<small class="d-block text-muted mb-2">15 Mayo, 08:15 AM</small>
-									<small class="d-block fw-semibold text-danger">Salida:</small>
-									<small class="d-block text-muted mb-3">15 Mayo, 02:30 PM</small>
-
-									<a href="#" class="btn btn-outline-secondary btn-sm" data-bs-toggle="modal"
-										data-bs-target="#historialModal" onclick="mostrarHistorial(); return false;">
-										Ver historial
-									</a>
-								</div>
-							</div>
-						</div>
-
+						<p class="mb-0 text-success fw-semibold">
+							<span class="text-dark" th:text="${usuario != null ? usuario.email : ' - '}"></span>
+						</p>
 					</div>
 				</div>
+
+
+
+				<div id="profileModal" class="modal">
+					<div class="modal-content">
+						<span class="close-modal">&times;</span>
+						<h2>Perfil del Usuario</h2>
+
+						<div class="profile-info">
+							<img th:src="@{/images/user.jpg}" alt="Avatar Grande" class="avatar-large">
+							<div class="info-list">
+
+								<div class="border rounded p-2 mb-3 bg-light">
+									<p class="mb-0 text-success fw-semibold">
+										<span class="text-dark"
+											th:text="${usuario != null ? usuario.nombre : ' - '}"></span>
+									</p>
+								</div>
+
+								<div class="border rounded p-2 mb-3 bg-light">
+									<p class="mb-0 text-success fw-semibold">
+										<span class="text-dark"
+											th:text="${ficha != null ? ficha.nombrePrograma : ' - '}"></span>
+									</p>
+								</div>
+
+								<div class="border rounded p-2 mb-3 bg-light">
+									<p class="mb-0 text-success fw-semibold">
+										<span class="text-dark"
+											th:text="${ficha != null ? ficha.numFicha : ' - '}"></span>
+									</p>
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+
+
+
+
+				<div class="d-flex justify-content-between align-items-center mb-4">
+					<small class="text-muted">
+						<b>Válido hasta: <span th:text="${fechaValidez}">31/12/2025</span></b>
+					</small>
+				</div>
+
+
+
+				<div class="row g-3">
+
+					<!-- ===================== ACCESO / EGRESO ACTUAL ===================== -->
+					<div class="col-md-6">
+						<div class="bg-light rounded p-3 h-100">
+							<h6 class="mb-2" style="color: rgb(14, 209, 220);">
+								<i class="bi bi-calendar3 me-2" style="color: rgb(14, 209, 220);"></i>Acceso
+							</h6>
+
+							<ul class="list-unstyled mb-3">
+								<li>
+									<i class="bi bi-check-circle-fill text-success me-2"></i>
+									<!-- Si hay ingreso, lo muestra; si no, dice "Sin registro" -->
+									<span
+										th:text="${ultimoIngreso != null} ? ${#temporals.format(ultimoIngreso, 'EEEE HH:mm a')} : 'Sin registro'"></span>
+								</li>
+							</ul>
+
+							<h6 class="mb-2" style="color: rgb(14, 209, 220);">
+								<i class="bi bi-calendar3 me-2" style="color: rgb(14, 209, 220);"></i>Egreso
+							</h6>
+
+							<ul class="list-unstyled">
+								<li>
+									<i class="bi bi-backspace-reverse-fill text-danger me-2"></i>
+									<!-- Si hay egreso, lo muestra; si no, dice "Sin registro" -->
+									<span
+										th:text="${ultimoEgreso != null} ? ${#temporals.format(ultimoEgreso, 'EEEE HH:mm a')} : 'Sin registro'"></span>
+								</li>
+							</ul>
+						</div>
+					</div>
+
+					<!-- ===================== ÚLTIMO ACCESO COMPLETO ===================== -->
+					<div class="col-md-6">
+						<div class="bg-light rounded p-3 h-100">
+
+							<h6 class="mb-3" style="color: rgb(14, 209, 220);">
+								<i class="bi bi-clock-history me-2" style="color: rgb(14, 209, 220);"></i> Último
+								acceso
+							</h6>
+
+							<!-- Lugar o aula (si aplica) -->
+							<span class="d-block fw-bold text-dark mb-2"
+								th:text="${ultimoAcceso?.ubicacion != null ? ultimoAcceso.ubicacion : 'Aula no registrada'}">
+							</span>
+
+							<!-- Última Entrada -->
+							<small class="mb-2" style="color: rgb(14, 209, 220)">Entrada:</small>
+							<small class="d-block text-muted mb-2" th:text="${ultimoAcceso?.horaIngreso != null} ?
+                            ${#temporals.format(ultimoAcceso.horaIngreso, 'dd MMMM, hh:mm a')} : 'Sin registro'">
+							</small>
+
+							<!-- Última Salida -->
+							<small class="mb-2" style="color: rgb(14, 209, 220)">Salida:</small>
+							<small class="d-block text-muted mb-3" th:text="${ultimoAcceso?.horaEgreso != null} ?
+                            ${#temporals.format(ultimoAcceso.horaEgreso, 'dd MMMM, hh:mm a')} : 'Sin registro'">
+							</small>
+
+							<a href="#" class="btn btn-outline-secondary btn-sm" data-bs-toggle="modal"
+								data-bs-target="#historialModal" onclick="mostrarHistorial(); return false;">
+								Ver historial
+							</a>
+
+						</div>
+					</div>
+
+				</div>
+
 			</div>
+		</div>
+
+		</div>
 		</div>
 	</main>
 
+
+
+
+
+
+
+
+
+	<!-- MODAL HISTORIAL -->
 	<div id="historialModal" class="modal fade" tabindex="-1" aria-labelledby="historialModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
 					<h5 class="modal-title" id="historialModalLabel">Historial de Accesos</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
 				</div>
+
 				<div class="modal-body">
 					<div id="contenidoHistorial">
 						<p>Historial de accesos...</p>
@@ -211,25 +272,308 @@
 		</div>
 	</div>
 
+
+	<div th:fragment="modal">
+
+		<div id="profileModal" class="modal">
+			<div class="modal-content">
+				<span class="close-modal">&times;</span>
+				<h2>Perfil del Usuario</h2>
+
+				<div class="profile-info">
+					<img th:src="@{/images/user.jpg}" alt="Avatar Grande" class="avatar-large">
+					<div class="info-list">
+
+						<div class="border rounded p-2 mb-3 bg-light">
+							<p class="mb-0 text-success fw-semibold">
+								<span class="text-dark" th:text="${usuario != null ? usuario.nombre : ' - '}"></span>
+							</p>
+						</div>
+
+						<div class="border rounded p-2 mb-3 bg-light">
+							<p class="mb-0 text-success fw-semibold">
+								<span class="text-dark"
+									th:text="${ficha != null ? ficha.nombrePrograma : ' - '}"></span>
+							</p>
+						</div>
+
+						<div class="border rounded p-2 mb-3 bg-light">
+							<p class="mb-0 text-success fw-semibold">
+								<span class="text-dark" th:text="${ficha != null ? ficha.numFicha : ' - '}"></span>
+							</p>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+
+
+
+
+
+	<!-- FOOTER Y SCRIPTS GENERALES -->
 	<div th:insert="~{templates_usuario::footer}"></div>
 	<div th:insert="~{templates_usuario::jsFiles}"></div>
+
+	<!-- Bootstrap JS -->
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.6/dist/JsBarcode.all.min.js"></script>
 
-	<script>
-		function mostrarQR() {
-			const qr = document.getElementById("codigoQR");
-			qr.style.display = (qr.style.display === "none" || qr.style.display === "") ? "block" : "none";
-		}
 
-		function mostrarHistorial() {
-			const historial = `
-				<h6><b>Aula Computacional N°1</b></h6>
-				<p><b>Entrada:</b> 15 Mayo, 08:15 AM</p>
-				<p><b>Salida:</b> 15 Mayo, 02:30 PM</p>
-			`;
-			document.getElementById('contenidoHistorial').innerHTML = historial;
-		}
-	</script>
+
+	<div th:fragment="style">
+
+		<style>
+			/*   APRENDIZ  */
+
+			.user-menu-container {
+				position: relative;
+				display: inline-block;
+				font-family: 'Segoe UI', sans-serif;
+
+			}
+
+			.user-info {
+				display: flex;
+				align-items: center;
+				flex-direction: column;
+				line-height: 1.1;
+				gap: 10px;
+				cursor: pointer;
+				color: white;
+
+			}
+
+			.user-info div {
+				display: flex;
+				flex-direction: column;
+				align-items: flex-start;
+				/* Para alinear texto */
+			}
+
+
+			.user-info .avatar {
+				width: 40px;
+				height: 40px;
+				border-radius: 50%;
+				background: #ccc;
+
+			}
+
+			.user-info .user-name {
+				margin: 0;
+				font-size: 15px;
+				font-weight: 600;
+
+			}
+
+			.user-info .user-role {
+				font-size: 13px;
+				opacity: 0.8;
+
+			}
+
+			.dropdown-menu {
+				position: absolute;
+				top: 55px;
+				right: 0;
+				width: 260px;
+				background: #fff;
+				border-radius: 12px;
+				box-shadow: 0 8px 18px rgba(0, 0, 0, 0.1);
+				padding: 15px 0;
+				display: none;
+				animation: fadeIn 0.2s ease-in-out;
+				z-index: 10;
+
+			}
+
+			.dropdown-menu span {
+				display: flex;
+				flex-direction: column;
+				align-items: flex-start;
+				/* Para alinear texto */
+			}
+
+			.dropdown-header {
+				display: flex;
+				align-items: center;
+				gap: 12px;
+				padding: 0 18px 12px;
+				border-bottom: 1px solid #f0f0f0;
+			}
+
+			.avatar-large {
+				width: 45px;
+				height: 45px;
+				border-radius: 50%;
+				background: #ccc;
+
+			}
+
+			.dropdown-name {
+				font-weight: 600;
+				margin: 0;
+			}
+
+			.dropdown-email {
+				font-size: 12px;
+				color: gray;
+			}
+
+			.menu-options {
+				list-style: none;
+				padding: 10px 0;
+				margin: 0;
+			}
+
+			.menu-options li {
+				padding: 10px 20px;
+				cursor: pointer;
+				display: flex;
+				align-items: center;
+				gap: 10px;
+				color: #333;
+				transition: background 0.2s;
+			}
+
+			.menu-options li:hover {
+				background: #f5f5f5;
+			}
+
+			.logout {
+				color: #d9534f;
+			}
+
+			@keyframes fadeIn {
+				from {
+					opacity: 0;
+					transform: translateY(-8px);
+				}
+
+				to {
+					opacity: 1;
+					transform: translateY(0);
+				}
+			}
+
+			/* ======== MODAL ======== */
+
+			.modal {
+				display: none;
+				position: fixed;
+				z-index: 2000;
+				left: 0;
+				top: 0;
+				width: 100%;
+				height: 100%;
+				background: rgba(0, 0, 0, 0.45);
+				backdrop-filter: blur(4px);
+			}
+
+			.modal-content {
+				background: #fff;
+				width: 380px;
+				margin: 10% auto;
+				padding: 25px;
+				border-radius: 15px;
+				box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+				animation: modalFade 0.3s ease;
+			}
+
+			.close-modal {
+				float: right;
+				font-size: 28px;
+				cursor: pointer;
+			}
+
+			.profile-info {
+				text-align: center;
+			}
+
+			.profile-info img {
+				width: 110px;
+				height: 110px;
+				border-radius: 50%;
+				margin-bottom: 15px;
+			}
+
+			@keyframes modalFade {
+				from {
+					opacity: 0;
+					transform: translateY(-20px);
+				}
+
+				to {
+					opacity: 1;
+					transform: translateY(0);
+				}
+			}
+		</style>
+
+	</div>
+
+
+	<div th:fragment="jsFiles">
+
+		<script>
+
+			/* APRENDIZ */
+			function mostrarQR() {
+				const qr = document.getElementById("codigoQR");
+				qr.style.display = (qr.style.display === "none" || qr.style.display === "") ? "block" : "none";
+			} function
+				mostrarHistorial() {
+				const historial = ` <h6><b>Aula Computacional N°1</b></h6 >
+					<p><b>Entrada:</b> 15 Mayo, 08:15 AM</p>
+					<p><b>Salida:</b> 15 Mayo, 02:30 PM</p>
+				`;
+				document.getElementById('contenidoHistorial').innerHTML = historial;
+			}
+
+			const toggleMenu = document.getElementById("toggleMenu");
+			const dropdownMenu = document.getElementById("dropdownMenu");
+
+			toggleMenu.addEventListener("click", () => {
+				dropdownMenu.style.display =
+					dropdownMenu.style.display === "block" ? "none" : "block";
+			});
+
+			// Cerrar al hacer clic afuera
+			document.addEventListener("click", (e) => {
+				if (!toggleMenu.contains(e.target) && !dropdownMenu.contains(e.target)) {
+					dropdownMenu.style.display = "none";
+				}
+			});
+
+
+			const modal = document.getElementById("profileModal");
+			const openModal = document.getElementById("openProfile");
+			const closeModal = document.querySelector(".close-modal");
+
+			openModal.addEventListener("click", () => {
+				modal.style.display = "block";
+			});
+
+			closeModal.addEventListener("click", () => {
+				modal.style.display = "none";
+			});
+
+			window.addEventListener("click", (e) => {
+				if (e.target === modal) {
+					modal.style.display = "none";
+				}
+			});
+
+
+
+		</script>
+
+	</div>
 
 </body>
 
