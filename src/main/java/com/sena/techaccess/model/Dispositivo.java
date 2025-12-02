@@ -7,7 +7,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import jakarta.persistence.Column;
 import jakarta.persistence.JoinColumn;
 
 @Entity
@@ -16,7 +15,6 @@ public class Dispositivo {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "idDisp")
 	private Integer id;
 	private String tipoD;
 	private String marca;

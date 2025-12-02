@@ -1,30 +1,56 @@
 package com.sena.techaccess.controller;
 
+import java.time.LocalDateTime;
 
-import org.springframework.stereotype.Controller;
-/*import com.sena.techaccess.model.Acceso;
-import com.sena.techaccess.repository.AccesoRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
+import com.sena.techaccess.model.Acceso;
+import com.sena.techaccess.model.Usuario;
+import com.sena.techaccess.service.IAccesoService;
+import com.sena.techaccess.service.IUsuarioService;
 
-import java.util.List;
-*/
 @Controller
 public class AccesoController {
 
+	private static final Logger LOGGER = LoggerFactory.getLogger(AccesoController.class);
 
-	
+	@Autowired
+	private IUsuarioService usuarioService;
+
+	@Autowired
+	private IAccesoService accesoService;
+
+	@PostMapping("/registrar-ingreso")
+	@ResponseBody
+	public String registrarIngreso(@RequestParam("documento") String documento) {
+		// 1. Buscar usuario por documento
+		Usuario usuario = usuarioService.findByDocumento(documento);
+		if (usuario == null) {
+			return "Usuario no encontrado";
+		}
+
+		// 2. Buscar último acceso del usuario
+		Acceso ultimoAcceso = accesoService.findUltimoAcceso(usuario.getId());
+
+		// 3. Si hay un acceso sin salida, registrar salida
+		if (ultimoAcceso != null && ultimoAcceso.getHoraEgreso() == null) {
+			ultimoAcceso.setHoraEgreso(LocalDateTime.now());
+			accesoService.save(ultimoAcceso);
+			return "Egreso registrado: " + usuario.getNombre();
+		}
+
+		// 4. Si no hay acceso activo, crear uno nuevo
+		Acceso nuevoAcceso = new Acceso();
+		nuevoAcceso.setUsuario(usuario);
+		nuevoAcceso.setHoraIngreso(LocalDateTime.now());
+		accesoService.save(nuevoAcceso);
+
+		return "Ingreso registrado: " + usuario.getNombre();
 	}
-
-	// Modulo de controlmde accesos a el panel entradas(Instructor)
-
-	/*@GetMapping("/instructor/grupos")
-	public String mostrarGrupos(Model model) {
-		List<Acceso> accesos = accesoRepository.findAll();
-		model.addAttribute("accesos", accesos);
-		return "instructor";
-	 * 
-	 */
-
+}
