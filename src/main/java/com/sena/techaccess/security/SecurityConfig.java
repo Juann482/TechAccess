@@ -14,50 +14,42 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    private final ServiceLogin serviceLogin;
-    private final CustomSuccessHandler successHandler;
+	private final ServiceLogin serviceLogin;
+	private final CustomSuccessHandler successHandler;
 
-    public SecurityConfig(ServiceLogin serviceLogin, CustomSuccessHandler successHandler) {
-        this.serviceLogin = serviceLogin;
-        this.successHandler = successHandler;
-    }
+	public SecurityConfig(ServiceLogin serviceLogin, CustomSuccessHandler successHandler) {
+		this.serviceLogin = serviceLogin;
+		this.successHandler = successHandler;
+	}
 
-    @Bean
-    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-                .csrf(csrf -> csrf.disable())
+	@Bean
+	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+		http.csrf(csrf -> csrf.disable())
 
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/", "/assets/**", "/images/**", "/css/**", "/js/**", "/img/**, /error/**, /soporte, /about" )
-                        .permitAll()
-                        .requestMatchers("/Administrador/**").hasAuthority("Administrador")
-                        .requestMatchers("/Vigilancia/**").hasAuthority("Vigilancia")
-                        .requestMatchers("/Aprediz/**").hasAuthority("Aprendiz")
-                        .requestMatchers("/instructor/**").hasAuthority("Instructor")
-                        .requestMatchers("/funcionario/**").hasAuthority("Funcionario") 
+				.authorizeHttpRequests(auth -> auth
+						.requestMatchers("/", "/assets/**", "/images/**", "/css/**", "/js/**",
+								"/img/**, /error/**, /soporte, /about")
+						.permitAll().requestMatchers("/Administrador/**").hasAuthority("Administrador")
+						.requestMatchers("/Vigilancia/**").hasAuthority("Vigilancia").requestMatchers("/Aprediz/**")
+						.hasAuthority("Aprendiz").requestMatchers("/instructor/**").hasAuthority("Instructor")
+						.requestMatchers("/funcionario/**").hasAuthority("Funcionario")
 
-                        .anyRequest().authenticated())
-                .formLogin(login -> login
-                        .loginPage("/")
-                        .loginProcessingUrl("/login")
-                        .successHandler(successHandler)
-                        .permitAll())
-                .logout(logout -> logout
-                        .logoutUrl("/logout")
-                        .logoutSuccessUrl("/")
-                        .permitAll())
-                .userDetailsService(serviceLogin);
+						.anyRequest().authenticated())
+				.formLogin(login -> login.loginPage("/").loginProcessingUrl("/login").successHandler(successHandler)
+						.permitAll())
+				.logout(logout -> logout.logoutUrl("/logout").logoutSuccessUrl("/").permitAll())
+				.userDetailsService(serviceLogin);
 
-        return http.build();
-    }
+		return http.build();
+	}
 
-    @Bean
-    PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+	@Bean
+	PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
 
-    @Bean
-    AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
-        return config.getAuthenticationManager();
-    }
+	@Bean
+	AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+		return config.getAuthenticationManager();
+	}
 }

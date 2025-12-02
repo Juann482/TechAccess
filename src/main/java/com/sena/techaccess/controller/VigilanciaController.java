@@ -2,6 +2,7 @@ package com.sena.techaccess.controller;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,8 +51,17 @@ public class VigilanciaController {
 
 	@GetMapping("/Ingreso")
 	public String usuariosvigilancia(Model model) {
+		List<Usuario> usuarios = usuarioService.findAll();
+		Map<Integer, Acceso> ultimosAccesos = accesoService.findLatestAccessForAllUsers();
 
-		model.addAttribute("Usuarios", usuarioService.findAll());
+		// Asignar el último acceso a cada usuario
+		for (Usuario usuario : usuarios) {
+			if (usuario != null && ultimosAccesos != null) {
+				usuario.setAcceso(ultimosAccesos.get(usuario.getId()));
+			}
+		}
+
+		model.addAttribute("Usuarios", usuarios);
 		model.addAttribute("usuario", new Usuario());
 		model.addAttribute("Acceso", new Acceso());
 

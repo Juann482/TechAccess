@@ -6,7 +6,7 @@
 <body class="contact-page">
 
 	<div th:insert="~{/Vigilancia/templates_vigilancia.html::Ingresos}"></div>
-		
+
 	<main class="main">
 
 		<!-- Page Title -->
@@ -33,38 +33,36 @@
 							<div class="contact-form-wrapper">
 
 
-								<input type="text" 
-								          id="barcodeInput" 
-								          style="width: 300px; height: 40px; font-size: 20px; margin-bottom: 20px;" 
-								          placeholder="Escanee aquí su código..." 
-								          autofocus>
-										  
-										  <script>
-										  document.addEventListener("DOMContentLoaded", () => {
-										    const barcodeInput = document.getElementById("barcodeInput");
+								<input type="text" id="barcodeInput"
+									style="width: 300px; height: 40px; font-size: 20px; margin-bottom: 20px;"
+									placeholder="Escanee aquí su código..." autofocus>
 
-										    barcodeInput.addEventListener("change", () => {
-										      const codigo = barcodeInput.value.trim();
-										      if (codigo !== "") {
-										        fetch("/Vigilancia/registrar-ingreso", {
-										          method: "POST",
-										          headers: { "Content-Type": "application/x-www-form-urlencoded" },
-										          body: `documento=${codigo}`
-										        })
-										        .then(response => response.text())
-										        .then(data => {
-										          console.log(data);
-										          location.reload(); // actualiza la tabla
-										        })
-										        .catch(err => console.error(err));
+								<script>
+									document.addEventListener("DOMContentLoaded", () => {
+										const barcodeInput = document.getElementById("barcodeInput");
 
-										        barcodeInput.value = "";
-										      }
-										    });
-										  });
-										  </script>
+										barcodeInput.addEventListener("change", () => {
+											const codigo = barcodeInput.value.trim();
+											if (codigo !== "") {
+												fetch("/Vigilancia/registrar-ingreso", {
+													method: "POST",
+													headers: {"Content-Type": "application/x-www-form-urlencoded"},
+													body: `documento=${codigo}`
+												})
+													.then(response => response.text())
+													.then(data => {
+														console.log(data);
+														location.reload(); // actualiza la tabla
+													})
+													.catch(err => console.error(err));
 
-			  
+												barcodeInput.value = "";
+											}
+										});
+									});
+								</script>
+
+
 
 								<div class="col-md-12">
 									<h5 class="mb-3"><i class="bi bi-activity me-2">Ingreso de personal</i></h5>
@@ -86,10 +84,18 @@
 												<td th:text="${usuario.nombre}"></td>
 												<td th:text="${usuario.documento}"></td>
 												<td th:text="${usuario.rol}"></td>
-												<td th:text="${usuario.ficha != null ? usuario.ficha.numFicha : '-'}"></td>
-												<td th:text="${usuario.acceso !=null ? usuario.acceso.horaIngreso : '-'}"></td>
-												<td th:text="${usuario.acceso !=null ? usuario.acceso.horaEgreso : '-'}"></td>
-																							</tr>
+												<td th:text="${usuario.ficha != null ? usuario.ficha.numFicha : '-'}">
+												</td>
+												<td th:if="${usuario.acceso?.horaIngreso != null}"
+													th:text="${#temporals.format(usuario.acceso.horaIngreso, 'dd/MM/yyyy  hh:mm:ss a')}">
+												</td>
+												<td th:if="${usuario.acceso?.horaEgreso != null}"
+													th:text="${#temporals.format(usuario.acceso.horaEgreso, 'dd/MM/yyyy hh:mm:ss a')}">
+												</td>
+												<td th:if="${usuario.acceso?.horaEgreso == null}">
+													-
+												</td>
+											</tr>
 
 										</tbody>
 

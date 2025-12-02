@@ -2,8 +2,8 @@ package com.sena.techaccess.model;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name = "acceso")
@@ -14,41 +14,51 @@ public class Acceso {
 	private Integer idacceso;
 
 	@Column(name = "horaIngreso")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy hh:mm:ss a", timezone = "America/Bogota")
+	@DateTimeFormat(pattern = "dd/MM/yyyy hh:mm:ss a")
 	private LocalDateTime horaIngreso;
 
 	@Column(name = "horaEgreso")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy hh:mm:ss a", timezone = "America/Bogota")
+	@DateTimeFormat(pattern = "dd/MM/yyyy hh:mm:ss a")
 	private LocalDateTime horaEgreso;
 
-	@OneToOne
-	@JoinColumn(name = "idDisp")
+	// Relación con Dispositivo
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "id_disp") // Asegúrate de que este sea el nombre correcto en tu base de datos
 	private Dispositivo dispositivo;
 
-	@OneToOne
-	@JsonIgnore
+	// Relación con Usuario
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "usuario_id")
 	private Usuario usuario;
 
+	// Estado Permanencia
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "idestadoPermanencia")
+	@JoinColumn(name = "id_estado_permanencia")
 	private EstadoPermanencia estadoPermanencia;
 
-	@ManyToOne
+	// Vigilancia
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_vigilancia")
 	private Vigilancia vigilancia;
 
+	// Constructores
+	public Acceso() {
+	}
+
 	public Acceso(Integer idacceso, LocalDateTime horaIngreso, LocalDateTime horaEgreso, Dispositivo dispositivo,
-			Usuario usuario, EstadoPermanencia estadoPermanencia, AreaJobs area) {
+			Usuario usuario, EstadoPermanencia estadoPermanencia, Vigilancia vigilancia) {
 		this.idacceso = idacceso;
 		this.horaIngreso = horaIngreso;
 		this.horaEgreso = horaEgreso;
 		this.dispositivo = dispositivo;
 		this.usuario = usuario;
 		this.estadoPermanencia = estadoPermanencia;
+		this.vigilancia = vigilancia;
 	}
 
-	public Acceso() {
-
-	}
-
+	// Getters y Setters
 	public Integer getIdacceso() {
 		return idacceso;
 	}
@@ -97,10 +107,16 @@ public class Acceso {
 		this.estadoPermanencia = estadoPermanencia;
 	}
 
+	public Vigilancia getVigilancia() {
+		return vigilancia;
+	}
+
+	public void setVigilancia(Vigilancia vigilancia) {
+		this.vigilancia = vigilancia;
+	}
+
 	@Override
 	public String toString() {
-		return "Acceso [idacceso=" + idacceso + ", horaIngreso=" + horaIngreso + ", horaEgreso=" + horaEgreso
-				+ ", dispositivo=" + dispositivo + ", usuario=" + usuario + ", estadoPermanencia=" + estadoPermanencia
-				+ "]";
+		return "Acceso{" + "idacceso=" + idacceso + ", horaIngreso=" + horaIngreso + ", horaEgreso=" + horaEgreso + '}';
 	}
 }
