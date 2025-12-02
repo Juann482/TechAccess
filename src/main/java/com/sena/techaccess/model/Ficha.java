@@ -16,10 +16,11 @@ public class Ficha {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer idFicha;
+	private Integer id;
 	private String designacion;
 	private String nombrePrograma;
 	private Integer numFicha;
+	private String estado;
 	private String jornada;
 
 	@OneToMany(mappedBy = "ficha")
@@ -30,24 +31,25 @@ public class Ficha {
 	}
 
 	// contructor con campos
-	public Ficha(Integer idFicha, String designacion, String nombrePrograma, Integer numFicha, String jornada,
+	public Ficha(Integer id, String designacion, String nombrePrograma, Integer numFicha, String jornada, String estado,
 			List<Usuario> usuario) {
 		super();
-		this.idFicha = idFicha;
+		this.id = id;
 		this.designacion = designacion;
 		this.nombrePrograma = nombrePrograma;
 		this.numFicha = numFicha;
 		this.jornada = jornada;
 		this.usuario = usuario;
+		this.estado = estado;
 	}
 
 	// getters and setters
-	public Integer getIdFicha() {
-		return idFicha;
+	public Integer getId() {
+		return id;
 	}
 
-	public void setIdFicha(Integer idFicha) {
-		this.idFicha = idFicha;
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public String getDesignacion() {
@@ -90,10 +92,18 @@ public class Ficha {
 		this.usuario = usuario;
 	}
 
+	public String getEstado() {
+		return estado;
+	}
+
+	public void setEstado(String estado) {
+		this.estado = estado;
+	}
+
 	// toString
 	@Override
 	public String toString() {
-		return "Ficha [idFicha=" + idFicha + ", designacion=" + designacion + ", nombrePrograma=" + nombrePrograma
+		return "Ficha [id=" + id + ", designacion=" + designacion + ", nombrePrograma=" + nombrePrograma
 				+ ", numFicha=" + numFicha + ", jornada=" + jornada + ", usuario=" + usuario + "]";
 	}
 

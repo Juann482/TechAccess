@@ -8,7 +8,7 @@
 	<header id="header" class="header d-flex align-items-center fixed-top">
 		<div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
 
-			<a th:href="@{/home}" class="logo d-flex align-items-center">
+			<a th:href="@{/}" class="logo d-flex align-items-center">
 
 				<img th:src="@{/images/TecAccess.png}" alt="Logo Principal">
 
@@ -17,10 +17,9 @@
 
 			<nav id="navmenu" class="navmenu">
 				<ul>
-					<li><a th:href="@{/home}" class="active" style="color: #2f92b1;"><b>Inicio</b></a></li>
+					<li><a th:href="@{/}" class="active" style="color: #2f92b1;"><b>Inicio</b></a></li>
 					<li><a th:href="@{/about}">Sobre Nosotros</a></li>
 					<li><a th:href="@{/soporte}">Soporte</a></li>
-					<li><a href="#">Lenguaje</a></li>
 
 
 				</ul>
@@ -73,7 +72,7 @@
 										<button type="submit" class="btn-login" style="color: white;">Iniciar
 											Sesión</button>
 									</form>
-
+									
 									
 
 									<!-- funcion vinculo paginas roles END -->
@@ -82,6 +81,7 @@
 											<p>¿No tiene una cuenta?</p>
 										</label>
 										<a th:href="@{/#}" class="btn-login">Solicitar</a>
+										
 									</div>
 								</div>
 							</div>
