@@ -84,10 +84,7 @@
 									<table class="table table-hover">
 										<thead>
 											<tr>
-												<th>Id</th>
-												<th>Nombre y apellidos</th>
-												<th>Documento</th>
-												<th>Número de ficha</th>
+												
 												<th>Motivo de inasistencia</th>
 												<th>Descripción</th>
 												<th>Fecha</th>
@@ -96,10 +93,7 @@
 										</thead>
 										<tbody>
 											<tr th:each="excusa : ${excusas}">
-												<td th:text="${excusa.id}"></td>
-												<td th:text="${excusa.usuario.nombre}"></td>
-												<td th:text="${excusa.usuario.documento}"></td>
-												<td th:text="${excusa.usuario.ficha.numFicha}"></td>
+												
 												<td th:text="${excusa.motivo}"></td>
 												<td th:text="${excusa.descripcion != null and excusa.descripcion.length() > 0 ? excusa.descripcion : '-'}"></td>
 												<td th:text="${excusa.fecha}"></td>
@@ -123,8 +117,8 @@
 	</main>
 
 	<!-- 🔹 FOOTER -->
-	<div th:insert="~{/usuario/templates_usuario.html::footer}"></div>
-	<div th:insert="~{/usuario/templates_usuario.html::jsFiles}"></div>
+	<div th:insert="~{/templates_usuario.html::footer}"></div>
+	<div th:insert="~{/templates_usuario.html::jsFiles}"></div>
 
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
 
