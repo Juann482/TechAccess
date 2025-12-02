@@ -19,28 +19,17 @@ public class Acceso {
 	@Column(name = "horaEgreso")
 	private LocalDateTime horaEgreso;
 
-	// Sección enlazada con Dispositivo
 	@OneToOne
 	@JoinColumn(name = "idDisp")
 	private Dispositivo dispositivo;
 
-	// Sección enlazada con Usuario
 	@OneToOne
-	@JsonIgnore // ← ¡IMPORTANTE! Evita recursión infinita
+	@JsonIgnore
 	private Usuario usuario;
 
-	// Sección enlazada con EstadoPermanencia
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "idestadoPermanencia")
 	private EstadoPermanencia estadoPermanencia;
-
-	/*
-	 * / Sección enlazada con Área
-	 * 
-	 * @ManyToOne(fetch = FetchType.LAZY)
-	 * 
-	 * @JoinColumn(name = "idarea") private AreaJobs area;
-	 */
 
 	@ManyToOne
 	@JoinColumn(name = "id_vigilancia")
@@ -54,7 +43,6 @@ public class Acceso {
 		this.dispositivo = dispositivo;
 		this.usuario = usuario;
 		this.estadoPermanencia = estadoPermanencia;
-		// this.area = area;
 	}
 
 	public Acceso() {
@@ -109,24 +97,10 @@ public class Acceso {
 		this.estadoPermanencia = estadoPermanencia;
 	}
 
-	/*
-	 * public AreaJobs getArea() { return area; }
-	 */
-
-	/*
-	 * public void setArea(AreaJobs area) { this.area = area; }
-	 */
-
 	@Override
 	public String toString() {
 		return "Acceso [idacceso=" + idacceso + ", horaIngreso=" + horaIngreso + ", horaEgreso=" + horaEgreso
 				+ ", dispositivo=" + dispositivo + ", usuario=" + usuario + ", estadoPermanencia=" + estadoPermanencia
 				+ "]";
 	}
-
-	public void setVigilancia(Vigilancia vigilancia2) {
-		// TODO Auto-generated method stub
-		
-	}
-
 }
