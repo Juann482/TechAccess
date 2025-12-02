@@ -38,7 +38,11 @@ public class ServiceLogin implements UserDetailsService {
             
             session.setAttribute("IdUser", present.getId());
             session.setAttribute("nombre", present.getNombre());
+            session.setAttribute("documento", present.getDocumento());
             session.setAttribute("email", present.getEmail());
+            session.setAttribute("telefono", present.getTelefono());
+            session.setAttribute("direccion", present.getDireccion());
+            session.setAttribute("ficha", present.getFicha());
             session.setAttribute("rol", present.getRol());
 
             return User.builder()

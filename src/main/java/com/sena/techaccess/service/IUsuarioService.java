@@ -3,31 +3,57 @@ package com.sena.techaccess.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import com.sena.techaccess.model.Usuario;
 
 public interface IUsuarioService {
 
-	public Optional<Usuario> get(Integer id);
+	Optional<Usuario> get(Integer id);
 
-	public Usuario save(Usuario usuario);
-	
+	Usuario save(Usuario usuario);
+
 	List<Usuario> findByEstadoCuenta(String estadoCuenta);
 
-	public void delete(Integer id);
+	void delete(Integer id);
 
-	public void update(Usuario usuario);
+	void update(Usuario usuario);
 
-	public Usuario findByNombre(String nombre);
+	Usuario findByNombre(String nombre);
 
-	public Optional<Usuario> findByEmail(String email);
-	
-	public List<Usuario> findByRol(String rol);
+	Optional<Usuario> findByEmail(String email);
 
-	public Usuario findByDocumento(String documento);
-	
-	List<Usuario> filtrarUsuarios(String nombre, String documento, String rol, String estado);
+	List<Usuario> findByRol(String rol);
 
+	Usuario findByDocumento(String documento);
+
+	Page<Usuario> filtrarUsuarios(String nombre, String documento, String rol, String estado, Pageable pageable);
 
 	List<Usuario> findAll();
+	
+	List<Usuario> findByFichaId(Integer id);
+	
+	Page<Usuario> findByFichaId(Integer fichaId, Pageable pageable);
+	
+	Page<Usuario> filtrarUsuariosEnFicha(Integer fichaId, String nombre, String documento, String rol, String estado, Pageable pageable);
+
+	Optional<Usuario> findById(Integer id);
+	
+	void saveAll(List<Usuario> usuarios);
+
+	// >>>>>>>DASHBOARD<<<<<<<<
+
+	int Inactivos();
+
+	int Activos();
+
+	int Aprendiz();
+
+	int Instructor();
+
+	int Visitante();
+
+	int totalUsuarios();
 
 }

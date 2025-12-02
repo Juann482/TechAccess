@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head th:insert="~{Administrador/template_administracion.html::head}"></head>
+
+<body>
+
+	<div id="preloader">
+		<div class="spinner"></div>
+	</div>
+
+	<div th:insert="~{/Administrador/template_administracion.html::sidebar}"></div>
+	<div class="overlay"></div>
+
+	<main class="main-wrapper">
+
+		<div th:insert="~{Administrador/template_administracion.html::header}"></div>
+
+		<section class="section">
+			<div class="container-fluid">
+
+				<!-- Título -->
+				<div class="title-wrapper pt-30">
+					<div class="row align-items-center">
+						<div class="col-md-6">
+							<div class="title">
+								<h2 th:text="${ficha.numFicha + ' - ' + ficha.nombrePrograma}"></h2>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="card-style mb-15">
+
+					<div class="d-flex justify-content-end mb-3">
+
+						<!-- Botón Filtros -->
+						<button class="btn btn-info text-white me-2" data-bs-toggle="modal"
+							data-bs-target="#modalFiltros"><i class="bi bi-funnel-fill">
+							Filtros</i>
+						</button>
+
+						<!-- Botón Limpiar filtros (solo si hay filtros activos) -->
+						<div th:if="${nombre != null or documento != null or rol != null or estado != null}">
+							<a th:href="@{/Administrador/ficha/{id}(id=${ficha.id})}" class="btn btn-secondary">
+								Limpiar filtros
+							</a>
+						</div>
+
+					</div>
+
+
+
+					<!-- ===== TABLA ===== -->
+					<div class="table-responsive">
+						<table class="invoice-table table">
+							<thead>
+								<tr class="centrados">
+									<th>Nombre Completo</th>
+									<th>Documento</th>
+									<th>Correo</th>
+									<th>Teléfono</th>
+									<th>Estado</th>
+									<th>Rol</th>
+								</tr>
+							</thead>
+
+							<tbody>
+								<tr th:each="uf : ${usuariosPage.content}" class="centrados">
+									<td th:text="${uf.nombre}"></td>
+									<td th:text="${uf.documento}"></td>
+									<td th:text="${uf.email}"></td>
+									<td th:text="${uf.telefono}"></td>
+									<td th:text="${uf.estadoCuenta}"></td>
+									<td th:text="${uf.rol}"></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+
+					<!-- ===== PAGINACIÓN ===== -->
+					<nav aria-label="Page navigation" class="mt-3">
+						<ul class="pagination justify-content-center">
+
+							<!-- Anterior -->
+							<li th:class="'page-item ' + (${usuariosPage.first} ? 'disabled' : '')">
+								<a class="page-link" style="color: rgb(255, 255, 255); background-color: rgb(0, 0, 64); border-color: rgb(0, 0, 64);"
+								 th:href="@{/Administrador/ficha/{id}(
+                                        id=${ficha.id},
+                                        page=${usuariosPage.number - 1},
+                                        nombre=${nombre},
+                                        documento=${documento},
+                                        rol=${rol},
+                                        estado=${estado}
+                                   )}">
+									Anterior
+								</a>
+							</li>
+
+							<!-- Números -->
+							<li th:each="i : ${#numbers.sequence(0, usuariosPage.totalPages - 1)}"
+								th:class="'page-item ' + (${i} == ${usuariosPage.number} ? 'active' : '')">
+								<a class="page-link" 
+								th:text="${i + 1}" th:href="@{/Administrador/ficha/{id}(
+                                        id=${ficha.id},
+                                        page=${i},
+                                        nombre=${nombre},
+                                        documento=${documento},
+                                        rol=${rol},
+                                        estado=${estado}
+                                   )}">
+								</a>
+							</li>
+
+							<!-- Siguiente -->
+							<li th:class="'page-item ' + (${usuariosPage.last} ? 'disabled' : '')">
+								<a class="page-link" style="color: rgb(255, 255, 255); background-color: rgb(0, 0, 64); border-color: rgb(0, 0, 64);"
+								 th:href="@{/Administrador/ficha/{id}(
+                                        id=${ficha.id},
+                                        page=${usuariosPage.number + 1},
+                                        nombre=${nombre},
+                                        documento=${documento},
+                                        rol=${rol},
+                                        estado=${estado}
+                                   )}">
+									Siguiente
+								</a>
+							</li>
+
+						</ul>
+					</nav>
+
+					<div class="col-12 text-center mt-3">
+						<a th:href="@{/Administrador/Historialfichas}" class="main-btn secondary-btn btn-hover">
+							VOLVER
+						</a>
+					</div>
+
+				</div>
+			</div>
+		</section>
+
+		<div th:insert="~{Administrador/template_administracion.html::footer}"></div>
+	</main>
+	<div class="modal fade" id="modalFiltros" tabindex="-1" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+
+				<div class="modal-header">
+					<h5 class="modal-title">Filtros de Usuarios</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+				</div>
+
+				<form th:action="@{/Administrador/ficha/{id}(id=${ficha.id})}" method="get">
+					<div class="modal-body">
+						<div class="row">
+							<input type="hidden" name="page" value="0" />
+
+							<!-- inputs -->
+							<div class="col-md-12">
+								<label>Nombre</label>
+								<input type="text" name="nombre" class="form-control" th:value="${nombre}">
+							</div>
+							<div class="col-md-12">
+								<label>Documento</label>
+								<input type="text" name="documento" class="form-control" th:value="${documento}">
+							</div>
+							<div class="col-md-6 mt-3">
+								<label>Rol</label>
+								<select name="rol" class="form-select">
+									<option value="">Todos</option>
+									<option value="Aprendiz" th:selected="${rol == 'Aprendiz'}">Aprendiz</option>
+									<option value="Instructor" th:selected="${rol == 'Instructor'}">Instructor</option>
+									<option value="Visitante" th:selected="${rol == 'Visitante'}">Visitante</option>
+								</select>
+							</div>
+							<div class="col-md-6 mt-3">
+								<label>Estado</label>
+								<select name="estado" class="form-select">
+									<option value="">Todos</option>
+									<option value="Activo" th:selected="${estado == 'Activo'}">Activo</option>
+									<option value="Inactivo" th:selected="${estado == 'Inactivo'}">Inactivo</option>
+								</select>
+							</div>
+
+							<div class="modal-footer">
+								<button type="submit" class="btn btn-info text-white">Aplicar filtros</button>
+								<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+							</div>
+
+						</div>
+					</div>
+				</form>
+
+			</div>
+		</div>
+	</div>
+	<div th:insert="~{Administrador/template_administracion.html::jsFiles}"></div>
+
+</body>
+
+</html>

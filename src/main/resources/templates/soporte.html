@@ -8,18 +8,17 @@
 	<header id="header" class="header d-flex align-items-center fixed-top">
 		<div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
 
-			<a th:href="@{/home}" class="logo d-flex align-items-center">
+			<a th:href="@{/}" class="logo d-flex align-items-center">
 				<img th:src="@{/images/TecAccess.png}" alt="LogoPrin">
 				<h1 class="sitename"><b>TECH</b>ACCESS</h1>
 			</a>
 
 			<nav id="navmenu" class="navmenu">
 				<ul>
-					<li><a th:href="@{/home}">Inicio</a></li>
+					<li><a th:href="@{/}">Inicio</a></li>
 					<li><a th:href="@{/about}">Sobre nosotros</a></li>
 					<li><a th:href="@{/soporte}" class="active"><b style="color: #2f92b1;">Soporte</b></a>
 					</li>
-					<li><a href="#">Lenguaje</a></li>
 				</ul>
 				<i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
 			</nav>
@@ -30,7 +29,7 @@
 	<main class="main">
 
 		<!-- Page Title -->
-		<div class="page-title dark-background"	th:style="'background-image: url(' + @{/images/showcase-1.webp} + ');'">
+		<div class="page-title dark-background"	th:style="'background-image: url(' + @{/images/showcase-1.png} + ');'">
 			<div class="container position-relative">
 				<h1>Soporte</h1>
 				<p>¿Necesitas ayuda/asistencia con la página? <br> Comunícate con nosotros a continuación.</p>

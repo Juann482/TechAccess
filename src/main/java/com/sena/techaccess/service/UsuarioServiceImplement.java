@@ -1,4 +1,4 @@
-package com.sena.techaccess.service;
+	package com.sena.techaccess.service;
 
 import java.util.List;
 
@@ -7,6 +7,8 @@ import java.util.Optional;
 /*import java.util.stream.Collectors;*/
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.sena.techaccess.model.Usuario;
@@ -20,6 +22,40 @@ public class UsuarioServiceImplement implements IUsuarioService {
 	@Autowired
 	private UsuarioRepository usuarioRepository;
 
+	// >>>>>>>>>>>>>>>> DASHBOARD <<<<<<<<<<<<<<<<<
+
+	@Override
+	public int totalUsuarios() {
+		return (int) usuarioRepository.count();
+	}
+
+	@Override
+	public int Inactivos() {
+		return (int) usuarioRepository.countByEstadoCuenta("Inactivo");
+	}
+
+	@Override
+	public int Activos() {
+		return (int) usuarioRepository.countByEstadoCuenta("Activo");
+	}
+
+	@Override
+	public int Aprendiz() {
+		return (int) usuarioRepository.countByRol("Aprendiz");
+	}
+
+	@Override
+	public int Instructor() {
+		return (int) usuarioRepository.countByRol("Instructor");
+	}
+
+	@Override
+	public int Visitante() {
+		return (int) usuarioRepository.countByRol("Visitantes");
+	}
+
+//>>>>>>>>>>>>>>>>>>>>>> FIN DASHBOARD <<<<<<<<<<<<<<<<<<<<<
+
 	public List<Usuario> findAll() {
 		return usuarioRepository.findAll();
 	}
@@ -29,7 +65,7 @@ public class UsuarioServiceImplement implements IUsuarioService {
 	}
 
 	@Override
-	public Optional<Usuario> get(Integer id) {		
+	public Optional<Usuario> get(Integer id) {
 		return usuarioRepository.findById(id);
 	}
 
@@ -51,11 +87,11 @@ public class UsuarioServiceImplement implements IUsuarioService {
 
 	@Override
 	public Usuario findByNombre(String nombre) {
-		return usuarioRepository.findByNombre(nombre); 
-		}
+		return usuarioRepository.findByNombre(nombre);
+	}
 
 	@Override
-	public Optional  <Usuario> findByEmail(String email) {
+	public Optional<Usuario> findByEmail(String email) {
 		return usuarioRepository.findByEmail(email);
 	}
 
@@ -63,10 +99,10 @@ public class UsuarioServiceImplement implements IUsuarioService {
 	public List<Usuario> findByEstadoCuenta(String estadoCuenta) {
 		return usuarioRepository.findByEstadoCuenta(estadoCuenta);
 	}
-	
+
 	@Override
 	public List<Usuario> findByRol(String rol) {
-	    return usuarioRepository.findByRol(rol);
+		return usuarioRepository.findByRol(rol);
 	}
 
 	@Override
@@ -75,11 +111,28 @@ public class UsuarioServiceImplement implements IUsuarioService {
 	}
 
 	@Override
-	public List<Usuario> filtrarUsuarios(String nombre, String documento, String rol, String estado) {
-	    return usuarioRepository.filtrarUsuarios(nombre, documento, rol, estado);
+	public Page<Usuario> filtrarUsuarios(String nombre, String documento, String rol, String estado, Pageable pageable) {
+		return usuarioRepository.filtrarUsuarios(nombre, documento, rol, estado, pageable);
 	}
 
+	@Override
+	public Page<Usuario> findByFichaId(Integer fichaId, Pageable pageable) {
+		return usuarioRepository.findByFichaId(fichaId, pageable);
+	}
 
-	
+	@Override
+	public void saveAll(List<Usuario> usuarios) {
+		usuarioRepository.saveAll(usuarios);		
+	}
 
+	@Override
+	public Page<Usuario> filtrarUsuariosEnFicha(Integer fichaId, String nombre, String documento, String rol,
+	        String estado, Pageable pageable) {
+	    return usuarioRepository.filtrarUsuariosEnFicha(fichaId, nombre, documento, rol, estado, pageable);
+	}
+
+	@Override
+	public List<Usuario> findByFichaId(Integer id) {
+		return usuarioRepository.findByFichaId(id);
+	}
 }

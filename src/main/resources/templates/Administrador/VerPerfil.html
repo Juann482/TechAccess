@@ -26,7 +26,7 @@
 					<div class="row align-items-center">
 						<div class="col-md-6">
 							<div class="title">
-								<h2>Perfil</h2>
+								<h2>Perfil de usuario</h2>
 							</div>
 						</div>
 					</div>
@@ -41,47 +41,59 @@
 						<div class="card-style settings-card-1 mb-30">
 							<div class="title mb-30 d-flex justify-content-between align-items-center">
 								<h6>Mi perfil</h6>
-								<button class="border-0 bg-transparent">
-									<i class="lni lni-pencil-alt"></i>
-								</button>
+								<a class="border-0 bg-transparent" th:href="@{/Administrador/EdicionPerfil}" title="Editar">
+									<i class="bi bi-pencil-square"></i>
+								</a>
 							</div>
 							<div class="profile-info">
 								<div class="d-flex align-items-center mb-30">
 									<div class="profile-image">
-										<img src="assets/images/profile/profile-1.png" alt="" />
-										<div class="update-image">
-											<input type="file" />
-											<label for=""><i class="lni lni-cloud-upload"></i></label>
-										</div>
+										<img th:src="@{/images/Juan.jpg}" alt="Foto de perfil">										
 									</div>
 									<div class="profile-meta">
 										<h2 class="text-bold text-dark mb-10" th:text="${session.nombre}"></h2>
 										<p class="text-sm text-gray" th:text="${session.rol}"></p>
 									</div>
 								</div>
-								<div class="input-style-1">
-									<h4>Correo </h4>
-									<a th:text="${session.email}" class="text-gray"></a>
+								<div class="row">
+								    <!-- Columna izquierda -->
+								    <div class="col-md-6">
+								        
+								        <div class="mb-3">
+								            <h4 class="mb-1">Correo</h4>
+								            <p th:text="${session.email}" class="text-gray"></p>
+								        </div>
+
+								        <div class="mb-3">
+								            <h4 class="mb-1">Documento</h4>
+								            <p th:text="${session.documento}" class="text-gray"></p>
+								        </div>
+								    </div>
+
+								    <!-- Columna derecha -->
+								    <div class="col-md-6">
+
+								        <div class="mb-3">
+								            <h4 class="mb-1">Dirección</h4>
+								            <p th:text="${session.direccion}" class="text-gray"></p>
+								        </div>
+
+								        <div class="mb-3">
+								            <h4 class="mb-1">Teléfono</h4>
+								            <p th:text="${session.telefono}" class="text-gray"></p>
+								        </div>
+								    </div>
 								</div>
-								<div class="input-style-1">
-									<h4>Documento</h4>
-									<input type="password" value="admin@example.com" />
-								</div>
-								<div class="input-style-1">
-									<h4>Dirección</h4>
-									<input type="text" placeholder="www.uideck.com" value="www.uideck.com" />
-								</div>
-								<div class="input-style-1 flex">
-									<h4>Teléfono</h4>
-									<input type="text" placeholder="www.uideck.com" value="www.uideck.com" />
-								</div>
+
+
+
 
 							</div>
 						</div>
-						
+
 					</div>
 				</div>
-				
+
 			</div>
 
 		</section>
@@ -89,7 +101,7 @@
 
 
 		<div th:insert="~{Administrador/template_administracion.html::footer}"></div>
-		
+
 	</main>
 
 	<div th:insert="~{Administrador/template_administracion.html::jsFiles}"></div>

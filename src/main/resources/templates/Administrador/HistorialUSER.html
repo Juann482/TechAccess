@@ -57,55 +57,146 @@
 						<div class="col-lg-12">
 							<div class="form-form-wrapper">
 								<div class="text-end mb-3">
-									<a class="btn btn-warning" th:href="@{/Administrador/usuarios}"><i class="bi bi-arrow-counterclockwise">Volver</i></a>
-									<button class="btn btn-secondary" data-bs-toggle="modal"
+									<a class="btn btn-secondary" th:href="@{/Administrador/usuarios}"><i
+											class="bi bi-arrow-counterclockwise">Volver</i></a>
+									<button class="btn btn-info text-white" data-bs-toggle="modal"
 										data-bs-target="#modalFiltros"><i class="bi bi-funnel-fill">Filtro</i>
 									</button>
-									
+
+								</div>
+								<div class="table-responsive">
+									<table class="invoice-table table">
+										<thead>
+											<tr class="centrados">
+												<th scope="col">Nombre completo</th>
+												<th scope="col">Documento</th>
+												<th scope="col">Rol</th>
+												<th scope="col">Ficha</th>
+												<th scope="col">Estado</th>
+
+												<th scope="col"> Editar </th>
+												<th scope="col"> Eliminar </th>
+											</tr>
+										</thead>
+										<tbody th:each="usuario: ${Usuarios}">
+											<tr class="centrados ">
+												<td th:text="${usuario.nombre}"></td>
+												<td th:text="${usuario.documento}"></td>
+												<!---->
+												<td th:text="${usuario.rol}"></td>
+												<td th:text="${usuario.ficha != null ? usuario.ficha.numFicha : 'N/A'}">
+												</td>
+												<td>
+													<a th:href="@{/Administrador/cambiarEstado/{id} (id = ${usuario.id})}"
+														th:text="${usuario.estadoCuenta}"
+														th:style="${usuario.estadoCuenta == 'Activo'} ? 'color: #50F527; font-weight: bold;' : 'color: red; font-weight: bold;'">
+													</a>
+												</td>
+
+												<td><a title="Editar" class="btn btn-warning"
+														th:href="@{/Administrador/edicionUsuario/{id} (id=${usuario.id})}">
+														<i class="bi bi-pencil-fill"></i></a>
+												</td>
+												<td><a title="Eliminar" class="btn btn-danger"
+														th:href="@{/Administrador/deleteUser/{id} (id=${usuario.id})}">
+														<i class="bi bi-trash-fill"></i></a>
+												</td>
+
+											</tr>
+
+										</tbody>
+
+									</table>
 								</div>
 
-								<table class="invoice-table table">
-									<thead>
-										<tr class="centrados">
-											<th scope="col">Nombre completo</th>
-											<th scope="col">Documento</th>
-											<th scope="col">Rol</th>
-											<th scope="col">Ficha</th>
-											<th scope="col">Estado</th>
+								<div class="d-flex justify-content-center mt-3">
+									<nav>
+										<ul class="pagination">
 
-											<th scope="col"> Editar </th>
-											<th scope="col"> Eliminar </th>
-										</tr>
-									</thead>
-									<tbody th:each="usuario: ${Usuarios}">
-										<tr class="centrados ">
-											<td th:text="${usuario.nombre}"></td>
-											<td th:text="${usuario.documento}"></td>
-											<!---->
-											<td th:text="${usuario.rol}"></td>
-											<td th:text="${usuario.ficha != null ? usuario.ficha.numFicha : 'N/A'}">
-											</td>
-											<td>
-												<a th:href="@{/Administrador/cambiarEstado/{id} (id = ${usuario.id})}"
-													th:text="${usuario.estadoCuenta}"
-													th:style="${usuario.estadoCuenta == 'Activo'} ? 'color: #50F527; font-weight: bold;' : 'color: red; font-weight: bold;'">
+											<!-- Botón Anterior -->
+											<li class="page-item" th:classappend="${page.first}? 'disabled'">
+												<a class="page-link"
+													style="color: rgb(255, 255, 255); background-color: rgb(0, 0, 64); border-color: rgb(0, 0, 64);"
+													th:href="@{/Administrador/usuarios(
+								                        page=${page.number - 1},
+								                        nombre=${nombre},
+								                        documento=${documento},
+								                        rol=${rol},
+								                        estado=${estado}
+								                    )}">
+													Anterior
 												</a>
-											</td>
+											</li>
 
-											<td><a title="Editar" class="btn btn-warning"
-													th:href="@{/Administrador/edicionUsuario/{id} (id=${usuario.id})}">
-													<i class="bi bi-pencil-fill"></i></a>
-												</td>
-											<td><a title="Eliminar" class="btn btn-danger"
-													th:href="@{/Administrador/deleteUser/{id} (id=${usuario.id})}">
-													<i class="bi bi-trash-fill"></i></a>
-												</td>
+											<!-- Mostrar "1" si el rango empieza después de la primera página -->
+											<li class="page-item" th:if="${page.number > 5}">
+												<a class="page-link"
+													style="background-color: aqua; color: rgb(0, 0, 160);" th:href="@{/Administrador/usuarios(
+								                        page=0,
+								                        nombre=${nombre},
+								                        documento=${documento},
+								                        rol=${rol},
+								                        estado=${estado}
+								                    )}">
+													1
+												</a>
+											</li>
 
-										</tr>
+											<!-- Mostrar "..." antes si estamos lejos del inicio -->
+											<li class="page-item disabled" th:if="${page.number > 5}">
+												<span class="page-link">...</span>
+											</li>
 
-									</tbody>
+											<!-- Números dinámicos: solo 10 páginas centradas en la actual -->
+											<li class="page-item" th:each="i : ${#numbers.sequence(
+								                    page.number > 5 ? page.number - 4 : 0,
+								                    page.number + 5 < page.totalPages - 1 ? page.number + 5 : page.totalPages - 1
+								                )}" th:classappend="${i == page.number}? 'active'">
+												<a class="page-link" th:text="${i + 1}" th:href="@{/Administrador/usuarios(
+								                        page=${i},
+								                        nombre=${nombre},
+								                        documento=${documento},
+								                        rol=${rol},
+								                        estado=${estado}
+								                    )}">
+												</a>
+											</li>
 
-								</table>
+											<!-- Mostrar "..." después si quedan páginas -->
+											<li class="page-item disabled" th:if="${page.number + 6 < page.totalPages}">
+												<span class="page-link">...</span>
+											</li>
+
+											<!-- Mostrar última página si el rango no la incluye -->
+											<li class="page-item" th:if="${page.number + 6 < page.totalPages}">
+												<a class="page-link" th:text="${page.totalPages}" th:href="@{/Administrador/usuarios(
+								                        page=${page.totalPages - 1},
+								                        nombre=${nombre},
+								                        documento=${documento},
+								                        rol=${rol},
+								                        estado=${estado}
+								                    )}">
+												</a>
+											</li>
+
+											<!-- Botón Siguiente -->
+											<li class="page-item" th:classappend="${page.last}? 'disabled'">
+												<a class="page-link"
+													style="color: rgb(255, 255, 255); background-color: rgb(0, 0, 64); border-color: rgb(0, 0, 64);"
+													th:href="@{/Administrador/usuarios(
+								                        page=${page.number + 1},
+								                        nombre=${nombre},
+								                        documento=${documento},
+								                        rol=${rol},
+								                        estado=${estado}
+								                    )}">
+													Siguiente
+												</a>
+											</li>
+
+										</ul>
+									</nav>
+								</div>
 
 
 							</div>
@@ -129,7 +220,7 @@
 	<div th:insert="~{Administrador/template_administracion.html::jsFiles}"></div>
 	<!-- Modal -->
 	<div class="modal fade" id="modalFiltros" tabindex="-1" aria-hidden="true">
-		<div class="modal-dialog modal-lg">
+		<div class="modal-dialog">
 			<div class="modal-content">
 
 				<div class="modal-header">
@@ -142,19 +233,19 @@
 
 						<div class="row">
 
-							<div class="col-md-6">
+							<div class="col-md-12">
 								<label>Nombre:</label>
 								<input type="text" name="nombre" class="form-control" th:value="${nombre}">
 							</div>
 
-							<div class="col-md-6">
+							<div class="col-md-12">
 								<label>Documento:</label>
 								<input type="text" name="documento" class="form-control" th:value="${documento}">
 							</div>
 
 							<div class="col-md-6 mt-3">
 								<label>Rol:</label>
-								<select name="rol" class="form-control">
+								<select name="rol" class="form-select">
 									<option value="" th:selected="${rol == null}">Todos</option>
 									<option value="Administrador" th:selected="${rol == 'Administrador'}">Administrador
 									</option>
@@ -165,7 +256,7 @@
 
 							<div class="col-md-6 mt-3">
 								<label>Estado:</label>
-								<select name="estado" class="form-control">
+								<select name="estado" class="form-select">
 									<option value="" th:selected="${estado == null}">Todos</option>
 									<option value="Activo" th:selected="${estado == 'Activo'}">Activo</option>
 									<option value="Inactivo" th:selected="${estado == 'Inactivo'}">Inactivo</option>
@@ -178,7 +269,7 @@
 
 					<div class="modal-footer">
 						<button class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-						<button class="btn btn-primary" type="submit">Aplicar Filtros</button>
+						<button class="btn btn-info text-white" type="submit">Aplicar Filtros</button>
 					</div>
 
 				</form>

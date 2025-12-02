@@ -8075,7 +8075,7 @@ section,
 # Error 404 Section
 --------------------------------------------------------------*/
 .error-404 {
-	padding: 100px 0;
+	padding: 50px 0;
 	background: linear-gradient(135deg, color-mix(in srgb, var(--background-color), transparent 0%), color-mix(in srgb, var(--background-color), var(--accent-color) 4%));
 }
 

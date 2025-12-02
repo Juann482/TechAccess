@@ -192,11 +192,11 @@
 											<div class="select-style-1">
 
 												<div class="select-position">
-													<select id="ficha" name="ficha.idFicha" autocomplete="off">
+													<select id="ficha" name="ficha.id" autocomplete="off">
 														<option value="">Ficha </option>
-														<option th:each="ficha : ${fichas}" th:value="${ficha.idFicha}"
+														<option th:each="ficha : ${fichas}" th:value="${ficha.id}"
 															th:text="${ficha.numFicha}"
-															th:selected="${usuario.ficha != null and usuario.ficha.idFicha == ficha.idFicha}">
+															th:selected="${usuario.ficha != null and usuario.ficha.id == ficha.id}">
 														</option>
 													</select>
 												</div>

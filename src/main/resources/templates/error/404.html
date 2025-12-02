@@ -5,43 +5,9 @@
 
 <body class="page-404">
 
-	<header id="header" class="header d-flex align-items-center fixed-top">
-		<div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
-
-			<a th:href="@{/usuario/home}" class="logo d-flex align-items-center">
-				<!-- Uncomment the line below if you also wish to use an image logo -->
-				<!-- <img th:src="@{assets/img/logo.webp" alt=""> -->
-				<img th:src="@{/images/TecAccess.png}" alt="Logo principal">
-				<h1 class="sitename"><strong>TECH</strong>ACCESS</h1>
-			</a>
-
-			<nav id="navmenu" class="navmenu">
-				<ul>
-
-					<li><a th:href="@{/}" style="color: #2f92b1;"><b>Inicio</b></a></li>
-				
-				</ul>
-				<i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-			</nav>
-
-		</div>
-	</header>
 
 	<main class="main">
 
-		<!-- Page Title -->
-		<div class="page-title dark-background" th:style="'background-image: url(' + @{/images/showcase-1.webp} + ');'">
-			<div class="container position-relative">
-				<h1>404</h1>
-				<p>La página que esta buscando ha sido inhabilitada, su nombre cambió o esta temporalmente fuera de servicio.</p>
-				<nav class="breadcrumbs">
-					<ol>
-						<li><a th:href="@{/}">Inicio</a></li>
-						<li class="current">404</li>
-					</ol>
-				</nav>
-			</div>
-		</div><!-- End Page Title -->
 
 		<!-- Error 404 Section -->
 		<section id="error-404" class="error-404 section">
@@ -68,10 +34,10 @@
 								</p>
 
 								<div class="error-actions" data-aos="fade-up" data-aos-delay="800">
-									<a th:href="@{/usuario/home}" class="btn-home">
-										<i class="bi bi-house-door"></i> Volver al principio
+									<a onclick="window.history.back()" class="btn-home">
+										<i class="bi bi-arrow-return-left text-white"></i>Volver
 									</a>
-									<a th:href="@{/usuario/soporte}" class="btn-help">
+									<a th:href="@{/soporte}" class="btn-help">
 										<i class="bi bi-question-circle"></i> Centro de ayuda
 									</a>
 								</div>
