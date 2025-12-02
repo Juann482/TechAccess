@@ -20,42 +20,41 @@ import jakarta.persistence.TemporalType;
 @Entity
 @Table(name = "vigilancia")
 public class Vigilancia {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer idVigilancia;
-	
+
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date horaIngreso;
-	
+
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date horaEgreso;
-	
+
 	private String turno;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	private EstadoPermanencia estadoPermanencia;
 
-	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	// ❌ Antes: cascade = CascadeType.ALL (peligroso)
+	// ✔ Corregido: sin cascade para no alterar al usuario
+	@OneToOne(fetch = FetchType.LAZY)
 	private Usuario usuario;
 
+	// ✔ Accesos sí deben mantenerse en cascada
 	@OneToMany(mappedBy = "vigilancia", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Acceso> accesos = new ArrayList<>();
-	
 
 	public Vigilancia() {
 	}
 
 	public Vigilancia(Integer idVigilancia, Date horaIngreso, Date horaEgreso, String turno) {
-		super();
 		this.idVigilancia = idVigilancia;
 		this.horaIngreso = horaIngreso;
 		this.horaEgreso = horaEgreso;
 		this.turno = turno;
 	}
 
-	// getters and setters
-	
 	public Integer getIdVigilancia() {
 		return idVigilancia;
 	}
@@ -112,15 +111,19 @@ public class Vigilancia {
 		this.accesos = accesos;
 	}
 
-	@Override
-	public String toString() {
-	    return "Vigilancia [idVigilancia=" + idVigilancia + ", horaIngreso=" + horaIngreso + ", horaEgreso="
-	            + horaEgreso + ", turno=" + turno
-	            + ", estadoPermanencia=" + (estadoPermanencia != null ? estadoPermanencia.getTipoPermanencia() : null)
-	            + ", usuario=" + (usuario != null ? usuario.getId() : null)
-	            + ", accesos=" + (accesos != null ? accesos.size() : 0) + "]";
+	// ✔ Método auxiliar para añadir acceso sin errores
+	public void addAcceso(Acceso acceso) {
+		accesos.add(acceso);
+		acceso.setVigilancia(this);
 	}
 
-	
+	@Override
+	public String toString() {
+		return "Vigilancia [idVigilancia=" + idVigilancia + ", horaIngreso=" + horaIngreso + ", horaEgreso="
+				+ horaEgreso + ", turno=" + turno + ", estadoPermanencia="
+				+ (estadoPermanencia != null ? estadoPermanencia.getTipoPermanencia() : null) + ", usuario="
+				+ (usuario != null ? usuario.getId() : null) + ", accesos=" + (accesos != null ? accesos.size() : 0)
+				+ "]";
+	}
 
 }
