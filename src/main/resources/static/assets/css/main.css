@@ -8588,14 +8588,14 @@ footer {
 	width: 100%;
 	height: 100%;
 	object-fit: cover;
-	/* Efecto de corte diagonal*/
+	/* Efecto de corte diagonal
 	clip-path: polygon(52% 52%,
 			35% 0%,
 			200% 60%,
 			65% 100%);
+			
 
-
-	/* Efecto de bandas horizontales 
+	Efecto de bandas horizontales 
              clip-path: polygon(
                 0 60%, 0% 0%,
                 0% 30%, 0 30%,

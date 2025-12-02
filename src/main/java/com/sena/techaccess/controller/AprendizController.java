@@ -73,6 +73,15 @@ public class AprendizController {
 		return "Aprendiz/aprendiz";
 	}
 
+	// ===================== Codigo Barras ======================
+
+	@GetMapping("/perfil")
+	public String perfil(Model model) {
+		String documento = "1234567890"; 
+		model.addAttribute("documento", documento);
+		return "perfil";
+	}
+
 	// ========================= EXCUSAS =========================
 
 	@GetMapping("/excusas")

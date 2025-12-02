@@ -14,13 +14,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.sena.techaccess.model.Acceso;
 import com.sena.techaccess.model.Dispositivo;
 import com.sena.techaccess.model.DispositivoVisit;
 import com.sena.techaccess.model.Usuario;
-import com.sena.techaccess.repository.DispositivoVisitRepository;
 import com.sena.techaccess.service.IAccesoService;
 import com.sena.techaccess.service.IDispositivoService;
 import com.sena.techaccess.service.IDispositivoVisitService;
@@ -31,7 +29,7 @@ import com.sena.techaccess.service.IVigilanciaService;
 @RequestMapping("/Vigilancia")
 public class VigilanciaController {
 
-	private final Logger LOGGER = (Logger) LoggerFactory.getLogger(AdministradorController.class);
+	private final Logger LOGGER = LoggerFactory.getLogger(VigilanciaController.class);
 
 	@Autowired
 	private IDispositivoService dispositivoService;
@@ -41,101 +39,123 @@ public class VigilanciaController {
 
 	@Autowired
 	private IUsuarioService usuarioService;
-	
+
 	@Autowired
 	private IAccesoService accesoService;
 
 	@Autowired
 	private IDispositivoVisitService dispositivoVisitService;
-	
-	//======================= INGRESO ==========================//
+
+	// ======================= INGRESO ===================================== //
 
 	@GetMapping("/Ingreso")
 	public String usuariosvigilancia(Model model) {
 
-		model.addAttribute("Usuarios", usuarioService.findAll()); // Listado de usuarios
+		model.addAttribute("Usuarios", usuarioService.findAll());
 		model.addAttribute("usuario", new Usuario());
 		model.addAttribute("Acceso", new Acceso());
 
 		return "Vigilancia/Ingresos";
-
 	}
-	
+
+	/**
+	 * Registrar ingreso con validación de un ingreso activo
+	 */
 	@PostMapping("/registrar-ingreso")
 	@ResponseBody
 	public String registrarIngreso(@RequestParam("documento") String documento) {
-	    Usuario usuario = usuarioService.findByDocumento(documento);
 
-	    if (usuario == null) {
-	        LOGGER.warn("Usuario no encontrado para el documento: {}", documento);
-	        return "Usuario no encontrado";
-	    }
-	    
+		Usuario usuario = usuarioService.findByDocumento(documento);
 
-	    Acceso acceso = usuario.getAcceso();
+		if (usuario == null) {
+			LOGGER.warn("Usuario no encontrado para el documento {}", documento);
+			return "Usuario no encontrado";
+		}
 
-	    // Si no tiene un acceso creado, se crea uno nuevo
-	    if (acceso == null) {
-	        acceso = new Acceso();
-	        acceso.setUsuario(usuario);
-	        usuario.setAcceso(acceso);
-	    }
+		// Buscar último acceso
+		Acceso ultimoAcceso = accesoService.findUltimoAcceso(usuario.getId());
 
-	    // Registrar hora de ingreso actual
-	    acceso.setHoraIngreso(LocalDateTime.now());
+		// Si el último acceso no tiene hora de salida → todavía está dentro
+		if (ultimoAcceso != null && ultimoAcceso.getHoraEgreso() == null) {
+			return "El usuario ya tiene un ingreso activo. Debe registrar salida.";
+		}
 
-	    usuarioService.save(usuario);
+		// Crear nuevo registro de acceso
+		Acceso nuevo = new Acceso();
+		nuevo.setUsuario(usuario);
+		nuevo.setHoraIngreso(LocalDateTime.now());
 
-	    LOGGER.info("✅ Ingreso registrado para: {}", usuario.getNombre());
-	    
-	    return "Ingreso registrado correctamente";
+		accesoService.save(nuevo);
+
+		LOGGER.info("Ingreso registrado -> Usuario {}", usuario.getNombre());
+
+		return "Ingreso registrado correctamente";
 	}
 
+	/**
+	 * Registrar salida del usuario
+	 */
+	@PostMapping("/registrar-egreso")
+	@ResponseBody
+	public String registrarEgreso(@RequestParam("documento") String documento) {
 
-	// ====================== VISITANTES ===============================
+		Usuario usuario = usuarioService.findByDocumento(documento);
 
-	// Registro de visitantes
+		if (usuario == null) {
+			return "Usuario no encontrado";
+		}
+
+		// Buscar último acceso sin salida
+		Acceso ultimoAcceso = accesoService.findbyHoraIngreso(usuario.getId());
+
+		if (ultimoAcceso == null || ultimoAcceso.getHoraEgreso() != null) {
+			return "No hay ingreso activo para este usuario.";
+		}
+
+		ultimoAcceso.setHoraEgreso(LocalDateTime.now());
+		accesoService.save(ultimoAcceso);
+
+		LOGGER.info("Egreso registrado -> Usuario {}", usuario.getNombre());
+
+		return "Egreso registrado correctamente";
+	}
+
+	// ====================== VISITANTES ================================= //
+
 	@GetMapping("/registro")
-	public String historialVisitante(Usuario usuario, Model model) { //El @ModelAttribute permite recibir los datos del formulario directamente.
+	public String historialVisitante(Usuario usuario, Model model) {
 
 		model.addAttribute("usuario", new Usuario());
-	    model.addAttribute("dispositivo", new DispositivoVisit());
-	    
-	    // Traer todos los usuarios que tengan rol Visitante
-	    List<Usuario> visitantes = usuarioService.findByRol("Visitante");
-	    model.addAttribute("visitantesH", visitantes);
+		model.addAttribute("dispositivo", new DispositivoVisit());
 
-		LOGGER.warn("Visitante en historial: {}", visitantes);
+		List<Usuario> visitantes = usuarioService.findByRol("Visitante");
+		model.addAttribute("visitantesH", visitantes);
+
+		LOGGER.debug("Visitantes cargados {}", visitantes);
 
 		return "Vigilancia/Visitantes";
 	}
 
-	// Guardar visitantes
 	@PostMapping("/visitanteSave")
-	public String registroVisitante(Usuario usuario, DispositivoVisit dispositivo, Model model) {
+	public String registroVisitante(Usuario usuario, DispositivoVisit dispositivo) {
 
-		// Asignar rol a los visitantes
 		usuario.setRol("Visitante");
-
 		usuarioService.save(usuario);
 
-		// Verificar si viene info de dispositivo (para no guardar uno vacío)
 		if (dispositivo.getTipo() != null && !dispositivo.getTipo().equals("--Tipo--")) {
-			// Asociar el usuario recién guardado al dispositivo
 			dispositivo.setUsuario(usuario);
 			dispositivoVisitService.save(dispositivo);
-			LOGGER.debug("Dispositivo registrado para el visitante: {}", dispositivo);
-		}
 
-		LOGGER.debug("Visitante agregado con éxito: {}", usuario);
+			LOGGER.debug("Dispositivo registrado para visitante {}", dispositivo);
+		}
 
 		return "redirect:/Vigilancia/registro";
 	}
-	// ================== DISPOSITIVOS Visitantes ===========================
 
-	// Lista de dispositivos de visitantes
+	// ================== DISPOSITIVOS VISITANTES ===========================
+
 	@GetMapping("/DispositivosVisit")
-	public String dispositivosUser(DispositivoVisit dispositivo, Model model) {
+	public String dispositivosUser(Model model) {
 
 		model.addAttribute("dispositivosVisit", dispositivoVisitService.findAll());
 		model.addAttribute("dispoVisit", new DispositivoVisit());
@@ -146,51 +166,46 @@ public class VigilanciaController {
 	@GetMapping("/DeleteDV/{id}")
 	public String EliminarDispoV(@PathVariable Integer id) {
 
-		DispositivoVisit DispoVisitDl = new DispositivoVisit();
-		DispoVisitDl = dispositivoVisitService.get(id).get();
 		dispositivoVisitService.delete(id);
-		LOGGER.warn("Dispositivo de visitante eliminado; {}", DispoVisitDl);
+		LOGGER.warn("Dispositivo Visitante eliminado: {}", id);
 
 		return "redirect:/Vigilancia/DispositivosVisit";
 	}
-	
-	//================= DISPOSITIVOS Funcionarios ===========================
-	
+
+	// ================== DISPOSITIVOS FUNCIONARIOS ===========================
+
 	@GetMapping("/DispositivosUSER")
-	public String dispositivosUSER(Model model, Usuario usuario) {
-		
+	public String dispositivosUSER(Model model) {
+
 		model.addAttribute("DispoUSER", new Usuario());
-		
 		return "Vigilancia/RegistroDU";
 	}
-	
+
 	@PostMapping("/GuardarDispoUSER")
-	public String guardarDispositivoU(Dispositivo dispositivo ) {
-		
+	public String guardarDispositivoU(Dispositivo dispositivo) {
+
 		dispositivoService.save(dispositivo);
-		LOGGER.debug("Dispositivo guardado con exito: {}", dispositivo);
-		
-		return "redirect:/Vigilancia/Ingreso"; //Temporal
+		LOGGER.debug("Dispositivo funcionario guardado {}", dispositivo);
+
+		return "redirect:/Vigilancia/Ingreso";
 	}
-	
-	//========================= REGISTRO DISPOSITIVO ========================//
-	
+
+	// ======================== REGISTRO DISPOSITIVO ==========================
+
 	@GetMapping("/RDU")
-	public String ListadoDispoUSER(Dispositivo dispositivo, Model model) {
-		
+	public String ListadoDispoUSER(Model model) {
+
 		model.addAttribute("Listado", dispositivoService.findAll());
 		model.addAttribute("ListadoDispo", new Dispositivo());
-		
+
 		return "Vigilancia/DispositivosUSER";
 	}
-	
+
 	@GetMapping("/DeleteDUSER/{id}")
 	public String EliminarDispoUSER(@PathVariable Integer id) {
 
-		DispositivoVisit DispoVisitDl = new DispositivoVisit();
-		DispoVisitDl = dispositivoVisitService.get(id).get();
-		dispositivoVisitService.delete(id);
-		LOGGER.warn("Dispositivo de visitante eliminado; {}", DispoVisitDl);
+		dispositivoService.delete(id);
+		LOGGER.warn("Dispositivo funcionario eliminado {}", id);
 
 		return "redirect:/Vigilancia/RDU";
 	}

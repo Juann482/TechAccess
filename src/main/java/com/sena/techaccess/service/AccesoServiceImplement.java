@@ -10,46 +10,57 @@ import org.springframework.stereotype.Service;
 import com.sena.techaccess.model.Acceso;
 import com.sena.techaccess.repository.AccesoRepository;
 
-@Service	
-public class AccesoServiceImplement implements IAccesoService{
+@Service
+public class AccesoServiceImplement implements IAccesoService {
 
-	@Autowired
-	private AccesoRepository accesoRepository;
+    @Autowired
+    private AccesoRepository accesoRepository;
+
+    @Override
+    public Optional<Acceso> get(Integer id) {
+        return accesoRepository.findById(id);
+    }
+
+    @Override
+    public Acceso findbyHoraIngreso(LocalDateTime horaIngreso) {
+        return accesoRepository.findByHoraIngreso(horaIngreso);
+    }
+
+    @Override
+    public Acceso findByHoraEgreso(LocalDateTime horaEgreso) {
+        return accesoRepository.findByHoraEgreso(horaEgreso);
+    }
+
+    @Override
+    public Acceso save(Acceso acceso) {
+        return accesoRepository.save(acceso);
+    }
+
+    @Override
+    public void update(Acceso acceso) {
+        accesoRepository.save(acceso);
+    }
+
+    @Override
+    public void delete(Integer id) {
+        accesoRepository.deleteById(id);
+    }
+
+    @Override
+    public List<Acceso> findAll() {
+        return accesoRepository.findAll();
+    }
+
+    // ============================= NUEVO ===============================
+    // 🔍 Obtener el último registro de acceso de un usuario
+    @Override
+    public Acceso findUltimoAcceso(Integer idUsuario) {
+        return accesoRepository.findTopByUsuarioIdOrderByHoraIngresoDesc(idUsuario);
+    }
 
 	@Override
-	public Optional<Acceso> get(Integer id) {
-		return accesoRepository.findById(id);
+	public Acceso findbyHoraIngreso(Integer id) {
+		// TODO Auto-generated method stub
+		return null;
 	}
-
-	@Override
-	public Acceso findbyHoraIngreso(LocalDateTime horaIngreso) {
-		return accesoRepository.findByHoraIngreso(horaIngreso);
-	}
-
-	@Override
-	public Acceso findByHoraEgreso(LocalDateTime horaEgreso) {
-		return accesoRepository.findByHoraEgreso(horaEgreso);
-	}
-
-	@Override
-	public Acceso save(Acceso acceso) {
-		return accesoRepository.save(acceso);
-	}
-
-	@Override
-	public void update(Acceso acceso) {
-		accesoRepository.save(acceso);
-	}
-
-	@Override
-	public void delete(Integer id) {
-		accesoRepository.deleteById(id);
-	}
-
-	@Override
-	public List<Acceso> findAll() {
-		return accesoRepository.findAll();
-	}
-	
-	
 }
