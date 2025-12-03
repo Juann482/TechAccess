@@ -2,7 +2,7 @@
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 
 <head th:insert="~{/templates_usuario.html::head}">
-	<!-- SweetAlert -->
+
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 	<style>
@@ -109,10 +109,10 @@
 						<i class="bi bi-person-circle fs-4"></i>
 					</a>
 					<ul class="dropdown-menu dropdown-menu-end">
-						<li><a class="dropdown-item" href="#" onclick="mostrarPerfil()">
+						<li><a class="dropdown-item" href="#" id="perfil-link">
 								<i class="bi bi-person me-2"></i>Perfil
 							</a></li>
-						<li><a class="dropdown-item" th:href="@{/logout}" onclick="return confirmarLogout()">
+						<li><a class="dropdown-item" th:href="@{/logout}" id="logout-link">
 								<i class="bi bi-box-arrow-right me-2"></i>Cerrar sesión
 							</a></li>
 					</ul>
@@ -150,25 +150,27 @@
 							</div>
 
 							<nav class="nav flex-column mt-4">
-								<a th:href="@{/instructor/nvasEntradas}" class="btn btn-outline-info btn-sm mt-2"
-									onclick="cargando('Cargando últimas entradas...')">
+								<a th:href="@{/instructor/nvasEntradas}"
+									class="btn btn-outline-info btn-sm mt-2 cargando-btn"
+									data-mensaje="Cargando últimas entradas...">
 									<i class="bi bi-house me-2 text-success"></i> Últimas Entradas
 									<span class="metric-badge ms-2" th:text="${entradasHoy}">0</span>
 								</a>
-								<a th:href="@{/instructor/grupos}" class="btn btn-outline-info btn-sm mt-2"
-									onclick="cargando('Cargando grupos...')">
+								<a th:href="@{/instructor/grupos}" class="btn btn-outline-info btn-sm mt-2 cargando-btn"
+									data-mensaje="Cargando grupos...">
 									<i class="bi bi-people me-2 text-success"></i> Grupos
 									<span class="metric-badge ms-2" th:text="${gruposActivos}">0</span>
 								</a>
-								<a th:href="@{/instructor/reportes}" class="btn btn-outline-info btn-sm mt-2"
-									onclick="cargando('Generando reportes...')">
+								<a th:href="@{/instructor/reportes}"
+									class="btn btn-outline-info btn-sm mt-2 cargando-btn"
+									data-mensaje="Generando reportes...">
 									<i class="bi bi-clipboard-data me-2 text-success"></i> Reportes
 								</a>
 							</nav>
 
 							<!-- RESUMEN RÁPIDO -->
 							<div class="mt-4 p-3 border rounded">
-								<h6 class="text-muted mb-3">📊 Resumen Hoy</h6>
+								<h6 class="text-muted mb-3"> Resumen Hoy</h6>
 								<div class="row text-center">
 									<div class="col-6 mb-2">
 										<small class="text-muted">Presentes</small>
@@ -193,26 +195,34 @@
 							<p class="text-muted">Sistema de control de acceso y gestión de aprendices</p>
 
 							<!-- MÉTRICAS PRINCIPALES -->
-							<div class="stats-grid">
-								<div class="stat-item">
-									<i class="bi bi-people-fill fs-2 text-primary mb-2"></i>
-									<div class="stat-number" th:text="${totalAprendices}">0</div>
-									<small class="text-muted">Total Aprendices</small>
+							<div class="row g-3 mt-4">
+								<div class="col-md-3 col-sm-6">
+									<div class="stat-item">
+										<i class="bi bi-people-fill fs-2 text-primary mb-2"></i>
+										<div class="stat-number" th:text="${totalAprendices}">0</div>
+										<small class="text-muted">Total Aprendices</small>
+									</div>
 								</div>
-								<div class="stat-item">
-									<i class="bi bi-door-open fs-2 text-success mb-2"></i>
-									<div class="stat-number" th:text="${entradasHoy}">0</div>
-									<small class="text-muted">Entradas Hoy</small>
+								<div class="col-md-3 col-sm-6">
+									<div class="stat-item">
+										<i class="bi bi-door-open fs-2 text-success mb-2"></i>
+										<div class="stat-number" th:text="${entradasHoy}">0</div>
+										<small class="text-muted">Entradas Hoy</small>
+									</div>
 								</div>
-								<div class="stat-item">
-									<i class="bi bi-collection fs-2 text-warning mb-2"></i>
-									<div class="stat-number" th:text="${gruposActivos}">0</div>
-									<small class="text-muted">Grupos Activos</small>
+								<div class="col-md-3 col-sm-6">
+									<div class="stat-item">
+										<i class="bi bi-collection fs-2 text-warning mb-2"></i>
+										<div class="stat-number" th:text="${gruposActivos}">0</div>
+										<small class="text-muted">Grupos Activos</small>
+									</div>
 								</div>
-								<div class="stat-item">
-									<i class="bi bi-exclamation-triangle fs-2 text-danger mb-2"></i>
-									<div class="stat-number" th:text="${alertas}">0</div>
-									<small class="text-muted">Por Verificar</small>
+								<div class="col-md-3 col-sm-6">
+									<div class="stat-item">
+										<i class="bi bi-exclamation-triangle fs-2 text-danger mb-2"></i>
+										<div class="stat-number" th:text="${alertas}">0</div>
+										<small class="text-muted">Por Verificar</small>
+									</div>
 								</div>
 							</div>
 
@@ -271,8 +281,7 @@
 												<i class="bi bi-exclamation-triangle text-warning fs-1"></i>
 												<h4 class="text-warning" th:text="${alertas}">0</h4>
 												<p class="text-muted mb-3">Aprendices sin registro</p>
-												<button class="btn btn-outline-warning btn-sm"
-													onclick="verDetallesAlertas()">
+												<button class="btn btn-outline-warning btn-sm" id="alertas-btn">
 													Ver detalles
 												</button>
 											</div>
@@ -296,85 +305,154 @@
 	<div th:insert="~{/templates_usuario.html::jsFiles}"></div>
 
 	<!-- SweetAlert Scripts -->
-	<script>
+	<script th:inline="javascript">
+		/*<![CDATA[*/
+
+		// Variables globales desde Thymeleaf
+		const usuarioNombre = /*[[${usuario.nombre}]]*/ 'Instructor';
+		const usuarioEmail = /*[[${usuario.email}]]*/ 'instructor@sena.edu.co';
+		const alertasCount = /*[[${alertas}]]*/ 0;
+
 		// Función para mostrar carga
 		function cargando(mensaje) {
-			Swal.fire({
-				title: mensaje,
-				allowOutsideClick: false,
-				didOpen: () => {
-					Swal.showLoading();
-				}
-			});
+			if (typeof Swal !== 'undefined') {
+				Swal.fire({
+					title: mensaje,
+					allowOutsideClick: false,
+					showConfirmButton: false,
+					didOpen: () => {
+						Swal.showLoading();
+					}
+				});
+
+				// Cierre automático tras 2 segundos
+				setTimeout(() => {
+					if (Swal && Swal.isVisible()) {
+						Swal.close();
+					}
+				}, 2000);
+			}
 		}
 
 		// Confirmar logout
-		function confirmarLogout() {
-			Swal.fire({
-				title: '¿Cerrar sesión?',
-				text: "¿Estás seguro de que quieres salir?",
-				icon: 'question',
-				showCancelButton: true,
-				confirmButtonColor: '#0c2d48',
-				cancelButtonColor: '#6c757d',
-				confirmButtonText: 'Sí, salir',
-				cancelButtonText: 'Cancelar'
-			}).then((result) => {
-				if (result.isConfirmed) {
+		function confirmarLogout(event) {
+			event.preventDefault();
+
+			if (typeof Swal !== 'undefined') {
+				Swal.fire({
+					title: '¿Cerrar sesión?',
+					text: "¿Estás seguro de que quieres salir?",
+					icon: 'question',
+					showCancelButton: true,
+					confirmButtonColor: '#0c2d48',
+					cancelButtonColor: '#6c757d',
+					confirmButtonText: 'Sí, salir',
+					cancelButtonText: 'Cancelar'
+				}).then((result) => {
+					if (result.isConfirmed) {
+						window.location.href = '/logout';
+					}
+				});
+			} else {
+				// si SweetAlert no está disponible
+				if (confirm('¿Estás seguro de que quieres cerrar sesión?')) {
 					window.location.href = '/logout';
 				}
-			});
-			return false;
+			}
 		}
 
 		// Mostrar perfil
 		function mostrarPerfil() {
-			Swal.fire({
-				title: 'Mi Perfil',
-				html: `
-					<div class="text-start">
-						<p><strong>Nombre:</strong> <span th:text="${usuario.nombre}">Instructor</span></p>
-						<p><strong>Email:</strong> <span th:text="${usuario.email}">instructor@sena.edu.co</span></p>
-						<p><strong>Área:</strong> Mecánica</p>
-						<p><strong>Estado:</strong> <span class="badge bg-success">Activo</span></p>
-					</div>
-				`,
-				icon: 'info',
-				confirmButtonColor: '#0c2d48',
-				confirmButtonText: 'Entendido'
-			});
+			if (typeof Swal !== 'undefined') {
+				Swal.fire({
+					title: 'Mi Perfil',
+					html: `
+						<div class="text-start">
+							<p><strong>Nombre:</strong> ${usuarioNombre}</p>
+							<p><strong>Email:</strong> ${usuarioEmail}</p>
+							<p><strong>Área:</strong> Mecánica</p>
+							<p><strong>Estado:</strong> <span class="badge bg-success">Activo</span></p>
+						</div>
+					`,
+					icon: 'info',
+					confirmButtonColor: '#0c2d48',
+					confirmButtonText: 'Entendido'
+				});
+			} else {
+				alert(`Perfil:\nNombre: ${usuarioNombre}\nEmail: ${usuarioEmail}\nÁrea: Mecánica\nEstado: Activo`);
+			}
 		}
 
 		function verDetallesAlertas() {
-			Swal.fire({
-				title: 'Detalles de Alertas',
-				html: `
-					<div class="text-start">
-						<p><strong th:text="${alertas}">0</strong> aprendices no han registrado entrada hoy.</p>
-						<p>Revisa la sección de <strong>Últimas Entradas</strong> para más detalles.</p>
-					</div>
-				`,
-				icon: 'warning',
-				confirmButtonColor: '#0c2d48',
-				confirmButtonText: 'Entendido'
-			});
+			if (typeof Swal !== 'undefined') {
+				Swal.fire({
+					title: 'Detalles de Alertas',
+					html: `
+						<div class="text-start">
+							<p><strong>${alertasCount}</strong> aprendices no han registrado entrada hoy.</p>
+							<p>Revisa la sección de <strong>Últimas Entradas</strong> para más detalles.</p>
+						</div>
+					`,
+					icon: 'warning',
+					confirmButtonColor: '#0c2d48',
+					confirmButtonText: 'Entendido'
+				});
+			} else {
+				alert(`${alertasCount} aprendices no han registrado entrada hoy. Revisa la sección de Últimas Entradas.`);
+			}
 		}
 
-		// Mostrar alerta de bienvenida al cargar
+		// Inicializar eventos 
 		document.addEventListener('DOMContentLoaded', function () {
-			setTimeout(() => {
-				Swal.fire({
-					title: '¡Bienvenido!',
-					text: 'Panel de instructor cargado correctamente',
-					icon: 'success',
-					confirmButtonColor: '#0c2d48',
-					timer: 3000,
-					timerProgressBar: true,
-					toast: true,
-					position: 'top-end'
+			// Asignar evento al enlace de perfil
+			const perfilLink = document.getElementById('perfil-link');
+			if (perfilLink) {
+				perfilLink.addEventListener('click', function (e) {
+					e.preventDefault();
+					mostrarPerfil();
 				});
-			}, 1000);
+			}
+
+			// Asignar evento al enlace de logout
+			const logoutLink = document.getElementById('logout-link');
+			if (logoutLink) {
+				logoutLink.addEventListener('click', confirmarLogout);
+			}
+
+			// Asignar eventos a botones de carga
+			const cargandoButtons = document.querySelectorAll('.cargando-btn');
+			cargandoButtons.forEach(button => {
+				button.addEventListener('click', function (e) {
+					const mensaje = this.getAttribute('data-mensaje') || 'Cargando...';
+					cargando(mensaje);
+				});
+			});
+
+			// Asignar evento al botón de alertas
+			const alertasBtn = document.getElementById('alertas-btn');
+			if (alertasBtn) {
+				alertasBtn.addEventListener('click', verDetallesAlertas);
+			}
+
+			// Mostrar alerta de bienvenida
+			setTimeout(() => {
+				if (typeof Swal !== 'undefined') {
+					Swal.fire({
+						title: '¡Bienvenido!',
+						text: 'Panel de instructor cargado correctamente',
+						icon: 'success',
+						confirmButtonColor: '#0c2d48',
+						timer: 2000,
+						timerProgressBar: true,
+						toast: true,
+						position: 'top-end',
+						showConfirmButton: false
+					});
+				}
+			}, 800);
 		});
+
+		/*]]>*/
 	</script>
 </body>
 

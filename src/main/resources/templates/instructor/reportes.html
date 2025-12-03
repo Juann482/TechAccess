@@ -34,195 +34,237 @@
 		</div>
 	</header>
 
-	<Fondo de video>
-		<div class="video-container2 position-fixed top-0 start-0 w-100 h-100" style="z-index:-1;">
-			<video class="video-background2 w-100 h-100 object-fit-cover" autoplay muted loop>
-				<source src="https://videos.pexels.com/video-files/7946210/7946210-uhd_1440_2732_30fps.mp4">
-				Error al cargar el video.
-			</video>
-		</div>
+	<!-- Fondo de video -->
+	<div class="video-container2 position-fixed top-0 start-0 w-100 h-100" style="z-index:-1;">
+		<video class="video-background2 w-100 h-100 object-fit-cover" autoplay muted loop>
+			<source src="https://videos.pexels.com/video-files/7946210/7946210-uhd_1440_2732_30fps.mp4">
+			Error al cargar el video.
+		</video>
+	</div>
 
+	<main style="background-color: rgba(0, 128, 192, 0.05); min-height: 100vh; margin-top: 100px;">
 
-		<main style="background-color: rgba(0, 128, 192, 0.05); min-height: 100vh; margin-top: 100px;">
+		<section class="section" style="background-color:rgba(235, 234, 231, 0.87)">
+			<div class="container py-4">
+				<div class="row">
 
-			<section class="section" style="background-color:rgba(235, 234, 231, 0.87)">
-				<div class="container py-4">
-					<div class="row">
+					<!-- Panel lateral -->
+					<div class="col-lg-3 mb-4">
+						<div class="user-nav rounded shadow-sm p-3 bg-white text-center">
+							<img th:src="@{/images/instructor.png}" alt="Instructor.img"
+								style="width: 120px; border-radius: 50%; border: 2px solid rgb(0, 128, 192);">
+							<small class="text-muted"><b>Área:</b> <span>Mecánica</span></small>
+							<div class="mt-2">
+								<span class="badge bg-success px-3 py-2">Activo</span>
+							</div>
 
-						<!-- Panel lateral -->
-						<div class="col-lg-3 mb-4">
-							<div class="user-nav rounded shadow-sm p-3 bg-white text-center">
-								<img th:src="@{/images/instructor.png}" alt="Instructor.img"
-									style="width: 120px; border-radius: 50%; border: 2px solid rgb(0, 128, 192);">
-								<small class="text-muted"><b>Área:</b> <span>Mecánica</span></small>
-								<div class="mt-2">
-									<span class="badge bg-success px-3 py-2">Activo</span>
+							<nav class="nav flex-column mt-4">
+								<a th:href="@{/instructor/nvasEntradas}" class="btn btn-outline-info btn-sm mt-2">
+									<i class="bi bi-house me-2"></i> Últimas Entradas
+								</a>
+								<a th:href="@{/instructor/grupos}" class="btn btn-outline-info btn-sm mt-2">
+									<i class="bi bi-people me-2"></i> Grupos
+								</a>
+								<a th:href="@{/instructor/reportes}" class="btn btn-outline-info btn-sm mt-2">
+									<i class="bi bi-clipboard-data me-2"></i> Reportes
+								</a>
+							</nav>
+						</div>
+					</div>
+
+					<!-- Contenido principal - SOLO EXCUSAS -->
+					<div class="col-lg-9">
+
+						<!-- Ponderado -->
+						<div class="row mb-4">
+							<div class="col-md-13">
+								<div class="card text-white bg-info">
+									<div class="card-body text-center">
+										<h1 th:text="${totalExcusas}">0</h1>
+										<p class="mb-0 fs-5">Registro total de Excusas en el Sistema</p>
+									</div>
 								</div>
-
-								<nav class="nav flex-column mt-4">
-									<a th:href="@{/instructor/nvasEntradas}" class="btn btn-outline-info btn-sm mt-2">
-										<i class="bi bi-house me-2"></i> Últimas Entradas
-									</a>
-									<a th:href="@{/instructor/grupos}" class="btn btn-outline-info btn-sm mt-2">
-										<i class="bi bi-people me-2"></i> Grupos
-									</a>
-									<a th:href="@{/instructor/reportes}" class="btn btn-outline-info btn-sm mt-2">
-										<i class="bi bi-clipboard-data me-2"></i> Reportes
-									</a>
-								</nav>
 							</div>
 						</div>
 
-						<!-- Contenido principal - SOLO PERMISOS -->
-						<div class="col-lg-9">
+						<!-- Reporte de Excusas -->
+						<div class="card">
+							<div class="card-header bg-white d-flex justify-content-between align-items-center">
+								<h5 class="card-title mb-0">
+									<i class="bi bi-file-earmark-text me-2"></i>Reporte de Excusas de Aprendices
+								</h5>
+								<span class="badge bg-secondary" th:text="${totalExcusas} + ' excusas'">0
+									excusas</span>
+							</div>
+							<div class="card-body">
+								<div th:if="${excusas.empty}" class="text-center py-5">
+									<i class="bi bi-file-earmark-x fs-1 text-muted"></i>
+									<p class="text-muted mt-3">No hay excusas registradas en el sistema</p>
+								</div>
 
-							<!-- Ponderado -->
-							<div class="row mb-4">
-								<div class="col-md-13">
-									<div class="card text-white bg-info">
-										<div class="card-body text-center">
-											<h1 th:text="${totalPermisos}">0</h1>
-											<p class="mb-0 fs-5">Registro total de Permisos en el Sistema</p>
-										</div>
+								<div th:unless="${excusas.empty}" class="table-responsive">
+
+									<!-- Paginación -->
+									<nav th:if="${totalPaginas > 1}">
+										<ul class="pagination">
+											<!-- PREVIOUS -->
+											<li class="page-item"
+												th:classappend="${paginaActual == 0} ? 'disabled' : ''">
+												<a class="page-link" style="color:cadetblue"
+													th:href="@{/instructor/reportes(page=${paginaActual - 1})}">
+													&laquo; Anterior
+												</a>
+											</li>
+
+											<!-- Páginas -->
+											<li th:each="i : ${#numbers.sequence(0, totalPaginas - 1)}"
+												class="page-item" style="background-color:rgb(212, 212, 212)"
+												th:classappend="${i == paginaActual} ? 'active' : ''">
+												<a class="page-link"
+													style="color:azure; background-color:cadetblue; border-color: rgb(0, 128, 128);"
+													th:href="@{/instructor/reportes(page=${i})}" th:text="${i + 1}">
+												</a>
+											</li>
+
+											<!-- NEXT -->
+											<li class="page-item"
+												th:classappend="${paginaActual == totalPaginas - 1} ? 'disabled' : ''">
+												<a class="page-link" style="color:cadetblue"
+													th:href="@{/instructor/reportes(page=${paginaActual + 1})}">
+													Siguiente &raquo;
+												</a>
+											</li>
+										</ul>
+									</nav>
+
+									<!-- Info de paginación -->
+									<div class="text-center text-muted mt-2">
+										Página <span th:text="${paginaActual + 1}"></span> de <span
+											th:text="${totalPaginas}"></span>
+										| Mostrando <span th:text="${excusas.size()}"></span> excusas
 									</div>
+
+									<!-- Tabla de Excusas -->
+									<table class="table table-striped table-hover">
+										<thead class="table-secondary">
+											<tr>
+												<th>ID</th>
+												<th>Motivo</th>
+												<th>Descripción</th>
+												<th>Fecha</th>
+												<th>Aprendiz</th>
+												<th>Ficha</th>
+												<th>Soporte</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr th:each="excusa : ${excusas}">
+												<td th:text="${excusa.id}">1</td>
+												<td>
+													<span th:text="${excusa.motivo}" class="fw-bold text-dark">
+														Enfermedad
+													</span>
+												</td>
+												<td>
+													<small th:text="${excusa.descripcion}" class="text-muted"
+														style="max-width: 200px; display: inline-block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+														Descripción de la excusa...
+													</small>
+												</td>
+												<td th:text="${#temporals.format(excusa.fecha, 'dd/MM/yyyy')}">
+													15/04/2024
+												</td>
+												<td>
+													<span th:if="${excusa.usuario != null}"
+														th:text="${excusa.usuario.nombre}" class="fw-bold">
+														Aprendiz
+													</span>
+													<span th:if="${excusa.usuario == null}"
+														class="text-muted fst-italic">
+														Sin aprendiz
+													</span>
+												</td>
+												<td>
+													<span th:if="${excusa.ficha != null}"
+														th:text="${excusa.ficha.numFicha}" class="badge bg-primary">
+														2557863
+													</span>
+													<span th:if="${excusa.ficha == null}" class="text-muted fst-italic">
+														Sin ficha
+													</span>
+												</td>
+												<td>
+													<span th:if="${excusa.soporte != null and excusa.soporte != ''}">
+														<a th:href="@{'/uploads/' + ${excusa.soporte}}" target="_blank"
+															class="badge bg-success">
+															<i class="bi bi-file-earmark-arrow-down me-1"></i>Ver
+														</a>
+													</span>
+													<span th:if="${excusa.soporte == null or excusa.soporte == ''}"
+														class="badge bg-warning">
+														<i class="bi bi-file-x me-1"></i>Sin soporte
+													</span>
+												</td>
+											</tr>
+										</tbody>
+									</table>
 								</div>
 							</div>
+						</div>
 
-							<!-- Reporte de Permisos -->
-							<div class="card">
-								<div class="card-header bg-white d-flex justify-content-between align-items-center">
-									<h5 class="card-title mb-0">
-										<i class="bi bi-shield-check me-2"></i>Reporte de Permisos de Usuarios
-									</h5>
-									<span class="badge bg-secondary" th:text="${totalPermisos} + ' permisos'">0
-										permisos</span>
-								</div>
-								<div class="card-body">
-									<div th:if="${permisos.empty}" class="text-center py-5">
-										<i class="bi bi-shield-slash fs-1 text-muted"></i>
-										<p class="text-muted mt-3">No hay permisos registrados en el sistema</p>
-									</div>
-
-									<div th:unless="${permisos.empty}" class="table-responsive">
-
-										<!-----------                     ------------------>
-
-										<nav th:if="${totalPaginas > 1}">
-											<ul class="pagination">
-												<!-- el PREVOIUS -->
-												<li class="page-item"
-													th:classappend="${paginaActual == 0} ? 'disabled' : ''">
-													<a class="page-link" style="color:cadetblue"
-														th:href="@{/instructor/reportes(page=${paginaActual - 1})}">
-														&laquo; Anterior
-													</a>
-												</li>
-
-												<!-- Páginas -->
-												<li th:each="i : ${#numbers.sequence(0, totalPaginas - 1)}"
-													class="page-item" style="background-color:rgb(212, 212, 212)"
-													th:classappend="${i == paginaActual} ? 'active' : ''">
-													<a class="page-link"
-														style="color:azure; background-color:cadetblue; border-color: rgb(0, 128, 128);"
-														th:href="@{/instructor/reportes(page=${i})}" th:text="${i + 1}">
-													</a>
-												</li>
-
-												<!-- el NEXT -->
-												<li class="page-item"
-													th:classappend="${paginaActual == totalPaginas - 1} ? 'disabled' : ''">
-													<a class="page-link" style="color:cadetblue"
-														th:href="@{/instructor/reportes(page=${paginaActual + 1})}">
-														Siguiente &raquo;
-													</a>
-												</li>
-											</ul>
-										</nav>
-
-										<!-- pa saber -->
-										<div class="text-center text-muted mt-2">
-											Página <span th:text="${paginaActual + 1}"></span> de <span
-												th:text="${totalPaginas}"></span>
-											| Mostrando <span th:text="${permisos.size()}"></span> permisos
-										</div>
-
-										<table class="table table-striped table-hover">
-											<thead class="table-secondary">
-												<tr>
-													<th hidden>ID</th>
-													<th>Tipo de Permiso</th>
-													<!--th>Ruta</th-->
-													<th>Aprendiz</th>
-													<th>Estado</th>
-												</tr>
-											</thead>
-											<tbody>
-												<tr th:each="permiso : ${permisos}">
-													<td th:text="${permiso.id}" hidden>1</td>
-													<td>
-														<span th:text="${permiso.tipoPermiso}" class="text-dark">
-															ADMIN
-														</span>
-													</td>
-													<!--td>
-													<code th:text="${permiso.rutaPermiso}" class="text-dark">
-                                                        /administraor/dashboard
-                                                    </code>
-												</td-->
-													<td>
-														<span th:if="${permiso.usuario != null}"
-															th:text="${permiso.usuario.nombre}" class="fw-bold">
-															Johan Cena
-														</span>
-
-														<!--filtro de usuario aprendiz-->
-														<span th:if="${permiso.usuario == null}"
-															class="text-muted fst-italic">
-															Sin usuario
-														</span>
-													</td>
-													<td>
-														<span class="badge bg-info">
-															<i class="bi bi-check-circle me-1"></i>Ver detalles...
-														</span>
-													</td>
-												</tr>
-											</tbody>
-										</table>
-									</div>
-								</div>
+						<!-- Estadísticas -->
+						<div class="card mt-4">
+							<div class="card-header bg-white">
+								<h6 class="card-title mb-0">
+									<i class="bi bi-pie-chart me-2"></i>Estadísticas de Excusas
+								</h6>
 							</div>
-
-							<!-- Por Tipo de Permiso -->
-							<div class="card mt-4">
-								<div class="card-header bg-white">
-									<h6 class="card-title mb-0">
-										<i class="bi bi-pie-chart me-2"></i>Descripción y detalles
-									</h6>
-								</div>
-								<div class="card-body">
-									<div th:if="${!permisos.empty}">
-										<div class="row">
-											<div class="col-md-4 text-center">
-												<div class="col-md-4 text-center">
-													<div class="border rounded p-3">
-														<!--h4 th:text="${#lists.size(#lists.select(permisos, '${permiso.tipoPermiso == \"APRENDIZ\"}'))}">0</h4-->
-														<span class="badge bg-secondary">APRENDIZ</span>
-													</div>
-												</div>
+							<div class="card-body">
+								<div th:if="${!excusas.empty}">
+									<div class="row text-center">
+										<div class="col-md-3 mb-3">
+											<div class="border rounded p-3 bg-light">
+												<h4 th:text="${#lists.size(#lists.select(excusas, '${excusa.motivo == \"
+													ENFERMEDAD\"}'))}">0</h4>
+												<span class="badge bg-danger">ENFERMEDAD</span>
+											</div>
+										</div>
+										<div class="col-md-3 mb-3">
+											<div class="border rounded p-3 bg-light">
+												<h4 th:text="${#lists.size(#lists.select(excusas, '${excusa.motivo == \"
+													CITA MÉDICA\"}'))}">0</h4>
+												<span class="badge bg-warning">CITA MÉDICA</span>
+											</div>
+										</div>
+										<div class="col-md-3 mb-3">
+											<div class="border rounded p-3 bg-light">
+												<h4 th:text="${#lists.size(#lists.select(excusas, '${excusa.motivo == \"
+													EMERGENCIA FAMILIAR\"}'))}">0</h4>
+												<span class="badge bg-info">EMERGENCIA FAMILIAR</span>
+											</div>
+										</div>
+										<div class="col-md-3 mb-3">
+											<div class="border rounded p-3 bg-light">
+												<h4 th:text="${#lists.size(#lists.select(excusas, '${excusa.motivo == \"
+													OTRO\"}'))}">0</h4>
+												<span class="badge bg-secondary">OTRO</span>
 											</div>
 										</div>
 									</div>
+								</div>
+								<div th:if="${excusas.empty}" class="text-center">
+									<p class="text-muted">No hay datos para mostrar estadísticas</p>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-			</section>
-		</main>
+			</div>
+		</section>
+	</main>
 
-		<div th:insert="~{/templates_usuario.html::footer}"></div>
-		<div th:insert="~{/templates_usuario.html::jsFiles}"></div>
+	<div th:insert="~{/templates_usuario.html::footer}"></div>
+	<div th:insert="~{/templates_usuario.html::jsFiles}"></div>
 
 </body>
 
