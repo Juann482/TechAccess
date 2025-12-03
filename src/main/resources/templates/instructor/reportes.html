@@ -201,7 +201,7 @@
 														</a>
 													</span>
 													<span th:if="${excusa.soporte == null or excusa.soporte == ''}"
-														class="badge bg-warning">
+														class="badge bg-info">
 														<i class="bi bi-file-x me-1"></i>Sin soporte
 													</span>
 												</td>
@@ -224,29 +224,28 @@
 									<div class="row text-center">
 										<div class="col-md-3 mb-3">
 											<div class="border rounded p-3 bg-light">
-												<h4 th:text="${#lists.size(#lists.select(excusas, '${excusa.motivo == \"
-													ENFERMEDAD\"}'))}">0</h4>
-												<span class="badge bg-danger">ENFERMEDAD</span>
+												<h4 th:text="${#lists.size(excusas.?[motivo == 'ENFERMEDAD'])}">a Value
+												</h4>
+												<span class="badge bg-info">ENFERMEDAD</span>
 											</div>
 										</div>
 										<div class="col-md-3 mb-3">
 											<div class="border rounded p-3 bg-light">
-												<h4 th:text="${#lists.size(#lists.select(excusas, '${excusa.motivo == \"
-													CITA MÉDICA\"}'))}">0</h4>
-												<span class="badge bg-warning">CITA MÉDICA</span>
+												<h4 th:text="${#lists.size(excusas.?[motivo =='CITA MÉDICA'])}">b Value
+												</h4>
+												<span class="badge bg-secondary">CITA MÉDICA</span>
 											</div>
 										</div>
 										<div class="col-md-3 mb-3">
 											<div class="border rounded p-3 bg-light">
-												<h4 th:text="${#lists.size(#lists.select(excusas, '${excusa.motivo == \"
-													EMERGENCIA FAMILIAR\"}'))}">0</h4>
+												<h4 th:text="${#lists.size(excusas.?[motivo =='EMERGENCIA FAMILIAR'])}">
+													0</h4>
 												<span class="badge bg-info">EMERGENCIA FAMILIAR</span>
 											</div>
 										</div>
 										<div class="col-md-3 mb-3">
 											<div class="border rounded p-3 bg-light">
-												<h4 th:text="${#lists.size(#lists.select(excusas, '${excusa.motivo == \"
-													OTRO\"}'))}">0</h4>
+												<h4 th:text="${#lists.size(excusas.?[motivo == 'OTRO'])}">0</h4>
 												<span class="badge bg-secondary">OTRO</span>
 											</div>
 										</div>

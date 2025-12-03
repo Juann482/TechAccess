@@ -111,7 +111,7 @@ public class InstructorController {
 
 		// Obtener USUARIO de sesión
 		Usuario instructor = (Usuario) session.getAttribute("usuarioSesion");
-		if (instructor != null) {
+		if (instructor == null) {
 			return "redirect:/logout";
 		}
 
@@ -144,13 +144,16 @@ public class InstructorController {
 
 	@GetMapping("/grupos")
 	public String vistaGrupos(Model model) {
-		try {
-			// Obtiene USUARIO de sesión
-			Usuario instructor = (Usuario) session.getAttribute("usuarioSesion");
-			if (instructor != null) {
-				model.addAttribute("usuario", instructor);
-			}
 
+		// Obtiene USUARIO de sesión
+		Usuario instructor = (Usuario) session.getAttribute("usuarioSesion");
+		if (instructor == null) {
+			return "redirect:/logout";
+		}
+
+		model.addAttribute("usuario", instructor);
+
+		try {
 			List<Ficha> fichas = fichaService.findAll();
 
 			if (fichas.isEmpty()) {
@@ -164,6 +167,7 @@ public class InstructorController {
 		} catch (Exception e) {
 			model.addAttribute("error", "Error al cargar las fichas: " + e.getMessage());
 			e.printStackTrace();
+			return "redirect:/logout";
 		}
 
 		return "instructor/grupos";
@@ -173,10 +177,12 @@ public class InstructorController {
 	public String vistaReportes(@RequestParam(defaultValue = "0") int page, Model model) {
 		// Obtiene USUARIO de sesión
 		Usuario instructor = (Usuario) session.getAttribute("usuarioSesion");
-		if (instructor != null) {
+		if (instructor == null) {
 			// model.addAttribute("usuario", instructor);
-			model.addAttribute("instructor", instructor);
+			return "redirect:/logout";
 		}
+
+		model.addAttribute("instructor", instructor);
 
 		int tamañoPagina = 10;
 		int maxPaginas = 5;
@@ -187,9 +193,7 @@ public class InstructorController {
 		// METODO Filtrado por INSTR
 		// List<Excusas> todasExcusas =
 		// excusasService.findByUsuarioId(instructor.getId());
-		
-		
-		
+
 		// METODO iltrado por FICHAS del instructor
 		// List<Excusas> todasExcusas =
 		// excusasService.findByFichaInstructorId(instructor.getId());
