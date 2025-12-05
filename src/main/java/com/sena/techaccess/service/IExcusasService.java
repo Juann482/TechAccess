@@ -4,6 +4,7 @@ package com.sena.techaccess.service;
 import java.util.List;
 import java.util.Optional;
 import com.sena.techaccess.model.Excusas;
+import com.sena.techaccess.model.Usuario;
 
 public interface IExcusasService {
 	
@@ -15,4 +16,7 @@ public interface IExcusasService {
 
 	List<Excusas> findAll();
 
+	public List<Excusas> findByUsuario(Usuario user);
+
+	
 }

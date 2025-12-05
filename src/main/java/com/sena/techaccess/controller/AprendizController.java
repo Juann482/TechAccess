@@ -1,20 +1,24 @@
 package com.sena.techaccess.controller;
 
+import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
-
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.security.Principal;
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-import java.nio.file.Files;
-import java.io.IOException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,16 +27,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.util.StringUtils;
-import org.springframework.validation.BindingResult;
 
+import com.sena.techaccess.model.Acceso;
 import com.sena.techaccess.model.Excusas;
 import com.sena.techaccess.model.Horario;
 import com.sena.techaccess.model.Usuario;
-import com.sena.techaccess.repository.FichaRepository;
 import com.sena.techaccess.repository.HorarioRepository;
+import com.sena.techaccess.service.IAccesoService;
 import com.sena.techaccess.service.IExcusasService;
-import com.sena.techaccess.service.IFichaService;
 import com.sena.techaccess.service.IUsuarioService;
 
 import jakarta.validation.Valid;
@@ -40,6 +42,8 @@ import jakarta.validation.Valid;
 @Controller
 @RequestMapping("/Aprendiz")
 public class AprendizController {
+
+	private final AccesoController accesoController;
 
 	private final Logger LOGGER = LoggerFactory.getLogger(AprendizController.class);
 
@@ -50,183 +54,272 @@ public class AprendizController {
 	private IUsuarioService usuarioService;
 
 	@Autowired
-	private IFichaService fichaService;
-
-	@Autowired
-	private FichaRepository fichaRepository;
-
-	@Autowired
 	private HorarioRepository horarioRepository;
 
-	// Constructor
-	public AprendizController(FichaRepository fichaRepository) {
-		this.fichaRepository = fichaRepository;
+	@Autowired
+	private IAccesoService accesoService;
+
+	AprendizController(AccesoController accesoController) {
+		this.accesoController = accesoController;
 	}
 
+	// ===================== AUXILIAR: USUARIO LOGUEADO =====================
+
+	private Usuario getUsuarioLogueado(Principal principal) {
+		if (principal == null) {
+			return null;
+		}
+		String email = principal.getName(); // el mismo que usas en ServiceLogin
+
+		// Asegúrate de que IUsuarioService tenga este método:
+		// Optional<Usuario> findByEmail(String email);
+		return usuarioService.findByEmail(email).orElse(null);
+	}
 	// ========================= PÁGINA PRINCIPAL =========================
-	@GetMapping("/aprendiz")
-	public String inicioAprendiz(Model model) {
-		Usuario user = usuarioService.findAll().get(0);
+
+	@GetMapping({ "", "/inicio" })
+	public String inicioAprendiz(Model model, Principal principal) {
+
+		Usuario user = getUsuarioLogueado(principal);
+		if (user == null) {
+			return "redirect:/login";
+		}
+
 		model.addAttribute("usuario", user);
 		model.addAttribute("ficha", user.getFicha());
 		model.addAttribute("estadoCuenta", user.getEstadoCuenta());
+
+		// Obtener último acceso real
+		Acceso ultimoAcceso = accesoService.findUltimoAcceso(user.getId());
+		model.addAttribute("ultimoAcceso", ultimoAcceso);
+
+		// Cálculo seguro del tiempo dentro
+		String tiempoDentro;
+
+		if (ultimoAcceso != null && ultimoAcceso.getHoraIngreso() != null && ultimoAcceso.getHoraEgreso() == null) {
+
+			Duration dur = Duration.between(ultimoAcceso.getHoraIngreso(), LocalDateTime.now());
+
+			long horas = dur.toHours();
+			long minutos = dur.toMinutesPart();
+
+			tiempoDentro = horas + "h " + minutos + "m";
+
+		} else {
+			tiempoDentro = "Fuera del centro";
+		}
+
+		model.addAttribute("tiempoDentro", tiempoDentro);
+
 		return "Aprendiz/aprendiz";
 	}
 
-	// ===================== Codigo Barras ======================
+	// ========================= PERFIL =========================
 
 	@GetMapping("/perfil")
-	public String perfil(Model model) {
-		String documento = "1234567890"; 
-		model.addAttribute("documento", documento);
-		return "perfil";
+	public String perfil(Model model, Principal principal) {
+		Usuario user = getUsuarioLogueado(principal);
+		if (user == null) {
+			return "redirect:/login";
+		}
+
+		model.addAttribute("usuario", user);
+		model.addAttribute("documento", user.getDocumento());
+		return "Aprendiz/perfil";
 	}
 
 	// ========================= EXCUSAS =========================
 
 	@GetMapping("/excusas")
-	public String inicioexcusas(Model model) {
-		Usuario user = usuarioService.findAll().get(0);
-		model.addAttribute("usuario", user);
-		model.addAttribute("ficha", user.getFicha());
-		return "Aprendiz/excusas";
-	}
-
-	@PostMapping("/lista")
-	public String registrarExcusa(@ModelAttribute Excusas excusas, Model model) {
-		Usuario user = usuarioService.findAll().get(0);
-		excusasService.save(excusas);
-		LOGGER.warn("Excusa registrada con éxito: {}", excusas);
+	public String inicioExcusas(Model model, Principal principal) {
+		Usuario user = getUsuarioLogueado(principal);
+		if (user == null) {
+			return "redirect:/login";
+		}
 
 		model.addAttribute("usuario", user);
 		model.addAttribute("ficha", user.getFicha());
+
+		// AHORA: solo excusas del usuario logueado
+		List<Excusas> excusas = excusasService.findByUsuario(user);
+		model.addAttribute("excusas", excusas);
+
 		return "Aprendiz/excusas";
+
 	}
 
-	// Formulario vacío
+	@GetMapping("/list")
+	public String listarExcusas(Principal principal) {
+		// toda la lógica está en /excusas
+		return "redirect:/Aprendiz/excusas";
+	}
+
 	@GetMapping("/form")
-	public String mostrarFormularioExcusa(Model model) {
+	public String mostrarFormularioExcusa(Model model, Principal principal) {
+		Usuario user = getUsuarioLogueado(principal);
+		if (user == null) {
+			return "redirect:/login";
+		}
+
 		model.addAttribute("excusa", new Excusas());
 		return "Aprendiz/excusaForm";
 	}
 
-	// Guardar nueva excusa con archivo
 	@PostMapping("/save")
 	public String guardarExcusa(@Valid @ModelAttribute("excusa") Excusas excusa, BindingResult result,
-			@RequestParam("img") MultipartFile archivo, RedirectAttributes redirectAttributes, Model model) {
+			@RequestParam("img") MultipartFile archivo, RedirectAttributes redirectAttributes, Principal principal) {
 
 		try {
-			Usuario user = usuarioService.findAll().get(0); // usuario logueado o simulado
-			excusa.setUsuario(user); // ✅ asegura que tenga usuario asignado
-			excusa.setFicha(user.getFicha()); // ✅ también asigna ficha
-
-			// 1️⃣ Validar campos del modelo
-			if (result.hasErrors()) {
-				StringBuilder errores = new StringBuilder("Por favor completa todos los campos obligatorios: ");
-				result.getFieldErrors().forEach(err -> errores.append(err.getDefaultMessage()).append(". "));
-				redirectAttributes.addFlashAttribute("error", errores.toString());
-				return "redirect:/Aprendiz/excusas";
+			Usuario user = getUsuarioLogueado(principal);
+			if (user == null) {
+				redirectAttributes.addFlashAttribute("error", "No se pudo identificar al usuario logueado.");
+				return "redirect:/login";
 			}
 
-			// 2️⃣ Validar archivo obligatorio
+			excusa.setUsuario(user);
+			excusa.setFicha(user.getFicha());
+
+			if (result.hasErrors()) {
+				redirectAttributes.addFlashAttribute("error", "Error de validación en el formulario.");
+				return "redirect:/Aprendiz/form";
+			}
+
 			Excusas existente = (excusa.getId() != null) ? excusasService.findById(excusa.getId()).orElse(null) : null;
 
 			if (archivo.isEmpty() && (existente == null || existente.getSoporte() == null)) {
 				redirectAttributes.addFlashAttribute("error", "Debes adjuntar un soporte (PDF o imagen).");
-				return "redirect:/Aprendiz/excusas";
+				return "redirect:/Aprendiz/form";
 			}
 
-			// 3️⃣ Validar tipo de archivo
 			if (!archivo.isEmpty()) {
 				String tipo = archivo.getContentType();
 				if (tipo == null || !(tipo.startsWith("image/") || tipo.equals("application/pdf"))) {
 					redirectAttributes.addFlashAttribute("error", "El archivo debe ser una imagen o un PDF.");
-					return "redirect:/Aprendiz/excusas";
+					return "redirect:/Aprendiz/form";
 				}
 
-				// Guardar archivo
-				String nombreArchivo = UUID.randomUUID().toString().substring(0, 8) + "_"
-						+ StringUtils.cleanPath(archivo.getOriginalFilename());
-				Path dir = Paths.get("uploads");
-				if (!Files.exists(dir))
-					Files.createDirectories(dir);
-				Path ruta = dir.resolve(nombreArchivo);
-				Files.copy(archivo.getInputStream(), ruta, StandardCopyOption.REPLACE_EXISTING);
-				excusa.setSoporte(nombreArchivo);
+				excusa.setSoporte(guardarArchivoSoporte(archivo));
 			} else if (existente != null) {
 				excusa.setSoporte(existente.getSoporte());
 			}
 
-			// 4️⃣ Guardar en BD
 			excusasService.save(excusa);
 			redirectAttributes.addFlashAttribute("mensaje", "✅ Excusa guardada correctamente.");
 			return "redirect:/Aprendiz/excusas";
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			LOGGER.error("Error al guardar la excusa", e);
 			redirectAttributes.addFlashAttribute("error", "Error al guardar la excusa: " + e.getMessage());
 			return "redirect:/Aprendiz/excusas";
 		}
 	}
 
-	// detale excusa
-	@GetMapping("/Aprendiz/excusa/{id}")
-	public String verExcusa(@PathVariable Integer id, Model model) {
-		Excusas excusa = excusasService.findById(id)
-				.orElseThrow(() -> new IllegalArgumentException("Excusa no encontrada con id: " + id));
+	@GetMapping("/excusa/{id}")
+	public String verExcusa(@PathVariable Integer id, Model model, Principal principal,
+			RedirectAttributes redirectAttributes) {
+
+		Usuario user = getUsuarioLogueado(principal);
+		if (user == null) {
+			return "redirect:/login";
+		}
+
+		Excusas excusa = excusasService.findById(id).orElse(null);
+		if (excusa == null) {
+			redirectAttributes.addFlashAttribute("error", "Excusa no encontrada.");
+			return "redirect:/Aprendiz/excusas";
+		}
+
+		if (!excusa.getUsuario().getId().equals(user.getId())) {
+			redirectAttributes.addFlashAttribute("error", "Acceso denegado: Esta excusa no te pertenece.");
+			return "redirect:/Aprendiz/excusas";
+		}
 
 		model.addAttribute("excusa", excusa);
-		return "Aprendiz/detalle_excusa"; // Nombre del template HTML
+		return "Aprendiz/detalle_excusa";
 	}
 
-	// Listar excusas
-	@GetMapping("/list")
-	public String listarExcusas(Model model) {
-		model.addAttribute("excusas", excusasService.findAll());
-		return "Aprendiz/excusas";
-	}
-
-	// Editar
 	@GetMapping("/edit/{id}")
-	public String editarExcusa(@PathVariable Integer id, Model model) {
-		Excusas excusa = excusasService.findById(id).orElseThrow(() -> new RuntimeException("Excusa no encontrada"));
+	public String editarExcusa(@PathVariable Integer id, Model model, Principal principal,
+			RedirectAttributes redirectAttributes) {
+
+		Usuario user = getUsuarioLogueado(principal);
+		if (user == null) {
+			return "redirect:/login";
+		}
+
+		Excusas excusa = excusasService.findById(id).orElse(null);
+		if (excusa == null) {
+			redirectAttributes.addFlashAttribute("error", "Excusa no encontrada para edición.");
+			return "redirect:/Aprendiz/excusas";
+		}
+
+		if (!excusa.getUsuario().getId().equals(user.getId())) {
+			redirectAttributes.addFlashAttribute("error", "Acceso denegado: No puedes editar esta excusa.");
+			return "redirect:/Aprendiz/excusas";
+		}
+
 		model.addAttribute("excusa", excusa);
 		return "Aprendiz/excusaForm";
 	}
 
-	// Actualizar
 	@PostMapping("/update")
-	public String actualizarExcusa(@ModelAttribute Excusas excusa, @RequestParam("img") MultipartFile archivo)
-			throws IOException {
+	public String actualizarExcusa(@ModelAttribute Excusas excusa, @RequestParam("img") MultipartFile archivo,
+			Principal principal, RedirectAttributes redirectAttributes) throws IOException {
 
-		Excusas existente = excusasService.findById(excusa.getId())
-				.orElseThrow(() -> new RuntimeException("Excusa no encontrada"));
+		Usuario user = getUsuarioLogueado(principal);
+		if (user == null) {
+			return "redirect:/login";
+		}
 
-		existente.setFicha(excusa.getFicha());
+		Excusas existente = excusasService.findById(excusa.getId()).orElse(null);
+		if (existente == null) {
+			redirectAttributes.addFlashAttribute("error", "Excusa a actualizar no encontrada.");
+			return "redirect:/Aprendiz/excusas";
+		}
+
+		if (!existente.getUsuario().getId().equals(user.getId())) {
+			redirectAttributes.addFlashAttribute("error", "Acceso denegado: No puedes modificar una excusa ajena.");
+			return "redirect:/Aprendiz/excusas";
+		}
+
 		existente.setMotivo(excusa.getMotivo());
 		existente.setFecha(excusa.getFecha());
-		existente.setUsuario(excusa.getUsuario());
 
 		if (!archivo.isEmpty()) {
-			String nombreArchivo = archivo.getOriginalFilename();
-			Path ruta = Paths.get("uploads/" + nombreArchivo);
-			Files.copy(archivo.getInputStream(), ruta, StandardCopyOption.REPLACE_EXISTING);
-			excusa.setSoporte(nombreArchivo);
+			existente.setSoporte(guardarArchivoSoporte(archivo));
 		}
+
 		excusasService.save(existente);
-		LOGGER.info("Excusa actualizada ID {}", existente.getId());
-		return "redirect:/Aprendiz/list";
+		redirectAttributes.addFlashAttribute("mensaje", "✅ Excusa actualizada correctamente.");
+		return "redirect:/Aprendiz/excusas";
 	}
 
-	// Eliminar
 	@GetMapping("/delete/{id}")
-	public String eliminarExcusa(@PathVariable Integer id) {
+	public String eliminarExcusa(@PathVariable Integer id, Principal principal, RedirectAttributes redirectAttributes) {
+
+		Usuario user = getUsuarioLogueado(principal);
+		if (user == null) {
+			return "redirect:/login";
+		}
+
+		Excusas excusa = excusasService.findById(id).orElse(null);
+		if (excusa == null) {
+			redirectAttributes.addFlashAttribute("error", "Excusa a eliminar no encontrada.");
+			return "redirect:/Aprendiz/excusas";
+		}
+
+		if (!excusa.getUsuario().getId().equals(user.getId())) {
+			redirectAttributes.addFlashAttribute("error", "Acceso denegado: No puedes eliminar una excusa ajena.");
+			return "redirect:/Aprendiz/excusas";
+		}
+
 		excusasService.delete(id);
-		LOGGER.info("Excusa eliminada ID {}", id);
-		return "redirect:/Aprendiz/list";
+		redirectAttributes.addFlashAttribute("mensaje", "✅ Excusa eliminada correctamente.");
+		return "redirect:/Aprendiz/excusas";
 	}
 
 	// ========================= HORARIO =========================
+
 	@GetMapping("/Horario")
 	public String verHorario(Model model) {
 		List<Horario> lista = horarioRepository.findAll();
@@ -239,21 +332,37 @@ public class AprendizController {
 		for (int i = 1; i <= 4; i++) {
 			Horario h = horarioRepository.findById((long) i).orElse(new Horario());
 			h.setId((long) i);
-
 			horarioRepository.save(h);
 		}
-
 		LOGGER.info("Horario actualizado correctamente.");
 		return "redirect:/Aprendiz/Horario";
 	}
 
-	///////////// Detalle Excusa/////////////////////
-
 	@GetMapping("/detalleExcusa")
-	public String detalleExcusa(Model model) {
-		List<Excusas> listaExcusas = excusasService.findAll();
-		model.addAttribute("excusas", listaExcusas);
+	public String detalleExcusa(Model model, Principal principal) {
+		Usuario user = getUsuarioLogueado(principal);
+		if (user == null) {
+			return "redirect:/login";
+		}
+
+		// También solo las excusas del usuario logueado
+		List<Excusas> excusas = excusasService.findByUsuario(user);
+		model.addAttribute("excusas", excusas);
+
 		return "Aprendiz/detalleExcusa";
 	}
 
+	// ================== AUXILIAR: GUARDAR ARCHIVO ==================
+
+	private String guardarArchivoSoporte(MultipartFile archivo) throws IOException {
+		String nombreArchivo = UUID.randomUUID().toString().substring(0, 8) + "_"
+				+ StringUtils.cleanPath(archivo.getOriginalFilename());
+		Path dir = Paths.get("uploads");
+		if (!Files.exists(dir)) {
+			Files.createDirectories(dir);
+		}
+		Path ruta = dir.resolve(nombreArchivo);
+		Files.copy(archivo.getInputStream(), ruta, StandardCopyOption.REPLACE_EXISTING);
+		return nombreArchivo;
+	}
 }

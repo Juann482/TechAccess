@@ -37,7 +37,7 @@ public class CustomSuccessHandler implements AuthenticationSuccessHandler {
                     return;
 
                 case "Aprendiz":
-                    response.sendRedirect("/Aprendiz/aprendiz");
+                    response.sendRedirect("/Aprendiz"); // o "/Aprendiz/inicio"
                     System.out.println("Usuario logueado como aprendiz");
                     return;
 
