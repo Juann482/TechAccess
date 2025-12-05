@@ -68,6 +68,8 @@ public class AccesoServiceImplement implements IAccesoService {
 		return findUltimoAcceso(idUsuario);
 	}
 
+
+	
 	// =============================================================
 	// 🔍 OBTENER EL ÚLTIMO ACCESO DE TODOS LOS USUARIOS
 	// =============================================================

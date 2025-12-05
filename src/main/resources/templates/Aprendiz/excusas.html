@@ -50,8 +50,6 @@
 					<ul class="menu-options">
 						<li><a id="openProfile"><i class="fas fa-user-circle"></i> Ver perfil</a></li>
 
-
-
 						<li><a th:href="@{/Aprendiz/detalleExcusa}"><i class="fas fa-history"></i> Ver historial de
 								excusa</a></li>
 						<li class="logout"><a th:href="@{/logout}"><i class="fas fa-sign-out-alt"></i> Cerrar sesión</a>
@@ -157,8 +155,9 @@
 															name="fichaasd"
 															th:value="${ficha != null ? ficha.numFicha : ' - '}"
 															readonly>
-														<input type="hidden" th:field="*{ficha.idFicha}"
-															th:value="${ficha != null ? ficha.idFicha : 0}">
+
+														<input type="hidden" th:name="ficha.id"
+															th:value="${ficha != null ? ficha.id : 0}">
 													</div>
 												</div>
 

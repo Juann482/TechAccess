@@ -119,4 +119,14 @@ public class Acceso {
 	public String toString() {
 		return "Acceso{" + "idacceso=" + idacceso + ", horaIngreso=" + horaIngreso + ", horaEgreso=" + horaEgreso + '}';
 	}
+
+	public Object getSalida() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public LocalDateTime getEntrada() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

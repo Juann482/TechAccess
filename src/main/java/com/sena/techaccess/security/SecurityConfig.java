@@ -25,19 +25,25 @@ public class SecurityConfig {
 	@Bean
 	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http.csrf(csrf -> csrf.disable())
-
 				.authorizeHttpRequests(auth -> auth
 						.requestMatchers("/", "/assets/**", "/images/**", "/css/**", "/js/**",
 								"/img/**, /error/**, /soporte, /about")
-						.permitAll().requestMatchers("/Administrador/**").hasAuthority("Administrador")
-						.requestMatchers("/Vigilancia/**").hasAuthority("Vigilancia").requestMatchers("/Aprediz/**")
-						.hasAuthority("Aprendiz").requestMatchers("/instructor/**").hasAuthority("Instructor")
+						.permitAll()
+						.requestMatchers("/Administrador/**").hasAuthority("Administrador")
+						.requestMatchers("/Vigilancia/**").hasAuthority("Vigilancia")
+						.requestMatchers("/Aprendiz/**").hasAuthority("Aprendiz")
+						.requestMatchers("/instructor/**").hasAuthority("Instructor")
 						.requestMatchers("/funcionario/**").hasAuthority("Funcionario")
-
 						.anyRequest().authenticated())
-				.formLogin(login -> login.loginPage("/").loginProcessingUrl("/login").successHandler(successHandler)
+				.formLogin(login -> login
+						.loginPage("/")
+						.loginProcessingUrl("/login")
+						.successHandler(successHandler)
 						.permitAll())
-				.logout(logout -> logout.logoutUrl("/logout").logoutSuccessUrl("/").permitAll())
+				.logout(logout -> logout
+						.logoutUrl("/logout")
+						.logoutSuccessUrl("/")
+						.permitAll())
 				.userDetailsService(serviceLogin);
 
 		return http.build();
