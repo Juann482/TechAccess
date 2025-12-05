@@ -1,6 +1,7 @@
 package com.sena.techaccess.service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
@@ -27,6 +28,8 @@ public interface IUsuarioService {
 	List<Usuario> findByRol(String rol);
 
 	Usuario findByDocumento(String documento);
+	
+	List<Usuario> findByRolAndEstadoCuenta(String rol, String estadoCuenta);
 
 	Page<Usuario> filtrarUsuarios(String nombre, String documento, String rol, String estado, Pageable pageable);
 
@@ -41,6 +44,10 @@ public interface IUsuarioService {
 	Optional<Usuario> findById(Integer id);
 	
 	void saveAll(List<Usuario> usuarios);
+	
+	Map<String, Long> obtenerUsuariosActivosPorRol();
+	
+
 
 	// >>>>>>>DASHBOARD<<<<<<<<
 

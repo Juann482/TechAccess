@@ -1,7 +1,8 @@
 	package com.sena.techaccess.service;
 
+import java.util.HashMap;
 import java.util.List;
-
+import java.util.Map;
 import java.util.Optional;
 
 /*import java.util.stream.Collectors;*/
@@ -12,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.sena.techaccess.model.Usuario;
+import com.sena.techaccess.repository.PermisosRepository;
 import com.sena.techaccess.repository.UsuarioRepository;
 
 import jakarta.transaction.Transactional;
@@ -21,6 +23,9 @@ public class UsuarioServiceImplement implements IUsuarioService {
 
 	@Autowired
 	private UsuarioRepository usuarioRepository;
+	
+	@Autowired
+	private PermisosRepository permisoRepository;
 
 	// >>>>>>>>>>>>>>>> DASHBOARD <<<<<<<<<<<<<<<<<
 
@@ -80,8 +85,9 @@ public class UsuarioServiceImplement implements IUsuarioService {
 		return usuarioRepository.save(usuario);
 	}
 
-	@Transactional
+	@Override
 	public void delete(Integer id) {
+		permisoRepository.deleteByUsuarioId(id);
 		usuarioRepository.deleteById(id);
 	}
 
@@ -135,4 +141,25 @@ public class UsuarioServiceImplement implements IUsuarioService {
 	public List<Usuario> findByFichaId(Integer id) {
 		return usuarioRepository.findByFichaId(id);
 	}
+	
+	@Override
+    public Map<String, Long> obtenerUsuariosActivosPorRol() {
+
+        List<Object[]> resultados = usuarioRepository.contarUsuariosActivosPorRol();
+        Map<String, Long> mapa = new HashMap<>();
+        for (Object[] fila : resultados) {
+            String rol = (String) fila[0];
+            Long cantidad = (Long) fila[1];
+            mapa.put(rol, cantidad);
+        }
+
+        return mapa;
+    }
+
+	@Override
+	public List<Usuario> findByRolAndEstadoCuenta(String rol, String estadoCuenta) {
+		return usuarioRepository.findByRolAndEstadoCuenta(rol, estadoCuenta);
+	}
+	
+	
 }

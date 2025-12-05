@@ -1,6 +1,7 @@
 package com.sena.techaccess.controller;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.sena.techaccess.model.Ficha;
 import com.sena.techaccess.model.Usuario;
@@ -67,10 +69,18 @@ public class AdministradorController {
 		model.addAttribute("Aprendiz", Aprendiz);
 		model.addAttribute("Instructor", Instructor);
 		model.addAttribute("Visitante", Visitante);
+		
+		 Map<String, Long> datos = usuarioService.obtenerUsuariosActivosPorRol();
 
+		 model.addAttribute("labels", datos.keySet());
+		 model.addAttribute("data", datos.values());
+
+		List<Usuario> vigi = usuarioService.findByRolAndEstadoCuenta("Vigilancia","Activo");
+		model.addAttribute("vigilancia", vigi);
+			
 		return "Administrador/Dashboard";
 	}
-
+	
 	// ========================== USUARIO =========================
 
 	@GetMapping("/form")
@@ -154,13 +164,16 @@ public class AdministradorController {
 
 	// Actualizar usuario
 	@PostMapping("/updateUsuario")
-	public String actualizarUsuario(Usuario usuarioForm) {
+	public String actualizarUsuario(Usuario usuarioForm, RedirectAttributes redirect) {
 		LOGGER.info("Objeto recibido para actualizar: {}", usuarioForm);
 
 		// Usuario de la BD
 		Usuario usuarioDB = usuarioService.get(usuarioForm.getId())
 				.orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
+		if (usuarioForm.getFicha() != null && usuarioForm.getFicha().getId() == null) {
+			usuarioForm.setFicha(null);
+		}
 		// --- LÓGICA DE CONTRASEÑA ---
 		if (usuarioForm.getPassword() != null && !usuarioForm.getPassword().isBlank()) {
 			usuarioDB.setPassword(pe.encode(usuarioForm.getPassword()));
@@ -176,6 +189,9 @@ public class AdministradorController {
 		usuarioDB.setRol(usuarioForm.getRol());
 
 		usuarioService.update(usuarioDB);
+		
+		redirect.addFlashAttribute("mensaje", "Se ha editado la ficha con éxito");
+		redirect.addFlashAttribute("tipo","success");
 
 		LOGGER.warn("Usuario actualizado: {}", usuarioDB);
 		return "redirect:/Administrador/usuarios";
@@ -183,10 +199,15 @@ public class AdministradorController {
 
 	// Eliminacion de usuarios
 	@GetMapping("/deleteUser/{id}")
-	public String eliminarUsuario(@PathVariable Integer id) {
+	public String eliminarUsuario(@PathVariable Integer id, RedirectAttributes redirect) {
+		
 		Usuario user = new Usuario();
 		user = usuarioService.get(id).get();
 		usuarioService.delete(id);
+		
+	    redirect.addFlashAttribute("mensaje", "Usuario eliminado correctamente");
+	    redirect.addFlashAttribute("tipo", "success");
+		
 		LOGGER.warn("Usuario eliminado {}", user);
 		return "redirect:/Administrador/usuarios";
 	}
@@ -339,13 +360,13 @@ public String verFicha(
 		Ficha ut = fichaService.get(id).orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 		LOGGER.warn("Busqueda de fichas por id {}", ut);
 		model.addAttribute("ficha", ut);
+		
 		return "Administrador/EdicionFICHA";
-
 	}
 
 	// Actualizar ficha
 	@PostMapping("/update")
-	public String actualizarFicha(Ficha ficha) {
+	public String actualizarFicha(Ficha ficha, RedirectAttributes redirect) {
 		LOGGER.info("Este es el objeto del producto a actualizar en la DB {}", ficha);
 
 		Ficha fichaAc = fichaService.get(ficha.getId()).get();
@@ -355,6 +376,10 @@ public String verFicha(
 		fichaAc.setNumFicha(ficha.getNumFicha());
 
 		fichaService.update(fichaAc);
+		
+		redirect.addFlashAttribute("mensaje", "Se ha editado la ficha con éxito");
+		redirect.addFlashAttribute("tipo","success");
+		
 		LOGGER.warn("Ficha actualizada: {}", fichaAc);
 
 		return "redirect:/Administrador/Historialfichas";
@@ -362,7 +387,7 @@ public String verFicha(
 
 	// Eliminar ficha
 	@GetMapping("/delete/{id}")
-	public String eliminarFicha(@PathVariable Integer id) {
+	public String eliminarFicha(@PathVariable Integer id, RedirectAttributes redirect) {
 
 		// 1. Buscar los usuarios que tienen esta ficha
 		List<Usuario> usuarios = usuarioService.findByFichaId(id);
@@ -374,6 +399,9 @@ public String verFicha(
 		usuarioService.saveAll(usuarios);
 
 		fichaService.delete(id);
+		
+		redirect.addFlashAttribute("mensaje", "Ficha eliminada con exito");
+		redirect.addFlashAttribute("tipo","success");
 
 		LOGGER.warn("Ficha eliminada: {}", id);
 		return "redirect:/Administrador/Historialfichas";
@@ -400,7 +428,7 @@ public String verFicha(
 	}
 
 	@PostMapping("/NuevoPerfil")
-	public String nuevoPerfil(@ModelAttribute Usuario usuario, HttpSession session) {
+	public String nuevoPerfil(@ModelAttribute Usuario usuario) {
 
 		Integer idAdmin = (Integer) session.getAttribute("IdUser");
 

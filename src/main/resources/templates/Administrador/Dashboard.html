@@ -4,130 +4,198 @@
 <head th:insert="~{Administrador/template_administracion.html :: head}"></head>
 
 <body>
-  <!-- ======== Preloader =========== -->
-  <div id="preloader">
-    <div class="spinner"></div>
-  </div>
+	<!-- ======== Preloader =========== -->
+	<div id="preloader">
+		<img th:src="@{/images/LogoBlankogoty.png}" alt="Logo blanco">
+	</div>
 
-  <!-- Sidebar -->
-  <div th:insert="~{Administrador/template_administracion.html :: sidebar}"></div>
-  <div class="overlay"></div>
+	<!-- Sidebar -->
+	<div th:insert="~{Administrador/template_administracion.html :: sidebar}"></div>
+	<div class="overlay"></div>
 
-  <!-- ======== main-wrapper start =========== -->
-  <main class="main-wrapper">
-    <!-- ========== header start ========== -->
-    <div th:insert="~{Administrador/template_administracion.html :: header}"></div>
-    <!-- ========== header end ========== -->
+	<!-- ======== main-wrapper start =========== -->
+	<main class="main-wrapper">
 
-    <!-- ========== section start ========== -->
-    <section class="section">
-      <div class="container-fluid">
-        <!-- ========== title-wrapper start ========== -->
-        <div class="title-wrapper pt-30">
-          <div class="row align-items-center">
-            <div class="col-md-6">
-              <div class="title">
-                <h2 th:text="${tituloPagina != null ? tituloPagina : 'eCommerce Dashboard'}"></h2>
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="breadcrumb-wrapper">
-                <nav aria-label="breadcrumb">
-                  <ol class="breadcrumb">
-                    <li class="breadcrumb-item">
-                      <a th:href="@{/administrador/Dashboard}">Dashboard</a>
-                    </li>
-                    <li class="breadcrumb-item active" aria-current="page">
-                      <span th:text="${subtituloPagina != null ? subtituloPagina : 'eCommerce'}"></span>
-                    </li>
-                  </ol>
-                </nav>
-              </div>
-            </div>
-          </div>
-        </div>
-		<div class="row">
-		           <div class="col-xl-3 col-lg-4 col-sm-6">
-		             <div class="icon-card mb-30">
-		               <div class="icon purple">
-		                 <i class="bi bi-person-lines-fill"></i>
-		               </div>
-		               <div class="content">
-		                 <h6 class="mb-10">Usuarios</h6>
-		                 <h3 class="text-bold mb-10" th:text="${UsuariosA}" th:title="${Activos + ' activos'}"></h3>
-		                 <p class="text-sm text-danger" >
-		                   <i class="bi bi-arrow-down"></i>
-						   <span class="text-danger" th:text="${Inactivos}"></span><br>
-		                   <span class="text-gray">Inactivos</span>
-		                 </p>
-		               </div>
-		             </div>
-		             <!-- End Icon Cart -->
-		           </div>
-		           <!-- End Col -->
-		           <div class="col-xl-3 col-lg-4 col-sm-6">
-		             <div class="icon-card mb-30">
-		               <div class="icon success">
-		                 <i class="bi bi-person-standing"></i>
-		               </div>
-		               <div class="content">
-		                 <h6 class="mb-10">Aprendices</h6>
-		                 <h3 class="text-bold mb-10" th:text="${Aprendiz}"></h3>
-		                 <p class="text-sm text-success">
-		                   <i class="lni lni-arrow-up"></i> +5.45%
-		                   <span class="text-gray">Increased</span>
-		                 </p>
-		               </div>
-		             </div>
-		             <!-- End Icon Cart -->
-		           </div>
-		           <!-- End Col -->
-		           <div class="col-xl-3 col-lg-4 col-sm-6">
-		             <div class="icon-card mb-30">
-		               <div class="icon primary">
-						<i class="bi bi-person-fill"></i>
-		               </div>
-		               <div class="content">
-		                 <h6 class="mb-10">Instructores</h6>
-		                 <h3 class="text-bold mb-10" th:text="${Instructor}"></h3>
-		                 <p class="text-sm text-danger">
-		                   <i class="lni lni-arrow-down"></i> -2.00%
-		                   <span class="text-gray">Expense</span>
-		                 </p>
-		               </div>
-		             </div>
-		             <!-- End Icon Cart -->
-		           </div>
-		           <!-- End Col -->
-		           <div class="col-xl-3 col-lg-4 col-sm-6">
-		             <div class="icon-card mb-30">
-		               <div class="icon orange">
-		                 <i class="bi bi-person-walking"></i>
-		               </div>
-		               <div class="content">
-		                 <h6 class="mb-10">Visitantes</h6>
-		                 <h3 class="text-bold mb-10" th:text="${Visitante}"></h3>
-		                 <p class="text-sm text-danger">
-		                   <i class="lni lni-arrow-down"></i> -25.00%
-		                   <span class="text-gray"> Earning</span>
-		                 </p>
-		               </div>
-		             </div>
-		             <!-- End Icon Cart -->
-		           </div>
-		           <!-- End Col -->
-		         </div>
-       
+		<!-- Header -->
+        <div th:insert="~{Administrador/template_administracion.html :: header}"></div>
 
-       
+		<section class="section">
+			<div class="container-fluid">
 
-      </div>
-    </section>
+				<!-- Título -->
+				<div class="title-wrapper pt-30">
+					<div class="row align-items-center">
+						<div class="col-md-6">
+							<h2 th:text="${tituloPagina != null ? tituloPagina : 'eCommerce Dashboard'}"></h2>
+						</div>
+						<div class="col-md-6">
+							<div class="breadcrumb-wrapper">
+								<nav aria-label="breadcrumb">
+									<ol class="breadcrumb">
+										<li class="breadcrumb-item">
+											<a th:href="@{/administrador/Dashboard}">Dashboard</a>
+										</li>
+										<li class="breadcrumb-item active" aria-current="page">
+											<span th:text="${subtituloPagina != null ? subtituloPagina : 'eCommerce'}"></span>
+										</li>
+									</ol>
+								</nav>
+							</div>
+						</div>
+					</div>
+				</div>
 
-    <!-- Footer -->
-    <div th:insert="~{Administrador/template_administracion.html :: footer}"></div>
-  </main>
+                <!-- ======== Tarjetas de estadísticas ======== -->
+				<div class="row g-4 mt-2">
 
-  <div th:insert="~{Administrador/template_administracion.html :: jsFiles}"></div>
+					<div class="col-xl-3 col-md-6">
+						<div class="icon-card mb-30">
+							<div class="icon purple">
+								<i class="bi bi-person-lines-fill"></i>
+							</div>
+							<div class="content">
+								<h6>Usuarios</h6>
+								<h3 class="text-bold" th:text="${UsuariosA}" th:title="${Activos + ' activos'}"></h3>
+								<p class="text-sm text-danger">
+									<i class="bi bi-arrow-down"></i>
+									<span th:text="${Inactivos}"></span> <br>
+									<span class="text-gray">Inactivos</span>
+								</p>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-xl-3 col-md-6">
+						<div class="icon-card mb-30">
+							<div class="icon success">
+								<i class="bi bi-person-standing"></i>
+							</div>
+							<div class="content">
+								<h6>Aprendices</h6>
+								<h3 class="text-bold" th:text="${Aprendiz}"></h3>
+								<p class="text-sm text-success">
+									<i class="lni lni-arrow-up"></i> +5.45%
+									<span class="text-gray">Increased</span>
+								</p>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-xl-3 col-md-6">
+						<div class="icon-card mb-30">
+							<div class="icon primary">
+								<i class="bi bi-person-fill"></i>
+							</div>
+							<div class="content">
+								<h6>Instructores</h6>
+								<h3 class="text-bold" th:text="${Instructor}"></h3>
+								<p class="text-sm text-danger">
+									<i class="lni lni-arrow-down"></i> -2.00%
+									<span class="text-gray">Expense</span>
+								</p>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-xl-3 col-md-6">
+						<div class="icon-card mb-30">
+							<div class="icon orange">
+								<i class="bi bi-person-walking"></i>
+							</div>
+							<div class="content">
+								<h6>Visitantes</h6>
+								<h3 class="text-bold" th:text="${Visitante}"></h3>
+								<p class="text-sm text-danger">
+									<i class="lni lni-arrow-down"></i> -25.00%
+									<span class="text-gray">Earning</span>
+								</p>
+							</div>
+						</div>
+					</div>
+
+				</div>
+
+				<!-- ======== Gráfica + Tabla ======== -->
+				<div class="row">
+
+					<!-- Gráfica -->
+					<div class="col-lg-5">
+						<div class="card p-3 shadow-sm">
+							<h4 class="mb-3 text-center">Gráfica de usuarios activos</h4>
+							<canvas id="graficaRoles" style="max-width: 400px; margin: auto;"></canvas>
+						</div>
+					</div>
+
+					<!-- Tabla -->
+					<div class="col-lg-7">
+						<div class="card p-3 shadow-sm">
+							<h4 class="mb-3 text-center">Vigilantes</h4>
+							<div class="table-responsive">
+								<table class="table">
+									<thead>
+										<tr class="centrados">
+											
+											<th scope="col">Nombre</th>
+											<th scope="col">Documento</th>
+											<th scope="col">Teléfono</th>
+											
+										</tr>
+									</thead>
+									<tbody th:each="v : ${vigilancia}">
+										<tr class="centrados">
+											
+											<td th:text="${v.nombre}"></td>
+											<td th:text="${v.documento}"></td>
+											<td th:text="${v.telefono}"></td>
+											
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+		</section>
+
+		<!-- Footer -->
+		<div th:insert="~{Administrador/template_administracion.html :: footer}"></div>
+
+	</main>
+
+	<div th:insert="~{Administrador/template_administracion.html :: jsFiles}"></div>
+
+	<script th:inline="javascript">
+		const ctx = document.getElementById('graficaRoles');
+
+		new Chart(ctx, {
+			type: 'pie',
+			data: {
+				labels: /*[[${labels}]]*/"",
+				datasets: [{
+					data: /*[[${data}]]*/"",
+					backgroundColor: [
+						'#92B6D6',
+						'#3687CE',
+						'#363BCE',
+						'#2F3574',
+						'#84878A',
+						'#CAD5E2',
+						'#795548'
+					]
+				}]
+			},
+			options: {
+				responsive: true,
+				plugins: {
+					legend: { position: 'bottom' }
+				}
+			}
+		});
+	</script>
+
 </body>
+
 </html>

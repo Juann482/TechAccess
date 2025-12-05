@@ -6,8 +6,7 @@
 <body>
 	<!-- ======== Preloader =========== -->
 	<div id="preloader">
-		<div class="spinner"></div>
-
+		<img th:src="@{/images/LogoBlankogoty.png}" alt="Logo blanco">
 	</div>
 
 	<div th:insert="~{/Administrador/template_administracion.html::sidebar}"></div>
@@ -56,14 +55,20 @@
 					<div class="row justify-content-center" data-aos="fade-up" data-aos-delay="300">
 						<div class="col-lg-12">
 							<div class="form-form-wrapper">
-								<div class="text-end mb-3">
-									<a class="btn btn-secondary" th:href="@{/Administrador/usuarios}"><i
-											class="bi bi-arrow-counterclockwise">Volver</i></a>
-									<button class="btn btn-info text-white" data-bs-toggle="modal"
+
+								<div class="d-flex justify-content-end mb-3">
+
+									<button class="btn btn-info text-white me-2" data-bs-toggle="modal"
 										data-bs-target="#modalFiltros"><i class="bi bi-funnel-fill">Filtro</i>
 									</button>
+									<div
+										th:if="${nombre != null or documento != null or rol != null or estado != null}">
+										<a class="btn btn-secondary" th:href="@{/Administrador/usuarios}">Limpiar
+											filtros</a>
+									</div>
 
 								</div>
+
 								<div class="table-responsive">
 									<table class="invoice-table table">
 										<thead>
@@ -97,9 +102,11 @@
 														th:href="@{/Administrador/edicionUsuario/{id} (id=${usuario.id})}">
 														<i class="bi bi-pencil-fill"></i></a>
 												</td>
-												<td><a title="Eliminar" class="btn btn-danger"
-														th:href="@{/Administrador/deleteUser/{id} (id=${usuario.id})}">
-														<i class="bi bi-trash-fill"></i></a>
+												<td> <a title="Eliminar" href="#"
+														th:onclick="|confirmarEliminacion(${usuario.id})|"
+														class="btn btn-danger"><i class="bi bi-trash-fill"></i>
+													</a>
+
 												</td>
 
 											</tr>
@@ -251,6 +258,7 @@
 									</option>
 									<option value="Instructor" th:selected="${rol == 'Instructor'}">Instructor</option>
 									<option value="Aprendiz" th:selected="${rol == 'Aprendiz'}">Aprendiz</option>
+									<option value="Vigilancia" th:selected="${rol == 'Vigilancia'}">Vigilancia</option>
 								</select>
 							</div>
 
@@ -277,6 +285,7 @@
 			</div>
 		</div>
 	</div>
+
 </body>
 
 </html>

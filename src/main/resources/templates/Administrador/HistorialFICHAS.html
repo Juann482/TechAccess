@@ -6,8 +6,7 @@
 <body>
 	<!-- ======== Preloader =========== -->
 	<div id="preloader">
-		<div class="spinner"></div>
-
+		<img th:src="@{/images/LogoBlankogoty.png}" alt="Logo blanco">
 	</div>
 
 	<div th:insert="~{/Administrador/template_administracion.html::sidebar}"></div>
@@ -72,129 +71,129 @@
 					<div class="row justify-content-center" data-aos="fade-up" data-aos-delay="300">
 						<div class="col-lg-12">
 							<div class="form-form-wrapper">
-								<table class="invoice-table table">
-									<thead>
-										<tr class="centrados">
-											<th scope="col">Programa</th>
-											<th scope="col">Número de ficha</th>
-											<th scope="col">Jornada</th>
-											<th scope="col">Estado</th>
+								<div class="table-responsive">
+									<table class="invoice-table table">
+										<thead>
+											<tr class="centrados">
+												<th scope="col">Programa</th>
+												<th scope="col">Número de ficha</th>
+												<th scope="col">Jornada</th>
+												<th scope="col">Estado</th>
 
-											<th scope="col">Detalles</th>
-											<th scope="col">Editar </th>
-											<th scope="col">Eliminar </th>
-										</tr>
-									</thead>
-									<tbody th:each="ficha: ${fichas}">
-										<tr class="centrados">
-											<td th:text="${ficha.nombrePrograma}"></td>
-											<td th:text="${ficha.numFicha}"></td>
-											<td th:text="${ficha != null ? ficha.jornada : 'N/A' }"></td>
-											<td>
-												<a th:href="@{/Administrador/CambiarEstadoFicha/{id} (id = ${ficha.id})}"
-													th:text="${ficha.estado}"
-													th:style="${ficha.estado == 'Activo'} ? 'color: #50F527; font-weight: bold;' : 'color: red; font-weight: bold;'">
-												</a>
-											</td>
+												<th scope="col">Detalles</th>
+												<th scope="col">Editar </th>
+												<th scope="col">Eliminar </th>
+											</tr>
+										</thead>
+										<tbody th:each="ficha: ${fichas}">
+											<tr class="centrados">
+												<td th:text="${ficha.nombrePrograma}"></td>
+												<td th:text="${ficha.numFicha}"></td>
+												<td th:text="${ficha != null ? ficha.jornada : 'N/A' }"></td>
+												<td>
+													<a th:href="@{/Administrador/CambiarEstadoFicha/{id} (id = ${ficha.id})}"
+														th:text="${ficha.estado}"
+														th:style="${ficha.estado == 'Activo'} ? 'color: #50F527; font-weight: bold;' : 'color: red; font-weight: bold;'">
+													</a>
+												</td>
 
-											<td><a title="Ver detalles" class="btn btn-info"
-													th:href="@{/Administrador/ficha/{id} (id = ${ficha.id})}">
-													<i class="bi bi-eye-fill" style="color: white;"></i>
-												</a>
-											</td>
-											<td><a title="Editar" class="btn btn-warning"
-													th:href="@{/Administrador/EdicionFichas/{id} (id = ${ficha.id})}">
-													<i class="bi bi-pencil-fill"></i>
-												</a>
-											</td>
-											<td><a title="Eliminar" class="btn btn-danger"
-													th:href="@{/Administrador/delete/{id} (id = ${ficha.id})}">
-													<i class="bi bi-trash-fill"></i>
-												</a>
-											</td>
+												<td><a title="Ver detalles" class="btn btn-info"
+														th:href="@{/Administrador/ficha/{id} (id = ${ficha.id})}">
+														<i class="bi bi-eye-fill" style="color: white;"></i>
+													</a>
+												</td>
+												<td><a title="Editar" class="btn btn-warning"
+														th:href="@{/Administrador/EdicionFichas/{id} (id = ${ficha.id})}">
+														<i class="bi bi-pencil-fill"></i>
+													</a>
+												</td>
+												<td><a title="Eliminar" href="#"
+														th:onclick="|confirmarEliminacionFicha(${ficha.id})|"
+														class="btn btn-danger"><i class="bi bi-trash-fill"></i>
+													</a>
+												</td>
 
-										</tr>
-									</tbody>
+											</tr>
+										</tbody>
 
-								</table>
+									</table>
+								</div>
+
 								<!-- Paginación -->
 								<nav aria-label="Page navigation" class="mt-4">
-								    <ul class="pagination justify-content-center">
+									<ul class="pagination justify-content-center">
 
-								        <!-- Página anterior -->
-								        <li class="page-item" th:classappend="${page.first} ? 'disabled'">
-								            <a class="page-link" style="color: rgb(255, 255, 255); background-color: rgb(0, 0, 64); border-color: rgb(0, 0, 64);"
-								               th:href="@{/Administrador/Historialfichas(page=${page.number - 1},
+										<!-- Página anterior -->
+										<li class="page-item" th:classappend="${page.first} ? 'disabled'">
+											<a class="page-link"
+												style="color: rgb(255, 255, 255); background-color: rgb(0, 0, 64); border-color: rgb(0, 0, 64);"
+												th:href="@{/Administrador/Historialfichas(page=${page.number - 1},
 								                    nombrePrograma=${nombrePrograma},
 								                    jornada=${jornada},
 								                    estado=${estado},
 								                    numFicha=${numFicha})}">
-								                Anterior
-								            </a>
-								        </li>
+												Anterior
+											</a>
+										</li>
 
-								        <!-- Si no arranca en la página 0, mostrar la página 1 -->
-								        <li class="page-item" th:if="${pageNumbers[0] > 0}">
-								            <a class="page-link" 	
-								               th:href="@{/Administrador/Historialfichas(page=0,
+										<!-- Si no arranca en la página 0, mostrar la página 1 -->
+										<li class="page-item" th:if="${pageNumbers[0] > 0}">
+											<a class="page-link" th:href="@{/Administrador/Historialfichas(page=0,
 								                    nombrePrograma=${nombrePrograma},
 								                    jornada=${jornada},
 								                    estado=${estado},
 								                    numFicha=${numFicha})}">
-								                1
-								            </a>
-								        </li>
+												1
+											</a>
+										</li>
 
-								        <!-- Puntos suspensivos antes -->
-								        <li class="page-item disabled" th:if="${pageNumbers[0] > 1}">
-								            <span class="page-link">...</span>
-								        </li>
+										<!-- Puntos suspensivos antes -->
+										<li class="page-item disabled" th:if="${pageNumbers[0] > 1}">
+											<span class="page-link">...</span>
+										</li>
 
-								        <!-- Números centrales -->
-								        <li class="page-item"
-								            th:each="num : ${pageNumbers}"
-								            th:classappend="${num == page.number} ? 'active'">
+										<!-- Números centrales -->
+										<li class="page-item" th:each="num : ${pageNumbers}"
+											th:classappend="${num == page.number} ? 'active'">
 
-								            <a class="page-link"
-								               th:text="${num + 1}"
-								               th:href="@{/Administrador/Historialfichas(page=${num},
+											<a class="page-link" th:text="${num + 1}" th:href="@{/Administrador/Historialfichas(page=${num},
 								                    nombrePrograma=${nombrePrograma},
 								                    jornada=${jornada},
 								                    estado=${estado},
 								                    numFicha=${numFicha})}">
-								            </a>
-								        </li>
+											</a>
+										</li>
 
-								        <!-- Puntos suspensivos después -->
-								        <li class="page-item disabled" th:if="${pageNumbers[pageNumbers.size()-1] < lastPage - 1}">
-								            <span class="page-link">...</span>
-								        </li>
+										<!-- Puntos suspensivos después -->
+										<li class="page-item disabled"
+											th:if="${pageNumbers[pageNumbers.size()-1] < lastPage - 1}">
+											<span class="page-link">...</span>
+										</li>
 
-								        <!-- Última página -->
-								        <li class="page-item" th:if="${pageNumbers[pageNumbers.size()-1] < lastPage}">
-								            <a class="page-link"
-								               th:text="${lastPage + 1}"
-								               th:href="@{/Administrador/Historialfichas(page=${lastPage},
+										<!-- Última página -->
+										<li class="page-item" th:if="${pageNumbers[pageNumbers.size()-1] < lastPage}">
+											<a class="page-link" th:text="${lastPage + 1}" th:href="@{/Administrador/Historialfichas(page=${lastPage},
 								                    nombrePrograma=${nombrePrograma},
 								                    jornada=${jornada},
 								                    estado=${estado},
 								                    numFicha=${numFicha})}">
-								            </a>
-								        </li>
+											</a>
+										</li>
 
-								        <!-- Página siguiente -->
-								        <li class="page-item" th:classappend="${page.last} ? 'disabled'">
-								            <a class="page-link" style="color: rgb(255, 255, 255); background-color: rgb(0, 0, 64); border-color: rgb(0, 0, 64);"
-								               th:href="@{/Administrador/Historialfichas(page=${page.number + 1},
+										<!-- Página siguiente -->
+										<li class="page-item" th:classappend="${page.last} ? 'disabled'">
+											<a class="page-link"
+												style="color: rgb(255, 255, 255); background-color: rgb(0, 0, 64); border-color: rgb(0, 0, 64);"
+												th:href="@{/Administrador/Historialfichas(page=${page.number + 1},
 								                    nombrePrograma=${nombrePrograma},
 								                    jornada=${jornada},
 								                    estado=${estado},
 								                    numFicha=${numFicha})}">
-								                Siguiente
-								            </a>
-								        </li>
+												Siguiente
+											</a>
+										</li>
 
-								    </ul>
+									</ul>
 								</nav>
 
 
@@ -271,7 +270,17 @@
 		</div>
 	</div>
 	<div th:insert="~{Administrador/template_administracion.html::jsFiles}"></div>
+	<script th:inline="javascript" th:if="${mensaje}">
+		const icono = /*[[${tipo}]]*/ "";
+		const texto = /*[[${mensaje}]]*/ "";
 
+		Swal.fire({
+			icon: icono,
+			title: texto,
+			timer: 2500,
+			showConfirmButton: false
+		});
+	</script>
 </body>
 
 </html>
