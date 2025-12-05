@@ -12,6 +12,11 @@
 
 	<!-- Video de fondo -->
 	<div class="video-background">
+
+		<video autoplay muted loop>
+			<source src="https://videos.pexels.com/video-files/33113400/14114346_1920_1080_30fps.mp4" type="video/mp4">
+		</video>
+
 		<div class="video-overlay"></div>
 	</div>
 
@@ -38,7 +43,7 @@
 					<span class="online-status"></span>
 				</div>
 				<div class="user-info text-center">
-					<h4 th:text="${usuario.nombre} ?: 'Instructor'">Instructor</h4>
+					<!--h4 th:text="${usuario.nombre} ?: 'Instructor'">Instructor</h4-->
 					<p class="user-role"><b>Área:</b> Mecánica</p>
 					<span class="user-status">Activo</span>
 				</div>
@@ -119,7 +124,7 @@
 					<div class="welcome-container">
 						<h1 class="welcome-text">
 							<span class="greeting">Reportes de Excusas</span>
-							<span class="user-name" th:text="${usuario.nombre} ?: 'Instructor'">Instructor</span>
+							<!--span class="user-name" th:text="${usuario.nombre} ?: 'Instructor'">Instructor</span-->
 						</h1>
 						<p class="welcome-subtitle">
 							<i class="bi bi-file-earmark-text me-2"></i>
@@ -150,8 +155,8 @@
 								<img th:src="@{/images/instructor.png}" alt="Instructor">
 							</div>
 							<div class="user-info-mini">
-								<span class="user-name-mini"
-									th:text="${usuario.nombre} ?: 'Instructor'">Instructor</span>
+								<!--span class="user-name-mini"
+									th:text="${usuario.nombre} ?: 'Instructor'">Instructor</span-->
 								<span class="user-role-mini">Instructor</span>
 							</div>
 							<i class="bi bi-chevron-down dropdown-arrow"></i>
@@ -260,7 +265,7 @@
 									<ul class="pagination justify-content-center">
 										<!-- PREVIOUS -->
 										<li class="page-item" th:classappend="${paginaActual == 0} ? 'disabled' : ''">
-											<a class="page-link glassmorphism border-0 text-light"
+											<a class="page-link glassmorphism border-0 text-info"
 												th:href="@{/instructor/reportes(page=${paginaActual - 1})}">
 												&laquo; Anterior
 											</a>
@@ -270,7 +275,7 @@
 										<li th:each="i : ${#numbers.sequence(0, totalPaginas - 1)}" class="page-item"
 											th:classappend="${i == paginaActual} ? 'active' : ''">
 											<a class="page-link glassmorphism border-0"
-												th:classappend="${i == paginaActual} ? 'bg-primary text-white' : 'text-light'"
+												th:classappend="${i == paginaActual} ? 'bg-info text-white' : 'text-light'"
 												th:href="@{/instructor/reportes(page=${i})}" th:text="${i + 1}">
 											</a>
 										</li>
@@ -278,7 +283,7 @@
 										<!-- NEXT -->
 										<li class="page-item"
 											th:classappend="${paginaActual == totalPaginas - 1} ? 'disabled' : ''">
-											<a class="page-link glassmorphism border-0 text-light"
+											<a class="page-link glassmorphism border-0 text-info"
 												th:href="@{/instructor/reportes(page=${paginaActual + 1})}">
 												Siguiente &raquo;
 											</a>
@@ -300,7 +305,7 @@
 									<table class="table table-hover align-middle mb-0" style="color: white;">
 										<thead style="background: rgba(12, 45, 72, 0.7);">
 											<tr>
-												<th>ID</th>
+												<!--th>ID</th-->
 												<th>Motivo</th>
 												<th>Descripción</th>
 												<th>Fecha</th>
@@ -310,11 +315,10 @@
 											</tr>
 										</thead>
 										<tbody>
-											<tr th:each="excusa : ${excusas}"
-												style="border-color: rgba(255, 255, 255, 0.1);">
-												<td class="fw-medium" th:text="${excusa.id}">1</td>
+											<tr th:each="excusa : ${excusas}" style="color: rgba(255, 255, 255, 0.1);">
+												<!--td class="fw-medium" th:text="${excusa.id}">1</td-->
 												<td>
-													<span th:text="${excusa.motivo}" class="fw-bold text-light">
+													<span th:text="${excusa.motivo}" class="fw-bold text-info">
 														Enfermedad
 													</span>
 												</td>
@@ -390,7 +394,7 @@
 											<h4 class="text-white"
 												th:text="${#lists.size(excusas.?[motivo =='CITA MÉDICA'])}">0</h4>
 											<span
-												class="badge bg-secondary bg-opacity-25 text-light border border-secondary">
+												class="badge bg-secondary bg-opacity-25 text-white border border-secondary">
 												CITA MÉDICA
 											</span>
 										</div>

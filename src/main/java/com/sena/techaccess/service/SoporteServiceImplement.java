@@ -4,12 +4,14 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.sena.techaccess.model.Soporte;
 import com.sena.techaccess.repository.SoporteRepository;
 
+@Service
 public class SoporteServiceImplement implements ISoporteService {
-	
+
 	@Autowired
 	private SoporteRepository soporteRepository;
 
@@ -37,8 +39,5 @@ public class SoporteServiceImplement implements ISoporteService {
 	public List<Soporte> findAll() {
 		return soporteRepository.findAll();
 	}
-
-
-	
 
 }

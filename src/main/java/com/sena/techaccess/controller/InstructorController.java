@@ -14,12 +14,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.sena.techaccess.model.Acceso;
 import com.sena.techaccess.model.Excusas;
 import com.sena.techaccess.model.Ficha;
-import com.sena.techaccess.model.Permisos;
 import com.sena.techaccess.model.Usuario;
 import com.sena.techaccess.service.IAccesoService;
 import com.sena.techaccess.service.IExcusasService;
 import com.sena.techaccess.service.IFichaService;
-import com.sena.techaccess.service.IPermisosService;
 import com.sena.techaccess.service.IUsuarioService;
 
 import jakarta.servlet.http.HttpSession;
@@ -37,8 +35,7 @@ public class InstructorController {
 	@Autowired
 	private IExcusasService excusasService;
 
-	@Autowired
-	private IPermisosService permisosService;
+
 
 	@Autowired
 	private IUsuarioService usuarioService;
