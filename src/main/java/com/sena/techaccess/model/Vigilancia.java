@@ -39,6 +39,7 @@ public class Vigilancia {
 	// ❌ Antes: cascade = CascadeType.ALL (peligroso)
 	// ✔ Corregido: sin cascade para no alterar al usuario
 	@OneToOne(fetch = FetchType.LAZY)
+	
 	private Usuario usuario;
 
 	// ✔ Accesos sí deben mantenerse en cascada

@@ -6,8 +6,7 @@
 <body>
 	<!-- ======== Preloader =========== -->
 	<div id="preloader">
-		<div class="spinner"></div>
-
+		<img th:src="@{/images/LogoBlankogoty.png}" alt="Logo blanco">
 	</div>
 
 	<div th:insert="~{/Administrador/template_administracion.html::sidebar}"></div>
@@ -72,65 +71,65 @@
 									</div>
 								</div>
 								<div class="row">
-								    <div class="col-lg-12">
-								        <form th:action="@{/Administrador/NuevoPerfil}" method="post">
+									<div class="col-lg-12">
+										<form th:action="@{/Administrador/NuevoPerfil}" method="post">
 
-								            <input type="hidden" name="id" th:value="${Admin.id}">
+											<input type="hidden" name="id" th:value="${Admin.id}">
 
-								            <!-- Nombre (fila completa) -->
-								            <div class="col-12 mb-3">
-								                <h4 class="mb-1">Nombre</h4>
-								                <input type="text" class="form-control" name="nombre"
-								                       th:value="${Admin.nombre}" required>
-								            </div>
+											<!-- Nombre (fila completa) -->
+											<div class="col-12 mb-3">
+												<h4 class="mb-1">Nombre</h4>
+												<input type="text" class="form-control" name="nombre"
+													th:value="${Admin.nombre}" required>
+											</div>
 
-								            <!-- 2 columnas -->
-								            <div class="row">
+											<!-- 2 columnas -->
+											<div class="row">
 
-								                <!-- Columna izquierda -->
-								                <div class="col-lg-6">
+												<!-- Columna izquierda -->
+												<div class="col-lg-6">
 
-								                    <div class="mb-3">
-								                        <h4 class="mb-1">Correo</h4>
-								                        <input type="text" class="form-control" name="email"
-								                               th:value="${Admin.email}" required>
-								                    </div>
+													<div class="mb-3">
+														<h4 class="mb-1">Correo</h4>
+														<input type="text" class="form-control" name="email"
+															th:value="${Admin.email}" required>
+													</div>
 
-								                    <div class="mb-3">
-								                        <h4 class="mb-1">Documento</h4>
-								                        <input type="number" class="form-control" name="documento"
-								                               th:value="${Admin.documento}" required>
-								                    </div>
+													<div class="mb-3">
+														<h4 class="mb-1">Documento</h4>
+														<input type="number" class="form-control" name="documento"
+															th:value="${Admin.documento}" required>
+													</div>
 
-								                </div>
+												</div>
 
-								                <!-- Columna derecha -->
-								                <div class="col-lg-6">
+												<!-- Columna derecha -->
+												<div class="col-lg-6">
 
-								                    <div class="mb-3">
-								                        <h4 class="mb-1">Dirección</h4>
-								                        <input type="text" class="form-control" name="direccion"
-								                               th:value="${Admin.direccion}" required>
-								                    </div>
+													<div class="mb-3">
+														<h4 class="mb-1">Dirección</h4>
+														<input type="text" class="form-control" name="direccion"
+															th:value="${Admin.direccion}" required>
+													</div>
 
-								                    <div class="mb-3">
-								                        <h4 class="mb-1">Teléfono</h4>
-								                        <input type="number" class="form-control" name="telefono"
-								                               th:value="${Admin.telefono}" required>
-								                    </div>
+													<div class="mb-3">
+														<h4 class="mb-1">Teléfono</h4>
+														<input type="number" class="form-control" name="telefono"
+															th:value="${Admin.telefono}" required>
+													</div>
 
-								                </div>
+												</div>
 
-								            </div>
+											</div>
 
-								            <div class="col-12 text-center mt-3">
-								                <button type="submit" class="main-btn secondary-btn btn-hover">
-								                    ACTUALIZAR
-								                </button>
-								            </div>
+											<div class="col-12 text-center mt-3">
+												<button type="submit" class="main-btn secondary-btn btn-hover">
+													ACTUALIZAR
+												</button>
+											</div>
 
-								        </form>
-								    </div>
+										</form>
+									</div>
 								</div>
 
 

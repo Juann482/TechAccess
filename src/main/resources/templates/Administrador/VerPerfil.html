@@ -6,8 +6,7 @@
 <body>
 	<!-- ======== Preloader =========== -->
 	<div id="preloader">
-		<div class="spinner"></div>
-
+		<img th:src="@{/images/LogoBlankogoty.png}" alt="Logo blanco">
 	</div>
 
 	<div th:insert="~{/Administrador/template_administracion.html::sidebar}"></div>
@@ -41,14 +40,15 @@
 						<div class="card-style settings-card-1 mb-30">
 							<div class="title mb-30 d-flex justify-content-between align-items-center">
 								<h6>Mi perfil</h6>
-								<a class="border-0 bg-transparent" th:href="@{/Administrador/EdicionPerfil}" title="Editar">
+								<a class="border-0 bg-transparent" th:href="@{/Administrador/EdicionPerfil}"
+									title="Editar">
 									<i class="bi bi-pencil-square"></i>
 								</a>
 							</div>
 							<div class="profile-info">
 								<div class="d-flex align-items-center mb-30">
 									<div class="profile-image">
-										<img th:src="@{/images/Juan.jpg}" alt="Foto de perfil">										
+										<img th:src="${session.imagen}" alt="Foto de perfil">
 									</div>
 									<div class="profile-meta">
 										<h2 class="text-bold text-dark mb-10" th:text="${session.nombre}"></h2>
@@ -56,33 +56,33 @@
 									</div>
 								</div>
 								<div class="row">
-								    <!-- Columna izquierda -->
-								    <div class="col-md-6">
-								        
-								        <div class="mb-3">
-								            <h4 class="mb-1">Correo</h4>
-								            <p th:text="${session.email}" class="text-gray"></p>
-								        </div>
+									<!-- Columna izquierda -->
+									<div class="col-md-6">
 
-								        <div class="mb-3">
-								            <h4 class="mb-1">Documento</h4>
-								            <p th:text="${session.documento}" class="text-gray"></p>
-								        </div>
-								    </div>
+										<div class="mb-3">
+											<h4 class="mb-1">Correo</h4>
+											<p th:text="${session.email}" class="text-gray"></p>
+										</div>
 
-								    <!-- Columna derecha -->
-								    <div class="col-md-6">
+										<div class="mb-3">
+											<h4 class="mb-1">Documento</h4>
+											<p th:text="${session.documento}" class="text-gray"></p>
+										</div>
+									</div>
 
-								        <div class="mb-3">
-								            <h4 class="mb-1">Dirección</h4>
-								            <p th:text="${session.direccion}" class="text-gray"></p>
-								        </div>
+									<!-- Columna derecha -->
+									<div class="col-md-6">
 
-								        <div class="mb-3">
-								            <h4 class="mb-1">Teléfono</h4>
-								            <p th:text="${session.telefono}" class="text-gray"></p>
-								        </div>
-								    </div>
+										<div class="mb-3">
+											<h4 class="mb-1">Dirección</h4>
+											<p th:text="${session.direccion}" class="text-gray"></p>
+										</div>
+
+										<div class="mb-3">
+											<h4 class="mb-1">Teléfono</h4>
+											<p th:text="${session.telefono}" class="text-gray"></p>
+										</div>
+									</div>
 								</div>
 
 

@@ -6,8 +6,7 @@
 <body>
 	<!-- ======== Preloader =========== -->
 	<div id="preloader">
-		<div class="spinner"></div>
-
+		<img th:src="@{/images/LogoBlankogoty.png}" alt="Logo blanco">
 	</div>
 
 	<div th:insert="~{Administrador/template_administracion.html::sidebar}"></div>
@@ -127,7 +126,8 @@
 										<div class="col-lg-3">
 											<div class="select-style-1">
 												<div class="select-position">
-													<select name="jornada" id="jornada" required th:value="${ficha.jornada}">
+													<select name="jornada" id="jornada" required
+														th:value="${ficha.jornada}">
 														<option value="" selected>Jornada</option>
 														<option>Mañana</option>
 														<option>Tarde</option>

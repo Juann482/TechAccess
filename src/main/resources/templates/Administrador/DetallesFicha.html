@@ -6,7 +6,7 @@
 <body>
 
 	<div id="preloader">
-		<div class="spinner"></div>
+		<img th:src="@{/images/LogoBlankogoty.png}" alt="Logo blanco">
 	</div>
 
 	<div th:insert="~{/Administrador/template_administracion.html::sidebar}"></div>
@@ -37,7 +37,7 @@
 						<!-- Botón Filtros -->
 						<button class="btn btn-info text-white me-2" data-bs-toggle="modal"
 							data-bs-target="#modalFiltros"><i class="bi bi-funnel-fill">
-							Filtros</i>
+								Filtros</i>
 						</button>
 
 						<!-- Botón Limpiar filtros (solo si hay filtros activos) -->
@@ -84,8 +84,9 @@
 
 							<!-- Anterior -->
 							<li th:class="'page-item ' + (${usuariosPage.first} ? 'disabled' : '')">
-								<a class="page-link" style="color: rgb(255, 255, 255); background-color: rgb(0, 0, 64); border-color: rgb(0, 0, 64);"
-								 th:href="@{/Administrador/ficha/{id}(
+								<a class="page-link"
+									style="color: rgb(255, 255, 255); background-color: rgb(0, 0, 64); border-color: rgb(0, 0, 64);"
+									th:href="@{/Administrador/ficha/{id}(
                                         id=${ficha.id},
                                         page=${usuariosPage.number - 1},
                                         nombre=${nombre},
@@ -100,8 +101,7 @@
 							<!-- Números -->
 							<li th:each="i : ${#numbers.sequence(0, usuariosPage.totalPages - 1)}"
 								th:class="'page-item ' + (${i} == ${usuariosPage.number} ? 'active' : '')">
-								<a class="page-link" 
-								th:text="${i + 1}" th:href="@{/Administrador/ficha/{id}(
+								<a class="page-link" th:text="${i + 1}" th:href="@{/Administrador/ficha/{id}(
                                         id=${ficha.id},
                                         page=${i},
                                         nombre=${nombre},
@@ -114,8 +114,9 @@
 
 							<!-- Siguiente -->
 							<li th:class="'page-item ' + (${usuariosPage.last} ? 'disabled' : '')">
-								<a class="page-link" style="color: rgb(255, 255, 255); background-color: rgb(0, 0, 64); border-color: rgb(0, 0, 64);"
-								 th:href="@{/Administrador/ficha/{id}(
+								<a class="page-link"
+									style="color: rgb(255, 255, 255); background-color: rgb(0, 0, 64); border-color: rgb(0, 0, 64);"
+									th:href="@{/Administrador/ficha/{id}(
                                         id=${ficha.id},
                                         page=${usuariosPage.number + 1},
                                         nombre=${nombre},

@@ -21,6 +21,24 @@
 		.centrados {
 			text-align: center;
 		}
+		.glow-error {
+				    border: 2px solid rgb(255, 125, 125) !important;
+				    animation: redGlow 0.7s infinite alternate;
+				}
+
+				@keyframes redGlow {
+				    from {
+				        box-shadow: 0 0 5px rgb(255, 125, 125);
+				    }
+				    to {
+				        box-shadow: 0 0 12px rgba(255, 0, 0, 1);
+				    }
+				}
+
+				.text-danger {
+				    color: rgb(255, 204, 204) !important;
+				    font-size: 0.85rem;
+				}
 	</style>
 
 	<!-- =======================================================
@@ -70,6 +88,21 @@
 
 	<!-- Main JS File -->
 	<script th:src="@{/assets/js/main.js}"></script>
+	<script>
+	    document.addEventListener("DOMContentLoaded", () => {
+	        const params = new URLSearchParams(window.location.search);
+	        
+	        if (params.has("error")) {
+	            const passwordField = document.getElementById("passwordInput");
+	            if (passwordField) {
+	                passwordField.value = "";
+	                console.log("Contraseña borrada por error"); // para probar
+	            }
+	        }
+	    });
+	</script>
+
+
 
 </div>
 

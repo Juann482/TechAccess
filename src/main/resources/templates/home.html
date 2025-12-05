@@ -59,21 +59,47 @@
 									<h3 style="color:rgb(255, 250, 250)">Acceso al Sistema</h3>
 									<div></div>
 
-									<form th:action="@{/login}" method="post">
-										<div class="form-group">
-											<label for="username" style="color:rgb(255, 255, 255)">Usuario</label>
-											<input type="email" class="form-control" name="username" placeholder="Correo electrónico" required>
-										</div>
-										<div class="form-group">
-											<label for="password" style="color:rgb(255, 255, 255)">Contraseña</label>
-											<input type="password" class="form-control" name="password" placeholder="Contraseña" required>
-										</div>
+									<form th:action="@{/login}" method="post" onload="clearPassword()">
 
-										<button type="submit" class="btn-login" style="color: white;">Iniciar
-											Sesión</button>
+									    <div class="form-group">
+									        <label for="username" style="color:white;">Usuario</label>
+
+									        <input type="email"
+									               class="form-control"
+									               name="username"
+									               placeholder="Correo electrónico"
+									               required
+												   autocomplete="off"
+									               th:classappend="${param.error} ? ' glow-error' : ''">
+
+									        <small th:if="${param.error}" class="text-danger">
+									            El correo es inválido o se encuentra inactivo.
+									        </small>
+									    </div>
+
+									    <div class="form-group">
+									        <label for="password" style="color:white;">Contraseña</label>
+
+											<input id="passwordInput"
+											       type="password"
+											       class="form-control"
+											       name="password"
+											       placeholder="Contraseña"
+											       required
+												   autocomplete="new-password"
+											       th:classappend="${param.error} ? ' glow-error' : ''">
+
+
+									        <small th:if="${param.error}" class="text-danger">
+									            Contraseña inválida.
+									        </small>
+									    </div>
+
+									    <button type="submit" class="btn-login" style="color:white;">Iniciar Sesión</button>
+
 									</form>
-									
-									
+
+
 
 									<!-- funcion vinculo paginas roles END -->
 									<div class="form-footer">
@@ -81,7 +107,7 @@
 											<p>¿No tiene una cuenta?</p>
 										</label>
 										<a th:href="@{/#}" class="btn-login">Solicitar</a>
-										
+
 									</div>
 								</div>
 							</div>

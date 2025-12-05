@@ -27,7 +27,7 @@ public class CustomSuccessHandler implements AuthenticationSuccessHandler {
 
             switch (rol) {
                 case "Administrador":
-                    response.sendRedirect("/Administrador/usuarios");
+                    response.sendRedirect("/Administrador/dashboard");
                     System.out.println("Usuario logueado como admin");
                     return;
 

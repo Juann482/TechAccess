@@ -67,6 +67,16 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
 
 
 	Page<Usuario> findByFichaId(Integer fichaId, Pageable pageable);
+	
+	@Query("""			
+			SELECT u.rol, COUNT(u) 
+	        FROM Usuario u
+	        WHERE u.estadoCuenta = 'Activo' 
+	        GROUP BY u.rol""")
+	List<Object[]> contarUsuariosActivosPorRol();
+
+	List<Usuario> findByRolAndEstadoCuenta(String rol, String estadoCuenta);
+
 
 	// ================================================0
 
