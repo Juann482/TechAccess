@@ -16,7 +16,6 @@ public interface IAccesoService {
 	Acceso findByHoraEgreso(LocalDateTime horaEgreso);
 
 	Acceso save(Acceso acceso);
-	
 
 	void update(Acceso acceso);
 

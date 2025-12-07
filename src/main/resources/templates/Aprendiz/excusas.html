@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<html lang="es" xmlns:th="http://www.thyme5.org">
 
 <head th:insert="~{templates_usuario::head}">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -7,7 +7,6 @@
 
 <body class="contact-page" style="font-family: 'Segoe UI', sans-serif;">
 	<!-- Encabezado -->
-
 	<header id="header" class="header d-flex align-items-center fixed-top">
 		<div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
 
@@ -24,7 +23,6 @@
 					<li><a th:href="@{/Aprendiz/aprendiz}">Aprendiz</a></li>
 					<li><a th:href="@{/Aprendiz/excusas}" class="active"><b>Excusas</b></a></li>
 					<li><a th:href="@{/Aprendiz/Horario}">Horario</a></li>
-
 				</ul>
 				<i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
 			</nav>
@@ -49,12 +47,10 @@
 
 					<ul class="menu-options">
 						<li><a id="openProfile"><i class="fas fa-user-circle"></i> Ver perfil</a></li>
-
 						<li><a th:href="@{/Aprendiz/detalleExcusa}"><i class="fas fa-history"></i> Ver historial de
 								excusa</a></li>
 						<li class="logout"><a th:href="@{/logout}"><i class="fas fa-sign-out-alt"></i> Cerrar sesión</a>
 						</li>
-
 					</ul>
 				</div>
 			</div>
@@ -74,69 +70,50 @@
 		</div>
 
 		<div class="container py-5">
-			<div class="row g-4">
-			</div>
+			<div class="row g-4"></div>
 		</div>
 
-		<!-- 🔹 Fondo de video a pantalla completa 
-			<div class="video-container2 position-fixed top-0 start-0 w-100 h-100 overflow-hidden"
-				style="z-index: -1; opacity: 1;">
 
-				<video class="video-background2 w-100 h-100 object-fit-cover" autoplay muted loop playsinline>
-					<source th:src="@{/assets/vid/entradaS.mp4}" type="video/mp4">
-					Tu navegador no soporta videos en HTML5.
-				</video>
-			</div>
-		 -->
-
-
-		<!-- 🔹 CONTENIDO PRINCIPAL -->
-
+		<!-- CONTENIDO PRINCIPAL -->
 		<main class="main" style="background-color: rgba(0, 124, 88, 0.05); min-height: 100vh;">
 			<div class="page-title black-background text-center py-5">
 				<div class="container position-relative">
 					<div class="container">
 						<div class="row">
 
-							<!-- 🔸 MENÚ LATERAL -->
-
-
-							<!-- 🔸 FORMULARIO PRINCIPAL -->
-
-
+							<!-- FORMULARIO DE EXCUSAS -->
 							<div class="col-lg-11 mx-auto px-4">
-								<div class="access-card bg-white rounded-3 shadow-sm p-4 " style="opacity: 0.95;">
+								<div class="access-card bg-white rounded-3 shadow-sm p-4" style="opacity: 0.95;">
 									<section class="section dashboard">
 										<div class="card-body">
 
 											<h4 class="mb-3" style="color: rgb(14, 209, 220);">
 												<i class="bi bi-clipboard-check me-2"
-													style="color: rgb(14, 209, 220);"></i><b>Registrar
-													Excusa</b>
+													style="color: rgb(14, 209, 220);"></i>
+												<b>Registrar Excusa</b>
 											</h4>
+
 											<div th:if="${error}" class="alert alert-danger mt-3"
-												style="color: rgb(14, 209, 220);" th:text="${error}">
-											</div>
+												style="color: rgb(14, 209, 220);" th:text="${error}"></div>
+
+											<!-- FORMULARIO REAL -->
 											<form th:action="@{/Aprendiz/save}" method="post"
-												enctype="multipart/form-data">
+												enctype="multipart/form-data" id="formExcusa">
 
 												<div class="mb-3 row" style="color: rgb(14, 209, 220)">
-													<label
-														class="col-sm-3 col-form-label fw-semibold text-success; ">Nombre
-														y
+													<label class="col-sm-3 col-form-label fw-semibold">Nombre y
 														apellidos:</label>
 													<div class="col-sm-9">
 														<input type="text" class="form-control" id="nombres"
 															name="nombres"
 															th:value="${usuario != null ? usuario.nombre : ' - '}"
 															readonly>
-
 													</div>
 												</div>
 
 												<div class="mb-3 row" style="color: rgb(14, 209, 220)">
 													<label
-														class="col-sm-3 col-form-label fw-semibold text-success; ">Documento:</label>
+														class="col-sm-3 col-form-label fw-semibold">Documento:</label>
 													<div class="col-sm-9">
 														<input type="number" class="form-control" id="ndocumento"
 															name="ndocumento"
@@ -146,9 +123,7 @@
 												</div>
 
 												<div class="mb-3 row" style="color: rgb(14, 209, 220)">
-													<label
-														class="col-sm-3 col-form-label fw-semibold text-success; ">Número
-														de
+													<label class="col-sm-3 col-form-label fw-semibold">Número de
 														ficha:</label>
 													<div class="col-sm-9">
 														<input type="number" class="form-control mb-2" id="fichaasd"
@@ -162,50 +137,34 @@
 												</div>
 
 												<div class="mb-3 row" style="color: rgb(14, 209, 220)">
-													<label
-														class="col-sm-3 col-form-label fw-semibold text-success; ">Motivo
-														de
+													<label class="col-sm-3 col-form-label fw-semibold">Motivo de
 														inasistencia:</label>
 													<div class="col-sm-9">
 														<select class="form-control" id="motivo" name="motivo" required>
-															<option value="">*** Seleccionar ***
+															<option value="">*** Seleccionar ***</option>
+															<option value="Enfermedad">Enfermedad</option>
+															<option value="Incapacidad médica">Incapacidad médica
 															</option>
-															<option value="Enfermedad">Enfermedad
-															</option>
-															<option value="Incapacidad médica">
-																Incapacidad
-																médica
-															</option>
-															<option value="Derecho al voto">Derecho al
-																voto
-															</option>
-															<option value="Calamidad doméstica">
-																Calamidad
-																doméstica
+															<option value="Derecho al voto">Derecho al voto</option>
+															<option value="Calamidad doméstica">Calamidad doméstica
 															</option>
 															<option value="Otro">Otro</option>
 														</select>
 													</div>
 												</div>
+
 												<div class="mb-3 row" style="color: rgb(14, 209, 220)">
 													<label
-														class="col-sm-3 col-form-label fw-semibold text-success; ">Descripcion
-														:</label>
+														class="col-sm-3 col-form-label fw-semibold">Descripción:</label>
 													<div class="col-sm-9">
-														<div class="form-group">
-															<div class="input-with-icon">
-																<input type="text" class="form-control" id="descripcion"
-																	name="descripcion"
-																	placeholder="Motivo de inasistencia: "
-																	autocomplete="off">
-															</div>
-														</div>
+														<input type="text" class="form-control" id="descripcion"
+															name="descripcion" placeholder="Motivo de inasistencia"
+															autocomplete="off">
 													</div>
 												</div>
 
 												<div class="mb-3 row" style="color: rgb(14, 209, 220)">
-													<label
-														class="col-sm-3 col-form-label fw-semibold text-success; ">Fecha:</label>
+													<label class="col-sm-3 col-form-label fw-semibold">Fecha:</label>
 													<div class="col-sm-9">
 														<input type="date" class="form-control" id="fecha" name="fecha"
 															required>
@@ -213,33 +172,26 @@
 												</div>
 
 												<div class="mb-3 row" style="color: rgb(14, 209, 220)">
-													<label
-														class="col-sm-3 col-form-label fw-semibold text-success; ">Soporte:</label>
+													<label class="col-sm-3 col-form-label fw-semibold">Soporte:</label>
 													<div class="col-sm-9">
 														<input type="file" class="form-control" name="img"
 															accept=".pdf,.jpg,.png" required>
-
-														<small class="text-muted">Adjunte un soporte de la
-															inasistencia
-															(PDF o
-															imagen).</small>
+														<small class="text-muted">Adjunte un soporte en PDF o
+															imagen.</small>
 													</div>
 												</div>
-												<div class="text-end" style="color: rgb(14, 209, 220)">
-													<form th:action="@{/Aprendiz/save}" method="post"
-														enctype="multipart/form-data" id="formExcusa">
-														<!-- tus campos aquí -->
-														<div class="text-end">
-															<button type="button" class="btn"
-																style="background-color: rgb(14, 209, 220); border-color: rgb(14, 209, 220); color: white;"
-																onclick="confirmarGuardado()">
-																<i class="bi bi-send-plus me-2"></i>
-																Guardar Excusa
-															</button>
 
-														</div>
-													</form>
+												<div class="text-end mt-4">
+													<button type="button" class="btn"
+														style="background-color: rgb(14, 209, 220); border-color: rgb(14, 209, 220); color: white;"
+														onclick="confirmarGuardado()">
+														<i class="bi bi-send-plus me-2"></i> Guardar Excusa
+													</button>
 												</div>
+
+											</form>
+
+										</div>
 									</section>
 								</div>
 							</div>
@@ -251,7 +203,7 @@
 
 		<div th:insert="~{/Aprendiz/aprendiz.html::modal}"></div>
 
-		<!-- 🔹 FOOTER -->
+		<!-- FOOTER -->
 		<div th:insert="~{/templates_usuario.html::footer}"></div>
 		<div th:insert="~{/templates_usuario.html::jsFiles}"></div>
 
@@ -260,21 +212,45 @@
 
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
 
+		<!-- SweetAlert2 -->
+		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+		<!-- Script de confirmación -->
+		<script>
+			function confirmarGuardado() {
+				Swal.fire({
+					title: "¿Guardar excusa?",
+					text: "La información será registrada en el sistema.",
+					icon: "question",
+					showCancelButton: true,
+					confirmButtonText: "Guardar",
+					cancelButtonText: "Cancelar",
+					buttonsStyling: false,
+					customClass: {
+						popup: 'rounded-4 shadow',
+						title: 'fw-bold',
+						confirmButton: 'btn btn-outline-secondary px-4 rounded-pill',  // <-- AQUÍ EL FONDO VERDE
+						cancelButton: 'btn btn-outline-secondary px-4 rounded-pill'
+					}
+				}).then((result) => {
+					if (result.isConfirmed) {
+
+						Swal.fire({
+							icon: "success",
+							title: "Excusa guardada",
+							text: "La excusa se registró correctamente.",
+							showConfirmButton: false,
+							timer: 1500,
+							customClass: {popup: 'rounded-4 shadow'}
+						}).then(() => {
+							document.getElementById("formExcusa").submit();
+						});
+					}
+				});
+			}
+		</script>
 
 
 </body>
 
 </html>
-
-
-<script>
-	function confirmarGuardado() {
-		if (confirm("¿Deseas guardar la información de la excusa?")) {
-			document.querySelector("form").submit();
-		}
-	}
-	function mostrarQR() {
-		const qr = document.getElementById("codigoQR");
-		qr.style.display = (qr.style.display === "none" || qr.style.display === "") ? "block" : "none";
-	}
-</script>
