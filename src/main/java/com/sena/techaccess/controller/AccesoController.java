@@ -28,37 +28,30 @@ public class AccesoController {
 	private IAccesoService accesoService;
 
 	@PostMapping("/registrar-ingreso")
-	@ResponseBody
-	public String registrarIngreso(@RequestParam("documento") String documento) {
-		// 1. Buscar usuario por documento / código de barras
-		Usuario usuario = usuarioService.findByDocumento(documento);
-		if (usuario == null) {
-			return "Usuario no encontrado";
-		}
+@ResponseBody
+public String registrarIngreso(@RequestParam("documento") String documento) {
+    // 1. Buscar usuario por documento / código de barras
+    Usuario usuario = usuarioService.findByDocumento(documento);
+    if (usuario == null) {
+        return "Usuario no encontrado";
+    }
 
-		// 2. Buscar su último acceso
-		Acceso ultimoAcceso = accesoService.findUltimoAcceso(usuario.getId());
+    // 2. Buscar su último acceso
+    Acceso ultimoAcceso = accesoService.findUltimoAcceso(usuario.getId());
 
-		// 3. Si hay un acceso sin horaEgreso → registrar SALIDA
-		if (ultimoAcceso != null && ultimoAcceso.getHoraEgreso() == null) {
+    // 3. Si hay un acceso sin horaEgreso → registrar SALIDA
+    if (ultimoAcceso != null && ultimoAcceso.getHoraEgreso() == null) {
+        ultimoAcceso.setHoraEgreso(LocalDateTime.now());
+        accesoService.save(ultimoAcceso);
+        return "Egreso registrado: " + usuario.getNombre();
+    }
 
-			// (OPCIONAL) validar tiempo mínimo antes de salida:
-			Duration dur = Duration.between(ultimoAcceso.getHoraIngreso(), LocalDateTime.now());
-			if (dur.toMinutes() < 5) {
-				return "Debe pasar al menos 5 minutos para registrar salida.";
-			}
+    // 4. Si no hay acceso activo → registrar NUEVA ENTRADA
+    Acceso nuevoAcceso = new Acceso();
+    nuevoAcceso.setUsuario(usuario);
+    nuevoAcceso.setHoraIngreso(LocalDateTime.now());
+    accesoService.save(nuevoAcceso);
 
-			ultimoAcceso.setHoraEgreso(LocalDateTime.now());
-			accesoService.save(ultimoAcceso);
-			return "Egreso registrado: " + usuario.getNombre();
-		}
-
-		// 4. Si no hay acceso activo → registrar NUEVA ENTRADA
-		Acceso nuevoAcceso = new Acceso();
-		nuevoAcceso.setUsuario(usuario);
-		nuevoAcceso.setHoraIngreso(LocalDateTime.now());
-		accesoService.save(nuevoAcceso);
-
-		return "Ingreso registrado: " + usuario.getNombre();
-	}
+    return "Ingreso registrado: " + usuario.getNombre();
+}
 }

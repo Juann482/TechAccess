@@ -63,6 +63,8 @@ public class AprendizController {
 		this.accesoController = accesoController;
 	}
 
+	
+
 	// ===================== AUXILIAR: USUARIO LOGUEADO =====================
 
 	private Usuario getUsuarioLogueado(Principal principal) {
