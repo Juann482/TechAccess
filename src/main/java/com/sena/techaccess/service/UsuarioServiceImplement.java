@@ -36,27 +36,27 @@ public class UsuarioServiceImplement implements IUsuarioService {
 
 	@Override
 	public int Inactivos() {
-		return (int) usuarioRepository.countByEstadoCuenta("Inactivo");
+		return usuarioRepository.countByEstadoCuenta("Inactivo");
 	}
 
 	@Override
 	public int Activos() {
-		return (int) usuarioRepository.countByEstadoCuenta("Activo");
+		return usuarioRepository.countByEstadoCuenta("Activo");
 	}
 
 	@Override
 	public int Aprendiz() {
-		return (int) usuarioRepository.countByRol("Aprendiz");
+		return usuarioRepository.countByRol("Aprendiz");
 	}
 
 	@Override
 	public int Instructor() {
-		return (int) usuarioRepository.countByRol("Instructor");
+		return usuarioRepository.countByRol("Instructor");
 	}
 
 	@Override
 	public int Visitante() {
-		return (int) usuarioRepository.countByRol("Visitantes");
+		return usuarioRepository.countByRol("Visitantes");
 	}
 
 //>>>>>>>>>>>>>>>>>>>>>> FIN DASHBOARD <<<<<<<<<<<<<<<<<<<<<
@@ -164,38 +164,32 @@ public class UsuarioServiceImplement implements IUsuarioService {
 
 	@Override
 	public int AprendizAct() {
-		// TODO Auto-generated method stub
-		return 0;
+		return usuarioRepository.countByRolAndEstadoCuenta("Aprendiz", "Activo");
 	}
 
 	@Override
 	public int AprendizIN() {
-		// TODO Auto-generated method stub
-		return 0;
+		return usuarioRepository.countByRolAndEstadoCuenta("Aprendiz", "Inactivo");
 	}
 
 	@Override
 	public int InstructorAc() {
-		// TODO Auto-generated method stub
-		return 0;
+		return usuarioRepository.countByRolAndEstadoCuenta("Instructor", "Activo");
 	}
 
 	@Override
 	public int InstructorIN() {
-		// TODO Auto-generated method stub
-		return 0;
+		return usuarioRepository.countByRolAndEstadoCuenta("Instructor", "Inactivo");
 	}
 
 	@Override
 	public int VisitantesAc() {
-		// TODO Auto-generated method stub
-		return 0;
+		return usuarioRepository.countByRolAndEstadoCuenta("Visitantes", "Activo");
 	}
 
 	@Override
 	public int VisitantesIN() {
-		// TODO Auto-generated method stub
-		return 0;
+		return usuarioRepository.countByRolAndEstadoCuenta("Visitantes", "Inactivo");
 	}
 
 }
