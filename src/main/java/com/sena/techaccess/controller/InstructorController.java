@@ -109,7 +109,7 @@ public class InstructorController {
 
             if (!accesos.isEmpty()) {
                 Acceso primerAcceso = accesos.get(0);
-                System.out.println("Primer acceso - ID: " + primerAcceso.getIdacceso());
+                System.out.println("Primer acceso - ID: " + primerAcceso.getId());
                 System.out.println("Usuario: "
                         + (primerAcceso.getUsuario() != null ? primerAcceso.getUsuario().getNombre() : "NULL"));
             }
