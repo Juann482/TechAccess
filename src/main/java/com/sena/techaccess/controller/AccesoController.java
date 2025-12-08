@@ -30,23 +30,24 @@ public class AccesoController {
 	@PostMapping("/registrar-ingreso")
 @ResponseBody
 public String registrarIngreso(@RequestParam("documento") String documento) {
-    // 1. Buscar usuario por documento / código de barras
+
     Usuario usuario = usuarioService.findByDocumento(documento);
     if (usuario == null) {
+        LOGGER.warn("Documento no encontrado: {}", documento);
         return "Usuario no encontrado";
     }
 
-    // 2. Buscar su último acceso
     Acceso ultimoAcceso = accesoService.findUltimoAcceso(usuario.getId());
+    LOGGER.info("Ultimo acceso encontrado para {}: {}", usuario.getNombre(), ultimoAcceso);
 
-    // 3. Si hay un acceso sin horaEgreso → registrar SALIDA
     if (ultimoAcceso != null && ultimoAcceso.getHoraEgreso() == null) {
+        LOGGER.info("Registrando EGRESO para acceso id={}", ultimoAcceso.getId());
         ultimoAcceso.setHoraEgreso(LocalDateTime.now());
         accesoService.save(ultimoAcceso);
         return "Egreso registrado: " + usuario.getNombre();
     }
 
-    // 4. Si no hay acceso activo → registrar NUEVA ENTRADA
+    LOGGER.info("Registrando INGRESO nuevo para usuario id={}", usuario.getId());
     Acceso nuevoAcceso = new Acceso();
     nuevoAcceso.setUsuario(usuario);
     nuevoAcceso.setHoraIngreso(LocalDateTime.now());

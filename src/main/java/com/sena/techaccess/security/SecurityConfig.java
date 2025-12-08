@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 
 @Configuration
 @EnableWebSecurity
@@ -26,25 +27,18 @@ public class SecurityConfig {
 	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http.csrf(csrf -> csrf.disable())
 				.authorizeHttpRequests(auth -> auth
-						.requestMatchers("/", "/assets/**", "/images/**", "/css/**", "/js/**",
-								"/img/**, /error/**, /soporte, /about")
-						.permitAll()
-						.requestMatchers("/Administrador/**").hasAuthority("Administrador")
-						.requestMatchers("/Vigilancia/**").hasAuthority("Vigilancia")
-						.requestMatchers("/Aprendiz/**").hasAuthority("Aprendiz")
-						.requestMatchers("/instructor/**").hasAuthority("Instructor")
-						.requestMatchers("/funcionario/**").hasAuthority("Funcionario")
-						.anyRequest().authenticated())
-				.formLogin(login -> login
-						.loginPage("/")
-						.loginProcessingUrl("/login")
-						.successHandler(successHandler)
+						.requestMatchers("/", "/assets/**", "/images/**", "/css/**", "/js/**", "/img/**", "/error/**",
+								"/soporte", "/about")
+						.permitAll().requestMatchers("/Administrador/**").hasAuthority("Administrador")
+						.requestMatchers("/Vigilancia/**").hasAuthority("Vigilancia").requestMatchers("/Aprendiz/**")
+						.hasAuthority("Aprendiz").requestMatchers("/instructor/**").hasAuthority("Instructor")
+						.requestMatchers("/funcionario/**").hasAuthority("Funcionario").anyRequest().authenticated())
+				.formLogin(login -> login.loginPage("/").loginProcessingUrl("/login").successHandler(successHandler)
 						.permitAll())
-				.logout(logout -> logout
-						.logoutUrl("/logout")
-						.logoutSuccessUrl("/")
-						.permitAll())
-				.userDetailsService(serviceLogin);
+				.logout(logout -> logout.logoutUrl("/logout").logoutSuccessUrl("/").permitAll())
+				.userDetailsService(serviceLogin)
+				// 👉 Corrección agregada (ENVÍA AL LOGIN EN VEZ DE 403)
+				.exceptionHandling(ex -> ex.authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/")));
 
 		return http.build();
 	}
