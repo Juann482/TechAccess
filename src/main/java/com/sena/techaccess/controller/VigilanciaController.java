@@ -116,7 +116,7 @@ public class VigilanciaController {
 		}
 
 		// Buscar último acceso sin salida
-		Acceso ultimoAcceso = accesoService.findbyHoraIngreso(usuario.getId());
+		Acceso ultimoAcceso = accesoService.findByHoraIngreso(usuario.getId());
 
 		if (ultimoAcceso == null || ultimoAcceso.getHoraEgreso() != null) {
 			return "No hay ingreso activo para este usuario.";

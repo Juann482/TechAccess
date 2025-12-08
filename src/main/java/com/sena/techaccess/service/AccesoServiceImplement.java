@@ -53,65 +53,42 @@ public class AccesoServiceImplement implements IAccesoService {
 		return accesoRepository.findAll();
 	}
 
-	// =============================================================
-	// 🔍 OBTENER EL ÚLTIMO ACCESO DE UN USUARIO
-	// =============================================================
+	// 🔍 ÚLTIMO ACCESO SIN SALIDA (para registrar egreso)
 	@Override
 	public Acceso findUltimoAcceso(Integer idUsuario) {
-
-		return accesoRepository.findTopByUsuarioIdOrderByHoraIngresoDesc(idUsuario);
+		return accesoRepository.findTopByUsuario_IdAndHoraEgresoIsNullOrderByHoraIngresoDesc(idUsuario);
 	}
 
-	// Evita duplicados ⇒ reutiliza findUltimoAcceso()
-	@Override
-	public Acceso findbyHoraIAcceso(Integer idUsuario) {
-		return findUltimoAcceso(idUsuario);
-	}
-
-
-	
-	// =============================================================
-	// 🔍 OBTENER EL ÚLTIMO ACCESO DE TODOS LOS USUARIOS
-	// =============================================================
+	// 🔍 ÚLTIMO ACCESO de todos los usuarios (para paneles)
 	@Override
 	public Map<Integer, Acceso> findLatestAccessForAllUsers() {
-
 		List<Object[]> results = accesoRepository.findLatestAccessForAllUsers();
 		Map<Integer, Acceso> latestAccessMap = new HashMap<>();
 
 		if (results != null) {
 			for (Object[] result : results) {
-
 				if (result != null && result.length >= 2) {
-
 					Integer userId = (Integer) result[0];
 					Acceso acceso = (Acceso) result[1];
-
 					if (userId != null && acceso != null) {
 						latestAccessMap.put(userId, acceso);
 					}
 				}
 			}
 		}
-
 		return latestAccessMap;
 	}
 
-	// Alias por compatibilidad
+	// Alias si alguna parte del código llama a este nombre
 	@Override
 	public Map<Integer, Acceso> findUltimoAcceso() {
 		return findLatestAccessForAllUsers();
 	}
 
-	// Método innecesario → lo dejo implementado vacío para evitar errores
+	// Métodos sobrantes: devuelve null solo si NO se usan en ningún sitio.
 	@Override
 	public Acceso findByHoraIngreso(Integer id) {
 		return null;
 	}
 
-	@Override
-	public Acceso findbyHoraIngreso(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }

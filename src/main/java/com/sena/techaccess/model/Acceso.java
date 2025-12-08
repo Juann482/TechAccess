@@ -125,4 +125,9 @@ public class Acceso {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	public Integer getIdacceso() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

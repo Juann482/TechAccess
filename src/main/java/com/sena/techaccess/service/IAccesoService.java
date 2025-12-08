@@ -25,15 +25,11 @@ public interface IAccesoService {
 
 	Acceso findByHoraIngreso(Integer id);
 
-	Acceso findUltimoAcceso(Integer id);
+	// Último acceso SIN salida de un usuario (para egreso)
+	Acceso findUltimoAcceso(Integer idUsuario);
 
-	// Find all users with their latest access
 	Map<Integer, Acceso> findLatestAccessForAllUsers();
 
 	Map<Integer, Acceso> findUltimoAcceso();
-
-	Acceso findbyHoraIngreso(Integer id);
-
-	Acceso findbyHoraIAcceso(Integer idUsuario);
 
 }

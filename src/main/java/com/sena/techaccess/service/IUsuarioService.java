@@ -63,4 +63,16 @@ public interface IUsuarioService {
 
 	int totalUsuarios();
 
+	int AprendizAct();
+
+	int AprendizIN();
+
+	int InstructorAc();
+
+	int InstructorIN();
+
+	int VisitantesAc();
+
+	int VisitantesIN();
+
 }
