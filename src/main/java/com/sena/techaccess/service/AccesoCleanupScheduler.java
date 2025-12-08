@@ -25,7 +25,7 @@ public class AccesoCleanupScheduler {
     public void limpiarHistorialAccesos() {
         List<Acceso> accesos = accesoService.findAll();
         for (Acceso a : accesos) {
-            accesoService.delete(a.getIdacceso());
+            accesoService.delete(a.getId());
         }
         LOGGER.info("Historial de accesos limpiado. Registros eliminados: {}", accesos.size());
     }

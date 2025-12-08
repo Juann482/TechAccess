@@ -17,7 +17,7 @@
 	<main class="main-wrapper">
 
 		<!-- Header -->
-        <div th:insert="~{Administrador/template_administracion.html :: header}"></div>
+		<div th:insert="~{Administrador/template_administracion.html :: header}"></div>
 
 		<section class="section">
 			<div class="container-fluid">
@@ -26,17 +26,18 @@
 				<div class="title-wrapper pt-30">
 					<div class="row align-items-center">
 						<div class="col-md-6">
-							<h2 th:text="${tituloPagina != null ? tituloPagina : 'eCommerce Dashboard'}"></h2>
+							<h2 th:text="${'¡Bienvenido ' + session.nombre + '!'}"></h2>
 						</div>
 						<div class="col-md-6">
 							<div class="breadcrumb-wrapper">
 								<nav aria-label="breadcrumb">
 									<ol class="breadcrumb">
 										<li class="breadcrumb-item">
-											<a th:href="@{/administrador/Dashboard}">Dashboard</a>
+											<a th:href="@{/administrador/dashboard}">Dashboard</a>
 										</li>
 										<li class="breadcrumb-item active" aria-current="page">
-											<span th:text="${subtituloPagina != null ? subtituloPagina : 'eCommerce'}"></span>
+											<span
+												th:text="${subtituloPagina != null ? subtituloPagina : 'eCommerce'}"></span>
 										</li>
 									</ol>
 								</nav>
@@ -45,7 +46,7 @@
 					</div>
 				</div>
 
-                <!-- ======== Tarjetas de estadísticas ======== -->
+				<!-- ======== Tarjetas de estadísticas ======== -->
 				<div class="row g-4 mt-2">
 
 					<div class="col-xl-3 col-md-6">
@@ -56,10 +57,15 @@
 							<div class="content">
 								<h6>Usuarios</h6>
 								<h3 class="text-bold" th:text="${UsuariosA}" th:title="${Activos + ' activos'}"></h3>
+								<p class="text-sm text-success">
+									<i class="bi bi-check-circle-fill"></i>
+									<span th:text="${Activos}"></span>
+									<span class="text-success">Activos</span>
+								</p>
 								<p class="text-sm text-danger">
-									<i class="bi bi-arrow-down"></i>
-									<span th:text="${Inactivos}"></span> <br>
-									<span class="text-gray">Inactivos</span>
+									<i class="bi bi-dash-circle-fill"></i>
+									<span th:text="${Inactivos}"></span>
+									<span class="text-danger">Inactivos</span>
 								</p>
 							</div>
 						</div>
@@ -74,8 +80,14 @@
 								<h6>Aprendices</h6>
 								<h3 class="text-bold" th:text="${Aprendiz}"></h3>
 								<p class="text-sm text-success">
-									<i class="lni lni-arrow-up"></i> +5.45%
-									<span class="text-gray">Increased</span>
+									<i class="bi bi-check-circle-fill"></i>
+									<span th:text="${AprendizAc}"></span>
+									<span class="text-success">Activos</span>
+								</p>
+								<p class="text-sm text-danger">
+									<i class="bi bi-dash-circle-fill"></i>
+									<span th:text="${ApInactivo}"></span>
+									<span class="text-danger">Inactivos</span>
 								</p>
 							</div>
 						</div>
@@ -89,9 +101,15 @@
 							<div class="content">
 								<h6>Instructores</h6>
 								<h3 class="text-bold" th:text="${Instructor}"></h3>
+								<p class="text-sm text-success">
+									<i class="bi bi-check-circle-fill"></i>
+									<span th:text=${AcInstructor}></span>
+									<span class="text-success">Activos</span>
+								</p>
 								<p class="text-sm text-danger">
-									<i class="lni lni-arrow-down"></i> -2.00%
-									<span class="text-gray">Expense</span>
+									<i class="bi bi-dash-circle-fill"></i>
+									<span th:text="${InInactivo}"></span>
+									<span class="text-danger">Inactivos</span>
 								</p>
 							</div>
 						</div>
@@ -105,9 +123,15 @@
 							<div class="content">
 								<h6>Visitantes</h6>
 								<h3 class="text-bold" th:text="${Visitante}"></h3>
+								<p class="text-sm text-success">
+									<i class="bi bi-check-circle-fill"></i>
+									<span th:text="${VisitAc}"></span>
+									<span class="text-success">Presentes</span>
+								</p>
 								<p class="text-sm text-danger">
-									<i class="lni lni-arrow-down"></i> -25.00%
-									<span class="text-gray">Earning</span>
+									<i class="bi bi-dash-circle-fill"></i>
+									<span th:text="${VisitEg}"></span>
+									<span class="text-danger">Egresados</span>
 								</p>
 							</div>
 						</div>
@@ -119,12 +143,12 @@
 				<div class="row">
 
 					<!-- Gráfica -->
-					<div class="col-lg-5">
+					<div class="col-lg-5 mb-4">
 						<div class="card p-3 shadow-sm">
 							<h4 class="mb-3 text-center">Gráfica de usuarios activos</h4>
-							<canvas id="graficaRoles" style="max-width: 400px; margin: auto;"></canvas>
+							<canvas id="graficaRoles" style="width: 100%; margin: auto;"></canvas>
 						</div>
-					</div>
+					</div><br>
 
 					<!-- Tabla -->
 					<div class="col-lg-7">
@@ -134,20 +158,20 @@
 								<table class="table">
 									<thead>
 										<tr class="centrados">
-											
+
 											<th scope="col">Nombre</th>
 											<th scope="col">Documento</th>
 											<th scope="col">Teléfono</th>
-											
+
 										</tr>
 									</thead>
 									<tbody th:each="v : ${vigilancia}">
 										<tr class="centrados">
-											
+
 											<td th:text="${v.nombre}"></td>
 											<td th:text="${v.documento}"></td>
 											<td th:text="${v.telefono}"></td>
-											
+
 										</tr>
 									</tbody>
 								</table>
@@ -158,7 +182,7 @@
 				</div>
 
 			</div>
-		</section>
+		</section><br>
 
 		<!-- Footer -->
 		<div th:insert="~{Administrador/template_administracion.html :: footer}"></div>
@@ -190,7 +214,7 @@
 			options: {
 				responsive: true,
 				plugins: {
-					legend: { position: 'bottom' }
+					legend: {position: 'bottom'}
 				}
 			}
 		});

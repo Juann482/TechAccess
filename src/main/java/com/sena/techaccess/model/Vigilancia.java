@@ -23,7 +23,8 @@ public class Vigilancia {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer idVigilancia;
+	private Integer id;
+	private String actividad;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date horaIngreso;
@@ -32,9 +33,6 @@ public class Vigilancia {
 	private Date horaEgreso;
 
 	private String turno;
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	private EstadoPermanencia estadoPermanencia;
 
 	// ❌ Antes: cascade = CascadeType.ALL (peligroso)
 	// ✔ Corregido: sin cascade para no alterar al usuario
@@ -49,19 +47,20 @@ public class Vigilancia {
 	public Vigilancia() {
 	}
 
-	public Vigilancia(Integer idVigilancia, Date horaIngreso, Date horaEgreso, String turno) {
-		this.idVigilancia = idVigilancia;
+	public Vigilancia(Integer id, Date horaIngreso, Date horaEgreso, String turno, String actividad) {
+		this.id = id;
 		this.horaIngreso = horaIngreso;
 		this.horaEgreso = horaEgreso;
 		this.turno = turno;
+		this.actividad = actividad;
 	}
 
-	public Integer getIdVigilancia() {
-		return idVigilancia;
+	public Integer getId() {
+		return id;
 	}
 
-	public void setIdVigilancia(Integer idVigilancia) {
-		this.idVigilancia = idVigilancia;
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public Date getHoraIngreso() {
@@ -88,14 +87,6 @@ public class Vigilancia {
 		this.turno = turno;
 	}
 
-	public EstadoPermanencia getEstadoPermanencia() {
-		return estadoPermanencia;
-	}
-
-	public void setEstadoPermanencia(EstadoPermanencia estadoPermanencia) {
-		this.estadoPermanencia = estadoPermanencia;
-	}
-
 	public Usuario getUsuario() {
 		return usuario;
 	}
@@ -112,6 +103,14 @@ public class Vigilancia {
 		this.accesos = accesos;
 	}
 
+	public String getActividad() {
+		return actividad;
+	}
+
+	public void setActividad(String actividad) {
+		this.actividad = actividad;
+	}
+
 	// ✔ Método auxiliar para añadir acceso sin errores
 	public void addAcceso(Acceso acceso) {
 		accesos.add(acceso);
@@ -120,9 +119,8 @@ public class Vigilancia {
 
 	@Override
 	public String toString() {
-		return "Vigilancia [idVigilancia=" + idVigilancia + ", horaIngreso=" + horaIngreso + ", horaEgreso="
-				+ horaEgreso + ", turno=" + turno + ", estadoPermanencia="
-				+ (estadoPermanencia != null ? estadoPermanencia.getTipoPermanencia() : null) + ", usuario="
+		return "Vigilancia [id=" + id + ", horaIngreso=" + horaIngreso + ", horaEgreso="
+				+ horaEgreso + ", turno=" + turno + ", usuario="
 				+ (usuario != null ? usuario.getId() : null) + ", accesos=" + (accesos != null ? accesos.size() : 0)
 				+ "]";
 	}

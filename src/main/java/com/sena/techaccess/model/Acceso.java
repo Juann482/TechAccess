@@ -11,7 +11,8 @@ public class Acceso {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer idacceso;
+	private Integer id;
+	private String actividad;
 
 	@Column(name = "horaIngreso")
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy hh:mm:ss a", timezone = "America/Bogota")
@@ -33,11 +34,6 @@ public class Acceso {
 	@JoinColumn(name = "usuario_id")
 	private Usuario usuario;
 
-	// Estado Permanencia
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_estado_permanencia")
-	private EstadoPermanencia estadoPermanencia;
-
 	// Vigilancia
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_vigilancia")
@@ -47,24 +43,24 @@ public class Acceso {
 	public Acceso() {
 	}
 
-	public Acceso(Integer idacceso, LocalDateTime horaIngreso, LocalDateTime horaEgreso, Dispositivo dispositivo,
-			Usuario usuario, EstadoPermanencia estadoPermanencia, Vigilancia vigilancia) {
-		this.idacceso = idacceso;
+	public Acceso(Integer id, LocalDateTime horaIngreso, LocalDateTime horaEgreso, Dispositivo dispositivo,
+			Usuario usuario, String actividad, Vigilancia vigilancia) {
+		this.id = id;
 		this.horaIngreso = horaIngreso;
 		this.horaEgreso = horaEgreso;
 		this.dispositivo = dispositivo;
 		this.usuario = usuario;
-		this.estadoPermanencia = estadoPermanencia;
+		this.actividad = actividad;
 		this.vigilancia = vigilancia;
 	}
 
 	// Getters y Setters
-	public Integer getIdacceso() {
-		return idacceso;
+	public Integer getId() {
+		return id;
 	}
 
-	public void setIdacceso(Integer idacceso) {
-		this.idacceso = idacceso;
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public LocalDateTime getHoraIngreso() {
@@ -99,12 +95,12 @@ public class Acceso {
 		this.usuario = usuario;
 	}
 
-	public EstadoPermanencia getEstadoPermanencia() {
-		return estadoPermanencia;
+	public String getActividad() {
+		return actividad;
 	}
 
-	public void setEstadoPermanencia(EstadoPermanencia estadoPermanencia) {
-		this.estadoPermanencia = estadoPermanencia;
+	public void setActividad(String actividad) {
+		this.actividad = actividad;
 	}
 
 	public Vigilancia getVigilancia() {
@@ -117,7 +113,7 @@ public class Acceso {
 
 	@Override
 	public String toString() {
-		return "Acceso{" + "idacceso=" + idacceso + ", horaIngreso=" + horaIngreso + ", horaEgreso=" + horaEgreso + '}';
+		return "Acceso{" + "id=" + id + ", horaIngreso=" + horaIngreso + ", horaEgreso=" + horaEgreso + '}';
 	}
 
 	public Object getSalida() {

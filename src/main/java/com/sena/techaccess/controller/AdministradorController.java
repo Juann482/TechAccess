@@ -1,5 +1,6 @@
 package com.sena.techaccess.controller;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -19,12 +20,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.sena.techaccess.model.Ficha;
 import com.sena.techaccess.model.Usuario;
 import com.sena.techaccess.service.IFichaService;
 import com.sena.techaccess.service.IUsuarioService;
+import com.sena.techaccess.service.UploadFileService;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -45,6 +48,9 @@ public class AdministradorController {
 	@Autowired
 	private HttpSession session;
 
+	@Autowired
+	private UploadFileService upload;
+
 	BCryptPasswordEncoder pe = new BCryptPasswordEncoder();
 
 	AdministradorController(PasswordEncoder passwordEncoder) {
@@ -59,42 +65,62 @@ public class AdministradorController {
 		int TotalUSER = usuarioService.totalUsuarios();
 		int Inactivos = usuarioService.Inactivos();
 		int Activos = usuarioService.Activos();
+		
 		int Aprendiz = usuarioService.Aprendiz();
+		int AprendizAc = usuarioService.AprendizAct();
+		int AprendizIn = usuarioService.AprendizIN();
+		
 		int Instructor = usuarioService.Instructor();
+		int InstructorAc = usuarioService.InstructorAc();
+		int InstructorIn = usuarioService.InstructorIN();
+		
 		int Visitante = usuarioService.Visitante();
+		int VisitanteAc = usuarioService.VisitantesAc();
+		int VisitanteIn = usuarioService.VisitantesIN();
 
 		model.addAttribute("UsuariosA", TotalUSER);
-		model.addAttribute("Inactivos", Inactivos);
+		model.addAttribute("Inactivos", Inactivos);		
 		model.addAttribute("Activos", Activos);
-		model.addAttribute("Aprendiz", Aprendiz);
-		model.addAttribute("Instructor", Instructor);
-		model.addAttribute("Visitante", Visitante);
 		
-		 Map<String, Long> datos = usuarioService.obtenerUsuariosActivosPorRol();
+		model.addAttribute("Aprendiz", Aprendiz);
+		model.addAttribute("AprendizAc", AprendizAc);
+		model.addAttribute("ApInactivo", AprendizIn);
+		
+		model.addAttribute("Instructor", Instructor);
+		model.addAttribute("AcInstructor", InstructorAc);
+		model.addAttribute("InInactivo", InstructorIn);
+		
+		model.addAttribute("Visitante", Visitante);
+		model.addAttribute("VisitAc", VisitanteAc);		
+		model.addAttribute("VisitEg", VisitanteIn);
 
-		 model.addAttribute("labels", datos.keySet());
-		 model.addAttribute("data", datos.values());
+		Map<String, Long> datos = usuarioService.obtenerUsuariosActivosPorRol();
 
-		List<Usuario> vigi = usuarioService.findByRolAndEstadoCuenta("Vigilancia","Activo");
+		model.addAttribute("labels", datos.keySet());
+		model.addAttribute("data", datos.values());
+
+		List<Usuario> vigi = usuarioService.findByRolAndEstadoCuenta("Vigilancia", "Activo");
 		model.addAttribute("vigilancia", vigi);
-			
+
 		return "Administrador/Dashboard";
 	}
-	
+
 	// ========================== USUARIO =========================
 
 	@GetMapping("/form")
-	public String mostrarFormulario(Model model) {
+	public String mostrarFormulario(Usuario usuario, Model model) {
 
+		usuario.setImagen("default.jpg");
 		model.addAttribute("usuarios", usuarioService.findAll());
 		model.addAttribute("usuario", new Usuario()); // objeto vacio
 		model.addAttribute("fichas", fichaService.findAll()); // Lista de fichas
+		
 
 		return "Administrador/RegistroUSER";
 	}
 
 	@PostMapping("/form")
-	public String guardarRegistro(Usuario usuario) {
+	public String guardarRegistro(Usuario usuario, RedirectAttributes redirect) {
 
 		usuario.setPassword(pe.encode(usuario.getPassword()));
 		usuario.setEstadoCuenta("Activo");
@@ -103,6 +129,11 @@ public class AdministradorController {
 		}
 		usuarioService.save(usuario);
 		LOGGER.warn("Usuario guardado: {}", usuario.getNombre());
+		
+
+		redirect.addFlashAttribute("mensaje", "Usuario registrado correctamente");
+		redirect.addFlashAttribute("tipo", "success");
+		
 		return "redirect:/Administrador/usuarios";
 	}
 
@@ -189,9 +220,9 @@ public class AdministradorController {
 		usuarioDB.setRol(usuarioForm.getRol());
 
 		usuarioService.update(usuarioDB);
-		
+
 		redirect.addFlashAttribute("mensaje", "Se ha editado la ficha con éxito");
-		redirect.addFlashAttribute("tipo","success");
+		redirect.addFlashAttribute("tipo", "success");
 
 		LOGGER.warn("Usuario actualizado: {}", usuarioDB);
 		return "redirect:/Administrador/usuarios";
@@ -200,14 +231,14 @@ public class AdministradorController {
 	// Eliminacion de usuarios
 	@GetMapping("/deleteUser/{id}")
 	public String eliminarUsuario(@PathVariable Integer id, RedirectAttributes redirect) {
-		
+
 		Usuario user = new Usuario();
 		user = usuarioService.get(id).get();
 		usuarioService.delete(id);
-		
-	    redirect.addFlashAttribute("mensaje", "Usuario eliminado correctamente");
-	    redirect.addFlashAttribute("tipo", "success");
-		
+
+		redirect.addFlashAttribute("mensaje", "Usuario eliminado correctamente");
+		redirect.addFlashAttribute("tipo", "success");
+
 		LOGGER.warn("Usuario eliminado {}", user);
 		return "redirect:/Administrador/usuarios";
 	}
@@ -216,25 +247,22 @@ public class AdministradorController {
 
 	// enlistar ficha
 	@GetMapping("/Historialfichas")
-	public String 	asignarCampoFichas(@RequestParam(required = false) String nombrePrograma,
-			                         @RequestParam(required = false) String jornada,
-			                         @RequestParam(required = false) String estado,
-			                         @RequestParam(required = false) Integer numFicha,
-			                         @RequestParam(defaultValue = "0") int page,
-			                         Model model) {
-		
+	public String asignarCampoFichas(@RequestParam(required = false) String nombrePrograma,
+			@RequestParam(required = false) String jornada, @RequestParam(required = false) String estado,
+			@RequestParam(required = false) Integer numFicha, @RequestParam(defaultValue = "0") int page, Model model) {
+
 		Pageable pageable = PageRequest.of(page, 10);
-		
+
 		Page<Ficha> fichaPage = fichaService.filtrarFicha(nombrePrograma, jornada, estado, numFicha, pageable);
 
 		model.addAttribute("fichas", fichaPage.getContent());
 		model.addAttribute("page", fichaPage);
-		
+
 		model.addAttribute("nombrePrograma", nombrePrograma);
 		model.addAttribute("jornada", jornada);
 		model.addAttribute("estado", estado);
 		model.addAttribute("numFicha", numFicha);
-		
+
 		int totalPages = fichaPage.getTotalPages();
 		int currentPage = fichaPage.getNumber();
 
@@ -246,27 +274,23 @@ public class AdministradorController {
 
 		// Ajuste si estamos cerca del inicio
 		if (startPage == 0) {
-		    endPage = Math.min(maxPagesToShow - 1, totalPages - 1);
+			endPage = Math.min(maxPagesToShow - 1, totalPages - 1);
 		}
 
 		// Ajuste si estamos al final
 		if (endPage == totalPages - 1) {
-		    startPage = Math.max(0, endPage - maxPagesToShow + 1);
+			startPage = Math.max(0, endPage - maxPagesToShow + 1);
 		}
 
-		model.addAttribute("pageNumbers",
-		        java.util.stream.IntStream.rangeClosed(startPage, endPage).boxed().toList()
-		);
+		model.addAttribute("pageNumbers", java.util.stream.IntStream.rangeClosed(startPage, endPage).boxed().toList());
 
 		model.addAttribute("lastPage", totalPages - 1);
 
-
 		return "Administrador/HistorialFICHAS";
 	}
-	
 
 	@GetMapping("/CambiarEstadoFicha/{id}")
-	public String cambiarEstadoFicha(@PathVariable Integer id) {
+	public String cambiarEstadoFicha(@PathVariable Integer id, RedirectAttributes redirect) {
 
 		Ficha f = fichaService.get(id).orElse(null);
 		if (f != null) {
@@ -276,6 +300,9 @@ public class AdministradorController {
 				f.setEstado("Activo");
 			}
 		}
+		
+		redirect.addFlashAttribute("mensaje", "Estado actualizado");
+		redirect.addFlashAttribute("tipo", "success");
 
 		fichaService.save(f);
 
@@ -290,68 +317,64 @@ public class AdministradorController {
 
 	// Guardar ficha
 	@PostMapping("/fichaSave")
-	public String guardarFicha(Ficha ficha) {
+	public String guardarFicha(Ficha ficha, RedirectAttributes redirect) {
 
 		ficha.setEstado("Activo");
 
 		if (ficha.getJornada() != null && ficha.getJornada() == null) {
 			ficha.setJornada(null);
 		}
+		
 		fichaService.save(ficha);
+		
+		redirect.addFlashAttribute("mensaje", "Ficha registrada correctamente");
+		redirect.addFlashAttribute("tipo", "success");
+		
 		LOGGER.debug("La ficha se ha registrado con exito {}", ficha);
 
 		return "redirect:/Administrador/Historialfichas";
 	}
 
 	@GetMapping("/ficha/{id}")
-public String verFicha(
-        @PathVariable Integer id,
-        @RequestParam(defaultValue = "0") int page,
-        @RequestParam(defaultValue = "10") int size,
-        @RequestParam(required = false) String nombre,
-        @RequestParam(required = false) String documento,
-        @RequestParam(required = false) String rol,
-        @RequestParam(required = false) String estado,
-        Model model) {
+	public String verFicha(@PathVariable Integer id, @RequestParam(defaultValue = "0") int page,
+			@RequestParam(defaultValue = "10") int size, @RequestParam(required = false) String nombre,
+			@RequestParam(required = false) String documento, @RequestParam(required = false) String rol,
+			@RequestParam(required = false) String estado, Model model) {
 
-    Pageable pageable = PageRequest.of(page, size);
+		Pageable pageable = PageRequest.of(page, size);
 
-    // Si alguno está lleno, aplicar filtros
-    boolean hayFiltros = 
-           (nombre != null && !nombre.isEmpty()) ||
-           (documento != null && !documento.isEmpty()) ||
-           (rol != null && !rol.isEmpty()) ||
-           (estado != null && !estado.isEmpty());
+		// Si alguno está lleno, aplicar filtros
+		boolean hayFiltros = (nombre != null && !nombre.isEmpty()) || (documento != null && !documento.isEmpty())
+				|| (rol != null && !rol.isEmpty()) || (estado != null && !estado.isEmpty());
 
-    Page<Usuario> usuariosPage;
+		Page<Usuario> usuariosPage;
 
-    if (hayFiltros) {
-        usuariosPage = usuarioService.filtrarUsuariosEnFicha(id, nombre, documento, rol, estado, pageable);
-    } else {
-        usuariosPage = usuarioService.findByFichaId(id, pageable);
-    }
+		if (hayFiltros) {
+			usuariosPage = usuarioService.filtrarUsuariosEnFicha(id, nombre, documento, rol, estado, pageable);
+		} else {
+			usuariosPage = usuarioService.findByFichaId(id, pageable);
+		}
 
-    Ficha ficha = fichaService.get(id).orElse(null);
-    if (ficha == null) {
-        return "redirect:/Administrador/Historialfichas";
-    }
+		Ficha ficha = fichaService.get(id).orElse(null);
+		if (ficha == null) {
+			return "redirect:/Administrador/Historialfichas";
+		}
 
-    model.addAttribute("ficha", ficha);
-    model.addAttribute("usuariosPage", usuariosPage);
+		model.addAttribute("ficha", ficha);
+		model.addAttribute("usuariosPage", usuariosPage);
 
-    model.addAttribute("currentPage", page);
-    model.addAttribute("totalPages", usuariosPage.getTotalPages());
-    model.addAttribute("totalItems", usuariosPage.getTotalElements());
+		model.addAttribute("currentPage", page);
+		model.addAttribute("totalPages", usuariosPage.getTotalPages());
+		model.addAttribute("totalItems", usuariosPage.getTotalElements());
 
-    // Para mantener filtros en el modal
-    model.addAttribute("nombre", nombre);
-    model.addAttribute("documento", documento);
-    model.addAttribute("rol", rol);
-    model.addAttribute("estado", estado);
+		// Para mantener filtros en el modal
+		model.addAttribute("nombre", nombre);
+		model.addAttribute("documento", documento);
+		model.addAttribute("rol", rol);
+		model.addAttribute("estado", estado);
 
-    return "Administrador/DetallesFicha";
-}
-
+		return "Administrador/DetallesFicha";
+	}
 
 	// Editar ficha
 	@GetMapping("/EdicionFichas/{id}")
@@ -360,14 +383,14 @@ public String verFicha(
 		Ficha ut = fichaService.get(id).orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 		LOGGER.warn("Busqueda de fichas por id {}", ut);
 		model.addAttribute("ficha", ut);
-		
+
 		return "Administrador/EdicionFICHA";
 	}
 
 	// Actualizar ficha
 	@PostMapping("/update")
 	public String actualizarFicha(Ficha ficha, RedirectAttributes redirect) {
-		LOGGER.info("Este es el objeto del producto a actualizar en la DB {}", ficha);
+		LOGGER.info("Este es el objeto del usuario a actualizar en la DB {}", ficha);
 
 		Ficha fichaAc = fichaService.get(ficha.getId()).get();
 
@@ -376,10 +399,10 @@ public String verFicha(
 		fichaAc.setNumFicha(ficha.getNumFicha());
 
 		fichaService.update(fichaAc);
-		
+
 		redirect.addFlashAttribute("mensaje", "Se ha editado la ficha con éxito");
-		redirect.addFlashAttribute("tipo","success");
-		
+		redirect.addFlashAttribute("tipo", "success");
+
 		LOGGER.warn("Ficha actualizada: {}", fichaAc);
 
 		return "redirect:/Administrador/Historialfichas";
@@ -387,7 +410,7 @@ public String verFicha(
 
 	// Eliminar ficha
 	@GetMapping("/delete/{id}")
-	public String eliminarFicha(@PathVariable Integer id, RedirectAttributes redirect) {
+	public String eliminarFicha(@PathVariable Integer id, Integer numFicha, RedirectAttributes redirect) {
 
 		// 1. Buscar los usuarios que tienen esta ficha
 		List<Usuario> usuarios = usuarioService.findByFichaId(id);
@@ -396,12 +419,13 @@ public String verFicha(
 		for (Usuario u : usuarios) {
 			u.setFicha(null);
 		}
+		
 		usuarioService.saveAll(usuarios);
 
 		fichaService.delete(id);
-		
-		redirect.addFlashAttribute("mensaje", "Ficha eliminada con exito");
-		redirect.addFlashAttribute("tipo","success");
+
+		redirect.addFlashAttribute("mensaje", "Ficha eliminada");
+		redirect.addFlashAttribute("tipo", "success");
 
 		LOGGER.warn("Ficha eliminada: {}", id);
 		return "redirect:/Administrador/Historialfichas";
@@ -428,8 +452,20 @@ public String verFicha(
 	}
 
 	@PostMapping("/NuevoPerfil")
-	public String nuevoPerfil(@ModelAttribute Usuario usuario) {
+	public String nuevoPerfil(@ModelAttribute Usuario usuario, RedirectAttributes redirect, @RequestParam("img") MultipartFile file) throws IOException {
 
+		Usuario u = new Usuario();
+		u = usuarioService.get(usuario.getId()).get();
+
+		if (file.isEmpty()) {
+			usuario.setImagen(u.getImagen());
+		} else {
+			if (!u.getImagen().equals("default.jpg")) {
+				upload.deleteImage(u.getImagen());
+			}
+			String nombreImagen = upload.saveImages(file, u.getNombre());
+			usuario.setImagen(nombreImagen);
+		}
 		Integer idAdmin = (Integer) session.getAttribute("IdUser");
 
 		Optional<Usuario> PA = usuarioService.get(idAdmin);
@@ -443,6 +479,7 @@ public String verFicha(
 			admin.setDireccion(usuario.getDireccion());
 			admin.setDocumento(usuario.getDocumento());
 			admin.setTelefono(usuario.getTelefono());
+			admin.setImagen(usuario.getImagen());
 
 			usuarioService.save(admin);
 
@@ -451,7 +488,11 @@ public String verFicha(
 			session.setAttribute("direccion", admin.getDireccion());
 			session.setAttribute("documento", admin.getDocumento());
 			session.setAttribute("telefono", admin.getTelefono());
+			session.setAttribute("imagen", admin.getImagen());
 		}
+		
+		redirect.addFlashAttribute("mensaje", "Perfil actualizado");
+		redirect.addFlashAttribute("tipo", "success");
 
 		return "redirect:/Administrador/Perfil";
 	}
