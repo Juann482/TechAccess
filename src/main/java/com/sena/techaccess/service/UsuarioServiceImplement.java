@@ -1,5 +1,7 @@
+
 package com.sena.techaccess.service;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -48,15 +50,44 @@ public class UsuarioServiceImplement implements IUsuarioService {
 	public int Aprendiz() {
 		return usuarioRepository.countByRol("Aprendiz");
 	}
+	
+	@Override
+	public int AprendizAct() {
+		return (int) usuarioRepository.countByRolAndEstadoCuenta("Aprendiz", "Activo");
+	}
 
+	@Override
+	public int AprendizIN() {
+		return (int) usuarioRepository.countByRolAndEstadoCuenta("Aprendiz", "Inactivo");
+	}
 	@Override
 	public int Instructor() {
 		return usuarioRepository.countByRol("Instructor");
+	}
+	
+	@Override
+	public int InstructorAc() {
+		return (int) usuarioRepository.countByRolAndEstadoCuenta("Instructor", "Activo");
+	}
+	
+	@Override
+	public int InstructorIN() {
+		return (int) usuarioRepository.countByRolAndEstadoCuenta("Instructor", "Inactivo");
 	}
 
 	@Override
 	public int Visitante() {
 		return usuarioRepository.countByRol("Visitantes");
+	}
+	
+	@Override
+	public int VisitantesAc() {
+		return (int) usuarioRepository.countByRolAndEstadoCuenta("Visitantes", "Activo");
+	}
+	
+	@Override
+	public int VisitantesIN() {
+		return (int) usuarioRepository.countByRolAndEstadoCuenta("Visitantes", "Inactivo");
 	}
 
 //>>>>>>>>>>>>>>>>>>>>>> FIN DASHBOARD <<<<<<<<<<<<<<<<<<<<<
@@ -162,34 +193,5 @@ public class UsuarioServiceImplement implements IUsuarioService {
 		return usuarioRepository.findByRolAndEstadoCuenta(rol, estadoCuenta);
 	}
 
-	@Override
-	public int AprendizAct() {
-		return usuarioRepository.countByRolAndEstadoCuenta("Aprendiz", "Activo");
-	}
-
-	@Override
-	public int AprendizIN() {
-		return usuarioRepository.countByRolAndEstadoCuenta("Aprendiz", "Inactivo");
-	}
-
-	@Override
-	public int InstructorAc() {
-		return usuarioRepository.countByRolAndEstadoCuenta("Instructor", "Activo");
-	}
-
-	@Override
-	public int InstructorIN() {
-		return usuarioRepository.countByRolAndEstadoCuenta("Instructor", "Inactivo");
-	}
-
-	@Override
-	public int VisitantesAc() {
-		return usuarioRepository.countByRolAndEstadoCuenta("Visitantes", "Activo");
-	}
-
-	@Override
-	public int VisitantesIN() {
-		return usuarioRepository.countByRolAndEstadoCuenta("Visitantes", "Inactivo");
-	}
 
 }

@@ -15,6 +15,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 
 @Entity
 @Table(name = "usuario")
@@ -39,7 +40,7 @@ public class Usuario {
 	@JoinColumn(name = "ficha_id", nullable = true)
 	private Ficha ficha;
 
-	@OneToMany(mappedBy = "usuario")
+	@OneToMany(mappedBy = "usuario", cascade = CascadeType.REMOVE)
 	private List<DispositivoVisit> dispositivoVisit = new ArrayList<>();
 
 	@OneToMany(mappedBy = "usuario")
@@ -49,8 +50,9 @@ public class Usuario {
 	private Vigilancia vigilancia;
 
 
-	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL) // CAscadeType.ALL Borra todas sus fichas y accesos automaticamente si se llega a borrar un usuario																
-	private Acceso acceso;
+	@OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL) // CAscadeType.ALL Borra todas sus fichas y accesos automaticamente si se llega a borrar un usuario																
+	@Transient
+	private List<Acceso> accesos = new ArrayList<>();
 
 	@OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY)
 	private List<Excusas> excusas = new ArrayList<>();
@@ -188,12 +190,12 @@ public class Usuario {
 		this.vigilancia = vigilancia;
 	}
 
-	public Acceso getAcceso() {
-		return acceso;
+	public List <Acceso> getAcceso() {
+		return accesos;
 	}
 
-	public void setAcceso(Acceso acceso) {
-		this.acceso = acceso;
+	public void setAcceso(List <Acceso> accesos) {
+		this.accesos = accesos;
 	}
 
 	public List<Excusas> getExcusas() {
@@ -217,7 +219,7 @@ public class Usuario {
 		return "Usuario [id=" + id + ", nombre=" + nombre + ", email=" + email + ", documento=" + documento
 				+ ", direccion=" + direccion + ", telefono=" + telefono + ", password=" + password + ", rol=" + rol
 				+ ", estadoCuenta=" + estadoCuenta + ", imagen=" + imagen + ", ficha=" + ficha + ", dispositivoVisit="
-				+ dispositivoVisit + ", permisos=" + permisos + ", vigilancia=" + vigilancia + ", acceso=" + acceso
+				+ dispositivoVisit + ", permisos=" + permisos + ", vigilancia=" + vigilancia + ", accesos=" + accesos
 				+ ", excusas=" + excusas + ", dispositivo=" + dispositivo + "]";
 	}
 

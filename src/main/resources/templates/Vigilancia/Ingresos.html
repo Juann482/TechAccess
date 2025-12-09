@@ -3,6 +3,7 @@
 
 <head th:insert="~{/Vigilancia/templates_vigilancia.html::head}"></head>
 
+
 <body class="contact-page">
 
 	<div th:insert="~{/Vigilancia/templates_vigilancia.html::Ingresos}"></div>
@@ -10,7 +11,7 @@
 	<main class="main">
 
 		<!-- Page Title -->
-		<div class="page-title dark-background" th:style="'background-image: url(' + @{/images/fondo.jpeg} + ');'">
+		<div class="page-title dark-background" th:style="|background-image: url('@{/images/fondo.jpeg}');|">
 			<div class="container position-relative">
 				<h1>Ingresos</h1>
 				<nav class="breadcrumbs">
@@ -23,19 +24,50 @@
 		</div>
 		<!-- End Page Title -->
 
-		<!-- Contact Section -->
+		<!-- MAIN SECTION -->
 		<section id="contact" class="contact section" style="padding-top: 220px;">
-			<!--Acomodar Style cuando este todo finalizado-->
 			<div class="container" data-aos="fade-up" data-aos-delay="100">
 				<div class="container form-container-overlap">
 					<div class="row justify-content-center" data-aos="fade-up" data-aos-delay="300">
-						<div class="col-lg-10">
+						<div class="col-lg-12">
+
 							<div class="contact-form-wrapper">
 
+								<!-- CONTENEDOR DE FILTROS Y SCANNER -->
+								<div class="filter-buttons-container">
+									<!-- SCANNER A LA IZQUIERDA -->
+									<div class="scanner-container">
+										<div style="min-width: 400px;">
+											<input type="text" id="barcodeInput" class="form-control form-control-lg"
+												placeholder="Escanee documento aquí..." autofocus>
+											<small class="text-muted mt-1">
+												Escanee el documento del usuario para registrar ingreso/egreso
+											</small>
+										</div>
+									</div>
 
-								<input type="text" id="barcodeInput"
-									style="width: 300px; height: 40px; font-size: 20px; margin-bottom: 20px;"
-									placeholder="Escanee aquí su código..." autofocus >
+									<!-- BOTONES A LA DERECHA -->
+									<div class="right-buttons">
+										<button class="btn btn-success" data-bs-toggle="modal"
+										       data-bs-target="#registroVisitanteModal">Registrar Visitante
+										</button>
+										<button class="btn btn-primary" data-bs-toggle="modal"
+											data-bs-target="#filtrosModal">
+											Filtrar
+										</button>
+
+										<!-- BOTÓN LIMPIAR FILTROS (solo aparece si hay filtros) -->
+										<a th:href="@{/Vigilancia/Ingreso}" class="btn btn-secondary"
+										   th:if="${(nombre != null and nombre != '') or 
+										            (documento != null and documento != '') or 
+										            (rol != null and rol != '') or 
+										            (ficha != null and ficha != '') or 
+										            (fechaIngreso != null) or 
+										            (fechaEgreso != null)}">
+										   Limpiar filtros
+										</a>
+									</div>
+								</div>
 
 								<script>
 									document.addEventListener("DOMContentLoaded", () => {
@@ -43,18 +75,29 @@
 
 										barcodeInput.addEventListener("change", () => {
 											const codigo = barcodeInput.value.trim();
+
 											if (codigo !== "") {
-												fetch("/Vigilancia/registrar-ingreso", {
+												fetch("/Vigilancia/registrar-scan", {
 													method: "POST",
-													headers: {"Content-Type": "application/x-www-form-urlencoded"},
+													headers: {
+														"Content-Type": "application/x-www-form-urlencoded"
+													},
 													body: `documento=${codigo}`
 												})
-													.then(response => response.text())
-													.then(data => {
-														console.log(data);
-														location.reload(); // actualiza la tabla
+													.then(resp => {
+														if (!resp.ok) {
+															throw new Error('Error en la respuesta del servidor');
+														}
+														return resp.text();
 													})
-													.catch(err => console.error(err));
+													.then(data => {
+														alert(data);
+														location.reload();
+													})
+													.catch(err => {
+														console.error("Error:", err);
+														alert("Error al registrar el acceso. Intente nuevamente.");
+													});
 
 												barcodeInput.value = "";
 											}
@@ -62,57 +105,424 @@
 									});
 								</script>
 
-
-
-								<div class="col-md-12">
-									<h5 class="mb-3"><i class="bi bi-activity me-2">Ingreso de personal</i></h5>
-
-
-									<table class="table datatable">
+								<div class="table-responsive">
+									<table class="table table-hover datatable">
 										<thead>
-											<tr class="centrados">
-												<th scope="col">Nombre completo</th>
-												<th scope="col">Documento</th>
-												<th scope="col">Rol</th>
-												<th scope="col">Ficha</th>
-												<th scope="col">Ingreso</th>
-												<th scope="col">Egreso</th>
+											<tr class="text-center">
+												<th>Nombre</th>
+												<th>Documento</th>
+												<th>Rol</th>
+												<th>Ficha</th>
+												<th>Hora Ingreso</th>
+												<th>Hora Egreso</th>
+												<th>Estado</th>
 											</tr>
 										</thead>
-										<tbody th:each="usuario: ${Usuarios}">
-											<tr class="centrados">
-												<td th:text="${usuario.nombre}"></td>
-												<td th:text="${usuario.documento}"></td>
-												<td th:text="${usuario.rol}"></td>
-												<td th:text="${usuario.ficha != null ? usuario.ficha.numFicha : '-'}">
+										<tbody>
+											<tr th:each="acc : ${accesos}"
+												th:class="${acc.horaEgreso == null} ? 'user-inside-row' : 'user-outside-row'">
+
+
+												<!-- Nombre -->
+												<td th:text="${acc.usuario?.nombre} ?: 'N/A'" class="centrados"></td>
+
+												<!-- Documento -->
+												<td th:text="${acc.usuario?.documento} ?: 'N/A'" class="centrados"></td>
+
+												<!-- Rol -->
+												<td class="centrados">
+													<span th:switch="${acc.usuario?.rol}">
+														<span th:case="'Aprendiz'"
+															class="badge badge-aprendiz">Aprendiz</span>
+														<span th:case="'Funcionario'"
+															class="badge badge-funcionario">Funcionario</span>
+														<span th:case="'Visitante'"
+															class="badge badge-visitante">Visitante</span>
+														<span th:case="'Administrador'"
+															class="badge badge-administrador">Administrador</span>
+														<span th:case="'Instructor'"
+															class="badge badge-instructor">Instructor</span>
+														<span th:case="*" class="badge bg-secondary"
+															th:text="${acc.usuario?.rol}"></span>
+													</span>
 												</td>
-												<td th:if="${usuario.acceso?.horaIngreso != null}"
-													th:text="${#temporals.format(usuario.acceso.horaIngreso, 'dd/MM/yyyy  hh:mm:ss a')}">
+
+												<!-- Ficha -->
+												<td th:text="${acc.usuario?.ficha?.numFicha} ?: '-'" class="centrados">
 												</td>
-												<td th:if="${usuario.acceso?.horaEgreso != null}"
-													th:text="${#temporals.format(usuario.acceso.horaEgreso, 'dd/MM/yyyy hh:mm:ss a')}">
+												<!-- Hora Ingreso -->
+												<td class="centrados">
+												    <span th:if="${acc.horaIngreso != null}">
+												        <span th:text="${#temporals.format(acc.horaIngreso, 'dd/MM/yyyy HH:mm')}"></span>
+												    </span>
+												    <span th:unless="${acc.horaIngreso != null}" class="text-muted">
+												        Ausente
+												    </span>
 												</td>
-												<td th:if="${usuario.acceso?.horaEgreso == null}">
-													-
+
+												<!-- Hora Egreso -->
+												<td class="centrados">
+												    <!-- Caso 1: No hay ingreso → Ausente -->
+												    <span th:if="${acc.horaIngreso == null}" class="text-muted">
+												        Ausente
+												    </span>
+												    
+												    <!-- Caso 2: Hay ingreso pero NO egreso → Activo -->
+												    <span th:if="${acc.horaIngreso != null and acc.horaEgreso == null}" 
+												          class="text-success fw-bold">
+												        Activo
+												    </span>
+												    
+												    <!-- Caso 3: Hay ingreso Y egreso → Mostrar hora -->
+												    <span th:if="${acc.horaIngreso != null and acc.horaEgreso != null}">
+												        <span th:text="${#temporals.format(acc.horaEgreso, 'dd/MM/yyyy HH:mm')}"></span>
+												    </span>
+												</td>
+
+												<!-- Estado -->
+												<td class="centrados">
+												    <span th:switch="${acc.actividad}">
+												        <span th:case="'Ingresado'" class="badge bg-secondary">Ingresado</span>
+												        <span th:case="'Egresado'" class="badge bg-success">Egresado</span>
+												        <span th:case="*" class="badge bg-danger">Ausente</span>
+												    </span>
 												</td>
 											</tr>
 
+											<!-- Mensaje si no hay datos -->
+											<tr th:if="${accesos.empty}">
+												<td colspan="8" class="text-center text-muted py-4">
+													<div class="display-4 mb-2">📭</div>
+													No se encontraron registros de acceso
+													<div
+														th:if="${nombre != null or documento != null or rol != null or ficha != null or fechaIngreso != null or fechaEgreso != null}">
+														con los filtros aplicados.
+														<a th:href="@{/Vigilancia/Ingreso}"
+															class="btn btn-sm btn-link">Ver todos</a>
+													</div>
+												</td>
+											</tr>
 										</tbody>
-
-
 									</table>
+								</div>
+
+								<!-- PAGINACIÓN -->
+								<div th:if="${page.totalPages > 1}" class="mt-4">
+									<nav aria-label="Navegación de páginas">
+										<ul class="pagination justify-content-center">
+
+											<!-- Primera página -->
+											<li class="page-item" th:classappend="${page.first} ? 'disabled' : ''">
+												<a class="page-link" th:href="@{/Vigilancia/Ingreso(page=0,
+                                                                                    nombre=${nombre},
+                                                                                    documento=${documento},
+                                                                                    rol=${rol},
+                                                                                    ficha=${ficha},
+                                                                                    fechaIngreso=${fechaIngreso},
+                                                                                    fechaEgreso=${fechaEgreso})}"
+													aria-label="Primera">
+													<span aria-hidden="true">&laquo;&laquo;</span>
+												</a>
+											</li>
+
+											<!-- Página anterior -->
+											<li class="page-item" th:classappend="${page.first} ? 'disabled' : ''">
+												<a class="page-link" th:href="@{/Vigilancia/Ingreso(page=${page.number - 1},
+                                                                                    nombre=${nombre},
+                                                                                    documento=${documento},
+                                                                                    rol=${rol},
+                                                                                    ficha=${ficha},
+                                                                                    fechaIngreso=${fechaIngreso},
+                                                                                    fechaEgreso=${fechaEgreso})}"
+													aria-label="Anterior">
+													<span aria-hidden="true">&laquo;</span>
+												</a>
+											</li>
+
+											<!-- Números de página -->
+											<li class="page-item" th:each="num : ${pageNumbers}"
+												th:classappend="${num == page.number} ? 'active' : ''">
+												<a class="page-link" th:text="${num + 1}" th:href="@{/Vigilancia/Ingreso(page=${num},
+                                                                                    nombre=${nombre},
+                                                                                    documento=${documento},
+                                                                                    rol=${rol},
+                                                                                    ficha=${ficha},
+                                                                                    fechaIngreso=${fechaIngreso},
+                                                                                    fechaEgreso=${fechaEgreso})}"></a>
+											</li>
+
+											<!-- Página siguiente -->
+											<li class="page-item" th:classappend="${page.last} ? 'disabled' : ''">
+												<a class="page-link" th:href="@{/Vigilancia/Ingreso(page=${page.number + 1},
+                                                                                    nombre=${nombre},
+                                                                                    documento=${documento},
+                                                                                    rol=${rol},
+                                                                                    ficha=${ficha},
+                                                                                    fechaIngreso=${fechaIngreso},
+                                                                                    fechaEgreso=${fechaEgreso})}"
+													aria-label="Siguiente">
+													<span aria-hidden="true">&raquo;</span>
+												</a>
+											</li>
+
+											<!-- Última página -->
+											<li class="page-item" th:classappend="${page.last} ? 'disabled' : ''">
+												<a class="page-link" th:href="@{/Vigilancia/Ingreso(page=${page.totalPages - 1},
+                                                                                    nombre=${nombre},
+                                                                                    documento=${documento},
+                                                                                    rol=${rol},
+                                                                                    ficha=${ficha},
+                                                                                    fechaIngreso=${fechaIngreso},
+                                                                                    fechaEgreso=${fechaEgreso})}"
+													aria-label="Última">
+													<span aria-hidden="true">&raquo;&raquo;</span>
+												</a>
+											</li>
+										</ul>
+									</nav>
+
+									<div class="text-center text-muted mt-2">
+										Página <strong th:text="${page.number + 1}"></strong> de
+										<strong th:text="${page.totalPages}"></strong>
+										• Mostrando <strong
+											th:text="${#numbers.formatInteger(accesos.size(), 0, 'POINT')}"></strong>
+										registros
+									</div>
 								</div>
 
 							</div>
 						</div>
 					</div>
+				</div>
+			</div>
 		</section>
+
+		<div class="modal fade light-blue-modal" id="filtrosModal" tabindex="-1" aria-hidden="true">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">Filtros de Búsqueda</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+					</div>
+
+					<div class="modal-body">
+						<form method="get" th:action="@{/Vigilancia/Ingreso}">
+							<div class="row g-3">
+
+								<!-- Nombre -->
+								<div class="col-md-6">
+									<label class="form-label fw-bold">Nombre</label>
+									<input type="text" class="form-control" name="nombre" th:value="${nombre}"
+										placeholder="Buscar por nombre...">
+								</div>
+
+								<!-- Documento -->
+								<div class="col-md-6">
+									<label class="form-label fw-bold">Documento</label>
+									<input type="text" class="form-control" name="documento" th:value="${documento}"
+										placeholder="Buscar por documento...">
+								</div>
+
+								<!-- Rol -->
+								<div class="col-md-6">
+									<label class="form-label fw-bold">Rol</label>
+									<select class="form-select" name="rol">
+										<option value="">Todos los roles</option>
+										<option value="Aprendiz" th:selected="${rol == 'Aprendiz'}">Aprendiz</option>
+										<option value="Funcionario" th:selected="${rol == 'Funcionario'}">Funcionario
+										</option>
+										<option value="Visitante" th:selected="${rol == 'Visitante'}">Visitante</option>
+										<option value="Administrador" th:selected="${rol == 'Administrador'}">
+											Administrador</option>
+										<option value="Instructor" th:selected="${rol == 'Instructor'}">Instructor
+										</option>
+									</select>
+								</div>
+
+								<!-- Ficha -->
+								<div class="col-md-6">
+									<label class="form-label fw-bold">Número de Ficha</label>
+									<input type="text" class="form-control" name="ficha" th:value="${ficha}"
+										placeholder="Buscar por ficha...">
+								</div>
+
+								<!-- Fecha Ingreso -->
+								<div class="col-md-6">
+									<label class="form-label fw-bold">Fecha de Ingreso</label>
+									<input type="date" class="form-control" name="fechaIngreso"
+										th:value="${fechaIngreso}">
+								</div>
+
+								<!-- Fecha Egreso -->
+								<div class="col-md-6">
+									<label class="form-label fw-bold">Fecha de Egreso</label>
+									<input type="date" class="form-control" name="fechaEgreso"
+										th:value="${fechaEgreso}">
+								</div>
+
+								<!-- Botones -->
+								<div class="col-12 mt-4">
+									<div class="d-flex justify-content-between">
+										<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+											Cancelar
+										</button>
+
+										<div>
+											<a th:href="@{/Vigilancia/Ingreso}" class="btn btn-outline-danger me-2">
+												Limpiar
+											</a>
+											<button type="submit" class="btn btn-primary">
+												Aplicar Filtros
+											</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- MODAL PARA REGISTRAR VISITANTE -->
+		<div class="modal fade light-blue-modal" id="registroVisitanteModal" tabindex="-1" aria-hidden="true">
+		    <div class="modal-dialog modal-lg">
+		        <div class="modal-content">
+		            <div class="modal-header">
+		                <h5 class="modal-title">Registrar Nuevo Visitante</h5>
+		                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+		            </div>
+
+		            <div class="modal-body">
+		                <form th:action="@{/Vigilancia/visitanteSave}" method="post">
+		                    <div class="row g-3">
+		                        <!-- Nombre completo -->
+		                        <div class="col-md-6">
+		                            <label class="form-label fw-bold">Nombre completo <span class="text-danger">*</span></label>
+		                            <input type="text" class="form-control" id="nombre" name="nombre"
+		                                placeholder="Ingrese nombre completo" required>
+		                        </div>
+
+		                        <!-- Correo electrónico -->
+		                        <div class="col-md-6">
+		                            <label class="form-label fw-bold">Correo electrónico <span class="text-danger">*</span></label>
+		                            <input type="email" class="form-control" id="email" name="email"
+		                                placeholder="correo@ejemplo.com" required autocomplete="off">
+		                        </div>
+
+		                        <!-- Documento -->
+		                        <div class="col-md-6">
+		                            <label class="form-label fw-bold">Número de documento <span class="text-danger">*</span></label>
+		                            <input type="number" class="form-control" id="documento" name="documento"
+		                                placeholder="12345678" required>
+		                        </div>
+
+		                        <!-- Teléfono -->
+		                        <div class="col-md-6">
+		                            <label class="form-label fw-bold">Teléfono <span class="text-danger">*</span></label>
+		                            <input type="number" class="form-control" id="telefono" name="telefono"
+		                                placeholder="3001234567" required autocomplete="off">
+		                        </div>
+
+		                        <!-- ¿Trae dispositivo? -->
+		                        <div class="col-md-6" style="align-items: center;">
+		                            <label class="form-label fw-bold">¿El visitante trae dispositivo?</label>
+		                            <select class="form-control" id="opcion" name="opcion" onchange="mostrarCampos()">
+		                                <option value="no">No</option>
+		                                <option value="si">Sí</option>
+		                            </select>
+		                        </div>
+
+		                        <!-- CAMPOS DE DISPOSITIVO (ocultos por defecto) -->
+		                        <div id="camposExtra" class="oculto">
+		                            <hr class="my-3">
+		                            <h6 class="fw-bold mb-3">Información del dispositivo</h6>
+		                            
+		                            <div class="row g-3">
+		                                <!-- Tipo -->
+		                                <div class="col-md-4">
+		                                    <label class="form-label fw-bold">Tipo</label>
+		                                    <select class="form-control" id="tipo" name="tipo">
+		                                        <option value="">-- Seleccione --</option>
+		                                        <option>Computador</option>
+		                                        <option>Tablet</option>
+		                                        <option>Cámara</option>
+		                                    </select>
+		                                </div>
+
+		                                <!-- Marca -->
+		                                <div class="col-md-4">
+		                                    <label class="form-label fw-bold">Marca</label>
+		                                    <select class="form-control" id="marca" name="marca">
+		                                        <option value="">-- Seleccione --</option>
+		                                        <option>Lenovo</option>
+		                                        <option>Samsung</option>
+		                                        <option>DELL</option>
+		                                        <option>Asus</option>
+		                                        <option>Huawei</option>
+		                                        <option>Apple</option>
+		                                        <option>Acer</option>
+		                                        <option>Canon</option>
+		                                        <option>Nikon</option>
+		                                        <option>Sony</option>
+		                                    </select>
+		                                </div>
+
+		                                <!-- Color -->
+		                                <div class="col-md-4">
+		                                    <label class="form-label fw-bold">Color</label>
+		                                    <select class="form-control" id="color" name="color">
+		                                        <option value="">-- Seleccione --</option>
+		                                        <option>Negro</option>
+		                                        <option>Gris</option>
+		                                        <option>Azul oscuro</option>
+		                                        <option>Gris oscuro</option>
+		                                        <option>Dorado</option>
+		                                        <option>Blanco</option>
+		                                    </select>
+		                                </div>
+		                            </div>
+		                        </div>
+
+		                        <!-- Botones -->
+		                        <div class="col-12 mt-4">
+		                            <div class="d-flex justify-content-between">
+		                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+		                                    Cancelar
+		                                </button>
+		                                <button type="submit" class="btn btn-success">
+		                                    <i class="bi bi-save"></i> Registrar Visitante
+		                                </button>
+		                            </div>
+		                        </div>
+		                    </div>
+		                </form>
+		            </div>
+		        </div>
+		    </div>
+		</div>
 
 	</main>
 
-	<div th:insert="~{/Vigilancia/templates_vigilancia.html::footer}"></div>
+	<!-- Botones flotantes simplificados -->
+	<div class="floating-buttons">
+		<a href="#" class="btn btn-primary btn-floating" data-bs-toggle="modal" data-bs-target="#filtrosModal"
+			title="Filtrar">
+			🔍
+		</a>
+		<button class="btn btn-info btn-floating" onclick="document.getElementById('barcodeInput').focus()"
+			title="Escanear">
+			📷
+		</button>
+		<button class="btn btn-success btn-floating" data-bs-toggle="modal" data-bs-target="#registroVisitanteModal"
+		        title="Registrar Visitante">
+		        👤
+		    </button>
+	</div>
 
+	<div th:insert="~{/Vigilancia/templates_vigilancia.html::footer}"></div>
 	<div th:insert="~{/Vigilancia/templates_vigilancia.html::jsFiles}"></div>
+
+
 
 </body>
 

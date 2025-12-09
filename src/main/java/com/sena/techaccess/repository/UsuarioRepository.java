@@ -1,5 +1,6 @@
 package com.sena.techaccess.repository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import java.util.Optional;
@@ -11,6 +12,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import com.sena.techaccess.model.Acceso;
 import com.sena.techaccess.model.Usuario;
 
 @Repository
@@ -79,7 +81,10 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
 
 	List<Usuario> findByRolAndEstadoCuenta(String rol, String estadoCuenta);
 
+	int countByRolAndEstadoCuenta(String rol, String estadoCuenta );
 
-	// ================================================0
+
+	// ================================================
+
 
 }
