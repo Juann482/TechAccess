@@ -1,3 +1,4 @@
+
 package com.sena.techaccess.service;
 
 import java.time.LocalDate;
@@ -16,6 +17,8 @@ import org.springframework.stereotype.Service;
 import com.sena.techaccess.model.Usuario;
 import com.sena.techaccess.repository.PermisosRepository;
 import com.sena.techaccess.repository.UsuarioRepository;
+
+import jakarta.transaction.Transactional;
 
 @Service
 public class UsuarioServiceImplement implements IUsuarioService {
@@ -190,40 +193,5 @@ public class UsuarioServiceImplement implements IUsuarioService {
 		return usuarioRepository.findByRolAndEstadoCuenta(rol, estadoCuenta);
 	}
 
-	@Override
-	public int AprendizAct() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int AprendizIN() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int InstructorAc() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int InstructorIN() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int VisitantesAc() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int VisitantesIN() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
+	
 }
