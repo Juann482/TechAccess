@@ -1,55 +1,207 @@
 ﻿<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 
-<head>
-	<meta charset="UTF-8">
-	<title th:text="${currentPage}"></title>
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
+<head th:insert="~{/templates_superadmin.html::head}"></head>
 
-<body>
-	<div th:replace="~{fragments/header :: header}"></div>
+<body class="superadmin-page">
 
-	<div class="container mt-4">
-		<h1 th:text="${currentPage}"></h1>
+    <header id="header" class="header d-flex align-items-center fixed-top">
+        <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
 
-		<form th:action="@{/superadmin/superadmins/guardar}" th:object="${superAdmin}" method="post">
-			<input type="hidden" th:field="*{id}" />
+            <a th:href="@{/superadmin/dashboard}" class="logo d-flex align-items-center">
+                <img th:src="@{/images/TecAccess.png}" alt="LogoPrin">
+                <h1 class="sitename"><b>TECH</b>ACCESS <small>SuperAdmin</small></h1>
+            </a>
 
-			<div class="mb-3">
-				<label for="nombre" class="form-label">Nombre</label>
-				<input type="text" class="form-control" id="nombre" th:field="*{nombre}" required>
-			</div>
+            <nav id="navmenu" class="navmenu">
+                <ul>
+                    <li><a th:href="@{/superadmin/dashboard}">Dashboard</a></li>
+                    <li><a th:href="@{/superadmin/usuarios}">Usuarios</a></li>
+                    <li><a th:href="@{/superadmin/superadmins}" class="active">SuperAdmins</a></li>
+                    <li><a th:href="@{/superadmin/vigilancia}">Vigilancia</a></li>
+                    <li><a th:href="@{/superadmin/accesos}">Accesos</a></li>
+                    <li><a th:href="@{/superadmin/configuracion}">Configuración</a></li>
+                    <li><a href="#" class="logout-btn">Cerrar Sesión</a></li>
+                </ul>
+                <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+            </nav>
 
-			<div class="mb-3">
-				<label for="email" class="form-label">Email</label>
-				<input type="email" class="form-control" id="email" th:field="*{email}" required>
-			</div>
+        </div>
+    </header>
 
-			<div class="mb-3">
-				<label for="documento" class="form-label">Documento</label>
-				<input type="text" class="form-control" id="documento" th:field="*{documento}" required>
-			</div>
+    <main class="main">
 
-			<div class="mb-3">
-				<label for="telefono" class="form-label">Teléfono</label>
-				<input type="text" class="form-control" id="telefono" th:field="*{telefono}">
-			</div>
+        <div class="page-title dark-background" th:style="'background-image: url(' + @{/images/showcase-1.webp} + ');'">
+            <div class="container position-relative">
+                <h1 th:text="${superAdmin.id == null} ? 'Nuevo SuperAdmin' : 'Editar SuperAdmin'">Formulario SuperAdmin</h1>
+                <p th:text="${superAdmin.id == null} ? 'Registra un nuevo superadministrador' : 'Modifica la información del superadministrador'"></p>
+                <nav class="breadcrumbs">
+                    <ol>
+                        <li><a th:href="@{/superadmin/dashboard}"><b>Dashboard</b></a></li>
+                        <li><a th:href="@{/superadmin/superadmins}">SuperAdmins</a></li>
+                        <li class="current" th:text="${superAdmin.id == null} ? 'Nuevo' : 'Editar'">Formulario</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
 
-			<div class="mb-3">
-				<label for="password" class="form-label">Contraseña</label>
-				<input type="password" class="form-control" id="password" th:field="*{password}" required>
-			</div>
+        <section class="superadmin-content section" style="padding-top: 220px;">
+            <div class="container" data-aos="fade-up" data-aos-delay="100">
 
-			<div class="mb-3">
-				<label for="permisosEspeciales" class="form-label">Permisos Especiales</label>
-				<input type="text" class="form-control" id="permisosEspeciales" th:field="*{permisosEspeciales}">
-			</div>
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
 
-			<button type="submit" class="btn btn-primary">Guardar</button>
-			<a th:href="@{/superadmin/superadmins}" class="btn btn-secondary">Cancelar</a>
-		</form>
-	</div>
+                        <div class="card shadow-lg border-0">
+                            <div class="card-header bg-primary text-white py-3">
+                                <h5 class="mb-0">
+                                    <i class="bi bi-person-badge"></i> 
+                                    <span th:text="${superAdmin.id == null} ? 'Formulario de Registro' : 'Formulario de Edición'"></span>
+                                </h5>
+                            </div>
+
+                            <div class="card-body p-4">
+                                <form th:action="@{/superadmin/superadmins/guardar}" th:object="${superAdmin}" method="post" 
+                                      class="needs-validation" novalidate>
+                                    
+                                    <input type="hidden" th:field="*{id}" />
+
+                                    <div class="row g-3">
+                                        <div class="col-md-6">
+                                            <label for="nombre" class="form-label fw-bold">
+                                                <i class="bi bi-person"></i> Nombre Completo
+                                                <span class="text-danger">*</span>
+                                            </label>
+                                            <input type="text" class="form-control form-control-lg" id="nombre" 
+                                                   th:field="*{nombre}" required placeholder="Ej: Juan Pérez">
+                                            <div class="invalid-feedback">
+                                                Por favor ingresa el nombre completo.
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <label for="email" class="form-label fw-bold">
+                                                <i class="bi bi-envelope"></i> Email
+                                                <span class="text-danger">*</span>
+                                            </label>
+                                            <input type="email" class="form-control form-control-lg" id="email" 
+                                                   th:field="*{email}" required placeholder="ejemplo@techaccess.com">
+                                            <div class="invalid-feedback">
+                                                Por favor ingresa un email válido.
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <label for="documento" class="form-label fw-bold">
+                                                <i class="bi bi-card-text"></i> Documento
+                                                <span class="text-danger">*</span>
+                                            </label>
+                                            <input type="text" class="form-control form-control-lg" id="documento" 
+                                                   th:field="*{documento}" required placeholder="Número de documento">
+                                            <div class="invalid-feedback">
+                                                Por favor ingresa el número de documento.
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <label for="telefono" class="form-label fw-bold">
+                                                <i class="bi bi-telephone"></i> Teléfono
+                                            </label>
+                                            <input type="tel" class="form-control form-control-lg" id="telefono" 
+                                                   th:field="*{telefono}" placeholder="(XXX) XXX-XXXX">
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <label for="password" class="form-label fw-bold">
+                                                <i class="bi bi-lock"></i> Contraseña
+                                                <span class="text-danger">*</span>
+                                            </label>
+                                            <input type="password" class="form-control form-control-lg" id="password" 
+                                                   th:field="*{password}" required>
+                                            <div class="invalid-feedback">
+                                                Por favor ingresa una contraseña segura.
+                                            </div>
+                                            <div class="form-text">
+                                                Mínimo 8 caracteres con mayúsculas, minúsculas y números.
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <label for="permisosEspeciales" class="form-label fw-bold">
+                                                <i class="bi bi-shield-check"></i> Permisos Especiales
+                                            </label>
+                                            <input type="text" class="form-control form-control-lg" id="permisosEspeciales" 
+                                                   th:field="*{permisosEspeciales}" placeholder="Ej: ACCESO_TOTAL, AUDITORIA">
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <div class="form-check form-switch">
+                                                <input class="form-check-input" type="checkbox" role="switch" 
+                                                       id="notificarUsuario" checked>
+                                                <label class="form-check-label" for="notificarUsuario">
+                                                    <i class="bi bi-bell"></i> Notificar al usuario por email
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <label class="form-label fw-bold">
+                                                <i class="bi bi-info-circle"></i> Información Adicional
+                                            </label>
+                                            <textarea class="form-control" rows="3" 
+                                                      placeholder="Observaciones o notas adicionales..."></textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex justify-content-between mt-5 pt-3 border-top">
+                                        <a th:href="@{/superadmin/superadmins}" class="btn btn-outline-secondary btn-lg px-4">
+                                            <i class="bi bi-x-circle"></i> Cancelar
+                                        </a>
+                                        <button type="submit" class="btn btn-primary btn-lg px-5">
+                                            <i class="bi bi-save"></i> 
+                                            <span th:text="${superAdmin.id == null} ? 'Guardar SuperAdmin' : 'Actualizar SuperAdmin'"></span>
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <div class="alert alert-info mt-4">
+                            <h6><i class="bi bi-exclamation-circle"></i> Información importante:</h6>
+                            <ul class="mb-0">
+                                <li>Los campos marcados con <span class="text-danger">*</span> son obligatorios.</li>
+                                <li>La contraseña será encriptada automáticamente.</li>
+                                <li>Los permisos especiales determinan funciones específicas del sistema.</li>
+                                <li>El superadmin tendrá acceso total al sistema inmediatamente.</li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <div th:insert="~{/templates_superadmin.html::footer}"></div>
+
+    <div th:insert="~{/templates_superadmin.html::jsFiles}"></div>
+
+    <script>
+        (function () {
+            'use strict'
+            var forms = document.querySelectorAll('.needs-validation')
+            Array.prototype.slice.call(forms).forEach(function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+                    form.classList.add('was-validated')
+                }, false)
+            })
+        })()
+    </script>
+
 </body>
-
 </html>

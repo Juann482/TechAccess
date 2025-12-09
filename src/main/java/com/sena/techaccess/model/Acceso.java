@@ -26,7 +26,7 @@ public class Acceso {
 
 	// Relación con Dispositivo
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_disp") // Asegúrate de que este sea el nombre correcto en tu base de datos
+	@JoinColumn(name = "id_disp") //verificar coincidencia DISPOSITIVO id  
 	private Dispositivo dispositivo;
 
 	// Relación con Usuario
