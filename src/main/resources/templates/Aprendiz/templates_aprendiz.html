@@ -19,7 +19,7 @@
 
 	<!-- Main CSS File -->
 	<link th:href="@{/assets/css/main.css}" rel="stylesheet">
-	
+
 	<!-- Font Awesome -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
@@ -28,7 +28,7 @@
      FRAGMENTO DE HEADER/NAVBAR
      ============================================ -->
 <div th:fragment="header">
-	<header id="header" class="header d-flex align-items-center fixed-top" 
+	<header id="header" class="header d-flex align-items-center fixed-top"
 		th:style="'background: linear-gradient(135deg, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.75) 100%), url(' + @{/images/fondo.jpeg} + ') center/cover; backdrop-filter: blur(5px);'">
 		<div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
 
@@ -51,7 +51,6 @@
 
 			<div class="user-menu-container">
 				<div class="user-info" id="toggleMenu">
-					<img th:src="@{/images/user.jpg}" alt="Avatar" class="avatar">
 					<div>
 						<span class="" th:text="${usuario != null ? usuario.nombre : ' - '}"></span>
 						<span class="user-role" th:text="${session.rol != null ? session.rol : 'Aprendiz'}"></span>
@@ -60,7 +59,6 @@
 
 				<div class="dropdown-menu" id="dropdownMenu">
 					<div class="dropdown-header">
-						<img th:src="@{/images/user.jpg}" alt="Avatar Grande" class="avatar-large">
 						<div>
 							<span class="" th:text="${usuario != null ? usuario.nombre : ' - '}"></span>
 							<span class="" th:text="${usuario != null ? usuario.email : ' - '}"></span>
@@ -69,8 +67,10 @@
 
 					<ul class="menu-options">
 						<li><a id="openProfile"><i class="fas fa-user-circle"></i> Ver perfil</a></li>
-						<li><a th:href="@{/Aprendiz/detalleExcusa}"><i class="fas fa-history"></i> Ver historial de excusas</a></li>
-						<li class="logout"><a th:href="@{/logout}"><i class="fas fa-sign-out-alt"></i> Cerrar sesión</a></li>
+						<li><a th:href="@{/Aprendiz/detalleExcusa}"><i class="fas fa-history"></i> Ver historial de
+								excusas</a></li>
+						<li class="logout"><a th:href="@{/logout}"><i class="fas fa-sign-out-alt"></i> Cerrar sesión</a>
+						</li>
 					</ul>
 				</div>
 			</div>
@@ -210,6 +210,7 @@
 				opacity: 0;
 				transform: translateY(-8px);
 			}
+
 			to {
 				opacity: 1;
 				transform: translateY(0);
@@ -266,6 +267,7 @@
 				opacity: 0;
 				transform: translateY(-20px);
 			}
+
 			to {
 				opacity: 1;
 				transform: translateY(0);
@@ -397,8 +399,53 @@
 	<script>
 		/* SCRIPTS COMUNES PARA APRENDIZ */
 
+		// Mostrar/Ocultar QR
+		function mostrarQR() {
+			const qr = document.getElementById("codigoQR");
+			qr.style.display = (qr.style.display === "none" || qr.style.display === "") ? "block" : "none";
+		}
+
+		// Mostrar historial (Ejemplo - puedes reemplazar con datos reales)
+		function mostrarHistorial() {
+			const historial = `
+		        <h6><b>Aula Computacional N°1</b></h6>
+		        <p><b>Entrada:</b> 15 Mayo, 08:15 AM</p>
+		        <p><b>Salida:</b> 15 Mayo, 02:30 PM</p>
+		    `;
+			document.getElementById("contenidoHistorial").innerHTML = historial;
+		}
+
+		// Escáner / input opcional
+		window.onload = () => {
+			const input = document.getElementById("barcodeInput");
+			if (!input) return;
+
+			const ensureFocus = () => {
+				if (document.activeElement !== input) {
+					input.focus();
+				}
+			};
+			setInterval(ensureFocus, 300);
+
+			input.addEventListener("keypress", function (e) {
+				if (e.key === "Enter") {
+					const codigo = input.value.trim();
+					if (codigo !== "") {
+						procesarCodigo(codigo);
+					}
+					input.value = "";
+				}
+			});
+
+			input.focus();
+		};
+
+		function procesarCodigo(codigo) {
+			console.log("Código escaneado:", codigo);
+		}
+
 		// Toggle menú usuario
-		document.addEventListener("DOMContentLoaded", function() {
+		document.addEventListener("DOMContentLoaded", function () {
 			const toggleMenu = document.getElementById("toggleMenu");
 			const dropdownMenu = document.getElementById("dropdownMenu");
 
@@ -458,11 +505,71 @@
 				}
 			}
 		});
+
+
+		// Controlar visibilidad del campo Descripción
+		document.addEventListener("DOMContentLoaded", function () {
+			const motivoSelect = document.getElementById("motivo");
+			const descripcionRow = document.getElementById("descripcionRow");
+			const descripcionInput = document.getElementById("descripcion");
+
+			// Función para mostrar/ocultar el campo de descripción
+			function toggleDescripcion() {
+				if (motivoSelect.value === "Otro") {
+					descripcionRow.style.display = "flex";
+					descripcionInput.setAttribute("required", "required");
+				} else {
+					descripcionRow.style.display = "none";
+					descripcionInput.removeAttribute("required");
+					descripcionInput.value = ""; // Limpiar el campo cuando se oculta
+				}
+			}
+
+			// Escuchar cambios en el select de motivo
+			motivoSelect.addEventListener("change", toggleDescripcion);
+
+			// Verificar el valor inicial (por si hay un valor pre-seleccionado)
+			toggleDescripcion();
+		});
+
+		function confirmarGuardado() {
+			Swal.fire({
+				title: "¿Guardar excusa?",
+				text: "La información será registrada en el sistema.",
+				icon: "question",
+				showCancelButton: true,
+				confirmButtonText: "Guardar",
+				cancelButtonText: "Cancelar",
+				buttonsStyling: false,
+				customClass: {
+					popup: 'rounded-4 shadow',
+					title: 'fw-bold',
+					confirmButton: 'btn btn-outline-secondary px-4 rounded-pill',
+					cancelButton: 'btn btn-outline-secondary px-4 rounded-pill'
+				}
+			}).then((result) => {
+				if (result.isConfirmed) {
+					Swal.fire({
+						icon: "success",
+						title: "Excusa guardada",
+						text: "La excusa se registró correctamente.",
+						showConfirmButton: false,
+						timer: 1500,
+						customClass: {popup: 'rounded-4 shadow'}
+					}).then(() => {
+						document.getElementById("formExcusa").submit();
+					});
+				}
+			});
+		}
+
+
+
 	</script>
 
 	<!-- Bootstrap JS -->
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
-	
+
 	<!-- JsBarcode (si se necesita para códigos QR) -->
 	<script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.6/dist/JsBarcode.all.min.js"></script>
 </div>
@@ -476,4 +583,3 @@
 </div>
 
 </html>
-
