@@ -41,7 +41,7 @@
 
 			<nav id="navmenu" class="navmenu">
 				<ul>
-					<li><a th:href="@{/Aprendiz/aprendiz}" id="nav-aprendiz">Aprendiz</a></li>
+					<li><a th:href="@{/Aprendiz}" id="nav-aprendiz">Aprendiz</a></li>
 					<li><a th:href="@{/Aprendiz/excusas}" id="nav-excusas">Excusas</a></li>
 					<li><a th:href="@{/Aprendiz/Horario}" id="nav-horario">Horario</a></li>
 				</ul>
@@ -68,7 +68,7 @@
 
 					<ul class="menu-options">
 						<li><a id="openProfile"><i class="fas fa-user-circle"></i> Ver perfil</a></li>
-						<li><a th:href="@{/Aprendiz/historialExcusas}"><i class="fas fa-history"></i> Ver historial de excusas</a></li>
+						<li><a th:href="@{/Aprendiz/detalleExcusa}"><i class="fas fa-history"></i> Ver historial de excusas</a></li>
 						<li class="logout"><a th:href="@{/logout}"><i class="fas fa-sign-out-alt"></i> Cerrar sesión</a></li>
 					</ul>
 				</div>
@@ -377,7 +377,9 @@
 			// Activar enlace activo en el navbar según la página actual
 			const currentPath = window.location.pathname;
 			const navLinks = {
-				'/Aprendiz/aprendiz': 'nav-aprendiz',
+				'/Aprendiz/inicio': 'nav-aprendiz',
+				'/Aprendiz/': 'nav-aprendiz',
+				'/Aprendiz': 'nav-aprendiz',
 				'/Aprendiz/excusas': 'nav-excusas',
 				'/Aprendiz/Horario': 'nav-horario'
 			};
