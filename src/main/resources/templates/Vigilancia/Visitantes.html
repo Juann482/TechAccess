@@ -35,13 +35,10 @@
 					<div class="row justify-content-center" data-aos="fade-up" data-aos-delay="300">
 						<div class="col-lg-10">
 							<div class="contact-form-wrapper">
-								<div class="contact-form-wrapper">
-									<p>Registro para visitantes</p>
 									<button type="button" class="btn btn-primary" data-bs-toggle="modal"
 										data-bs-target="#exampleModal">
 										Registrar visitante
 									</button>
-								</div>
 								<br>
 								<br>
 								<h2 class="text-center mb-4">Historial de visitantes</h2>
@@ -54,7 +51,6 @@
 											<th scope="col">Teléfono</th>
 											<th scope="col">Hora de ingreso</th>
 											<th scope="col">Hora de salida</th>
-											<th scope="col">Editar </th>
 										</tr>
 									</thead>
 									<tbody th:each="visitante: ${visitantesH}">
@@ -64,6 +60,31 @@
 											<td th:text="${visitante.documento}"></td>
 											<td th:text="${visitante.email}"></td>
 											<td th:text="${visitante.telefono}"></td>
+											<td th:if="${visitante.acceso != null}"
+											    th:text="${#temporals.format(visitante.acceso.horaIngreso, 'dd/MM/yyyy hh:mm a')}">
+											</td>
+											<td th:if="${visitante.acceso == null}">
+											    -
+											</td>
+											<td class="centrados">
+
+											    <!-- Si el visitante NO ha salido -->
+											    <button th:if="${visitante.acceso != null and visitante.acceso.horaEgreso == null}"
+											            class="btn btn-danger btn-sm"
+											            th:attr="onclick=|registrarSalidaVisitante(${visitante.id})|">
+											        Egreso
+											    </button>
+
+											    <!-- Si YA salió -->
+											    <span th:if="${visitante.acceso != null and visitante.acceso.horaEgreso != null}"
+											          th:text="${#temporals.format(visitante.acceso.horaEgreso, 'dd/MM/yyyy hh:mm a')}">
+											    </span>
+
+											    <!-- Si nunca ha ingresado -->
+											    <span th:if="${visitante.acceso == null}"> - </span>
+											</td>
+
+
 
 										</tr>
 									</tbody>

@@ -1,4 +1,4 @@
-package com.sena.techaccess.model;
+	package com.sena.techaccess.model;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
@@ -30,7 +30,7 @@ public class Acceso {
 	private Dispositivo dispositivo;
 
 	// Relación con Usuario
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "usuario_id")
 	private Usuario usuario;
 

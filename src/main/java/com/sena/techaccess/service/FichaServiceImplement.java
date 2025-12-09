@@ -20,20 +20,20 @@ public class FichaServiceImplement implements IFichaService {
 	@Autowired
 	private UsuarioRepository usuarioRepository;
 
-	public Ficha save(Ficha ficha) { // Guarda o actualiza una ficha
+	public Ficha save(Ficha ficha) {
 		return fichaRepository.save(ficha);
 	}
 
 	@Override
-	public void delete(Integer id) { // Elimina una ficha por su ID
+	public void delete(Integer id) {
 		fichaRepository.deleteById(id);
 	}
 
-	public Optional<Ficha> findById(Integer id) { // Busca una ficha su ID
+	public Optional<Ficha> findById(Integer id) {
 		return fichaRepository.findById(id);
 	}
 
-	public List<Ficha> findAll() { // Obtiene todas las fichas registradas
+	public List<Ficha> findAll() { 
 		return fichaRepository.findAll();
 	}
 

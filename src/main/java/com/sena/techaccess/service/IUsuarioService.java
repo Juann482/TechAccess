@@ -1,5 +1,6 @@
 package com.sena.techaccess.service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -7,6 +8,7 @@ import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import com.sena.techaccess.model.Acceso;
 import com.sena.techaccess.model.Usuario;
 
 public interface IUsuarioService {
@@ -46,22 +48,29 @@ public interface IUsuarioService {
 	void saveAll(List<Usuario> usuarios);
 	
 	Map<String, Long> obtenerUsuariosActivosPorRol();
-	
-
 
 	// >>>>>>>DASHBOARD<<<<<<<<
 
 	int Inactivos();
-
 	int Activos();
 
 	int Aprendiz();
-
+	int AprendizAct();
+	int AprendizIN();
+	
 	int Instructor();
+	int InstructorAc();
+	int InstructorIN();
 
 	int Visitante();
+	int VisitantesAc();
+	int VisitantesIN();
 
 	int totalUsuarios();
+	
+	//>>>>>> VIGILANCIA <<<<<<<<<
+	
+
 
 	int AprendizAct();
 
