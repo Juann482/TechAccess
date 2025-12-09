@@ -48,13 +48,16 @@
 
 									<!-- BOTONES A LA DERECHA -->
 									<div class="right-buttons">
+										<button class="btn btn-success" data-bs-toggle="modal"
+										       data-bs-target="#registroVisitanteModal">Registrar Visitante
+										</button>
 										<button class="btn btn-primary" data-bs-toggle="modal"
 											data-bs-target="#filtrosModal">
 											Filtrar
 										</button>
 
 										<!-- BOTÓN LIMPIAR FILTROS (solo aparece si hay filtros) -->
-										<a th:href="@{/Vigilancia/Ingreso}" class="btn btn-outline-secondary"
+										<a th:href="@{/Vigilancia/Ingreso}" class="btn btn-secondary"
 										   th:if="${(nombre != null and nombre != '') or 
 										            (documento != null and documento != '') or 
 										            (rol != null and rol != '') or 
@@ -179,8 +182,8 @@
 												<!-- Estado -->
 												<td class="centrados">
 												    <span th:switch="${acc.actividad}">
-												        <span th:case="'Ingresado'" class="badge bg-success">Ingresado</span>
-												        <span th:case="'Egresado'" class="badge bg-secondary">Egresado</span>
+												        <span th:case="'Ingresado'" class="badge bg-secondary">Ingresado</span>
+												        <span th:case="'Egresado'" class="badge bg-success">Egresado</span>
 												        <span th:case="*" class="badge bg-danger">Ausente</span>
 												    </span>
 												</td>
@@ -380,6 +383,123 @@
 				</div>
 			</div>
 		</div>
+		<!-- MODAL PARA REGISTRAR VISITANTE -->
+		<div class="modal fade light-blue-modal" id="registroVisitanteModal" tabindex="-1" aria-hidden="true">
+		    <div class="modal-dialog modal-lg">
+		        <div class="modal-content">
+		            <div class="modal-header">
+		                <h5 class="modal-title">Registrar Nuevo Visitante</h5>
+		                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+		            </div>
+
+		            <div class="modal-body">
+		                <form th:action="@{/Vigilancia/visitanteSave}" method="post">
+		                    <div class="row g-3">
+		                        <!-- Nombre completo -->
+		                        <div class="col-md-6">
+		                            <label class="form-label fw-bold">Nombre completo <span class="text-danger">*</span></label>
+		                            <input type="text" class="form-control" id="nombre" name="nombre"
+		                                placeholder="Ingrese nombre completo" required>
+		                        </div>
+
+		                        <!-- Correo electrónico -->
+		                        <div class="col-md-6">
+		                            <label class="form-label fw-bold">Correo electrónico <span class="text-danger">*</span></label>
+		                            <input type="email" class="form-control" id="email" name="email"
+		                                placeholder="correo@ejemplo.com" required autocomplete="off">
+		                        </div>
+
+		                        <!-- Documento -->
+		                        <div class="col-md-6">
+		                            <label class="form-label fw-bold">Número de documento <span class="text-danger">*</span></label>
+		                            <input type="number" class="form-control" id="documento" name="documento"
+		                                placeholder="12345678" required>
+		                        </div>
+
+		                        <!-- Teléfono -->
+		                        <div class="col-md-6">
+		                            <label class="form-label fw-bold">Teléfono <span class="text-danger">*</span></label>
+		                            <input type="number" class="form-control" id="telefono" name="telefono"
+		                                placeholder="3001234567" required autocomplete="off">
+		                        </div>
+
+		                        <!-- ¿Trae dispositivo? -->
+		                        <div class="col-md-6" style="align-items: center;">
+		                            <label class="form-label fw-bold">¿El visitante trae dispositivo?</label>
+		                            <select class="form-control" id="opcion" name="opcion" onchange="mostrarCampos()">
+		                                <option value="no">No</option>
+		                                <option value="si">Sí</option>
+		                            </select>
+		                        </div>
+
+		                        <!-- CAMPOS DE DISPOSITIVO (ocultos por defecto) -->
+		                        <div id="camposExtra" class="oculto">
+		                            <hr class="my-3">
+		                            <h6 class="fw-bold mb-3">Información del dispositivo</h6>
+		                            
+		                            <div class="row g-3">
+		                                <!-- Tipo -->
+		                                <div class="col-md-4">
+		                                    <label class="form-label fw-bold">Tipo</label>
+		                                    <select class="form-control" id="tipo" name="tipo">
+		                                        <option value="">-- Seleccione --</option>
+		                                        <option>Computador</option>
+		                                        <option>Tablet</option>
+		                                        <option>Cámara</option>
+		                                    </select>
+		                                </div>
+
+		                                <!-- Marca -->
+		                                <div class="col-md-4">
+		                                    <label class="form-label fw-bold">Marca</label>
+		                                    <select class="form-control" id="marca" name="marca">
+		                                        <option value="">-- Seleccione --</option>
+		                                        <option>Lenovo</option>
+		                                        <option>Samsung</option>
+		                                        <option>DELL</option>
+		                                        <option>Asus</option>
+		                                        <option>Huawei</option>
+		                                        <option>Apple</option>
+		                                        <option>Acer</option>
+		                                        <option>Canon</option>
+		                                        <option>Nikon</option>
+		                                        <option>Sony</option>
+		                                    </select>
+		                                </div>
+
+		                                <!-- Color -->
+		                                <div class="col-md-4">
+		                                    <label class="form-label fw-bold">Color</label>
+		                                    <select class="form-control" id="color" name="color">
+		                                        <option value="">-- Seleccione --</option>
+		                                        <option>Negro</option>
+		                                        <option>Gris</option>
+		                                        <option>Azul oscuro</option>
+		                                        <option>Gris oscuro</option>
+		                                        <option>Dorado</option>
+		                                        <option>Blanco</option>
+		                                    </select>
+		                                </div>
+		                            </div>
+		                        </div>
+
+		                        <!-- Botones -->
+		                        <div class="col-12 mt-4">
+		                            <div class="d-flex justify-content-between">
+		                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+		                                    Cancelar
+		                                </button>
+		                                <button type="submit" class="btn btn-success">
+		                                    <i class="bi bi-save"></i> Registrar Visitante
+		                                </button>
+		                            </div>
+		                        </div>
+		                    </div>
+		                </form>
+		            </div>
+		        </div>
+		    </div>
+		</div>
 
 	</main>
 
@@ -393,6 +513,10 @@
 			title="Escanear">
 			📷
 		</button>
+		<button class="btn btn-success btn-floating" data-bs-toggle="modal" data-bs-target="#registroVisitanteModal"
+		        title="Registrar Visitante">
+		        👤
+		    </button>
 	</div>
 
 	<div th:insert="~{/Vigilancia/templates_vigilancia.html::footer}"></div>

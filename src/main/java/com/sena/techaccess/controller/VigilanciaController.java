@@ -17,11 +17,13 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.sena.techaccess.model.Acceso;
 import com.sena.techaccess.model.Dispositivo;
@@ -178,39 +180,30 @@ public class VigilanciaController {
         return "Egreso registrado correctamente";
     }
 
-    @GetMapping("/registro")
-    public String historialVisitante(Model model) {
-        model.addAttribute("usuario", new Usuario());
-        model.addAttribute("dispositivo", new DispositivoVisit());
-
-        List<Usuario> visitantes = usuarioService.findByRol("Visitante");
-        
-        // Crear una lista de DTOs o Maps
-        List<Map<String, Object>> visitantesConUltimoAcceso = new ArrayList<>();
-        
-        for (Usuario v : visitantes) {
-            Acceso ultimo = accesoService.findUltimoAcceso(v.getId());
-            
-            Map<String, Object> usuarioMap = new HashMap<>();
-            usuarioMap.put("usuario", v);
-            usuarioMap.put("ultimoAcceso", ultimo);
-            
-            visitantesConUltimoAcceso.add(usuarioMap);
-        }
-
-        model.addAttribute("visitantesH", visitantesConUltimoAcceso);
-        return "Vigilancia/Visitantes";
-    }
-
     @PostMapping("/visitanteSave")
-    public String registroVisitante(Usuario usuario, DispositivoVisit dispositivo) {
+    public String registroVisitante(
+            @ModelAttribute Usuario usuario,
+            @RequestParam(value = "opcion", defaultValue = "no") String opcion,
+            @RequestParam(required = false) String tipo,
+            @RequestParam(required = false) String marca,
+            @RequestParam(required = false) String color,
+            RedirectAttributes redirect) {
+        
         usuario.setRol("Visitante");
         usuario.setEstadoCuenta("Activo");
         usuarioService.save(usuario);
 
-        if (dispositivo.getTipo() != null && !dispositivo.getTipo().equals("--Tipo--")) {
+        // Solo guardar dispositivo si se seleccionó "Sí" Y tiene datos válidos
+        boolean tieneDispositivo = false;
+        
+        if ("si".equals(opcion) && tipo != null && !tipo.isEmpty() && !tipo.equals("--Seleccione--")) {
+            DispositivoVisit dispositivo = new DispositivoVisit();
+            dispositivo.setTipo(tipo);
+            dispositivo.setMarca(marca != null ? marca : "");
+            dispositivo.setColor(color != null ? color : "");
             dispositivo.setUsuario(usuario);
             dispositivoVisitService.save(dispositivo);
+            tieneDispositivo = true;
         }
 
         Acceso acceso = new Acceso();
@@ -219,7 +212,11 @@ public class VigilanciaController {
         acceso.setActividad("Ingresado");
         accesoService.save(acceso);
 
-        return "redirect:/Vigilancia/registro";
+        // Mensaje personalizado
+        redirect.addFlashAttribute("mensaje", "Visitante registrado");
+     	redirect.addFlashAttribute("tipo", "success");
+        
+        return "redirect:/Vigilancia/Ingreso";
     }
 
     @PostMapping("/visitante-egreso")
