@@ -1,5 +1,6 @@
 	package com.sena.techaccess.service;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,8 +16,6 @@ import org.springframework.stereotype.Service;
 import com.sena.techaccess.model.Usuario;
 import com.sena.techaccess.repository.PermisosRepository;
 import com.sena.techaccess.repository.UsuarioRepository;
-
-import jakarta.transaction.Transactional;
 
 @Service
 public class UsuarioServiceImplement implements IUsuarioService {
@@ -48,15 +47,44 @@ public class UsuarioServiceImplement implements IUsuarioService {
 	public int Aprendiz() {
 		return (int) usuarioRepository.countByRol("Aprendiz");
 	}
+	
+	@Override
+	public int AprendizAct() {
+		return (int) usuarioRepository.countByRolAndEstadoCuenta("Aprendiz", "Activo");
+	}
 
+	@Override
+	public int AprendizIN() {
+		return (int) usuarioRepository.countByRolAndEstadoCuenta("Aprendiz", "Inactivo");
+	}
 	@Override
 	public int Instructor() {
 		return (int) usuarioRepository.countByRol("Instructor");
+	}
+	
+	@Override
+	public int InstructorAc() {
+		return (int) usuarioRepository.countByRolAndEstadoCuenta("Instructor", "Activo");
+	}
+	
+	@Override
+	public int InstructorIN() {
+		return (int) usuarioRepository.countByRolAndEstadoCuenta("Instructor", "Inactivo");
 	}
 
 	@Override
 	public int Visitante() {
 		return (int) usuarioRepository.countByRol("Visitantes");
+	}
+	
+	@Override
+	public int VisitantesAc() {
+		return (int) usuarioRepository.countByRolAndEstadoCuenta("Visitantes", "Activo");
+	}
+	
+	@Override
+	public int VisitantesIN() {
+		return (int) usuarioRepository.countByRolAndEstadoCuenta("Visitantes", "Inactivo");
 	}
 
 //>>>>>>>>>>>>>>>>>>>>>> FIN DASHBOARD <<<<<<<<<<<<<<<<<<<<<
