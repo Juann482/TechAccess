@@ -12,21 +12,21 @@ import com.sena.techaccess.model.Acceso;
 @Service
 public class AccesoCleanupScheduler {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(AccesoCleanupScheduler.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(AccesoCleanupScheduler.class);
 
-    private final IAccesoService accesoService;
+	private final IAccesoService accesoService;
 
-    public AccesoCleanupScheduler(IAccesoService accesoService) {
-        this.accesoService = accesoService;
-    }
+	public AccesoCleanupScheduler(IAccesoService accesoService) {
+		this.accesoService = accesoService;
+	}
 
-    // Cada 12 horas
-    @Scheduled(cron = "0 0 0/12 * * ?")
-    public void limpiarHistorialAccesos() {
-        List<Acceso> accesos = accesoService.findAll();
-        for (Acceso a : accesos) {
-            accesoService.delete(a.getId());
-        }
-        LOGGER.info("Historial de accesos limpiado. Registros eliminados: {}", accesos.size());
-    }
+	// Ejecutar cada 12 horas: a las 00:00, 12:00, 24:00...
+	@Scheduled(cron = "0   0/10 * * *  ?")
+	public void limpiarHistorialAccesos() {
+		List<Acceso> accesos = accesoService.findAll();
+		for (Acceso a : accesos) {
+			accesoService.delete(a.getIdacceso());
+		}
+		LOGGER.info("Historial de accesos limpiado. Registros eliminados: {}", accesos.size());
+	}
 }

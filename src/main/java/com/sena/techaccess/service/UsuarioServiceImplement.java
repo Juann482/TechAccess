@@ -1,4 +1,4 @@
-	package com.sena.techaccess.service;
+package com.sena.techaccess.service;
 
 import java.time.LocalDate;
 import java.util.HashMap;
@@ -22,7 +22,7 @@ public class UsuarioServiceImplement implements IUsuarioService {
 
 	@Autowired
 	private UsuarioRepository usuarioRepository;
-	
+
 	@Autowired
 	private PermisosRepository permisoRepository;
 
@@ -145,7 +145,8 @@ public class UsuarioServiceImplement implements IUsuarioService {
 	}
 
 	@Override
-	public Page<Usuario> filtrarUsuarios(String nombre, String documento, String rol, String estado, Pageable pageable) {
+	public Page<Usuario> filtrarUsuarios(String nombre, String documento, String rol, String estado,
+			Pageable pageable) {
 		return usuarioRepository.filtrarUsuarios(nombre, documento, rol, estado, pageable);
 	}
 
@@ -156,38 +157,73 @@ public class UsuarioServiceImplement implements IUsuarioService {
 
 	@Override
 	public void saveAll(List<Usuario> usuarios) {
-		usuarioRepository.saveAll(usuarios);		
+		usuarioRepository.saveAll(usuarios);
 	}
 
 	@Override
 	public Page<Usuario> filtrarUsuariosEnFicha(Integer fichaId, String nombre, String documento, String rol,
-	        String estado, Pageable pageable) {
-	    return usuarioRepository.filtrarUsuariosEnFicha(fichaId, nombre, documento, rol, estado, pageable);
+			String estado, Pageable pageable) {
+		return usuarioRepository.filtrarUsuariosEnFicha(fichaId, nombre, documento, rol, estado, pageable);
 	}
 
 	@Override
 	public List<Usuario> findByFichaId(Integer id) {
 		return usuarioRepository.findByFichaId(id);
 	}
-	
+
 	@Override
-    public Map<String, Long> obtenerUsuariosActivosPorRol() {
+	public Map<String, Long> obtenerUsuariosActivosPorRol() {
 
-        List<Object[]> resultados = usuarioRepository.contarUsuariosActivosPorRol();
-        Map<String, Long> mapa = new HashMap<>();
-        for (Object[] fila : resultados) {
-            String rol = (String) fila[0];
-            Long cantidad = (Long) fila[1];
-            mapa.put(rol, cantidad);
-        }
+		List<Object[]> resultados = usuarioRepository.contarUsuariosActivosPorRol();
+		Map<String, Long> mapa = new HashMap<>();
+		for (Object[] fila : resultados) {
+			String rol = (String) fila[0];
+			Long cantidad = (Long) fila[1];
+			mapa.put(rol, cantidad);
+		}
 
-        return mapa;
-    }
+		return mapa;
+	}
 
 	@Override
 	public List<Usuario> findByRolAndEstadoCuenta(String rol, String estadoCuenta) {
 		return usuarioRepository.findByRolAndEstadoCuenta(rol, estadoCuenta);
 	}
-	
-	
+
+	@Override
+	public int AprendizAct() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int AprendizIN() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int InstructorAc() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int InstructorIN() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int VisitantesAc() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int VisitantesIN() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }

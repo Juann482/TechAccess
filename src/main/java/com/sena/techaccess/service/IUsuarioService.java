@@ -72,4 +72,16 @@ public interface IUsuarioService {
 	
 
 
+	int AprendizAct();
+
+	int AprendizIN();
+
+	int InstructorAc();
+
+	int InstructorIN();
+
+	int VisitantesAc();
+
+	int VisitantesIN();
+
 }

@@ -38,4 +38,5 @@ public interface IAccesoService {
     
     // Nuevo método para obtener accesos con usuario cargado
     List<Acceso> findAllWithUsuario();
+
 }

@@ -14,25 +14,20 @@ import com.sena.techaccess.model.Acceso;
 
 public interface AccesoRepository extends JpaRepository<Acceso, Integer> {
 
-    // Buscar por hora exacta de ingreso
+
     Acceso findByHoraIngreso(LocalDateTime horaIngreso);
 
-    // Buscar por hora exacta de egreso
     Acceso findByHoraEgreso(LocalDateTime horaEgreso);
 
-    // Traer los accesos de un usuario ordenados por ingreso (el último primero)
     @Query("SELECT a FROM Acceso a JOIN FETCH a.usuario u WHERE u.id = :usuarioId ORDER BY a.horaIngreso DESC")
     List<Acceso> findByUsuarioIdOrderByHoraIngresoDesc(@Param("usuarioId") Integer usuarioId);
 
-    // Último acceso del usuario (sin importar egreso)
     @Query("SELECT a FROM Acceso a JOIN FETCH a.usuario u WHERE u.id = :usuarioId ORDER BY a.horaIngreso DESC")
     Acceso findTopByUsuarioIdOrderByHoraIngresoDesc(@Param("usuarioId") Integer usuarioId);
 
-    // Último acceso del usuario que NO tenga horaEgreso
     @Query("SELECT a FROM Acceso a JOIN FETCH a.usuario u WHERE u.id = :usuarioId AND a.horaEgreso IS NULL ORDER BY a.horaIngreso DESC")
     Acceso findTopByUsuarioIdAndHoraEgresoIsNullOrderByHoraIngresoDesc(@Param("usuarioId") Integer usuarioId);
 
-    // Últimos accesos de todos los usuarios (para tabla)
     @Query("""
         SELECT a FROM Acceso a 
         JOIN FETCH a.usuario u
@@ -44,7 +39,6 @@ public interface AccesoRepository extends JpaRepository<Acceso, Integer> {
     """)
     List<Acceso> findLatestAccessForAllUsers();
     
-    // Método CORREGIDO para la vista de Ingresos con COUNT QUERY
     @Query(value = """
     	    SELECT a FROM Acceso a 
     	    JOIN FETCH a.usuario u
@@ -80,8 +74,7 @@ public interface AccesoRepository extends JpaRepository<Acceso, Integer> {
     	    @Param("fechaEgreso") LocalDate fechaEgreso,
     	    Pageable pageable
     	);
-    
-    // Versión simplificada sin ficha (para mantener compatibilidad si es necesario)
+           
     @Query(value = """
         SELECT a FROM Acceso a 
         JOIN FETCH a.usuario u
@@ -110,7 +103,7 @@ public interface AccesoRepository extends JpaRepository<Acceso, Integer> {
         Pageable pageable
     );
     
-    // Para obtener todos los accesos con usuario cargado
     @Query("SELECT a FROM Acceso a JOIN FETCH a.usuario ORDER BY a.horaIngreso DESC")
     List<Acceso> findAllWithUsuario();
+
 }

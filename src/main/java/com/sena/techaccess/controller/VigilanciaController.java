@@ -89,7 +89,6 @@ public class VigilanciaController {
         model.addAttribute("accesos", accesosPage.getContent());
         model.addAttribute("page", accesosPage);
         
-        // Mantener los filtros en el modelo para la paginación
         model.addAttribute("nombre", nombre);
         model.addAttribute("documento", documento);
         model.addAttribute("rol", rol);
@@ -117,7 +116,7 @@ public class VigilanciaController {
     }
 
     // ============================================================
-    // 🔥 REGISTRO AUTOMÁTICO → INGRESO / EGRESO
+    //  REGISTRO AUTOMÁTICO → INGRESO / EGRESO
     // ============================================================
 
     @PostMapping("/registrar-scan")
@@ -178,10 +177,6 @@ public class VigilanciaController {
         LOGGER.info("Egreso registrado (manual) -> Usuario {}", usuario.getNombre());
         return "Egreso registrado correctamente";
     }
-
-    // =====================================================================
-    // VISITANTES
-    // =====================================================================
 
     @GetMapping("/registro")
     public String historialVisitante(Model model) {

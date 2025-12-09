@@ -65,33 +65,33 @@ public class AdministradorController {
 		int TotalUSER = usuarioService.totalUsuarios();
 		int Inactivos = usuarioService.Inactivos();
 		int Activos = usuarioService.Activos();
-		
+
 		int Aprendiz = usuarioService.Aprendiz();
 		int AprendizAc = usuarioService.AprendizAct();
 		int AprendizIn = usuarioService.AprendizIN();
-		
+
 		int Instructor = usuarioService.Instructor();
 		int InstructorAc = usuarioService.InstructorAc();
 		int InstructorIn = usuarioService.InstructorIN();
-		
+
 		int Visitante = usuarioService.Visitante();
 		int VisitanteAc = usuarioService.VisitantesAc();
 		int VisitanteIn = usuarioService.VisitantesIN();
 
 		model.addAttribute("UsuariosA", TotalUSER);
-		model.addAttribute("Inactivos", Inactivos);		
+		model.addAttribute("Inactivos", Inactivos);
 		model.addAttribute("Activos", Activos);
-		
+
 		model.addAttribute("Aprendiz", Aprendiz);
 		model.addAttribute("AprendizAc", AprendizAc);
 		model.addAttribute("ApInactivo", AprendizIn);
-		
+
 		model.addAttribute("Instructor", Instructor);
 		model.addAttribute("AcInstructor", InstructorAc);
 		model.addAttribute("InInactivo", InstructorIn);
-		
+
 		model.addAttribute("Visitante", Visitante);
-		model.addAttribute("VisitAc", VisitanteAc);		
+		model.addAttribute("VisitAc", VisitanteAc);
 		model.addAttribute("VisitEg", VisitanteIn);
 
 		Map<String, Long> datos = usuarioService.obtenerUsuariosActivosPorRol();
@@ -114,7 +114,6 @@ public class AdministradorController {
 		model.addAttribute("usuarios", usuarioService.findAll());
 		model.addAttribute("usuario", new Usuario()); // objeto vacio
 		model.addAttribute("fichas", fichaService.findAll()); // Lista de fichas
-		
 
 		return "Administrador/RegistroUSER";
 	}
@@ -129,11 +128,10 @@ public class AdministradorController {
 		}
 		usuarioService.save(usuario);
 		LOGGER.warn("Usuario guardado: {}", usuario.getNombre());
-		
 
 		redirect.addFlashAttribute("mensaje", "Usuario registrado correctamente");
 		redirect.addFlashAttribute("tipo", "success");
-		
+
 		return "redirect:/Administrador/usuarios";
 	}
 
@@ -300,7 +298,7 @@ public class AdministradorController {
 				f.setEstado("Activo");
 			}
 		}
-		
+
 		redirect.addFlashAttribute("mensaje", "Estado actualizado");
 		redirect.addFlashAttribute("tipo", "success");
 
@@ -321,15 +319,15 @@ public class AdministradorController {
 
 		ficha.setEstado("Activo");
 
-		if (ficha.getJornada() != null && ficha.getJornada() == null) {
+		if (ficha.getJornada() != null && ficha.getJornada().isBlank()) {
 			ficha.setJornada(null);
 		}
-		
+
 		fichaService.save(ficha);
-		
+
 		redirect.addFlashAttribute("mensaje", "Ficha registrada correctamente");
 		redirect.addFlashAttribute("tipo", "success");
-		
+
 		LOGGER.debug("La ficha se ha registrado con exito {}", ficha);
 
 		return "redirect:/Administrador/Historialfichas";
@@ -419,7 +417,7 @@ public class AdministradorController {
 		for (Usuario u : usuarios) {
 			u.setFicha(null);
 		}
-		
+
 		usuarioService.saveAll(usuarios);
 
 		fichaService.delete(id);
@@ -452,7 +450,8 @@ public class AdministradorController {
 	}
 
 	@PostMapping("/NuevoPerfil")
-	public String nuevoPerfil(@ModelAttribute Usuario usuario, RedirectAttributes redirect, @RequestParam("img") MultipartFile file) throws IOException {
+	public String nuevoPerfil(@ModelAttribute Usuario usuario, RedirectAttributes redirect,
+			@RequestParam("img") MultipartFile file) throws IOException {
 
 		Usuario u = new Usuario();
 		u = usuarioService.get(usuario.getId()).get();
@@ -490,7 +489,7 @@ public class AdministradorController {
 			session.setAttribute("telefono", admin.getTelefono());
 			session.setAttribute("imagen", admin.getImagen());
 		}
-		
+
 		redirect.addFlashAttribute("mensaje", "Perfil actualizado");
 		redirect.addFlashAttribute("tipo", "success");
 

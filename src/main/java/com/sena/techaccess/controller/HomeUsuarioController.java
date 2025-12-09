@@ -14,10 +14,9 @@ import com.sena.techaccess.model.Soporte;
 @Controller
 @RequestMapping("/")
 public class HomeUsuarioController {
-	
+
 	@Autowired
 	private IAccesoService accesoService;
-
 
 	@GetMapping("/soporte")
 	public String soporte() {
@@ -28,11 +27,10 @@ public class HomeUsuarioController {
 	public String about() {
 		return "about";
 	}
+
 	@GetMapping("")
 	public String Inicio() {
 		return ("home");
 	}
 
-	
-	
 }
