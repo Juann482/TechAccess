@@ -1,42 +1,14 @@
 ﻿<!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 
-<head th:insert="~{/templates_usuario.html::head}"></head>
+<head th:insert="~{/Aprendiz/templates_aprendiz.html::head}"></head>
 
-<body class="contact-page" style="font-family: 'Segoe UI', sans-serif;">
+<body class="contact-page">
 
-	<!-- Encabezado -->
+	<div th:insert="~{/Aprendiz/templates_aprendiz.html::header}"></div>
+	<div th:insert="~{/Aprendiz/templates_aprendiz.html::style}"></div>
 
-	<header id="header" class="header d-flex align-items-center fixed-top">
-		<div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
-
-			<a th:href="@{/usuario/home}" class="logo d-flex align-items-center">
-				<img th:src="@{/images/TecAccess.png}" alt="LogoPrin">
-				<h1 class="sitename"><b style="color: rgb(14, 209, 220);">TECH</b>ACCESS <b
-						style="color: rgb(14, 209, 220);">|</b> SENA</h1>
-			</a>
-
-			<nav id="navmenu" class="navmenu">
-				<ul>
-					<li><a href="#" class="active"><b>Aprendiz</b></a></li>
-					<li><a th:href="@{/Aprendiz/excusas}">Excusas</a></li>
-					<li><a th:href="@{/Aprendiz/Horario}">Horario</a></li>
-					<li><a th:href="@{/usuario/home}">Inicio</a></li>
-
-				</ul>
-				<i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-			</nav>
-
-		</div>
-	</header>
-
-
-	<main class="main" style="background-color: rgba(0, 124, 88, 0.05); min-height: 100vh;">
-
-
-
-		<!-- Contenido principal -->
-		<main class="main" style="background-color: rgba(0, 124, 88, 0.05); min-height: 100vh;">
+	<main class="main">
 
 			<!-- Encabezado de página -->
 			<div class="page-title dark-background text-center py-5"
@@ -235,15 +207,21 @@
 			</div>
 		</div>
 
-		<!-- Footer y Scripts -->
-		<div th:insert="~{/templates_usuario.html::footer}"></div>
-		<div th:insert="~{/templates_usuario.html::jsFiles}"></div>
-		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
+	</main>
 
+	<!-- FOOTER / MODAL / JS COMUNES -->
+		<div th:insert="~{/Aprendiz/templates_aprendiz.html::modal}"></div>
+		<div th:insert="~{/Aprendiz/templates_aprendiz.html::footer}"></div>
+		<div th:insert="~{/Aprendiz/templates_aprendiz.html::jsFiles}"></div>
+
+		<!-- Scripts específicos -->
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
 		<script>
 			function mostrarQR() {
 				const qr = document.getElementById("codigoQR");
-				qr.style.display = (qr.style.display === "none" || qr.style.display === "") ? "block" : "none";
+				if (qr) {
+					qr.style.display = (qr.style.display === "none" || qr.style.display === "") ? "block" : "none";
+				}
 			}
 
 			function mostrarHistorial() {
@@ -252,7 +230,10 @@
 				<p><b>Entrada:</b> 15 Mayo, 08:15 AM</p>
 				<p><b>Salida:</b> 15 Mayo, 02:30 PM</p>
 			`;
-				document.getElementById('contenidoHistorial').innerHTML = historial;
+				const cont = document.getElementById('contenidoHistorial');
+				if (cont) {
+					cont.innerHTML = historial;
+				}
 			}
 		</script>
 
