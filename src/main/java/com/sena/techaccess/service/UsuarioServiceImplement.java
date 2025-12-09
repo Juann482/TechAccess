@@ -38,17 +38,17 @@ public class UsuarioServiceImplement implements IUsuarioService {
 
 	@Override
 	public int Inactivos() {
-		return (int) usuarioRepository.countByEstadoCuenta("Inactivo");
+		return usuarioRepository.countByEstadoCuenta("Inactivo");
 	}
 
 	@Override
 	public int Activos() {
-		return (int) usuarioRepository.countByEstadoCuenta("Activo");
+		return usuarioRepository.countByEstadoCuenta("Activo");
 	}
 
 	@Override
 	public int Aprendiz() {
-		return (int) usuarioRepository.countByRol("Aprendiz");
+		return usuarioRepository.countByRol("Aprendiz");
 	}
 	
 	@Override
@@ -62,7 +62,7 @@ public class UsuarioServiceImplement implements IUsuarioService {
 	}
 	@Override
 	public int Instructor() {
-		return (int) usuarioRepository.countByRol("Instructor");
+		return usuarioRepository.countByRol("Instructor");
 	}
 	
 	@Override
@@ -77,7 +77,7 @@ public class UsuarioServiceImplement implements IUsuarioService {
 
 	@Override
 	public int Visitante() {
-		return (int) usuarioRepository.countByRol("Visitantes");
+		return usuarioRepository.countByRol("Visitantes");
 	}
 	
 	@Override
@@ -193,5 +193,5 @@ public class UsuarioServiceImplement implements IUsuarioService {
 		return usuarioRepository.findByRolAndEstadoCuenta(rol, estadoCuenta);
 	}
 
-	
+
 }

@@ -1,102 +1,100 @@
 package com.sena.techaccess.controller;
 
 import com.sena.techaccess.model.SuperAdministrador;
-import com.sena.techaccess.model.Acceso;
-import com.sena.techaccess.service.SuperAdministradorServiceImplement;
-import com.sena.techaccess.service.IAccesoService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.sena.techaccess.service.ISuperadminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
-import java.util.Optional;
 
 @Controller
-@RequestMapping("/superadmin")
+@RequestMapping("/superadmin/superadmins")
 public class SuperAdministradorController {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(SuperAdministradorController.class);
-
     @Autowired
-    private SuperAdministradorServiceImplement superAdministradorService;
+    private ISuperadminService superadminService;
 
-    private final IAccesoService accesoService;
-
-    public SuperAdministradorController(IAccesoService accesoService) {
-        this.accesoService = accesoService;
-    }
-
-    @GetMapping("/dashboard")
-    public String dashboard(Model model) {
-        model.addAttribute("currentPage", "Dashboard");
-        return "superadmin/dashboard";
-    }
-
-    @GetMapping("/usuarios")
-    public String gestionUsuarios(Model model) {
-        model.addAttribute("currentPage", "Gestión de Usuarios");
-        return "superadmin/usuarios";
-    }
-
-    @GetMapping("/superadmins")
+    @GetMapping("")
     public String listarSuperAdmins(Model model) {
-        List<SuperAdministrador> superAdmins = superAdministradorService.findAll();
+        List<SuperAdministrador> superAdmins = superadminService.findAll();
         model.addAttribute("superAdmins", superAdmins);
-        model.addAttribute("currentPage", "SuperAdministradores");
-        return "superadmin/lista";
+        return "superadmin/superadmins/list";
     }
 
-    @GetMapping("/superadmins/nuevo")
-    public String mostrarFormularioNuevo(Model model) {
+    @GetMapping("/crear")
+    public String mostrarFormularioCrear(Model model) {
         model.addAttribute("superAdmin", new SuperAdministrador());
-        model.addAttribute("currentPage", "Nuevo SuperAdmin");
-        return "superadmin/formulario";
+        return "superadmin/superadmins/form";
     }
 
-    @PostMapping("/superadmins/guardar")
-    public String guardarSuperAdmin(@ModelAttribute SuperAdministrador superAdministrador) {
-        superAdministradorService.save(superAdministrador);
+    @PostMapping("/guardar")
+    public String guardarSuperAdmin(@ModelAttribute SuperAdministrador superAdmin, RedirectAttributes redirect) {
+        if (superadminService.existsByEmail(superAdmin.getEmail())) {
+            redirect.addFlashAttribute("error", "El email ya está registrado");
+            return "redirect:/superadmin/superadmins/crear";
+        }
+        if (superadminService.existsByDocumento(superAdmin.getDocumento())) {
+            redirect.addFlashAttribute("error", "El documento ya está registrado");
+            return "redirect:/superadmin/superadmins/crear";
+        }
+        superadminService.save(superAdmin);
+        redirect.addFlashAttribute("success", "SuperAdmin creado exitosamente");
         return "redirect:/superadmin/superadmins";
     }
 
-    @GetMapping("/superadmins/editar/{id}")
+    @GetMapping("/editar/{id}")
     public String mostrarFormularioEditar(@PathVariable Integer id, Model model) {
-        Optional<SuperAdministrador> superAdmin = superAdministradorService.findById(id);
-        if (superAdmin.isPresent()) {
-            model.addAttribute("superAdmin", superAdmin.get());
-            model.addAttribute("currentPage", "Editar SuperAdmin");
-            return "superadmin/formulario";
+        SuperAdministrador superAdmin = superadminService.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("ID inválido: " + id));
+        model.addAttribute("superAdmin", superAdmin);
+        return "superadmin/superadmins/form";
+    }
+
+    @PostMapping("/actualizar/{id}")
+    public String actualizarSuperAdmin(@PathVariable Integer id, @ModelAttribute SuperAdministrador superAdmin, RedirectAttributes redirect) {
+        SuperAdministrador existente = superadminService.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("ID inválido: " + id));
+        
+        if (!existente.getEmail().equals(superAdmin.getEmail()) && superadminService.existsByEmail(superAdmin.getEmail())) {
+            redirect.addFlashAttribute("error", "El email ya está registrado");
+            return "redirect:/superadmin/superadmins/editar/" + id;
+        }
+        
+        if (!existente.getDocumento().equals(superAdmin.getDocumento()) && superadminService.existsByDocumento(superAdmin.getDocumento())) {
+            redirect.addFlashAttribute("error", "El documento ya está registrado");
+            return "redirect:/superadmin/superadmins/editar/" + id;
+        }
+        
+        superAdmin.setId(id);
+        superadminService.save(superAdmin);
+        redirect.addFlashAttribute("success", "SuperAdmin actualizado exitosamente");
+        return "redirect:/superadmin/superadmins";
+    }
+
+    @GetMapping("/eliminar/{id}")
+    public String eliminarSuperAdmin(@PathVariable Integer id, RedirectAttributes redirect) {
+        if (superadminService.findById(id).isPresent()) {
+            superadminService.deleteById(id);
+            redirect.addFlashAttribute("success", "SuperAdmin eliminado exitosamente");
+        } else {
+            redirect.addFlashAttribute("error", "SuperAdmin no encontrado");
         }
         return "redirect:/superadmin/superadmins";
     }
 
-    @GetMapping("/superadmins/eliminar/{id}")
-    public String eliminarSuperAdmin(@PathVariable Integer id) {
-        superAdministradorService.deleteById(id);
-        return "redirect:/superadmin/superadmins";
-    }
-
-    @GetMapping("/vigilancia")
-    public String gestionVigilancia(Model model) {
-        model.addAttribute("currentPage", "Gestión de Vigilancia");
-        return "superadmin/vigilancia";
-    }
-
-    @GetMapping("/accesos")
-    public String gestionAccesos(Model model) {
-        List<Acceso> accesos = accesoService.findAll();
-        LOGGER.info("Cargando accesos en superadmin/accesos. Total: {}", accesos.size());
-        model.addAttribute("accesos", accesos);
-        model.addAttribute("currentPage", "Gestión de Accesos");
-        return "superadmin/accesos";
-    }
-
-    @GetMapping("/configuracion")
-    public String configuracionSistema(Model model) {
-        model.addAttribute("currentPage", "Configuración del Sistema");
-        return "superadmin/configuracion";
+    @GetMapping("/buscar")
+    public String buscarSuperAdmins(@RequestParam(required = false) String nombre, Model model) {
+        List<SuperAdministrador> superAdmins;
+        if (nombre != null && !nombre.trim().isEmpty()) {
+            superAdmins = superadminService.findByNombreContaining(nombre);
+        } else {
+            superAdmins = superadminService.findAll();
+        }
+        model.addAttribute("superAdmins", superAdmins);
+        model.addAttribute("nombreBuscado", nombre);
+        return "superadmin/superadmins/list";
     }
 }

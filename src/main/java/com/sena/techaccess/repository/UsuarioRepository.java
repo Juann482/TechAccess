@@ -27,6 +27,8 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
 	List<Usuario> findByEstadoCuenta(String estadoCuenta);
 
 	Usuario findByDocumento(String documento);
+	
+	int countByRolAndEstadoCuenta(String rol, String estadoCuenta);
 
 	// En funcion con la base de datos
 	@Query("""
