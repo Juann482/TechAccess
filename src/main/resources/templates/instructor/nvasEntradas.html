@@ -12,6 +12,11 @@
 
 	<!-- Video de fondo -->
 	<div class="video-background">
+
+		<video autoplay muted loop>
+			<source src="https://videos.pexels.com/video-files/33113400/14114346_1920_1080_30fps.mp4" type="video/mp4">
+		</video>
+
 		<div class="video-overlay"></div>
 	</div>
 
@@ -149,8 +154,8 @@
 								<img th:src="@{/images/instructor.png}" alt="Instructor">
 							</div>
 							<div class="user-info-mini">
-								<span class="user-name-mini"
-									th:text="${usuario.nombre} ?: 'Instructor'">Instructor</span>
+								<!--span class="user-name-mini"
+														th:text="${usuario.nombre} ?: 'Instructor'">Instructor</span-->
 								<span class="user-role-mini">Instructor</span>
 							</div>
 							<i class="bi bi-chevron-down dropdown-arrow"></i>
@@ -232,7 +237,7 @@
 						<div th:if="${accesos != null and !accesos.empty}">
 							<div class="table-responsive">
 								<table class="table table-hover align-middle mb-0" style="color: white;">
-									<thead class="table-primary" style="background: rgba(12, 45, 72, 0.7);">
+									<thead class="table-secondary">
 										<tr>
 											<th class="border-0">
 												<i class="bi bi-person me-1"></i> Estudiante
@@ -254,7 +259,7 @@
 									<tbody>
 										<tr th:each="entrada : ${accesos}" class="border-bottom"
 											style="border-color: rgba(255, 255, 255, 0.1);">
-											<td class="fw-medium text-light"
+											<td class="fw-medium text-muted"
 												th:text="${entrada.usuario?.nombre} ?: 'NN'">
 												Estudiante
 											</td>
@@ -265,7 +270,7 @@
                                                 Área
                                             </td-->
 											<td>
-												<span class="text-light small" th:text="${entrada.horaIngreso}">
+												<span class="text-muted small" th:text="${entrada.horaIngreso}">
 													EntradaRegistro
 												</span>
 												<br>
@@ -275,23 +280,23 @@
                                                 </span-->
 											</td>
 											<td>
-												<span th:if="${entrada.estadoPermanencia?.idestadoPermanencia == 1}"
+												<!--span th:if="${entrada.estadoPermanencia?.idestadoPermanencia == 1}"
 													class="badge bg-success bg-opacity-25 text-success px-3 py-2 border border-success">
 													<i class="bi bi-check-circle me-1"></i> Presente
 												</span>
 												<span th:if="${entrada.estadoPermanencia?.idestadoPermanencia == 2}"
 													class="badge bg-dark bg-opacity-25 text-muted px-3 py-2 border border-muted">
 													<i class="bi bi-x-circle me-1"></i> Ausente
-												</span>
+												</span-->
 												<!--span
                                                     th:if="${entrada.estadoPermanencia?.nombre != 'Presente' and entrada.estadoPermanencia?.nombre != 'Ausente'}"
                                                     class="badge bg-secondary bg-opacity-25 text-secondary px-3 py-2 border border-secondary">
                                                     <i class="bi bi-question-circle me-1"></i>
                                                     <span
                                                         th:text="${entrada.estadoPermanencia?.nombre} ?: 'No definido'"></span>
-                                                </span-->
-											</td>
-											<!--td class="text-center">
+                                                </span>
+											</td-->
+												<!--td class="text-center">
                                                 <div class="btn-group btn-group-sm" role="group">
                                                     <a th:href="@{'/acceso/editar/' + ${entrada.idacceso}}"
                                                         class="btn btn-outline-info" title="Editar entrada">
@@ -312,12 +317,12 @@
 
 							<!-- Contador de estados -->
 							<div class="mt-4 d-flex justify-content-between align-items-center">
-								<small class="text-muted">
+								<small class="text-light">
 									<i class="bi bi-info-circle me-1"></i>
 									Mostrando <strong class="text-light" th:text="${accesos.size()}">0</strong>
 									registros
 								</small>
-								<small class="text-muted">
+								<small class="text-light">
 									<strong>Última actualización:</strong>
 									<span class="text-light" th:text="${#dates.createNow()}">Ahora</span>
 								</small>

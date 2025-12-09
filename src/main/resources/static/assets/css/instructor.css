@@ -2,17 +2,18 @@
 :root {
 	--primary-color: #0c2d48;
 	--secondary-color: #1a4d6e;
-	--accent-color: #2ecc71;
+	--accent-color: rgb(0, 128, 192);
 	--warning-color: #f39c12;
+	--success-color: rgb(11, 168, 117);
 	--danger-color: #e74c3c;
-	--light-color: #f8f9fa;
+	--light-color: rgb(240, 242, 244);
 	--dark-color: #2c3e50;
 	--gray-color: #95a5a6;
 	--sidebar-width: 280px;
 	--header-height: 70px;
 	--card-radius: 16px;
 	--transition-speed: 0.3s;
-	--glass-bg: rgba(255, 255, 255, 0.1);
+	--glass-bg: rgba(128, 128, 128, 0.3);
 	--glass-border: rgba(255, 255, 255, 0.2);
 }
 
@@ -54,7 +55,7 @@ body {
 	left: 0;
 	width: 100%;
 	height: 100%;
-	background: linear-gradient(135deg, rgba(12, 45, 72, 0.9) 0%, rgba(26, 77, 110, 0.7) 100%);
+	background: linear-gradient(135deg, rgb(0, 0, 0) 0%, rgba(26, 77, 110, 0.7) 100%);
 	z-index: 1;
 }
 
@@ -137,7 +138,7 @@ body {
 	border-radius: 50%;
 	border: 3px solid var(--accent-color);
 	object-fit: cover;
-	box-shadow: 0 8px 25px rgba(46, 204, 113, 0.3);
+	box-shadow: 0 8px 25px rgba(255, 255, 255, 0.3);
 }
 
 .online-status {
@@ -146,7 +147,7 @@ body {
 	right: 8px;
 	width: 15px;
 	height: 15px;
-	background-color: var(--accent-color);
+	background-color: var(--success-color);
 	border-radius: 50%;
 	border: 2px solid rgba(15, 30, 45, 0.95);
 }
@@ -167,7 +168,7 @@ body {
 .user-status {
 	display: inline-block;
 	background: rgba(46, 204, 113, 0.2);
-	color: var(--accent-color);
+	color: var(--success-color);
 	padding: 0.25rem 1rem;
 	border-radius: 20px;
 	font-size: 0.8rem;
@@ -220,7 +221,7 @@ body {
 }
 
 .sidebar-nav a.active {
-	background: rgba(46, 204, 113, 0.15);
+	background: rgba(192, 192, 192, 0.15);
 	color: white;
 	font-weight: 600;
 }
@@ -317,12 +318,12 @@ body {
 }
 
 .summary-icon.present {
-	background: rgba(46, 204, 113, 0.2);
+	background: rgba(0, 128, 128, 0.2);
 	color: var(--accent-color);
 }
 
 .summary-icon.total {
-	background: rgba(12, 45, 72, 0.3);
+	background: rgba(255, 255, 255, 0.2);
 	color: var(--primary-color);
 }
 
@@ -609,12 +610,12 @@ body {
 }
 
 .widget-icon.schedule {
-	background: linear-gradient(135deg, #9b59b6, #8e44ad);
+	background: linear-gradient(135deg, rgb(192, 192, 192), rgb(128, 128, 192));
 	color: white;
 }
 
 .widget-icon.next-class {
-	background: linear-gradient(135deg, #2ecc71, #27ae60);
+	background: linear-gradient(135deg, rgba(0, 128, 64, 0.15), #27ae60);
 	color: white;
 }
 
@@ -792,7 +793,7 @@ body {
 
 .section-icon.activity {
 	background: rgba(46, 204, 113, 0.2);
-	color: var(--accent-color);
+	color: var(--success-color);
 }
 
 .section-icon.alert {
@@ -822,7 +823,7 @@ body {
 	display: flex;
 	align-items: center;
 	gap: 5px;
-	color: var(--accent-color);
+	color: var(--light-color);
 	text-decoration: none;
 	font-weight: 600;
 	font-size: 0.9rem;

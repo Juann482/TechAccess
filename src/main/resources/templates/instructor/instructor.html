@@ -13,11 +13,12 @@
 
 	<!-- Video de fondo -->
 	<div class="video-background">
-		<!--video autoplay muted loop>
-            <source src="https://videos.pexels.com/video-files/3209298/3209298-uhd_1440_2732_25fps.mp4" type="video/mp4">
-            <source src="https://videos.pexels.com/video-files/3209298/3209298-full_hd_1920_1080_25fps.mp4" type="video/mp4">
-            Tu navegador no soporta videos HTML5.
-        </video-->
+
+		<video autoplay muted loop>
+			<source src="https://videos.pexels.com/video-files/33113400/14114346_1920_1080_30fps.mp4" type="video/mp4">
+			<!--source src="https://videos.pexels.com/video-files/29460356/12681485_2560_1440_30fps.mp4" type="video/mp4"-->
+		</video>
+
 		<div class="video-overlay"></div>
 	</div>
 
@@ -53,7 +54,7 @@
 			<!-- Menú de navegación -->
 			<ul class="sidebar-nav">
 				<li>
-					<a th:href="@{/instructor/nvasEntradas}" class="active cargando-btn"
+					<a th:href="@{/instructor/nvasEntradas}" class="cargando-btn"
 						data-mensaje="Cargando últimas entradas...">
 						<div class="menu-icon-container">
 							<i class="bi bi-house-door"></i>
@@ -77,8 +78,7 @@
 							<i class="bi bi-clipboard-data"></i>
 						</div>
 						<span class="menu-text">Reportes</span>
-						<span class="menu-indicator">
-							<i class="bi bi-chevron-right"></i>
+						<i class="bi bi-chevron-right"></i>
 						</span>
 					</a>
 				</li>
@@ -308,7 +308,7 @@
 							<div class="empty-icon">
 								<i class="bi bi-inbox"></i>
 							</div>
-							<h4>No hay actividad registrada</h4>
+							<h4>No se registra actividad</h4>
 							<p>No hay registros de entradas</p>
 						</div>
 
@@ -330,7 +330,7 @@
 										<span class="ficha"
 											th:text="${acceso.usuario.ficha} ?: 'Ficha no disponible'">Ficha
 											default xxx-xxx-x</span>
-										•
+
 										<span class="activity-type">Ingreso registrado</span>
 									</p>
 								</div>
