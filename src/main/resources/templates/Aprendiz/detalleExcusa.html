@@ -55,13 +55,12 @@
 
 							<div class="card-body">
 								<div class="table-container">
-									<h4 class="text-success mb-4">
-										<i class="bi bi-clipboard-check me-2"></i><b>Excusas Registradas</b>
+									<h4 class="mb-4" style="color: rgb(14, 209, 220);">
+										<i class="bi bi-clipboard-check me-2" style="color: rgb(14, 209, 220);"></i><b>Excusas Registradas</b>
 									</h4>
-									<table class="table table-hover">
+									<table class="table table-hover table-primary-blue">
 										<thead>
 											<tr>
-												
 												<th>Motivo de inasistencia</th>
 												<th>Descripción</th>
 												<th>Fecha</th>
@@ -70,14 +69,13 @@
 										</thead>
 										<tbody>
 											<tr th:each="excusa : ${excusas}">
-												
 												<td th:text="${excusa.motivo}"></td>
 												<td th:text="${excusa.descripcion != null and excusa.descripcion.length() > 0 ? excusa.descripcion : '-'}"></td>
 												<td th:text="${excusa.fecha}"></td>
 												<td>
 													<a th:href="@{'/uploads/' + ${excusa.soporte}}" download
-														class="btn btn-outline-success btn-sm">
-														Descargar soporte
+														class="btn btn-outline-primary-blue btn-sm">
+														<i class="bi bi-download me-1"></i> Descargar soporte
 													</a>
 												</td>
 											</tr>
