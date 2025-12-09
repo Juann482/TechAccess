@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<!-- 
+	EJEMPLO DE USO DEL TEMPLATE templates_aprendiz.html
+	Este archivo muestra cómo usar los fragmentos comunes en los HTML de Aprendiz
+-->
+
+<!-- 1. HEAD: Usar el fragmento head del template -->
+<head th:insert="~{/Aprendiz/templates_aprendiz.html::head}">
+	<!-- Aquí puedes agregar estilos adicionales específicos de esta página si es necesario -->
+</head>
+
+<body class="contact-page">
+	
+	<!-- 2. HEADER/NAVBAR: Insertar el header común -->
+	<div th:insert="~{/Aprendiz/templates_aprendiz.html::header}"></div>
+	
+	<!-- 3. ESTILOS: Insertar los estilos comunes -->
+	<div th:insert="~{/Aprendiz/templates_aprendiz.html::style}"></div>
+
+	<!-- 4. CONTENIDO PRINCIPAL: Aquí va el contenido específico de cada página -->
+	<main class="main">
+		<div class="page-title dark-background text-center"
+			th:style="'background-image: url(' + @{/images/fondo.jpeg} + '); background-size: cover; background-position: center; padding-top: 150px; padding-bottom: 50px;'">
+			<div class="container position-relative">
+				<h1 class="text-white fw-bold mb-3">Título de la Página</h1>
+			</div>
+		</div>
+
+		<div class="container py-5">
+			<div class="row g-4">
+				<!-- AQUÍ VA EL CONTENIDO ESPECÍFICO DE TU PÁGINA -->
+				<div class="col-12">
+					<div class="card shadow-sm">
+						<div class="card-body">
+							<h5 class="card-title">Contenido de ejemplo</h5>
+							<p class="card-text">Este es un ejemplo de cómo estructurar una página usando los fragmentos comunes.</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
+
+	<!-- 5. MODAL: Insertar el modal de perfil común -->
+	<div th:insert="~{/Aprendiz/templates_aprendiz.html::modal}"></div>
+
+	<!-- 6. FOOTER: Insertar el footer común -->
+	<div th:insert="~{/Aprendiz/templates_aprendiz.html::footer}"></div>
+
+	<!-- 7. SCRIPTS: Insertar los scripts comunes -->
+	<div th:insert="~{/Aprendiz/templates_aprendiz.html::jsFiles}"></div>
+	
+	<!-- 8. SCRIPTS ADICIONALES: Aquí puedes agregar scripts específicos de esta página -->
+	<script>
+		// Scripts específicos de esta página
+		console.log("Página cargada correctamente");
+	</script>
+
+</body>
+
+</html>
+

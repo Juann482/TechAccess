@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head th:fragment="head">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>TechAccess | Aprendiz</title>
+
+	<!-- Favicons -->
+	<link th:href="@{/images/TecAccess.png}" rel="icon">
+	<link th:href="@{/assets/img/apple-touch-icon.png}" rel="apple-touch-icon">
+
+	<!-- Vendor CSS Files -->
+	<link th:href="@{/assets/vendor/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+	<link th:href="@{/assets/vendor/bootstrap-icons/bootstrap-icons.css}" rel="stylesheet">
+	<link th:href="@{/assets/vendor/aos/aos.css}" rel="stylesheet">
+	<link th:href="@{/assets/vendor/swiper/swiper-bundle.min.css}" rel="stylesheet">
+	<link th:href="@{/assets/vendor/glightbox/css/glightbox.min.css}" rel="stylesheet">
+
+	<!-- Main CSS File -->
+	<link th:href="@{/assets/css/main.css}" rel="stylesheet">
+	
+	<!-- Font Awesome -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<!-- ============================================
+     FRAGMENTO DE HEADER/NAVBAR
+     ============================================ -->
+<div th:fragment="header">
+	<header id="header" class="header d-flex align-items-center fixed-top">
+		<div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
+
+			<a th:href="@{/usuario/home}" class="logo d-flex align-items-center">
+				<img th:src="@{/images/TecAccess.png}" alt="LogoPrin">
+				<h1 class="sitename">
+					<b style="color: rgb(14, 209, 220);">TECH</b>ACCESS
+					<b style="color: rgb(14, 209, 220);">|</b> SENA
+				</h1>
+			</a>
+
+			<nav id="navmenu" class="navmenu">
+				<ul>
+					<li><a th:href="@{/Aprendiz/aprendiz}" id="nav-aprendiz">Aprendiz</a></li>
+					<li><a th:href="@{/Aprendiz/excusas}" id="nav-excusas">Excusas</a></li>
+					<li><a th:href="@{/Aprendiz/Horario}" id="nav-horario">Horario</a></li>
+				</ul>
+				<i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+			</nav>
+
+			<div class="user-menu-container">
+				<div class="user-info" id="toggleMenu">
+					<img th:src="@{/images/user.jpg}" alt="Avatar" class="avatar">
+					<div>
+						<span class="" th:text="${usuario != null ? usuario.nombre : ' - '}"></span>
+						<span class="user-role" th:text="${session.rol != null ? session.rol : 'Aprendiz'}"></span>
+					</div>
+				</div>
+
+				<div class="dropdown-menu" id="dropdownMenu">
+					<div class="dropdown-header">
+						<img th:src="@{/images/user.jpg}" alt="Avatar Grande" class="avatar-large">
+						<div>
+							<span class="" th:text="${usuario != null ? usuario.nombre : ' - '}"></span>
+							<span class="" th:text="${usuario != null ? usuario.email : ' - '}"></span>
+						</div>
+					</div>
+
+					<ul class="menu-options">
+						<li><a id="openProfile"><i class="fas fa-user-circle"></i> Ver perfil</a></li>
+						<li><a th:href="@{/Aprendiz/historialExcusas}"><i class="fas fa-history"></i> Ver historial de excusas</a></li>
+						<li class="logout"><a th:href="@{/logout}"><i class="fas fa-sign-out-alt"></i> Cerrar sesión</a></li>
+					</ul>
+				</div>
+			</div>
+
+		</div>
+	</header>
+</div>
+
+<!-- ============================================
+     FRAGMENTO DE ESTILOS CSS
+     ============================================ -->
+<div th:fragment="style">
+	<style>
+		/*   APRENDIZ - ESTILOS COMUNES  */
+
+		body {
+			font-family: 'Segoe UI', sans-serif;
+		}
+
+		.user-menu-container {
+			position: relative;
+			display: inline-block;
+			font-family: 'Segoe UI', sans-serif;
+		}
+
+		.user-info {
+			display: flex;
+			align-items: center;
+			flex-direction: column;
+			line-height: 1.1;
+			gap: 10px;
+			cursor: pointer;
+			color: white;
+		}
+
+		.user-info div {
+			display: flex;
+			flex-direction: column;
+			align-items: flex-start;
+		}
+
+		.user-info .avatar {
+			width: 40px;
+			height: 40px;
+			border-radius: 50%;
+			background: #ccc;
+		}
+
+		.user-info .user-name {
+			margin: 0;
+			font-size: 15px;
+			font-weight: 600;
+		}
+
+		.user-info .user-role {
+			font-size: 13px;
+			opacity: 0.8;
+		}
+
+		.dropdown-menu {
+			position: absolute;
+			top: 55px;
+			right: 0;
+			width: 260px;
+			background: #fff;
+			border-radius: 12px;
+			box-shadow: 0 8px 18px rgba(0, 0, 0, 0.1);
+			padding: 15px 0;
+			display: none;
+			animation: fadeIn 0.2s ease-in-out;
+			z-index: 10;
+		}
+
+		.dropdown-menu span {
+			display: flex;
+			flex-direction: column;
+			align-items: flex-start;
+		}
+
+		.dropdown-header {
+			display: flex;
+			align-items: center;
+			gap: 12px;
+			padding: 0 18px 12px;
+			border-bottom: 1px solid #f0f0f0;
+		}
+
+		.avatar-large {
+			width: 45px;
+			height: 45px;
+			border-radius: 50%;
+			background: #ccc;
+		}
+
+		.dropdown-name {
+			font-weight: 600;
+			margin: 0;
+		}
+
+		.dropdown-email {
+			font-size: 12px;
+			color: gray;
+		}
+
+		.menu-options {
+			list-style: none;
+			padding: 10px 0;
+			margin: 0;
+		}
+
+		.menu-options li {
+			padding: 10px 20px;
+			cursor: pointer;
+			display: flex;
+			align-items: center;
+			gap: 10px;
+			color: #333;
+			transition: background 0.2s;
+		}
+
+		.menu-options li:hover {
+			background: #f5f5f5;
+		}
+
+		.menu-options li a {
+			text-decoration: none;
+			color: inherit;
+			width: 100%;
+		}
+
+		.logout {
+			color: #d9534f;
+		}
+
+		@keyframes fadeIn {
+			from {
+				opacity: 0;
+				transform: translateY(-8px);
+			}
+			to {
+				opacity: 1;
+				transform: translateY(0);
+			}
+		}
+
+		/* ======== MODAL DE PERFIL ======== */
+		.modal {
+			display: none;
+			position: fixed;
+			z-index: 2000;
+			left: 0;
+			top: 0;
+			width: 100%;
+			height: 100%;
+			background: rgba(0, 0, 0, 0.45);
+			backdrop-filter: blur(4px);
+		}
+
+		.modal-content {
+			background: #fff;
+			width: 380px;
+			margin: 10% auto;
+			padding: 25px;
+			border-radius: 15px;
+			box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+			animation: modalFade 0.3s ease;
+		}
+
+		.close-modal {
+			float: right;
+			font-size: 28px;
+			cursor: pointer;
+			color: #aaa;
+		}
+
+		.close-modal:hover {
+			color: #000;
+		}
+
+		.profile-info {
+			text-align: center;
+		}
+
+		.profile-info img {
+			width: 110px;
+			height: 110px;
+			border-radius: 50%;
+			margin-bottom: 15px;
+		}
+
+		@keyframes modalFade {
+			from {
+				opacity: 0;
+				transform: translateY(-20px);
+			}
+			to {
+				opacity: 1;
+				transform: translateY(0);
+			}
+		}
+
+		/* Estilos para página principal */
+		.main {
+			background-color: rgba(0, 124, 88, 0.05);
+			min-height: 100vh;
+		}
+
+		.page-title {
+			background-size: cover;
+			background-position: center;
+			padding-top: 150px;
+			padding-bottom: 50px;
+		}
+	</style>
+</div>
+
+<!-- ============================================
+     FRAGMENTO DE MODAL DE PERFIL
+     ============================================ -->
+<div th:fragment="modal">
+	<div id="profileModal" class="modal">
+		<div class="modal-content">
+			<span class="close-modal">&times;</span>
+			<h2>Perfil del Usuario</h2>
+
+			<div class="profile-info">
+				<img th:src="@{/images/user.jpg}" alt="Avatar Grande" class="avatar-large">
+				<div class="info-list">
+					<div class="border rounded p-2 mb-3 bg-light">
+						<h2 class="text-bold text-dark mb-10" th:text="${session.nombre}"></h2>
+						<p class="text-sm text-gray" th:text="${session.rol}"></p>
+					</div>
+
+					<div class="border rounded p-2 mb-3 bg-light">
+						<p class="mb-0 text-success fw-semibold">
+							<span class="text-dark" th:text="${usuario != null ? usuario.nombre : ' - '}"></span>
+						</p>
+					</div>
+
+					<div class="border rounded p-2 mb-3 bg-light">
+						<p class="mb-0 text-success fw-semibold">
+							<span class="text-dark" th:text="${ficha != null ? ficha.nombrePrograma : ' - '}"></span>
+						</p>
+					</div>
+
+					<div class="border rounded p-2 mb-3 bg-light">
+						<p class="mb-0 text-success fw-semibold">
+							<span class="text-dark" th:text="${ficha != null ? ficha.numFicha : ' - '}"></span>
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- ============================================
+     FRAGMENTO DE SCRIPTS JS
+     ============================================ -->
+<div th:fragment="jsFiles">
+	<script>
+		/* SCRIPTS COMUNES PARA APRENDIZ */
+
+		// Toggle menú usuario
+		document.addEventListener("DOMContentLoaded", function() {
+			const toggleMenu = document.getElementById("toggleMenu");
+			const dropdownMenu = document.getElementById("dropdownMenu");
+
+			if (toggleMenu && dropdownMenu) {
+				toggleMenu.addEventListener("click", () => {
+					dropdownMenu.style.display = dropdownMenu.style.display === "block" ? "none" : "block";
+				});
+
+				// Cerrar menú si se da clic fuera
+				document.addEventListener("click", (e) => {
+					if (!toggleMenu.contains(e.target) && !dropdownMenu.contains(e.target)) {
+						dropdownMenu.style.display = "none";
+					}
+				});
+			}
+
+			// Modal de perfil
+			const modal = document.getElementById("profileModal");
+			const openModal = document.getElementById("openProfile");
+			const closeModal = document.querySelector(".close-modal");
+
+			if (openModal && modal) {
+				openModal.addEventListener("click", () => {
+					modal.style.display = "block";
+				});
+			}
+
+			if (closeModal && modal) {
+				closeModal.addEventListener("click", () => {
+					modal.style.display = "none";
+				});
+
+				window.addEventListener("click", (e) => {
+					if (e.target === modal) {
+						modal.style.display = "none";
+					}
+				});
+			}
+
+			// Activar enlace activo en el navbar según la página actual
+			const currentPath = window.location.pathname;
+			const navLinks = {
+				'/Aprendiz/aprendiz': 'nav-aprendiz',
+				'/Aprendiz/excusas': 'nav-excusas',
+				'/Aprendiz/Horario': 'nav-horario'
+			};
+
+			for (const [path, id] of Object.entries(navLinks)) {
+				if (currentPath.includes(path)) {
+					const navElement = document.getElementById(id);
+					if (navElement) {
+						navElement.classList.add('active');
+						navElement.innerHTML = '<b>' + navElement.textContent + '</b>';
+					}
+				}
+			}
+		});
+	</script>
+
+	<!-- Bootstrap JS -->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
+	
+	<!-- JsBarcode (si se necesita para códigos QR) -->
+	<script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.6/dist/JsBarcode.all.min.js"></script>
+</div>
+
+<!-- ============================================
+     FRAGMENTO DE FOOTER
+     ============================================ -->
+<div th:fragment="footer">
+	<!-- Footer se toma de templates_usuario -->
+	<div th:insert="~{templates_usuario::footer}"></div>
+</div>
+
+</html>
+
