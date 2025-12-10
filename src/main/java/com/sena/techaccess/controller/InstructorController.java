@@ -49,17 +49,8 @@ public class InstructorController {
 	@GetMapping("/Inicio")
 	public String vistaPrincipal(Model model) {
 
-		
-		
-		
-		
 		System.out.println("============= ENTRANDO A /instructor/Inicio =========");
 
-		
-		
-		
-		
-		
 		// Obtener el usuario de la sesión
 		Usuario instructor = (Usuario) session.getAttribute("usuarioSesion");
 
@@ -86,10 +77,13 @@ public class InstructorController {
 
 			// Alertas (aprendices sin acceso hoy)
 			long aprendicesSinAccesoHoy = aprendices.stream().filter(aprendiz -> {
-				if (aprendiz.getAcceso() == null || aprendiz.getAcceso().getHoraIngreso() == null) {
+				List<Acceso> accesos = aprendiz.getAcceso();
+				if (accesos == null || accesos.isEmpty()) {
 					return true;
 				}
-				return !aprendiz.getAcceso().getHoraIngreso().toLocalDate().equals(LocalDate.now());
+				// Verifica si ALGÚN acceso es de hoy
+				return accesos.stream().noneMatch(acceso -> acceso.getHoraIngreso() != null
+						&& acceso.getHoraIngreso().toLocalDate().equals(LocalDate.now()));
 			}).count();
 			model.addAttribute("alertas", aprendicesSinAccesoHoy);
 
@@ -196,7 +190,7 @@ public class InstructorController {
 		model.addAttribute("instructor", instructor);
 
 		int tamañoPagina = 10;
-		int maxPaginas = 5;
+		// int maxPaginas = 5;
 
 		List<Excusas> todasExcusas = excusasService.findAll();
 		java.util.Collections.reverse(todasExcusas); // Para ver las más recientes primero
