@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 
-<head th:insert="~{templates_usuario::head}">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-</head>
+<head th:insert="~{/Aprendiz/templates_aprendiz.html::head}"></head>
 
-<body class="contact-page" style="font-family: 'Segoe UI', sans-serif;">
-	<!-- Encabezado -->
+<body class="contact-page">
+	<div th:insert="~{/Aprendiz/templates_aprendiz.html::style}"></div>
 
-	<header id="header" class="header d-flex align-items-center fixed-top">
+
+	<!-- Contenido principal -->
+	<header id="header" class="header d-flex align-items-center fixed-top"
+		th:style="'background: linear-gradient(135deg, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.75) 100%), url(' + @{/images/fondo.jpeg} + ') center/cover; backdrop-filter: blur(5px);'">
 		<div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
 
 			<a th:href="@{/usuario/home}" class="logo d-flex align-items-center">
@@ -21,20 +22,17 @@
 
 			<nav id="navmenu" class="navmenu">
 				<ul>
-					<li><a th:href="@{/Aprendiz/aprendiz}">Aprendiz</a></li>
-					<li><a th:href="@{/Aprendiz/excusas}">Excusas</a></li>
-					<li><a th:href="@{/Aprendiz/Horario}"><b class="active"><b>Horario</a></li>
-
+					<li><a th:href="@{/Aprendiz}" id="nav-aprendiz">Aprendiz</a></li>
+					<li><a th:href="@{/Aprendiz/excusas}" id="nav-excusas">Excusas</a></li>
+					<li><a th:href="@{/Aprendiz/Horario}" id="nav-horario">Horario</a></li>
 				</ul>
 				<i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
 			</nav>
 
+			
 
 		</div>
 	</header>
-
-
-	<!-- Contenido principal -->
 	<main class="main" style="background-color: rgba(0, 124, 88, 0.05); min-height: 100vh;">
 
 		<div class="page-title dark-background text-center"
@@ -44,10 +42,7 @@
 			</div>
 		</div>
 
-		<div class="container py-5">
-			<div class="row g-4">
-			</div>
-		</div>
+
 
 
 		<!-- 🔹 Fondo de video 
@@ -133,26 +128,19 @@
 			</div>
 		</div>
 
-		<div th:insert="~{/Aprendiz/aprendiz.html::modal}"></div>
+		<!-- MODAL / FOOTER / JS COMUNES -->
+		<div th:insert="~{/Aprendiz/templates_aprendiz.html::modal}"></div>
+		<div th:insert="~{/Aprendiz/templates_aprendiz.html::footer}"></div>
+		<div th:insert="~{/Aprendiz/templates_aprendiz.html::jsFiles}"></div>
 
-		<!-- Footer y Scripts -->
-		<div th:insert="~{/templates_usuario.html::footer}"></div>
-		<div th:insert="~{/templates_usuario.html::jsFiles}"></div>
-
-
-		<div th:insert="~{/Aprendiz/aprendiz.html::style}"></div>
-		<div th:insert="~{/Aprendiz/aprendiz.html::jsFiles}"></div>
-
+		<!-- Scripts específicos -->
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
-
-		<!-- Script de edición -->
 		<script>
 			let modoEdicion = false;
 
 			function activarEdicion() {
 				if (modoEdicion) return;
 
-				// Ahora seleccionamos las celdas <td> y también las <th> del cuerpo
 				const celdas = document.querySelectorAll("#tablaHorario tbody td, #tablaHorario tbody th");
 
 				celdas.forEach(celda => {

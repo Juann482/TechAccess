@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head th:fragment="head">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>TechAccess | Aprendiz</title>
+
+	<link th:href="@{/images/TecAccess.png}" rel="icon">
+	<link th:href="@{/assets/img/apple-touch-icon.png}" rel="apple-touch-icon">
+
+	<link th:href="@{/assets/vendor/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+	<link th:href="@{/assets/vendor/bootstrap-icons/bootstrap-icons.css}" rel="stylesheet">
+	<link th:href="@{/assets/vendor/aos/aos.css}" rel="stylesheet">
+	<link th:href="@{/assets/vendor/swiper/swiper-bundle.min.css}" rel="stylesheet">
+	<link th:href="@{/assets/vendor/glightbox/css/glightbox.min.css}" rel="stylesheet">
+
+	<link th:href="@{/assets/css/main.css}" rel="stylesheet">
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+	<div th:insert="~{templates_aprendiz.html::style}"></div>
+
+</head>
+
+<div th:fragment="style">
+	<style>
+		/* APRENDIZ - ESTILOS COMUNES  */
+
+		body {
+			font-family: 'Segoe UI', sans-serif;
+		}
+
+		.user-menu-container {
+			position: relative;
+			display: inline-block;
+			font-family: 'Segoe UI', sans-serif;
+		}
+
+		.user-info {
+			display: flex;
+			align-items: center;
+			flex-direction: column;
+			line-height: 1.1;
+			gap: 10px;
+			cursor: pointer;
+			color: white;
+		}
+
+		.user-info div {
+			display: flex;
+			flex-direction: column;
+			align-items: flex-start;
+		}
+
+		.user-info .avatar {
+			width: 40px;
+			height: 40px;
+			border-radius: 50%;
+			background: #ccc;
+		}
+
+		.user-info .user-name {
+			margin: 0;
+			font-size: 15px;
+			font-weight: 600;
+		}
+
+		.user-info .user-role {
+			font-size: 13px;
+			opacity: 0.8;
+		}
+
+		.dropdown-menu {
+			position: absolute;
+			top: 55px;
+			right: 0;
+			width: 260px;
+			background: #fff;
+			border-radius: 12px;
+			box-shadow: 0 8px 18px rgba(0, 0, 0, 0.1);
+			padding: 15px 0;
+			display: none;
+			/* ESTO ES CRÍTICO PARA OCULTAR EL MENÚ INICIALMENTE */
+			animation: fadeIn 0.2s ease-in-out;
+			z-index: 10;
+		}
+
+		.dropdown-menu span {
+			display: flex;
+			flex-direction: column;
+			align-items: flex-start;
+		}
+
+		.dropdown-header {
+			display: flex;
+			align-items: center;
+			gap: 12px;
+			padding: 0 18px 12px;
+			border-bottom: 1px solid #f0f0f0;
+		}
+
+		.avatar-large {
+			width: 45px;
+			height: 45px;
+			border-radius: 50%;
+			background: #ccc;
+		}
+
+		.dropdown-name {
+			font-weight: 600;
+			margin: 0;
+		}
+
+		.dropdown-email {
+			font-size: 12px;
+			color: gray;
+		}
+
+		.menu-options {
+			list-style: none;
+			padding: 10px 0;
+			margin: 0;
+		}
+
+		.menu-options li {
+			padding: 10px 20px;
+			cursor: pointer;
+			display: flex;
+			align-items: center;
+			gap: 10px;
+			color: #333;
+			transition: background 0.2s;
+		}
+
+		.menu-options li:hover {
+			background: #f5f5f5;
+		}
+
+		.menu-options li a {
+			text-decoration: none;
+			color: inherit;
+			width: 100%;
+		}
+
+		.logout {
+			color: #d9534f;
+		}
+
+		@keyframes fadeIn {
+			from {
+				opacity: 0;
+				transform: translateY(-8px);
+			}
+
+			to {
+				opacity: 1;
+				transform: translateY(0);
+			}
+		}
+
+		/* ======== MODAL DE PERFIL ======== */
+		.modal {
+			display: none;
+			position: fixed;
+			z-index: 2000;
+			left: 0;
+			top: 0;
+			width: 100%;
+			height: 100%;
+			background: rgba(0, 0, 0, 0.45);
+			backdrop-filter: blur(4px);
+		}
+
+		.modal-content {
+			background: #fff;
+			width: 380px;
+			margin: 10% auto;
+			padding: 25px;
+			border-radius: 15px;
+			box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+			animation: modalFade 0.3s ease;
+		}
+
+		.close-modal {
+			float: right;
+			font-size: 28px;
+			cursor: pointer;
+			color: #aaa;
+		}
+
+		.close-modal:hover {
+			color: #000;
+		}
+
+		.profile-info {
+			text-align: center;
+		}
+
+		.profile-info img {
+			width: 110px;
+			height: 110px;
+			border-radius: 50%;
+			margin-bottom: 15px;
+		}
+
+		@keyframes modalFade {
+			from {
+				opacity: 0;
+				transform: translateY(-20px);
+			}
+
+			to {
+				opacity: 1;
+				transform: translateY(0);
+			}
+		}
+
+		/* Estilos para página principal */
+		.main {
+			background-color: rgba(0, 124, 88, 0.05);
+			min-height: 100vh;
+		}
+
+		.page-title {
+			background-size: cover;
+			background-position: center;
+			padding-top: 150px;
+			padding-bottom: 50px;
+		}
+
+		/* Estilos para header con fondo oscuro */
+		#header {
+			box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+			z-index: 1000;
+		}
+
+		#header .sitename {
+			color: white;
+		}
+
+		#header .navmenu ul li a {
+			color: rgba(255, 255, 255, 0.9);
+			transition: color 0.3s ease;
+			text-decoration: none;
+		}
+
+		#header .navmenu ul li a:hover,
+		#header .navmenu ul li a.active {
+			color: rgb(14, 209, 220);
+		}
+
+		#header .mobile-nav-toggle {
+			color: white;
+		}
+
+		/* Color azul principal para títulos y elementos */
+		.text-primary-blue {
+			color: rgb(14, 209, 220) !important;
+		}
+
+		.btn-primary-blue {
+			background-color: rgb(14, 209, 220);
+			border-color: rgb(14, 209, 220);
+			color: white;
+		}
+
+		.btn-primary-blue:hover {
+			background-color: rgb(12, 180, 190);
+			border-color: rgb(12, 180, 190);
+			color: white;
+		}
+
+		.btn-outline-primary-blue {
+			border-color: rgb(14, 209, 220);
+			color: rgb(14, 209, 220);
+		}
+
+		.btn-outline-primary-blue:hover {
+			background-color: rgb(14, 209, 220);
+			border-color: rgb(14, 209, 220);
+			color: white;
+		}
+
+		.nav-active {
+			color: rgb(14, 209, 220) !important;
+			font-weight: bold;
+		}
+
+		/* Estilos para tablas con colores azules */
+		.table-primary-blue thead {
+			background-color: rgb(14, 209, 220);
+			color: white;
+		}
+
+		.table-primary-blue thead th {
+			border-color: rgb(12, 180, 190);
+		}
+	</style>
+</div>
+
+<div th:fragment="header">
+	<header id="header" class="header d-flex align-items-center fixed-top"
+		th:style="'background: linear-gradient(135deg, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.75) 100%), url(' + @{/images/fondo.jpeg} + ') center/cover; backdrop-filter: blur(5px);'">
+		<div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
+
+			<a th:href="@{/usuario/home}" class="logo d-flex align-items-center">
+				<img th:src="@{/images/TecAccess.png}" alt="LogoPrin">
+				<h1 class="sitename">
+					<b style="color: rgb(14, 209, 220);">TECH</b>ACCESS
+					<b style="color: rgb(14, 209, 220);">|</b> SENA
+				</h1>
+			</a>
+
+			<nav id="navmenu" class="navmenu">
+				<ul>
+					<li><a th:href="@{/Aprendiz}" id="nav-aprendiz">Aprendiz</a></li>
+					<li><a th:href="@{/Aprendiz/excusas}" id="nav-excusas">Excusas</a></li>
+					<li><a th:href="@{/Aprendiz/Horario}" id="nav-horario">Horario</a></li>
+				</ul>
+				<i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+			</nav>
+
+			<div class="user-menu-container">
+				<div class="user-info" id="toggleMenu">
+					<div>
+						<span class="" th:text="${usuario != null ? usuario.nombre : ' - '}"></span>
+						<span class="user-role" th:text="${session.rol != null ? session.rol : 'Aprendiz'}"></span>
+					</div>
+				</div>
+
+				<div class="dropdown-menu" id="dropdownMenu">
+					<div class="dropdown-header">
+						<div>
+							<span class="" th:text="${usuario != null ? usuario.nombre : ' - '}"></span>
+							<span class="" th:text="${usuario != null ? usuario.email : ' - '}"></span>
+						</div>
+					</div>
+
+					<ul class="menu-options">
+						<li><a id="openProfile" style="cursor: pointer;"><i class="fas fa-user-circle"></i> Ver
+								perfil</a></li>
+						<li><a th:href="@{/Aprendiz/detalleExcusa}"><i class="fas fa-history"></i> Ver historial de
+								excusas</a></li>
+						<li class="logout"><a th:href="@{/logout}"><i class="fas fa-sign-out-alt"></i> Cerrar sesión</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+
+		</div>
+	</header>
+</div>
+
+<div th:fragment="modal">
+	<div id="profileModal" class="modal">
+		<div class="modal-content">
+			<span class="close-modal">&times;</span>
+			<h2>Perfil del Usuario</h2>
+
+			<div class="profile-info">
+				<img th:src="@{/images/user.jpg}" alt="Avatar Grande" class="avatar-large">
+				<div class="info-list">
+					<div class="border rounded p-2 mb-3 bg-light">
+						<h2 class="text-bold text-dark mb-10" th:text="${session.nombre}"></h2>
+						<p class="text-sm text-gray" th:text="${session.rol}"></p>
+					</div>
+
+					<div class="border rounded p-2 mb-3 bg-light">
+						<p class="mb-0 text-success fw-semibold">
+							<span class="text-dark" th:text="${usuario != null ? usuario.nombre : ' - '}"></span>
+						</p>
+					</div>
+
+					<div class="border rounded p-2 mb-3 bg-light">
+						<p class="mb-0 text-success fw-semibold">
+							<span class="text-dark" th:text="${ficha != null ? ficha.nombrePrograma : ' - '}"></span>
+						</p>
+					</div>
+
+					<div class="border rounded p-2 mb-3 bg-light">
+						<p class="mb-0 text-success fw-semibold">
+							<span class="text-dark" th:text="${ficha != null ? ficha.numFicha : ' - '}"></span>
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div th:fragment="jsFiles">
+	<script>
+		/* SCRIPTS GLOBALES Y FUNCIONES AUXILIARES */
+
+		function mostrarQR() {
+			const qr = document.getElementById("codigoQR");
+			qr.style.display = (qr.style.display === "none" || qr.style.display === "") ? "block" : "none";
+		}
+
+		function filtrarHistorial() {
+			// Lógica de filtrado...
+		}
+
+		function aplicarFiltros() {
+			// Lógica de filtros avanzada...
+		}
+
+		function procesarCodigo(codigo) {
+			console.log("Código escaneado:", codigo);
+		}
+
+		function confirmarGuardado() {
+			Swal.fire({
+				title: "¿Guardar excusa?",
+				text: "La información será registrada en el sistema.",
+				icon: "question",
+				showCancelButton: true,
+				confirmButtonText: "Guardar",
+				cancelButtonText: "Cancelar",
+				buttonsStyling: false,
+				customClass: {
+					popup: 'rounded-4 shadow',
+					title: 'fw-bold',
+					confirmButton: 'btn btn-outline-secondary px-4 rounded-pill',
+					cancelButton: 'btn btn-outline-secondary px-4 rounded-pill'
+				}
+			}).then((result) => {
+				if (result.isConfirmed) {
+					Swal.fire({
+						icon: "success",
+						title: "Excusa guardada",
+						text: "La excusa se registró correctamente.",
+						showConfirmButton: false,
+						timer: 1500,
+						customClass: {popup: 'rounded-4 shadow'}
+					}).then(() => {
+						document.getElementById("formExcusa").submit();
+					});
+				}
+			});
+		}
+
+
+		// Escáner / input opcional (usando window.onload)
+		window.onload = () => {
+			const input = document.getElementById("barcodeInput");
+			if (!input) return;
+
+			const ensureFocus = () => {
+				if (document.activeElement !== input) {
+					input.focus();
+				}
+			};
+			setInterval(ensureFocus, 300);
+
+			input.addEventListener("keypress", function (e) {
+				if (e.key === "Enter") {
+					const codigo = input.value.trim();
+					if (codigo !== "") {
+						procesarCodigo(codigo);
+					}
+					input.value = "";
+				}
+			});
+
+			input.focus();
+		};
+
+
+		/* ======================================================= */
+		/* LÓGICA DE INTERACCIÓN CON EL DOM (UNA SOLA LLAMADA DOMContentLoaded) */
+		/* ======================================================= */
+		document.addEventListener("DOMContentLoaded", function () {
+
+			// 1. Lógica del Toggle Menú Usuario (Dropdown)
+			const toggleMenu = document.getElementById("toggleMenu");
+			const dropdownMenu = document.getElementById("dropdownMenu");
+
+			if (toggleMenu && dropdownMenu) {
+				toggleMenu.addEventListener("click", () => {
+					dropdownMenu.style.display = dropdownMenu.style.display === "block" ? "none" : "block";
+				});
+
+				// Cerrar menú si se da clic fuera
+				document.addEventListener("click", (e) => {
+					if (!toggleMenu.contains(e.target) && !dropdownMenu.contains(e.target)) {
+						dropdownMenu.style.display = "none";
+					}
+				});
+			}
+
+			// 2. Lógica del Modal de Perfil
+			const modal = document.getElementById("profileModal");
+			const openModal = document.getElementById("openProfile");
+			const closeModal = document.querySelector(".close-modal");
+
+			if (openModal && modal) {
+				openModal.addEventListener("click", () => {
+					modal.style.display = "block";
+					// Cerrar el dropdown al abrir el modal
+					if (dropdownMenu) dropdownMenu.style.display = "none";
+				});
+			}
+
+			if (closeModal && modal) {
+				closeModal.addEventListener("click", () => {
+					modal.style.display = "none";
+				});
+
+				window.addEventListener("click", (e) => {
+					if (e.target === modal) {
+						modal.style.display = "none";
+					}
+				});
+			}
+
+			// 3. Lógica para activar enlaces en el Navbar
+			const currentPath = window.location.pathname;
+
+			// Paso 1: Limpiar cualquier clase 'nav-active' previamente aplicada
+			document.querySelectorAll(".navmenu ul li a").forEach(link => {
+				link.classList.remove("nav-active");
+				// Eliminar el <b> que se agrega para el estilo 'bold'
+				link.innerHTML = link.textContent;
+			});
+
+			// Paso 2: Iterar y aplicar la clase solo al enlace que coincida
+			document.querySelectorAll(".navmenu ul li a").forEach(link => {
+				const linkPath = link.getAttribute("href");
+
+				if (linkPath) {
+					// Normalizar la ruta del enlace para comparación
+					let normalizedLinkPath = linkPath.endsWith('/') ? linkPath.slice(0, -1) : linkPath;
+
+					// Comprobar si la ruta actual TERMINA con la ruta del enlace (para evitar el problema /Aprendiz/excusas marcando /Aprendiz)
+					// Ejemplo: currentPath = /app/Aprendiz/excusas, normalizedLinkPath = /Aprendiz/excusas
+					if (currentPath.includes(normalizedLinkPath) && normalizedLinkPath.length > 1) {
+
+						// Si la ruta actual es exactamente igual O si es la ruta base (Aprendiz) y no está en una sub-ruta
+						if (currentPath.endsWith(normalizedLinkPath) || currentPath === normalizedLinkPath) {
+							link.classList.add("nav-active");
+							// Opcional: poner en negrita
+							link.innerHTML = '<b>' + link.textContent + '</b>';
+						}
+					}
+				}
+			});
+
+			// 4. Lógica de Excusa (Mostrar/Ocultar Descripción)
+			const motivoSelect = document.getElementById("motivo");
+			const descripcionRow = document.getElementById("descripcionRow");
+			const descripcionInput = document.getElementById("descripcion");
+
+			if (motivoSelect && descripcionRow) { // Solo si los elementos existen en la página
+				function toggleDescripcion() {
+					if (motivoSelect.value === "Otro") {
+						descripcionRow.style.display = "flex";
+						descripcionInput.setAttribute("required", "required");
+					} else {
+						descripcionRow.style.display = "none";
+						descripcionInput.removeAttribute("required");
+						descripcionInput.value = "";
+					}
+				}
+				motivoSelect.addEventListener("change", toggleDescripcion);
+				toggleDescripcion();
+			}
+
+		}); // FIN de DOMContentLoaded
+
+	</script>
+
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
+
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+	<script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.6/dist/JsBarcode.all.min.js"></script>
+</div>
+
+<div th:fragment="footer">
+	<footer id="footer" class="footer position-relative dark-background" style="text-align: center;">
+		<div class="container copyright text-center mt-4">
+			<p>© <span>Copyright</span> <strong class="px-1 sitename">TechAccess</strong> <span>Todos los derechos
+					reservados.</span></p>
+			<div class="credits">
+				Diseñado por <a href="#"><b>TECH</b>ACCESS</a>
+			</div>
+		</div>
+	</footer>
+	<a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i
+			class="bi bi-arrow-up-short"></i></a>
+</div>
+
+</html>

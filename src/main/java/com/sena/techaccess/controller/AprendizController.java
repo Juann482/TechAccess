@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -62,8 +63,6 @@ public class AprendizController {
 	AprendizController(AccesoController accesoController) {
 		this.accesoController = accesoController;
 	}
-
-	
 
 	// ===================== AUXILIAR: USUARIO LOGUEADO =====================
 
@@ -116,6 +115,25 @@ public class AprendizController {
 		return "Aprendiz/aprendiz";
 	}
 
+	// =============historial ingresos egresos ==============
+
+	@GetMapping("/historial")
+	@ResponseBody
+	public List<Map<String, String>> obtenerHistorial(Principal principal) {
+
+		Usuario user = getUsuarioLogueado(principal);
+		if (user == null) {
+			return List.of();
+		}
+
+		List<Acceso> historial = accesoService.findByUsuarioIdOrderByHoraIngresoDesc(user.getId());
+
+		return historial.stream()
+				.map(a -> Map.of("ingreso", a.getHoraIngreso() != null ? a.getHoraIngreso().toString() : "Sin registro",
+						"egreso", a.getHoraEgreso() != null ? a.getHoraEgreso().toString() : "Sin registro"))
+				.toList();
+	}
+
 	// ========================= PERFIL =========================
 
 	@GetMapping("/perfil")
@@ -164,7 +182,7 @@ public class AprendizController {
 		}
 
 		model.addAttribute("excusa", new Excusas());
-		return "Aprendiz/excusaForm";
+		return  "redirect:/Aprendiz/excusas";
 	}
 
 	@PostMapping("/save")

@@ -43,6 +43,23 @@ public class AccesoServiceImplement implements IAccesoService {
     }
 
     @Override
+    public List<Acceso> findByUsuarioIdOrderByHoraIngresoDesc(Long usuarioId) {
+        return accesoRepository.findByUsuarioIdOrderByHoraIngresoDesc(usuarioId);
+    }
+
+    
+    @Override
+    public List<Acceso> findByUsuarioAndMes(Long userId, int mes, int anio) {
+        return accesoRepository.findByUsuarioAndMes(userId, mes, anio);
+    }
+
+    @Override
+    public List<Acceso> findByUsuarioAndRango(Long userId, LocalDateTime inicio, LocalDateTime fin) {
+        return accesoRepository.findByUsuarioAndRango(userId, inicio, fin);
+    }
+
+    
+    @Override
     @Transactional(readOnly = true)
     public List<Acceso> findAll() {
         return accesoRepository.findAllWithUsuario(); // Usa la versión con JOIN FETCH
@@ -160,5 +177,23 @@ public class AccesoServiceImplement implements IAccesoService {
     public Acceso buscarUltimoAccesoPorUsuario(Integer usuarioId) {
         return findUltimoAcceso(usuarioId);
     }
+
+	@Override
+	public List<Acceso> findByUsuarioIdOrderByHoraIngresoDesc(Integer id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Acceso> findByUsuarioAndMes(Integer id, int mes, int anio) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Usuario findByDocumento(String correo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
 
