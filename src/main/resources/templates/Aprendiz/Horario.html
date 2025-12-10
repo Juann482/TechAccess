@@ -4,11 +4,35 @@
 <head th:insert="~{/Aprendiz/templates_aprendiz.html::head}"></head>
 
 <body class="contact-page">
-	<div th:insert="~{/Aprendiz/templates_aprendiz.html::header}"></div>
 	<div th:insert="~{/Aprendiz/templates_aprendiz.html::style}"></div>
 
 
 	<!-- Contenido principal -->
+	<header id="header" class="header d-flex align-items-center fixed-top"
+		th:style="'background: linear-gradient(135deg, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.75) 100%), url(' + @{/images/fondo.jpeg} + ') center/cover; backdrop-filter: blur(5px);'">
+		<div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
+
+			<a th:href="@{/usuario/home}" class="logo d-flex align-items-center">
+				<img th:src="@{/images/TecAccess.png}" alt="LogoPrin">
+				<h1 class="sitename">
+					<b style="color: rgb(14, 209, 220);">TECH</b>ACCESS
+					<b style="color: rgb(14, 209, 220);">|</b> SENA
+				</h1>
+			</a>
+
+			<nav id="navmenu" class="navmenu">
+				<ul>
+					<li><a th:href="@{/Aprendiz}" id="nav-aprendiz">Aprendiz</a></li>
+					<li><a th:href="@{/Aprendiz/excusas}" id="nav-excusas">Excusas</a></li>
+					<li><a th:href="@{/Aprendiz/Horario}" id="nav-horario">Horario</a></li>
+				</ul>
+				<i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+			</nav>
+
+			
+
+		</div>
+	</header>
 	<main class="main" style="background-color: rgba(0, 124, 88, 0.05); min-height: 100vh;">
 
 		<div class="page-title dark-background text-center"
@@ -18,10 +42,7 @@
 			</div>
 		</div>
 
-		<div class="container py-5">
-			<div class="row g-4">
-			</div>
-		</div>
+
 
 
 		<!-- 🔹 Fondo de video 
