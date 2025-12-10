@@ -406,14 +406,112 @@
 		}
 
 		// Mostrar historial (Ejemplo - puedes reemplazar con datos reales)
-		function mostrarHistorial() {
-			const historial = `
-		        <h6><b>Aula Computacional N°1</b></h6>
-		        <p><b>Entrada:</b> 15 Mayo, 08:15 AM</p>
-		        <p><b>Salida:</b> 15 Mayo, 02:30 PM</p>
-		    `;
-			document.getElementById("contenidoHistorial").innerHTML = historial;
+		/* ==========================
+		   FILTRO POR MES (botón azul)
+		   ========================== */
+		function filtrarHistorial() {
+
+			let mes = document.getElementById("mesFiltro").value;
+			let anio = document.getElementById("anioFiltro").value;
+
+			fetch(`/historial/mes?mes=${mes}&anio=${anio}`)
+				.then(r => r.json())
+				.then(data => {
+
+					let contenedor = document.getElementById("resultadoHistorial");
+					contenedor.innerHTML = "";
+
+					if (data.length === 0) {
+						contenedor.innerHTML = "<p>No hay registros para este filtro.</p>";
+						return;
+					}
+
+					data.forEach(reg => {
+						contenedor.innerHTML += `
+		                       <div class="card p-3 mb-2">
+		                           <strong style="color: rgb(14, 209, 220)">Entrada:</strong>
+		                           <small class="d-block text-muted mb-2">
+		                               ${reg.ingreso}
+		                           </small>
+
+		                           <strong style="color: rgb(14, 209, 220)">Salida:</strong>
+		                           <small class="d-block text-muted mb-2">
+		                               ${reg.egreso}
+		                           </small>
+		                       </div>
+		                   `;
+					});
+				});
 		}
+
+
+		function aplicarFiltros() {
+
+			let mes = document.getElementById("filtroMes").value;
+			let inicio = document.getElementById("fechaInicio").value;
+			let fin = document.getElementById("fechaFin").value;
+
+			let contenedor = document.getElementById("resultadoFiltro");
+
+			if (!mes && (!inicio || !fin)) {
+				contenedor.innerHTML = `<p class="text-danger">Debe seleccionar un mes o un rango válido.</p>`;
+				return;
+			}
+
+			contenedor.innerHTML = `
+		           <div class="alert alert-info">
+		               <strong>Filtro aplicado:</strong><br>
+		               Mes: ${mes || "-"}<br>
+		               Inicio: ${inicio || "-"}<br>
+		               Fin: ${fin || "-"}
+		           </div>
+		       `;
+		}
+
+
+
+		/* ==================================
+		   FILTRO AVANZADO (modal con 3 inputs)
+		   ================================== */
+		function aplicarFiltros() {
+
+			let mesCompleto = document.getElementById("filtroMes").value;  // formato YYYY-MM
+			let inicio = document.getElementById("fechaInicio").value;
+			let fin = document.getElementById("fechaFin").value;
+
+			let contenedor = document.getElementById("resultadoFiltro");
+
+			// Validación: debe elegir mes o rango completo
+			if (!mesCompleto && (!inicio || !fin)) {
+				contenedor.innerHTML = `
+					< p class= "text-danger" >
+					Debe seleccionar un mes o un rango válido.
+		            </p > `;
+				return;
+			}
+
+			/* --- Extraer mes y año del input "month" --- */
+			let mes = "-";
+			let anio = "-";
+
+			if (mesCompleto) {
+				let partes = mesCompleto.split("-");
+				anio = partes[0];
+				mes = partes[1];
+			}
+
+			// Imprimir resumen del filtro aplicado
+			contenedor.innerHTML = `
+					< div class= "alert alert-info" >
+		            <b>Filtro aplicado:</b><br>
+		            Mes: ${mesCompleto || "-"}<br>
+		            Inicio: ${inicio || "-"}<br>
+		            Fin: ${fin || "-"}
+		        </div>
+		    `;
+		}
+
+
 
 		// Escáner / input opcional
 		window.onload = () => {
