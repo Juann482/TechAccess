@@ -48,12 +48,10 @@ public class InstructorController {
 
 	@GetMapping("/Inicio")
 	public String vistaPrincipal(Model model) {
-
 		System.out.println("============= ENTRANDO A /instructor/Inicio =========");
 
 		// Obtener el usuario de la sesión
 		Usuario instructor = (Usuario) session.getAttribute("usuarioSesion");
-
 		if (instructor == null) {
 			return "redirect:/logout";
 		}
@@ -61,33 +59,31 @@ public class InstructorController {
 		model.addAttribute("usuario", instructor);
 
 		try {
+			// Cambia ESTA LÍNEA solamente:
+			// De: List<Usuario> aprendices = usuarioService.findByRol("Aprendiz");
+			// A:
+			List<Usuario> aprendices = usuarioService.findByRolWithAccesos("Aprendiz");
 
-			// Retorna APRENDICES
-			List<Usuario> aprendices = usuarioService.findByRol("Aprendiz");
 			model.addAttribute("totalAprendices", aprendices.size());
 
-			// Entradas de hoy
+			// El resto del código queda IGUAL
 			long entradasHoy = accesoService.findAll().stream().filter(acceso -> acceso.getHoraIngreso() != null)
 					.filter(acceso -> acceso.getHoraIngreso().toLocalDate().equals(LocalDate.now())).count();
 			model.addAttribute("entradasHoy", entradasHoy);
 
-			// Grupos activos (fichas únicas)
 			List<Ficha> fichasActivas = fichaService.findAll();
 			model.addAttribute("gruposActivos", fichasActivas.size());
 
-			// Alertas (aprendices sin acceso hoy)
 			long aprendicesSinAccesoHoy = aprendices.stream().filter(aprendiz -> {
-				List<Acceso> accesos = aprendiz.getAcceso();
+				List<Acceso> accesos = aprendiz.getAcceso(); // Ahora esto funcionará
 				if (accesos == null || accesos.isEmpty()) {
 					return true;
 				}
-				// Verifica si ALGÚN acceso es de hoy
 				return accesos.stream().noneMatch(acceso -> acceso.getHoraIngreso() != null
 						&& acceso.getHoraIngreso().toLocalDate().equals(LocalDate.now()));
 			}).count();
 			model.addAttribute("alertas", aprendicesSinAccesoHoy);
 
-			// 5. Actividad reciente (últimas 5 entradas del día)
 			List<Acceso> actividadReciente = accesoService.findAll().stream()
 					.filter(acceso -> acceso.getHoraIngreso() != null)
 					.filter(acceso -> acceso.getHoraIngreso().toLocalDate().equals(LocalDate.now()))
@@ -98,14 +94,14 @@ public class InstructorController {
 		} catch (Exception e) {
 			System.out.println("ERROR en vistaPrincipal: " + e.getMessage());
 			e.printStackTrace();
-			// Valores DEFAULT
 			model.addAttribute("totalAprendices", 0);
 			model.addAttribute("entradasHoy", 0);
 			model.addAttribute("gruposActivos", 0);
 			model.addAttribute("alertas", 0);
 			model.addAttribute("actividadReciente", List.of());
 
-			return "redirect:/logout";
+			// No rediriges a logout solo por un error, muestras error en vista
+			model.addAttribute("error", "Error al cargar datos: " + e.getMessage());
 		}
 
 		return "instructor/instructor";

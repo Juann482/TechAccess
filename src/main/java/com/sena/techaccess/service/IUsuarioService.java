@@ -47,6 +47,8 @@ public interface IUsuarioService {
 	
 	void saveAll(List<Usuario> usuarios);
 	
+	List<Usuario> findByRolWithAccesos(String rol);
+	
 	Map<String, Long> obtenerUsuariosActivosPorRol();
 
 	// >>>>>>>DASHBOARD<<<<<<<<
