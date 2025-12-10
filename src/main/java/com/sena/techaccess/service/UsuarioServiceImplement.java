@@ -140,8 +140,23 @@ public class UsuarioServiceImplement implements IUsuarioService {
 	@Override
 	public List<Usuario> findByRol(String rol) {
 		return usuarioRepository.findByRol(rol);
-	}
+	} 
 
+	// En UsuarioServiceImplement.java, añade al final de la clase:
+
+	@Override
+	@Transactional
+	public List<Usuario> findByRolWithAccesos(String rol) {
+	    List<Usuario> usuarios = usuarioRepository.findByRol(rol);
+	    // Forzar la carga de accesos dentro de la transacción
+	    usuarios.forEach(usuario -> {
+	        if (usuario.getAcceso() != null) {
+	            usuario.getAcceso().size(); // Esto fuerza la carga
+	        }
+	    });
+	    return usuarios;
+	}
+	
 	@Override
 	public Usuario findByDocumento(String documento) {
 		return usuarioRepository.findByDocumento(documento);
