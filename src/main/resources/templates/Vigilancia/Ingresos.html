@@ -70,41 +70,66 @@
 								</div>
 
 								<script>
-									document.addEventListener("DOMContentLoaded", () => {
-										const barcodeInput = document.getElementById("barcodeInput");
-
-										barcodeInput.addEventListener("change", () => {
-											const codigo = barcodeInput.value.trim();
-
-											if (codigo !== "") {
-												fetch("/Vigilancia/registrar-scan", {
-													method: "POST",
-													headers: {
-														"Content-Type": "application/x-www-form-urlencoded"
-													},
-													body: `documento=${codigo}`
-												})
-													.then(resp => {
-														if (!resp.ok) {
-															throw new Error('Error en la respuesta del servidor');
-														}
-														return resp.text();
-													})
-													.then(data => {
-														alert(data);
-														location.reload();
-													})
-													.catch(err => {
-														console.error("Error:", err);
-														alert("Error al registrar el acceso. Intente nuevamente.");
-													});
-
-												barcodeInput.value = "";
-											}
-										});
-									});
+								    document.addEventListener("DOMContentLoaded", () => {
+								        const barcodeInput = document.getElementById("barcodeInput");
+								        
+								        if (barcodeInput) {
+								            // Evento para cuando cambia el valor (scanner automático)
+								            barcodeInput.addEventListener("change", function() {
+								                const codigo = this.value.trim();
+								                if (codigo !== "") {
+								                    registrarAccesoScanner(codigo);
+								                    this.value = ""; // Limpiar input
+								                }
+								            });
+								            
+								            // Evento para tecla Enter (por si acaso)
+								            barcodeInput.addEventListener("keypress", function(e) {
+								                if (e.key === "Enter") {
+								                    e.preventDefault();
+								                    const codigo = this.value.trim();
+								                    if (codigo !== "") {
+								                        registrarAccesoScanner(codigo);
+								                        this.value = ""; // Limpiar input
+								                    }
+								                }
+								            });
+								            
+								            // Enfocar automáticamente el input
+								            barcodeInput.focus();
+								        }
+								        
+								        // Función para egreso manual de visitante (si existe)
+								        function registrarEgresoVisitante(idUsuario) {
+								            fetch(`/Vigilancia/visitante-egreso?id=${idUsuario}`, {
+								                method: "POST"
+								            })
+								            .then(resp => resp.text())
+								            .then(data => {
+								                if (data === "pito") { // Respuesta esperada del controlador
+								                    Swal.fire({
+								                        icon: "success",
+								                        title: "Egreso registrado correctamente",
+								                        timer: 2000,
+								                        showConfirmButton: false
+								                    });
+								                    
+								                    setTimeout(() => {
+								                        location.reload();
+								                    }, 1500);
+								                }
+								            })
+								            .catch(err => {
+								                console.error("Error:", err);
+								                Swal.fire({
+								                    icon: "error",
+								                    title: "Error al registrar egreso",
+								                    timer: 2000
+								                });
+								            });
+								        }
+								    });
 								</script>
-
 								<div class="table-responsive">
 									<table class="table table-hover datatable">
 										<thead>
