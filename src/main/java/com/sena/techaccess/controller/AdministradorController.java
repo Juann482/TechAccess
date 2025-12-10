@@ -450,21 +450,12 @@ public class AdministradorController {
 	}
 
 	@PostMapping("/NuevoPerfil")
-	public String nuevoPerfil(@ModelAttribute Usuario usuario, RedirectAttributes redirect,
-			@RequestParam("img") MultipartFile file) throws IOException {
+	public String nuevoPerfil(@ModelAttribute Usuario usuario, RedirectAttributes redirect){
 
 		Usuario u = new Usuario();
 		u = usuarioService.get(usuario.getId()).get();
 
-		if (file.isEmpty()) {
-			usuario.setImagen(u.getImagen());
-		} else {
-			if (!u.getImagen().equals("default.jpg")) {
-				upload.deleteImage(u.getImagen());
-			}
-			String nombreImagen = upload.saveImages(file, u.getNombre());
-			usuario.setImagen(nombreImagen);
-		}
+		
 		Integer idAdmin = (Integer) session.getAttribute("IdUser");
 
 		Optional<Usuario> PA = usuarioService.get(idAdmin);

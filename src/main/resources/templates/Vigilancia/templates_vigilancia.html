@@ -309,7 +309,7 @@
 	<header id="header" class="header d-flex align-items-center fixed-top">
 		<div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
 
-			<a th:href="@{/usuario/home}" class="logo d-flex align-items-center">
+			<a href="#" class="logo d-flex align-items-center">
 				<img th:src="@{/images/TecAccess.png}" alt="LogoPrin">
 				<h1 class="sitename"><b style="color: rgb(14, 209, 220);">TECH</b>ACCESS <b
 						style="color: rgb(14, 209, 220);">|</b> SENA</h1>
@@ -337,7 +337,7 @@
 
 						</ul>
 					</li>
-					<li><a href="#">Vigilancia</a></li>
+					<li><a href="#" th:text="${session.nombre}"></a></li>
 				</ul>
 				<i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
 			</nav>
@@ -353,7 +353,7 @@
 	<header id="header" class="header d-flex align-items-center fixed-top">
 		<div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
 
-			<a th:href="@{/usuario/home}" class="logo d-flex align-items-center">
+			<a href="#" class="logo d-flex align-items-center">
 				<img th:src="@{/images/TecAccess.png}" alt="LogoPrin">
 				<h1 class="sitename"><b style="color: rgb(14, 209, 220);">TECH</b>ACCESS <b
 						style="color: rgb(14, 209, 220);">|</b> SENA</h1>
@@ -380,7 +380,7 @@
 							<li><a class="dropdown-item" th:href="@{/Vigilancia/RDU}">Registro</a></li>
 						</ul>
 					</li>
-					<li><a href="#">Vigilancia</a></li>
+					<li><a href="#" th:text="${session.nombre}"></a></li>
 				</ul>
 				<i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
 			</nav>
@@ -396,7 +396,7 @@
 	<header id="header" class="header d-flex align-items-center fixed-top">
 		<div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
 
-			<a th:href="@{/usuario/home}" class="logo d-flex align-items-center">
+			<a href="#" class="logo d-flex align-items-center">
 				<img th:src="@{/images/TecAccess.png}" alt="LogoPrin">
 				<h1 class="sitename"><b style="color: rgb(14, 209, 220);">TECH</b>ACCESS <b
 						style="color: rgb(14, 209, 220);">|</b> SENA</h1>
@@ -422,7 +422,7 @@
 							<li><a class="dropdown-item" th:href="@{/Vigilancia/RDU}">Registro</a></li>
 						</ul>
 					</li>
-					<li><a href="#">Vigilancia</a></li>
+					<li><a href="#" th:text="${session.nombre}"></a></li>
 				</ul>
 				<i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
 			</nav>
@@ -444,7 +444,7 @@
 				<!-- You can delete the links only if you've purchased the pro version. -->
 				<!-- Licensing information: https://bootstrapmade.com/license/ -->
 				<!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
-				Diseñado por <a th:href="@{/usuario/home}"><b>TECH</b>ACCESS</a>
+				Diseñado por <a href="#"><b>TECH</b>ACCESS</a>
 			</div>
 		</div>
 	</footer>

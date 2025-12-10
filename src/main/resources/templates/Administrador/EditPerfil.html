@@ -60,10 +60,6 @@
 								<div class="d-flex align-items-center mb-30">
 									<div class="profile-image">
 										<img src="assets/images/profile/profile-1.png" alt="" />
-										<div class="update-image">
-											<input type="file" />
-											<label for=""><i class="lni lni-cloud-upload"></i></label>
-										</div>
 									</div>
 									<div class="profile-meta">
 										<h2 class="text-bold text-dark mb-10" th:text="${session.nombre}"></h2>
@@ -78,7 +74,11 @@
 											<input type="hidden" name="id" th:value="${Admin.id}">
 
 											<!-- Nombre (fila completa) -->
-
+											<div class="mb-3">
+												<h4 class="mb-1">Nombre</h4>
+												<input type="text" class="form-control" name="nombre"
+													th:value="${Admin.nombre}" required>
+											</div>
 
 
 											<!-- 2 columnas -->
@@ -87,11 +87,7 @@
 												<!-- Columna izquierda -->
 												<div class="col-lg-6">
 
-													<div class="mb-3">
-														<h4 class="mb-1">Nombre</h4>
-														<input type="text" class="form-control" name="nombre"
-															th:value="${Admin.nombre}" required>
-													</div>
+
 													<div class="mb-3">
 														<h4 class="mb-1">Correo</h4>
 														<input type="text" class="form-control" name="email"
@@ -108,11 +104,6 @@
 
 												<!-- Columna derecha -->
 												<div class="col-lg-6">
-													
-													<div class="mb-3">
-														<h4 class="mb-1">Foto de perfil (opcional)</h4>
-														<input type="file" class="form-control" id="img" name="img">
-													</div>
 
 													<div class="mb-3">
 														<h4 class="mb-1">Dirección</h4>
