@@ -67,6 +67,8 @@ public interface IUsuarioService {
 	int VisitantesIN();
 
 	int totalUsuarios();
+
+	void actualizarEstado(Integer id, String estado);
 	
 	//>>>>>> VIGILANCIA <<<<<<<<<
 	

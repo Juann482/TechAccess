@@ -77,17 +77,17 @@ public class UsuarioServiceImplement implements IUsuarioService {
 
 	@Override
 	public int Visitante() {
-		return usuarioRepository.countByRol("Visitantes");
+		return usuarioRepository.countByRol("Visitante");
 	}
 	
 	@Override
 	public int VisitantesAc() {
-		return (int) usuarioRepository.countByRolAndEstadoCuenta("Visitantes", "Activo");
+		return (int) usuarioRepository.countByRolAndEstadoCuenta("Visitante", "Activo");
 	}
 	
 	@Override
 	public int VisitantesIN() {
-		return (int) usuarioRepository.countByRolAndEstadoCuenta("Visitantes", "Inactivo");
+		return (int) usuarioRepository.countByRolAndEstadoCuenta("Visitante", "Inactivo");
 	}
 
 //>>>>>>>>>>>>>>>>>>>>>> FIN DASHBOARD <<<<<<<<<<<<<<<<<<<<<
@@ -191,6 +191,11 @@ public class UsuarioServiceImplement implements IUsuarioService {
 	@Override
 	public List<Usuario> findByRolAndEstadoCuenta(String rol, String estadoCuenta) {
 		return usuarioRepository.findByRolAndEstadoCuenta(rol, estadoCuenta);
+	}
+
+	@Override
+	public void actualizarEstado(Integer id, String estado) {
+	    usuarioRepository.actualizarEstado(id, estado);
 	}
 
 

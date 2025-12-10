@@ -50,8 +50,8 @@ public class Usuario {
 	private Vigilancia vigilancia;
 
 
-	@OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL) // CAscadeType.ALL Borra todas sus fichas y accesos automaticamente si se llega a borrar un usuario																
-	@Transient
+	@OneToMany(mappedBy = "usuario", cascade = CascadeType.REMOVE) // CAscadeType.ALL Borra todas sus fichas y accesos automaticamente si se llega a borrar un usuario																
+	
 	private List<Acceso> accesos = new ArrayList<>();
 
 	@OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY)

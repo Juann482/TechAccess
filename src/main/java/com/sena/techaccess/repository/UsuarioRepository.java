@@ -8,12 +8,15 @@ import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.sena.techaccess.model.Acceso;
 import com.sena.techaccess.model.Usuario;
+
+import jakarta.transaction.Transactional;
 
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
@@ -29,6 +32,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
 	Usuario findByDocumento(String documento);
 
 	int countByRolAndEstadoCuenta(String rol, String estadoCuenta);
+
 
 	// En funcion con la base de datos
 	@Query("""
@@ -76,5 +80,12 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
 	List<Usuario> findByRolAndEstadoCuenta(String rol, String estadoCuenta);
 
 	// ================================================
+
+	
+    @Modifying
+    @Transactional
+    @Query("UPDATE Usuario u SET u.estadoCuenta = :estado WHERE u.id = :id")
+    void actualizarEstado(@Param("id") Integer id, @Param("estado") String estado);
+
 
 }

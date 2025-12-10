@@ -120,25 +120,39 @@ public class VigilanciaController {
     // ============================================================
     //  REGISTRO AUTOMÁTICO → INGRESO / EGRESO
     // ============================================================
-
     @PostMapping("/registrar-scan")
-    @ResponseBody
-    public String registrarScan(@RequestParam("documento") String documento) {
-        Usuario usuario = usuarioService.findByDocumento(documento);
-        if (usuario == null) {
-            return "Usuario no encontrado";
-        }
-        Acceso acceso = accesoService.registrarAcceso(usuario.getId());
-        return acceso.getHoraEgreso() == null ? "Ingreso registrado correctamente" : "Egreso registrado correctamente";
+@ResponseBody
+public Map<String, String> registrarScan(@RequestParam("documento") String documento) {
+    Map<String, String> resp = new HashMap<>();
+
+    Usuario usuario = usuarioService.findByDocumento(documento);
+    if (usuario == null) {
+        resp.put("tipo", "error");
+        resp.put("mensaje", "Usuario no encontrado");
+        return resp;
     }
+
+    Acceso acceso = accesoService.registrarAcceso(usuario.getId());
+
+    if (acceso.getHoraEgreso() == null) {
+        resp.put("tipo", "success");
+        resp.put("mensaje", "Ingreso registrado correctamente");
+    } else {
+        resp.put("tipo", "info");
+        resp.put("mensaje", "Egreso registrado correctamente");
+    }
+
+    return resp;
+}
+
 
     // ============================================================
     // MÉTODOS MANUALES
     // ============================================================
 
     @PostMapping("/registrar-ingreso")
-    @ResponseBody
-    public String registrarIngreso(@RequestParam("documento") String documento) {
+    public String registrarIngreso(@RequestParam("documento") String documento, RedirectAttributes redirect) {
+    	
         Usuario usuario = usuarioService.findByDocumento(documento);
         if (usuario == null) {
             return "Usuario no encontrado";
@@ -156,7 +170,10 @@ public class VigilanciaController {
         accesoService.save(nuevo);
 
         LOGGER.info("Ingreso registrado (manual) -> Usuario {}", usuario.getNombre());
-        return "Ingreso registrado correctamente";
+        
+        redirect.addFlashAttribute("mensaje", "Usuario ingresado");
+        redirect.addFlashAttribute("tipo", "success");
+        return "redirect:/Vigilancia/Ingreso";
     }
 
     @PostMapping("/registrar-egreso")
@@ -174,10 +191,11 @@ public class VigilanciaController {
 
         ultimoAcceso.setHoraEgreso(LocalDateTime.now());
         ultimoAcceso.setActividad("Egresado");
+        
         accesoService.save(ultimoAcceso);
 
         LOGGER.info("Egreso registrado (manual) -> Usuario {}", usuario.getNombre());
-        return "Egreso registrado correctamente";
+        return "pito";
     }
 
     @PostMapping("/visitanteSave")
@@ -190,7 +208,6 @@ public class VigilanciaController {
             RedirectAttributes redirect) {
         
         usuario.setRol("Visitante");
-        usuario.setEstadoCuenta("Activo");
         usuarioService.save(usuario);
 
         // Solo guardar dispositivo si se seleccionó "Sí" Y tiene datos válidos
@@ -221,7 +238,7 @@ public class VigilanciaController {
 
     @PostMapping("/visitante-egreso")
     @ResponseBody
-    public String registrarEgresoVisitante(@RequestParam("id") Integer usuarioId) {
+    public String registrarEgresoVisitante(@RequestParam("id") Integer usuarioId, RedirectAttributes redirect) {
         Usuario usuario = usuarioService.findById(usuarioId).orElse(null);
         if (usuario == null) {
             return "Usuario no encontrado";
@@ -236,7 +253,11 @@ public class VigilanciaController {
         ultimoAcceso.setActividad("Egresado");
         accesoService.save(ultimoAcceso);
 
-        return "OK";
+        if (ultimoAcceso.getHoraEgreso() != null) {
+            usuarioService.actualizarEstado(usuarioId, "Inactivo");
+        }
+
+        return "pito";
     }
 
     // =====================================================================
