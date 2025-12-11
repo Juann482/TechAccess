@@ -110,7 +110,6 @@ public class AdministradorController {
 	@GetMapping("/form")
 	public String mostrarFormulario(Usuario usuario, Model model) {
 
-		usuario.setImagen("default.jpg");
 		model.addAttribute("usuarios", usuarioService.findAll());
 		model.addAttribute("usuario", new Usuario()); // objeto vacio
 		model.addAttribute("fichas", fichaService.findAll()); // Lista de fichas
@@ -469,7 +468,6 @@ public class AdministradorController {
 			admin.setDireccion(usuario.getDireccion());
 			admin.setDocumento(usuario.getDocumento());
 			admin.setTelefono(usuario.getTelefono());
-			admin.setImagen(usuario.getImagen());
 
 			usuarioService.save(admin);
 
@@ -478,7 +476,6 @@ public class AdministradorController {
 			session.setAttribute("direccion", admin.getDireccion());
 			session.setAttribute("documento", admin.getDocumento());
 			session.setAttribute("telefono", admin.getTelefono());
-			session.setAttribute("imagen", admin.getImagen());
 		}
 
 		redirect.addFlashAttribute("mensaje", "Perfil actualizado");
