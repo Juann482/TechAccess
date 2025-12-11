@@ -170,7 +170,7 @@ public class UsuarioServiceImplement implements IUsuarioService {
 	}
 
 	@Override
-	public Page<Usuario> findByFichaId(Integer fichaId, Pageable pageable) {
+	public Page<Usuario> findByFichaIdPaginado(Integer fichaId, Pageable pageable) {
 		return usuarioRepository.findByFichaId(fichaId, pageable);
 	}
 

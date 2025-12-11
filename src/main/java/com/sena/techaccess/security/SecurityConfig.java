@@ -28,8 +28,11 @@ public class SecurityConfig {
 		http.csrf(csrf -> csrf.disable())
 				.authorizeHttpRequests(auth -> auth
 						.requestMatchers("/", "/Home", "/assets/**", "/images/**", "/css/**", "/js/**", "/img/**", "/error/**",
-								"/soporte", "/about")
-						.permitAll()
+								"/soporte", "/about").permitAll()
+						
+						.requestMatchers("/api/**").permitAll()  // ← LÍNEA CRÍTICA
+                        .requestMatchers("/swagger-ui/**", "/api-docs/**").permitAll()
+                        
 						.requestMatchers("/Administrador/**").hasAuthority("Administrador")
 						.requestMatchers("/Vigilancia/**").hasAuthority("Vigilancia")
 						.requestMatchers("/Aprendiz/**").hasAuthority("Aprendiz")

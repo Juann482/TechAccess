@@ -137,7 +137,7 @@ public class ApiUsuarioController {
     public ResponseEntity<Page<Usuario>> getByFichaIdPage(
             @PathVariable Integer fichaId,
             Pageable pageable) {
-        Page<Usuario> pagina = usuarioService.findByFichaId(fichaId, pageable);
+        Page<Usuario> pagina = usuarioService.findByFichaIdPaginado(fichaId, pageable);
         return ResponseEntity.ok(pagina);
     }
 
@@ -175,28 +175,6 @@ public class ApiUsuarioController {
         return ResponseEntity.ok(inactivos);
     }
 
-    @GetMapping("/dashboard/por-rol")
-    public ResponseEntity<Map<String, Integer>> getEstadisticasPorRol() {
-        Map<String, Integer> estadisticas = Map.of(
-            "aprendices", usuarioService.Aprendiz(),
-            "aprendicesActivos", usuarioService.AprendizAct(),
-            "aprendicesInactivos", usuarioService.AprendizIN(),
-            "instructores", usuarioService.Instructor(),
-            "instructoresActivos", usuarioService.InstructorAc(),
-            "instructoresInactivos", usuarioService.InstructorIN(),
-            "visitantes", usuarioService.Visitante(),
-            "visitantesActivos", usuarioService.VisitantesAc(),
-            "visitantesInactivos", usuarioService.VisitantesIN()
-        );
-        return ResponseEntity.ok(estadisticas);
-    }
-
-    @GetMapping("/dashboard/activos-por-rol")
-    public ResponseEntity<Map<String, Long>> getUsuariosActivosPorRol() {
-        Map<String, Long> mapa = usuarioService.obtenerUsuariosActivosPorRol();
-        return ResponseEntity.ok(mapa);
-    }
-
     // ==================== OPERACIONES ESPECIALES ====================
 
     @PostMapping("/batch")
@@ -217,52 +195,5 @@ public class ApiUsuarioController {
         
         usuarioService.actualizarEstado(id, estado);
         return ResponseEntity.ok("Estado actualizado correctamente");
-    }
-
-    @GetMapping("/rol/{rol}/con-accesos")
-    public ResponseEntity<List<Usuario>> getByRolWithAccesos(@PathVariable String rol) {
-        List<Usuario> usuarios = usuarioService.findByRolWithAccesos(rol);
-        return ResponseEntity.ok(usuarios);
-    }
-
-    // ==================== LOGIN / AUTENTICACIÓN ====================
-
-    @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestParam String email, @RequestParam String password) {
-        Optional<Usuario> usuarioOpt = usuarioService.findByEmail(email);
-        
-        if (usuarioOpt.isEmpty()) {
-            return ResponseEntity.status(404).body("Usuario no encontrado");
-        }
-        
-        Usuario usuario = usuarioOpt.get();
-        if (!usuario.getPassword().equals(password)) {
-            return ResponseEntity.status(401).body("Credenciales incorrectas");
-        }
-        
-        // Eliminar password de la respuesta por seguridad
-        usuario.setPassword(null);
-        return ResponseEntity.ok(usuario);
-    }
-
-    @PostMapping("/cambiar-password")
-    public ResponseEntity<String> cambiarPassword(
-            @RequestParam Integer id,
-            @RequestParam String passwordActual,
-            @RequestParam String passwordNueva) {
-        
-        Optional<Usuario> usuarioOpt = usuarioService.findById(id);
-        if (usuarioOpt.isEmpty()) {
-            return ResponseEntity.status(404).body("Usuario no encontrado");
-        }
-        
-        Usuario usuario = usuarioOpt.get();
-        if (!usuario.getPassword().equals(passwordActual)) {
-            return ResponseEntity.status(401).body("Contraseña actual incorrecta");
-        }
-        
-        usuario.setPassword(passwordNueva);
-        usuarioService.save(usuario);
-        return ResponseEntity.ok("Contraseña actualizada correctamente");
     }
 }

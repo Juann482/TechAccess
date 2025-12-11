@@ -39,7 +39,7 @@ public interface IUsuarioService {
 	
 	List<Usuario> findByFichaId(Integer id);
 	
-	Page<Usuario> findByFichaId(Integer fichaId, Pageable pageable);
+	Page<Usuario> findByFichaIdPaginado(Integer fichaId, Pageable pageable);
 	
 	Page<Usuario> filtrarUsuariosEnFicha(Integer fichaId, String nombre, String documento, String rol, String estado, Pageable pageable);
 

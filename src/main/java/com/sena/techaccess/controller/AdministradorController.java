@@ -349,7 +349,7 @@ public class AdministradorController {
 		if (hayFiltros) {
 			usuariosPage = usuarioService.filtrarUsuariosEnFicha(id, nombre, documento, rol, estado, pageable);
 		} else {
-			usuariosPage = usuarioService.findByFichaId(id, pageable);
+			usuariosPage = usuarioService.findByFichaIdPaginado(id, pageable);
 		}
 
 		Ficha ficha = fichaService.get(id).orElse(null);
