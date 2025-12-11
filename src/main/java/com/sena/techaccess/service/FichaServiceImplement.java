@@ -37,10 +37,6 @@ public class FichaServiceImplement implements IFichaService {
 		return fichaRepository.findAll();
 	}
 
-	/*public Ficha findByNumFicha(String numFicha) { // Busca ficha por número de ficha
-		return fichaRepository.findByNumFicha(numFicha);
-	}*/
-
 	public void update(Ficha ficha) {
 		fichaRepository.save(ficha);		
 	}
@@ -63,10 +59,6 @@ public class FichaServiceImplement implements IFichaService {
 	@Override
 	public Ficha findByJornada(String jornada) {
 		return fichaRepository.findByJornada(jornada);
-	}
-	
-	public List<Usuario> listarUsuariosPorFicha(Integer fichaId) {
-	    return usuarioRepository.findByFichaId(fichaId);
 	}
 
 	@Override

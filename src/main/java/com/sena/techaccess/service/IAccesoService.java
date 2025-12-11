@@ -39,22 +39,7 @@ public interface IAccesoService {
     
     // Nuevo método para obtener accesos con usuario cargado
     List<Acceso> findAllWithUsuario();
-	List<Acceso> findByUsuarioIdOrderByHoraIngresoDesc(Integer id);
-	
-	
-	//Historial de accesos
-	List<Acceso> findByUsuarioIdOrderByHoraIngresoDesc(Long usuarioId);
-	
-	List<Acceso> findByUsuarioAndMes(Long userId, int mes, int anio);
-	List<Acceso> findByUsuarioAndRango(Long userId, LocalDateTime inicio, LocalDateTime fin);
-	List<Acceso> findByUsuarioAndMes(Integer id, int mes, int anio);
-	
-	Usuario findByDocumento(String documento);
-	
-	
-
-
-
-
+    
+	List<Acceso> findByUsuarioIdOrderByHoraIngresoDesc(Integer id);	
 
 }

@@ -30,4 +30,5 @@ public interface IFichaService {
 	
 	Page<Ficha> filtrarFicha(String nombrePrograma, String jornada, String estado, Integer numFicha, Pageable pageable);
 
+
 }
