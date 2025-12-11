@@ -27,18 +27,28 @@ public class SecurityConfig {
 	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http.csrf(csrf -> csrf.disable())
 				.authorizeHttpRequests(auth -> auth
-						.requestMatchers("/", "/assets/**", "/images/**", "/css/**", "/js/**", "/img/**", "/error/**",
+						.requestMatchers("/", "/Home", "/assets/**", "/images/**", "/css/**", "/js/**", "/img/**", "/error/**",
 								"/soporte", "/about")
-						.permitAll().requestMatchers("/Administrador/**").hasAuthority("Administrador")
-						.requestMatchers("/Vigilancia/**").hasAuthority("Vigilancia").requestMatchers("/Aprendiz/**")
-						.hasAuthority("Aprendiz").requestMatchers("/instructor/**").hasAuthority("Instructor")
-						.requestMatchers("/funcionario/**").hasAuthority("Funcionario").anyRequest().authenticated())
-				.formLogin(login -> login.loginPage("/").loginProcessingUrl("/login").successHandler(successHandler)
+						.permitAll()
+						.requestMatchers("/Administrador/**").hasAuthority("Administrador")
+						.requestMatchers("/Vigilancia/**").hasAuthority("Vigilancia")
+						.requestMatchers("/Aprendiz/**").hasAuthority("Aprendiz")
+						.requestMatchers("/instructor/**").hasAuthority("Instructor")
+						.requestMatchers("/funcionario/**").hasAuthority("Funcionario")
+						.anyRequest().authenticated())
+				
+				.formLogin(login -> login
+						.loginPage("/Home")
+						.loginProcessingUrl("/login")
+						.successHandler(successHandler)
 						.permitAll())
-				.logout(logout -> logout.logoutUrl("/logout").logoutSuccessUrl("/").permitAll())
+				.logout(logout -> logout
+						.logoutUrl("/logout")
+						.logoutSuccessUrl("/")
+						.permitAll())
 				.userDetailsService(serviceLogin)
 				// 👉 Corrección agregada (ENVÍA AL LOGIN EN VEZ DE 403)
-				.exceptionHandling(ex -> ex.authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/")));
+				.exceptionHandling(ex -> ex.authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/Home")));
 
 		return http.build();
 	}

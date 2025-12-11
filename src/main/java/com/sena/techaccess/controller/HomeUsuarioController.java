@@ -12,7 +12,7 @@ import com.sena.techaccess.service.ISoporteService;
 import com.sena.techaccess.model.Soporte;
 
 @Controller
-@RequestMapping("/")
+//@RequestMapping("/")
 public class HomeUsuarioController {
 
 	@Autowired
@@ -28,9 +28,14 @@ public class HomeUsuarioController {
 		return "about";
 	}
 
-	@GetMapping("")
+	@GetMapping("/Home") //antes estaba solo ""
 	public String Inicio() {
-		return ("home");
+		return "home";
+	}
+	
+	@GetMapping("/")
+	public String raiz() {
+		return "redirect:/Home";
 	}
 
 }
