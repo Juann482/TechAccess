@@ -33,8 +33,6 @@ public class Usuario {
 	private String rol;
 	private String estadoCuenta;
 	
-	//Limitado para administradores por el momento
-	private String imagen;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ficha_id", nullable = true)
@@ -64,7 +62,7 @@ public class Usuario {
 	}
 
 	public Usuario(Integer id, String nombre, String email, String documento, String direccion, String telefono,
-			String password, String rol, String estadoCuenta, String imagen) {
+			String password, String rol, String estadoCuenta) {
 		super();
 		this.id = id;
 		this.nombre = nombre;
@@ -75,7 +73,6 @@ public class Usuario {
 		this.password = password;
 		this.rol = rol;
 		this.estadoCuenta = estadoCuenta;
-		this.imagen = imagen;
 	}
 
 	public Integer getId() {
@@ -94,13 +91,6 @@ public class Usuario {
 		this.nombre = nombre;
 	}
 	
-	public String getImagen() {
-		return imagen;
-	}
-
-	public void setImagen(String imagen) {
-		this.imagen = imagen;
-	}
 
 	public String getEmail() {
 		return email;
@@ -218,7 +208,7 @@ public class Usuario {
 	public String toString() {
 		return "Usuario [id=" + id + ", nombre=" + nombre + ", email=" + email + ", documento=" + documento
 				+ ", direccion=" + direccion + ", telefono=" + telefono + ", password=" + password + ", rol=" + rol
-				+ ", estadoCuenta=" + estadoCuenta + ", imagen=" + imagen + ", ficha=" + ficha + ", dispositivoVisit="
+				+ ", estadoCuenta=" + estadoCuenta  + ", ficha=" + ficha + ", dispositivoVisit="
 				+ dispositivoVisit + ", permisos=" + permisos + ", vigilancia=" + vigilancia + ", accesos=" + accesos
 				+ ", excusas=" + excusas + ", dispositivo=" + dispositivo + "]";
 	}
